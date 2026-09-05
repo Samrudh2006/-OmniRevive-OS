@@ -14,13 +14,13 @@
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue.svg?style=flat-square)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg?style=flat-square)](https://fastapi.tiangolo.com/)
 [![Audit Chain](https://img.shields.io/badge/audit-SHA--256%20chained-emerald.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![Video Walkthrough](https://img.shields.io/badge/Demo_Video-Architecting_Autonomous_Control_Plane-red.svg?style=flat-square&logo=youtube)](docs/Architecting_an_Autonomous_Revenue_Recovery_Control_Plane.mp4)
+[![Video Walkthrough](https://img.shields.io/badge/Demo_Video-YouTube_Walkthrough-red.svg?style=flat-square&logo=youtube)](https://youtu.be/IBo7D1vHhd8)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg?style=flat-square)](LICENSE)
 
 > **Razorpay AI Buildathon Submission**  
 > **Track 03:** AI Revenue Recovery — *Detect revenue at risk, diagnose root causes, and execute bounded recovery workflows.*  
 > **Target Role:** AI Builder Intern (₹75,000/mo, In-Person Bangalore, 6 or 12 Months)  
-> **📹 Video Walkthrough:** [Architecting an Autonomous Revenue Recovery Control Plane (`docs/Architecting_an_Autonomous_Revenue_Recovery_Control_Plane.mp4`)](docs/Architecting_an_Autonomous_Revenue_Recovery_Control_Plane.mp4)
+> **📹 Live Video Walkthrough:** [Watch 4-Min Demo on YouTube (https://youtu.be/IBo7D1vHhd8)](https://youtu.be/IBo7D1vHhd8)
 
 ---
 
