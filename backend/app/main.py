@@ -29,6 +29,9 @@ from backend.app.bulk_processor import bulk_processor
 from backend.app.gateways import default_gateway
 from backend.app.b2b import b2b_voice_engine, ptp_store, b2b_fsm
 from backend.app.b2b.voice_agent import VoiceDialogueTurnRequest, VoiceDialogueResponse
+from backend.app.b2b.invoice_store import invoice_store
+from backend.app.communication.dispatch_engine import dispatch_engine
+from backend.app.copilot.action_agent import action_router
 from backend.app.policy_engine import policy_engine
 from benchmarks.benchmark_runner import run_held_out_benchmark
 
@@ -191,7 +194,10 @@ async def add_security_headers(request: Request, call_next):
     
     response: Response = await call_next(request)
     response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
+    if "/communication/" in request.url.path and request.url.path.endswith("/html"):
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    else:
+        response.headers["X-Frame-Options"] = "DENY"
     response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
@@ -814,6 +820,132 @@ async def get_active_ptp_records(request: Request):
         "timestamp": time.time()
     }
 
+# =========================================================================
+# Multi-Channel Communication Dispatch & Live Invoice Mutation API
+# =========================================================================
+class EmailDispatchRequest(BaseModel):
+    invoice_id: str = "inv_enterprise_998"
+    recipient_email: Optional[str] = None
+    subject: Optional[str] = None
+    custom_note: Optional[str] = None
+
+class InvoiceMutationRequest(BaseModel):
+    field: str
+    new_value: Any
+    reason: Optional[str] = "Manual dashboard instruction"
+
+@app.post("/api/v1/communication/email/send", tags=["Communication Dispatch"], summary="Dispatch Authentic Corporate Tax Invoice Email")
+async def send_invoice_email_endpoint(req: EmailDispatchRequest, request: Request):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    inv = invoice_store.get_invoice(req.invoice_id)
+    if not inv:
+        inv = invoice_store.get_invoice("inv_enterprise_998")
+
+    dispatch = dispatch_engine.dispatch_email(
+        to_email=req.recipient_email or (inv.customer_email if inv else "finance@acmepvt.com"),
+        invoice_id=req.invoice_id,
+        subject=req.subject or "",
+        custom_note=req.custom_note or ""
+    )
+
+    audit_store.record_event(
+        trace_id=trace_id,
+        merchant_id="merchant_123",
+        payment_id=req.invoice_id,
+        event_type="communication.email.dispatched",
+        failure_class="DISPATCH",
+        decision={"recipient": dispatch.recipient, "subject": dispatch.subject},
+        policy_verdict="ALLOWED",
+        action_taken="DISPATCH_EMAIL",
+        gateway_result={"dispatch_id": dispatch.dispatch_id}
+    )
+
+    return {
+        "success": True,
+        "data": dispatch.model_dump(),
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@app.get("/api/v1/communication/recent", tags=["Communication Dispatch"], summary="List Recent Sent Communications")
+async def list_recent_communications(limit: int = 20, request: Request = None):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
+    items = dispatch_engine.list_recent(limit=limit)
+    return {
+        "success": True,
+        "data": {
+            "total": len(items),
+            "dispatches": [item.model_dump() for item in items]
+        },
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@app.get("/api/v1/communication/{dispatch_id}", tags=["Communication Dispatch"], summary="Get Single Dispatch Details")
+async def get_dispatch_details(dispatch_id: str, request: Request):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    item = dispatch_engine.get_dispatch(dispatch_id)
+    if not item:
+        raise HTTPException(status_code=404, detail=f"Dispatch {dispatch_id} not found.")
+    return {
+        "success": True,
+        "data": item.model_dump(),
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@app.get("/api/v1/communication/{dispatch_id}/html", tags=["Communication Dispatch"], summary="Render Raw HTML Email for In-Browser Preview")
+async def render_dispatch_html(dispatch_id: str):
+    item = dispatch_engine.get_dispatch(dispatch_id)
+    if not item or not item.rendered_html:
+        inv = invoice_store.get_invoice("inv_enterprise_998")
+        if inv:
+            html = dispatch_engine.generate_html_invoice_email(inv, custom_note="Live rendered tax invoice advice.")
+            return HTMLResponse(content=html, status_code=200)
+        raise HTTPException(status_code=404, detail="Email body not found.")
+    return HTMLResponse(content=item.rendered_html, status_code=200)
+
+@app.get("/api/v1/invoices/{invoice_id}", tags=["Enterprise Invoices"], summary="Get Live Invoice State")
+async def get_invoice_details(invoice_id: str, request: Request):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    inv = invoice_store.get_invoice(invoice_id)
+    if not inv:
+        inv = invoice_store.get_invoice("inv_enterprise_998")
+    return {
+        "success": True,
+        "data": inv.model_dump() if inv else {},
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@app.post("/api/v1/invoices/{invoice_id}/mutate", tags=["Enterprise Invoices"], summary="Mutate Invoice Field On-Demand")
+async def mutate_invoice_endpoint(invoice_id: str, req: InvoiceMutationRequest, request: Request):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    inv = invoice_store.mutate_invoice_field(
+        invoice_id=invoice_id,
+        field=req.field,
+        new_value=req.new_value,
+        reason=req.reason or "API Mutation",
+        operator="API_USER"
+    )
+    audit_store.record_event(
+        trace_id=trace_id,
+        merchant_id="merchant_123",
+        payment_id=invoice_id,
+        event_type="invoice.field.mutated",
+        failure_class="MUTATION",
+        decision={"field": req.field, "new_value": req.new_value},
+        policy_verdict="ALLOWED",
+        action_taken=f"MUTATE_{req.field.upper()}",
+        gateway_result={"invoice": inv.model_dump()}
+    )
+    return {
+        "success": True,
+        "data": inv.model_dump(),
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
 @app.get("/api/v1/analytics/roi", tags=["System & Telemetry"], summary="Calculate Merchant Revenue Recovery ROI")
 async def calculate_merchant_roi(
     monthly_gmv: float = 10000000.0,
@@ -1108,6 +1240,26 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
     query = req.query.strip()
     if not query:
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
+
+    # 0. Check for Real Action Intent & Tool Calling Execution (100% Open Source)
+    action_res = action_router.parse_and_execute(query, trace_id=trace_id)
+    if action_res.action_executed:
+        return {
+            "success": True,
+            "data": {
+                "source": "action_execution_agent",
+                "action_executed": True,
+                "tool_name": action_res.tool_name,
+                "action_summary": action_res.action_summary,
+                "dispatch_id": action_res.dispatch_id,
+                "invoice_id": action_res.invoice_id,
+                "audit_hash": action_res.audit_hash,
+                "mutated_data": action_res.mutated_data,
+                "response": action_res.response_text
+            },
+            "trace_id": trace_id,
+            "timestamp": time.time()
+        }
     
     # 1. Attempt Local Ollama connection (if available)
     ollama_url = "http://localhost:11434/api/generate"
@@ -1256,5 +1408,72 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         "trace_id": trace_id,
         "timestamp": time.time()
     }
+
+
+# ==============================================================================
+# AWS ECOSYSTEM ENDPOINTS (CEDAR ZERO-TRUST & AMAZON BEDROCK GENAI)
+# ==============================================================================
+
+class CedarEvaluationPayload(BaseModel):
+    principal: str = Field(default="Role::SRE_Admin")
+    action: str = Field(default="Action::TripCircuitBreaker")
+    resource: str = Field(default="BankingSwitch::SBI")
+    context: Optional[Dict[str, Any]] = Field(default_factory=dict)
+
+@app.get("/aws/cedar/policies", tags=["AWS Zero-Trust Security"])
+async def get_cedar_policies():
+    """Returns active AWS Cedar formal zero-trust authorization policies."""
+    from aws.cedar.cedar_engine import get_cedar_engine
+    engine = get_cedar_engine()
+    return {
+        "success": True,
+        "data": {
+            "specification": "AWS Cedar v3.0",
+            "policy_sha256": engine.policy_hash,
+            "raw_policies": engine.raw_policies,
+            "rule_count": 4,
+            "enforcement_mode": "STRICT_ZERO_TRUST"
+        },
+        "timestamp": time.time()
+    }
+
+@app.post("/aws/cedar/evaluate", tags=["AWS Zero-Trust Security"])
+async def evaluate_cedar_policy(payload: CedarEvaluationPayload):
+    """Evaluates an access request against AWS Cedar formal security policies."""
+    from aws.cedar.cedar_engine import get_cedar_engine
+    engine = get_cedar_engine()
+    result = engine.evaluate(
+        principal=payload.principal,
+        action=payload.action,
+        resource=payload.resource,
+        context=payload.context
+    )
+    return {
+        "success": True,
+        "data": result.to_dict(),
+        "timestamp": time.time()
+    }
+
+@app.get("/aws/bedrock/status", tags=["AWS Generative AI"])
+async def get_bedrock_status():
+    """Returns current Amazon Bedrock foundation model configuration and telemetry."""
+    from aws.bedrock.bedrock_client import get_bedrock_agent
+    agent = get_bedrock_agent()
+    return {
+        "success": True,
+        "data": {
+            "foundation_model": agent.model_id,
+            "target_region": agent.region,
+            "is_live_aws": agent.is_live,
+            "mode": "Live Amazon Bedrock" if agent.is_live else "Local Zero-Cost Emulated",
+            "supported_actions": [
+                "B2B_HINGLISH_VOICE_SYNTHESIS",
+                "GSTIN_DISPUTE_EXTRACTION",
+                "PROMISE_TO_PAY_COMMITMENT_PARSER"
+            ]
+        },
+        "timestamp": time.time()
+    }
+
 
 
