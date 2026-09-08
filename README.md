@@ -321,6 +321,24 @@ run_benchmarks.bat
 python benchmarks/benchmark_runner.py
 ```
 
+### 4. Launch Autonomous Sentinel Recovery Daemon (Live Cyberpunk Ops)
+```bash
+# Windows (1-Click)
+run_sentinel.bat
+
+# CLI
+python cli.py sentinel
+```
+
+### 5. Launch Interactive B2B Conversational Autonomous Agent (Live Voice/Chat)
+```bash
+# Windows (1-Click)
+run_agent_chat.bat
+
+# CLI
+python cli.py chat
+```
+
 ---
 
 ## 8. Project & Candidate Information
