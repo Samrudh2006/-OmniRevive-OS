@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  RazorRevive-OS: Cloud-Native Revenue Recovery & SRE Control Plane
+  Powered by Amazon Bedrock, AWS Cedar Zero-Trust, and EventBridge.
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.11
+    Environment:
+      Variables:
+        AWS_BEDROCK_MODEL: anthropic.claude-3-5-sonnet-20241022-v2:0
+        POWERTOOLS_SERVICE_NAME: RazorReviveOS
+
+Resources:
+  # ============================================================================
+  # 1. API Gateway & Fast-Loop SRE Control Plane Lambda
+  # ============================================================================
+  RazorReviveApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../../
+      Handler: backend.app.main.handler
+      Policies:
+        - BedrockInvokeModelPolicy: {}
+      Events:
+        RootApi:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+
+  # ============================================================================
+  # 2. EventBridge Event Bus for Real-Time Banking Failure Streams (SBI, HDFC)
+  # ============================================================================
+  BankingSwitchEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: RazorRevive-BankingSwitchRadar
+
+  SwitchFailureRule:
+    Type: AWS::Events::Rule
+    Properties:
+      EventBusName: !Ref BankingSwitchEventBus
+      Description: Captures high error rate spikes on NPCI switches for Weibull retry triggers
+      EventPattern:
+        source:
+          - "razorrevive.telemetry"
+        detail-type:
+          - "SwitchErrorSpike"
+      Targets:
+        - Arn: !GetAtt WeibullRetryFunction.Arn
+          Id: "TriggerWeibullRetryScheduler"
+
+  WeibullRetryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../../
+      Handler: backend.app.weibull.handler
+      Timeout: 15
+
+  # ============================================================================
+  # 3. DynamoDB Table for Immutable Recovery Audit Trail
+  # ============================================================================
+  RecoveryAuditTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: RazorRevive-RecoveryAuditTrail
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: recovery_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: recovery_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+
+Outputs:
+  RazorReviveApiUrl:
+    Description: "API Gateway endpoint URL for RazorRevive-OS"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  EventBusArn:
+    Description: "ARN of the Banking Switch EventBridge bus"
+    Value: !GetAtt BankingSwitchEventBus.Arn

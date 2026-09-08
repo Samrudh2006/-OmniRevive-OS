@@ -1,0 +1,93 @@
+{
+  "RazorRevive": {
+    "entityTypes": {
+      "Role": {
+        "memberOfTypes": []
+      },
+      "Agent": {
+        "memberOfTypes": []
+      },
+      "BankingSwitch": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "switch_id": { "type": "String" },
+            "bank_name": { "type": "String" },
+            "error_rate": { "type": "Decimal" }
+          }
+        }
+      },
+      "B2BInvoice": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "invoice_id": { "type": "String" },
+            "amount": { "type": "Long" },
+            "current_gstin": { "type": "String" }
+          }
+        }
+      },
+      "AuditLog": {
+        "shape": {
+          "type": "Record",
+          "attributes": {
+            "entry_hash": { "type": "String" }
+          }
+        }
+      }
+    },
+    "actions": {
+      "TripCircuitBreaker": {
+        "appliesTo": {
+          "principalTypes": ["Role"],
+          "resourceTypes": ["BankingSwitch"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "mfa_verified": { "type": "Boolean" },
+              "system_risk_score": { "type": "Long" }
+            }
+          }
+        }
+      },
+      "ResetCircuitBreaker": {
+        "appliesTo": {
+          "principalTypes": ["Role"],
+          "resourceTypes": ["BankingSwitch"]
+        }
+      },
+      "MutateInvoiceGSTIN": {
+        "appliesTo": {
+          "principalTypes": ["Role", "Agent"],
+          "resourceTypes": ["B2BInvoice"],
+          "context": {
+            "type": "Record",
+            "attributes": {
+              "proposed_gstin": { "type": "String" },
+              "invoice_amount": { "type": "Long" },
+              "regulatory_compliance": { "type": "String" }
+            }
+          }
+        }
+      },
+      "ExecuteVoiceDialogueTurn": {
+        "appliesTo": {
+          "principalTypes": ["Agent", "Role"],
+          "resourceTypes": ["B2BInvoice"]
+        }
+      },
+      "DispatchTaxInvoiceEmail": {
+        "appliesTo": {
+          "principalTypes": ["Agent", "Role"],
+          "resourceTypes": ["B2BInvoice"]
+        }
+      },
+      "DeleteAuditRecord": {
+        "appliesTo": {
+          "principalTypes": ["Role", "Agent"],
+          "resourceTypes": ["AuditLog"]
+        }
+      }
+    }
+  }
+}
