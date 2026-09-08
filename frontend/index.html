@@ -478,90 +478,125 @@
             <span class="text-base sm:text-lg font-extrabold header-brand-title tracking-tight">
               <span class="brand-main-text">RazorRevive</span><span class="brand-highlight text-[#0c55ea] dark:text-[#38bdf8]">-OS</span>
             </span>
+            <!-- LIVE SIMULATION STATUS BADGE -->
+            <div class="h-5 px-2 rounded-full bg-emerald-500/10 border border-emerald-500/25 hidden sm:flex items-center gap-1.5 shadow-xs">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider mono uppercase">SIMULATION</span>
+            </div>
           </div>
           <div class="text-[10px] sm:text-[11px] header-center-sub text-slate-500 dark:text-slate-400 font-medium leading-none mt-0.5 hidden xs:block">AI Revenue Recovery Control Plane</div>
         </div>
       </div>
     </div>
 
-
-
     <!-- RIGHT HEADER CONTROLS -->
     <div class="flex items-center gap-2">
 
       <!-- CMDK COMMAND PALETTE TRIGGER BUTTON -->
-      <button onclick="openCommandPalette()" class="hidden lg:flex items-center gap-2 h-8 sm:h-9 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e293b] text-slate-600 dark:text-slate-300 text-xs font-semibold transition cursor-pointer shadow-sm">
+      <button onclick="openCommandPalette()" class="hidden md:flex items-center gap-2 h-8 sm:h-9 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e293b] text-slate-600 dark:text-slate-300 text-xs font-semibold transition cursor-pointer shadow-sm">
         <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         <span>Search commands...</span>
         <kbd class="px-1.5 py-0.5 rounded text-[10px] bg-slate-200 dark:bg-[#142442] border border-slate-300 dark:border-[#1e3a6a] text-slate-700 dark:text-slate-300 mono font-bold">⌘K</kbd>
       </button>
 
-      <!-- 60-SECOND GUIDED SRE TOUR BUTTON -->
-      <button onclick="startGuidedTour()" id="header-tour-btn" class="h-8 sm:h-9 px-2.5 sm:px-3.5 rounded-lg bg-gradient-to-r from-[#8b5cf6] to-[#0c55ea] hover:from-[#7c3aed] hover:to-[#0942b8] text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95 border border-purple-400/30">
-        <span class="animate-pulse">🧭</span>
-        <span class="hidden sm:inline">60s Guided Tour</span>
-        <span class="sm:hidden font-bold">Tour</span>
-      </button>
-
-      <!-- RUN 100-BATCH BENCHMARK BUTTON -->
-      <button onclick="runBenchmarkAction()" id="header-benchmark-btn" class="h-8 sm:h-9 px-2.5 sm:px-4 rounded-lg btn-primary text-xs font-semibold flex items-center gap-1.5 sm:gap-2 shadow-sm cursor-pointer">
-        <svg class="w-3.5 h-3.5 text-blue-100 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-        </svg>
-        <span id="benchmark-btn-text" class="hidden sm:inline">Run 100-Batch Benchmark</span>
-        <span class="sm:hidden font-bold">100-Batch</span>
-      </button>
-
-      <!-- DEMO SCENARIOS DROPDOWN BUTTON (High Contrast in Light & Dark Mode) -->
+      <!-- UNIFIED DEMO STUDIO & SCENARIOS DROPDOWN -->
       <div class="relative">
-        <button onclick="toggleScenariosMenu()" id="scenarios-btn" class="h-8 sm:h-9 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#0f1f38] dark:hover:bg-[#162a4d] border border-slate-300 dark:border-[#1e3a6a] text-slate-900 dark:text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer">
-          <span class="hidden sm:inline">⚡ Demo Scenarios</span>
-          <span class="sm:hidden">⚡ Scenarios</span>
+        <button onclick="toggleScenariosMenu()" id="scenarios-btn" class="h-8 sm:h-9 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#0c1a30] dark:hover:bg-[#122544] border border-slate-300 dark:border-[#1e3a6a] text-slate-800 dark:text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer">
+          <span class="text-amber-500 font-bold">⚡</span>
+          <span class="hidden sm:inline font-bold">Demo Studio</span>
+          <span class="sm:hidden font-bold">Demos</span>
           <svg class="w-3.5 h-3.5 text-slate-500 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
           </svg>
         </button>
 
         <!-- Dropdown Menu -->
-        <div id="scenarios-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white dark:bg-[#0c182c] border border-slate-200 dark:border-[#1e293b] rounded-xl shadow-2xl z-50 p-2 space-y-1">
-          <button onclick="selectScenario('A')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs">
-            <div class="font-bold text-sky-600 dark:text-sky-400 mono text-[11px]">Scenario A: Bank Outage 504</div>
-            <div class="text-[10px] text-slate-600 dark:text-slate-300">HDFC Degradation → Poisson Hazard Window</div>
+        <div id="scenarios-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#0c182c] border border-slate-200 dark:border-[#1e293b] rounded-xl shadow-2xl z-50 p-2 space-y-1.5 backdrop-blur-md">
+          
+          <!-- Interactive Demos Section -->
+          <div class="px-2 pt-1 pb-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Interactive Tours & Benchmarks
+          </div>
+
+          <!-- 60-Second Guided SRE Tour -->
+          <button onclick="document.getElementById('scenarios-dropdown')?.classList.add('hidden'); startGuidedTour();" id="header-tour-btn" class="w-full text-left p-2 rounded-lg bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/30 dark:hover:bg-purple-950/50 border border-purple-200 dark:border-purple-500/30 transition text-xs flex items-start gap-2.5 cursor-pointer">
+            <div class="w-7 h-7 rounded-md bg-purple-500/20 text-purple-600 dark:text-purple-300 flex items-center justify-center shrink-0 font-bold text-sm">🧭</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-purple-900 dark:text-purple-200 text-[12px]">60s Guided SRE Tour</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-200 dark:bg-purple-900/60 text-purple-800 dark:text-purple-300 font-bold">Interactive</span>
+              </div>
+              <div class="text-[10px] text-slate-600 dark:text-slate-400">Step-by-step radar, failover & circuit breaker tour</div>
+            </div>
           </button>
-          <button onclick="selectScenario('B')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs">
-            <div class="font-bold text-emerald-600 dark:text-emerald-400 mono text-[11px]">Scenario B: Soft Balance Decline</div>
-            <div class="text-[10px] text-slate-600 dark:text-slate-300">INR 2,499 → Dynamic 1-Click UPI Payment Link</div>
+
+          <!-- Run 100-Batch Benchmark -->
+          <button onclick="document.getElementById('scenarios-dropdown')?.classList.add('hidden'); runBenchmarkAction();" id="header-benchmark-btn" class="w-full text-left p-2 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/30 dark:hover:bg-blue-950/50 border border-blue-200 dark:border-blue-500/30 transition text-xs flex items-start gap-2.5 cursor-pointer">
+            <div class="w-7 h-7 rounded-md bg-blue-500/20 text-blue-600 dark:text-blue-300 flex items-center justify-center shrink-0 font-bold text-sm">⚡</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-blue-900 dark:text-blue-200 text-[12px]">Run 100-Batch Benchmark</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-200 dark:bg-blue-900/60 text-blue-800 dark:text-blue-300 font-bold">Load Test</span>
+              </div>
+              <div class="text-[10px] text-slate-600 dark:text-slate-400">Execute 100 synthetic concurrent webhooks</div>
+            </div>
           </button>
-          <button onclick="selectScenario('C')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs">
-            <div class="font-bold text-indigo-600 dark:text-indigo-400 mono text-[11px]">Scenario C: B2B GST Dispute</div>
-            <div class="text-[10px] text-slate-600 dark:text-slate-300">INR 85,000 → Safe Mutation Proposal & Reissue</div>
+
+          <div class="border-t border-slate-200 dark:border-[#1e293b] my-1"></div>
+
+          <!-- Payment Failure Scenarios -->
+          <div class="px-2 pt-0.5 pb-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Live Payment Failure Scenarios
+          </div>
+
+          <button onclick="selectScenario('A')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs cursor-pointer">
+            <div class="font-bold text-sky-600 dark:text-sky-400 mono text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span> Scenario A: Bank Outage 504
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 pl-3.5">HDFC/SBI Degradation → Poisson Hazard Window</div>
           </button>
-          <button onclick="selectScenario('D')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs">
-            <div class="font-bold text-cyan-600 dark:text-cyan-400 mono text-[11px]">Scenario D: Promise-to-Pay (PTP)</div>
-            <div class="text-[10px] text-slate-600 dark:text-slate-300">Friday 11:00 AM PTP Lock & Suppress Reminders</div>
+
+          <button onclick="selectScenario('B')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs cursor-pointer">
+            <div class="font-bold text-emerald-600 dark:text-emerald-400 mono text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Scenario B: Soft Balance Decline
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 pl-3.5">INR 2,499 → Dynamic 1-Click UPI Payment Link</div>
           </button>
-          <button onclick="selectScenario('E')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs">
-            <div class="font-bold text-rose-600 dark:text-rose-400 mono text-[11px]">Scenario E: 50-Webhook Storm</div>
-            <div class="text-[10px] text-slate-600 dark:text-slate-300">Atomic CAS Mutex → 1 Acquired, 49 Dropped</div>
+
+          <button onclick="selectScenario('C')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs cursor-pointer">
+            <div class="font-bold text-indigo-600 dark:text-indigo-400 mono text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Scenario C: B2B GST Dispute
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 pl-3.5">INR 85,000 → Safe Mutation Proposal & Reissue</div>
+          </button>
+
+          <button onclick="selectScenario('D')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs cursor-pointer">
+            <div class="font-bold text-cyan-600 dark:text-cyan-400 mono text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-cyan-500"></span> Scenario D: Promise-to-Pay (PTP)
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 pl-3.5">Friday 11:00 AM PTP Lock & Suppress Reminders</div>
+          </button>
+
+          <button onclick="selectScenario('E')" class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-[#172339] transition text-xs cursor-pointer">
+            <div class="font-bold text-rose-600 dark:text-rose-400 mono text-[11px] flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> Scenario E: 50-Webhook Storm
+            </div>
+            <div class="text-[10px] text-slate-600 dark:text-slate-300 pl-3.5">Atomic CAS Mutex → 1 Acquired, 49 Dropped</div>
           </button>
         </div>
       </div>
 
-      <!-- SIMULATION MODE PILL (Hidden on small mobile) -->
-      <div class="h-8 px-2.5 sm:px-3 rounded-full bg-[#ecfdf5] dark:bg-[#0b2518] border border-[#a7f3d0] dark:border-[#166534] hidden md:flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
-        <span class="text-[10px] font-bold text-[#047857] dark:text-[#10b981] tracking-wider mono uppercase">SIMULATION</span>
-      </div>
-
-      <!-- THEME TOGGLE BUTTON -->
-      <button onclick="toggleThemeMode()" id="theme-toggle-btn" class="h-8 w-8 sm:h-9 sm:w-9 rounded-lg border border-slate-200 dark:border-[#1e293b] bg-slate-50 dark:bg-[#081224] flex items-center justify-center text-sm shadow-sm transition">
-        <span id="theme-icon">☀️</span>
+      <!-- AWS CLOUD & CEDAR ZERO-TRUST RADAR BUTTON -->
+      <button onclick="openAwsCedarModal()" id="header-aws-cedar-btn" class="h-8 sm:h-9 px-2.5 sm:px-3 rounded-lg bg-gradient-to-r from-[#ea580c] via-[#f59e0b] to-[#0c55ea] hover:from-[#c2410c] hover:to-[#0942b8] text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95 border border-amber-400/40">
+        <span class="text-sm">☁️</span>
+        <span class="hidden sm:inline font-extrabold">AWS Bedrock & Cedar</span>
+        <span class="sm:hidden font-bold">AWS</span>
       </button>
 
-      <!-- USER AVATAR -->
-      <div class="w-8 h-8 rounded-full bg-[#0c2340] border border-[#132f54] flex items-center justify-center text-xs font-bold text-white shadow-sm shrink-0">
-        RR
-      </div>
+      <!-- THEME TOGGLE BUTTON -->
+      <button onclick="toggleThemeMode()" id="theme-toggle-btn" class="h-8 w-8 sm:h-9 sm:w-9 rounded-lg border border-slate-200 dark:border-[#1e293b] bg-slate-50 dark:bg-[#081224] flex items-center justify-center text-sm shadow-sm transition cursor-pointer">
+        <span id="theme-icon">☀️</span>
+      </button>
 
     </div>
   </header>
@@ -1031,12 +1066,23 @@
 
           <!-- Live Bank Switch Grid -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5" id="overview-npci-grid">
-            <!-- Bank Cards injected dynamically or defaulted -->
+            <!-- Bank Cards with Authentic Bank Logos -->
             <div class="p-3.5 rounded-xl bg-[#081224] border border-[#142442] space-y-2">
               <div class="flex justify-between items-start">
-                <div>
-                  <div class="text-xs font-bold text-white">HDFC Bank UPI</div>
-                  <div class="text-[10px] text-slate-400 mono">Switch ID: HDFC_CORE_01</div>
+                <div class="flex items-center gap-2.5">
+                  <!-- HDFC Official Brand Emblem -->
+                  <div class="w-7 h-7 rounded-lg bg-[#004c8f] flex items-center justify-center shrink-0 border border-[#00386b] shadow-sm">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <rect x="2" y="2" width="20" height="20" rx="3" fill="#004c8f"/>
+                      <rect x="9.5" y="2" width="5" height="20" fill="#ed232a"/>
+                      <rect x="2" y="9.5" width="20" height="5" fill="#ed232a"/>
+                      <rect x="9.5" y="9.5" width="5" height="5" fill="#ffffff"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">HDFC Bank UPI</div>
+                    <div class="text-[10px] text-slate-400 mono">Switch ID: HDFC_CORE_01</div>
+                  </div>
                 </div>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981] border border-[#0e5c36]">HEALTHY</span>
               </div>
@@ -1048,9 +1094,19 @@
 
             <div class="p-3.5 rounded-xl bg-[#081224] border border-amber-900/40 space-y-2">
               <div class="flex justify-between items-start">
-                <div>
-                  <div class="text-xs font-bold text-white">SBI Switch (U30)</div>
-                  <div class="text-[10px] text-slate-400 mono">Switch ID: SBI_INB_04</div>
+                <div class="flex items-center gap-2.5">
+                  <!-- SBI Official Keyhole Emblem -->
+                  <div class="w-7 h-7 rounded-full bg-[#002d62] flex items-center justify-center shrink-0 border border-[#00a5e5]/50 shadow-sm p-0.5">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="10" fill="#00a5e5"/>
+                      <circle cx="12" cy="12" r="4" fill="#002d62"/>
+                      <rect x="10.8" y="12" width="2.4" height="10" fill="#002d62"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">SBI Switch (U30)</div>
+                    <div class="text-[10px] text-slate-400 mono">Switch ID: SBI_INB_04</div>
+                  </div>
                 </div>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#25131d] text-amber-400 border border-amber-900/60">DEGRADED</span>
               </div>
@@ -1062,9 +1118,20 @@
 
             <div class="p-3.5 rounded-xl bg-[#081224] border border-[#142442] space-y-2">
               <div class="flex justify-between items-start">
-                <div>
-                  <div class="text-xs font-bold text-white">ICICI Bank Rail</div>
-                  <div class="text-[10px] text-slate-400 mono">Switch ID: ICIC_NODE_02</div>
+                <div class="flex items-center gap-2.5">
+                  <!-- ICICI Official Flame Emblem -->
+                  <div class="w-7 h-7 rounded-lg bg-[#b02a30] flex items-center justify-center shrink-0 border border-[#f58220]/50 shadow-sm">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="4" fill="#b02a30"/>
+                      <circle cx="12" cy="7" r="2.2" fill="#f58220"/>
+                      <rect x="10.5" y="11" width="3" height="8.5" rx="1.5" fill="#f58220"/>
+                      <path d="M7 11h2.5m5 0h2.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">ICICI Bank Rail</div>
+                    <div class="text-[10px] text-slate-400 mono">Switch ID: ICIC_NODE_02</div>
+                  </div>
                 </div>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981] border border-[#0e5c36]">HEALTHY</span>
               </div>
@@ -1076,9 +1143,19 @@
 
             <div class="p-3.5 rounded-xl bg-[#081224] border border-[#142442] space-y-2">
               <div class="flex justify-between items-start">
-                <div>
-                  <div class="text-xs font-bold text-white">Axis Bank Mandates</div>
-                  <div class="text-[10px] text-slate-400 mono">Switch ID: UTIB_MANDATE_01</div>
+                <div class="flex items-center gap-2.5">
+                  <!-- Axis Official Burgundy Emblem -->
+                  <div class="w-7 h-7 rounded-lg bg-[#97144d] flex items-center justify-center shrink-0 border border-[#b3195b]/50 shadow-sm">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                      <rect width="24" height="24" rx="4" fill="#97144d"/>
+                      <path d="M12 4L4 19h5.5l2.5-5 2.5 5H20L12 4z" fill="#ffffff"/>
+                      <path d="M12 11.5l-1.8 3.5h3.6L12 11.5z" fill="#97144d"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-white">Axis Bank Mandates</div>
+                    <div class="text-[10px] text-slate-400 mono">Switch ID: UTIB_MANDATE_01</div>
+                  </div>
                 </div>
                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981] border border-[#0e5c36]">HEALTHY</span>
               </div>
@@ -1154,28 +1231,127 @@
           </div>
         </div>
 
-        <!-- Audio Waveform Visualizer Card -->
-        <div class="custom-card p-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-[#1e293b] border border-[#334155] flex items-center justify-center text-blue-400" id="audio-status-icon">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+        <!-- Audio Waveform Visualizer & Action Execution Station -->
+        <div class="custom-card p-4 space-y-3.5">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#0c55ea] via-[#0284c7] to-[#38bdf8] p-0.5 shadow-lg shadow-sky-500/20 shrink-0 flex items-center justify-center relative" id="audio-status-icon">
+                <div class="w-full h-full rounded-[14px] bg-[#071326] border border-white/10 flex items-center justify-center relative overflow-hidden group">
+                  <!-- Studio Condenser Voice Microphone with Acoustic Waves -->
+                  <svg class="w-6 h-6 text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.7)]" viewBox="0 0 24 24" fill="none">
+                    <!-- Cylindrical capsule with grille mesh -->
+                    <rect x="8.5" y="2.5" width="7" height="11" rx="3.5" fill="url(#studio-mic-body)" stroke="#38bdf8" stroke-width="1.3"/>
+                    <line x1="8.5" y1="6" x2="15.5" y2="6" stroke="#0369a1" stroke-width="0.8"/>
+                    <line x1="8.5" y1="8.5" x2="15.5" y2="8.5" stroke="#0369a1" stroke-width="0.8"/>
+                    <line x1="8.5" y1="11" x2="15.5" y2="11" stroke="#0369a1" stroke-width="0.8"/>
+                    <!-- High-grade suspension cradle -->
+                    <path d="M4.5 10.5a7.5 7.5 0 0015 0" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                    <!-- Heavy studio base & stem -->
+                    <path d="M12 18v3.5m-3.5 0h7" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Acoustic sound wave emission brackets -->
+                    <path d="M2.5 10.5C2.5 7 4.2 4 6.8 2.8M21.5 10.5c0-3.5-1.7-6.5-4.3-7.7" stroke="#00e5ff" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="1.5 2"/>
+                    <defs>
+                      <linearGradient id="studio-mic-body" x1="8.5" y1="2.5" x2="15.5" y2="13.5" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#38bdf8"/>
+                        <stop offset="1" stop-color="#0284c7"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <span class="absolute bottom-1 right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#071326] shadow-sm animate-pulse"></span>
+                </div>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-white flex items-center gap-2 flex-wrap" id="voice-agent-audio-title">
+                  <span>B2B Voice Channel (Autonomous Hinglish Engine)</span>
+                  <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-amber-950/80 text-amber-300 border border-amber-800 mono flex items-center gap-1 cursor-pointer hover:bg-amber-900 transition" onclick="openAwsCedarModal()" title="View Amazon Bedrock Generative AI Pipeline">
+                    <span>☁️ Amazon Bedrock (Claude 3.5)</span>
+                  </span>
+                  <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 mono flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>LIVE SRE AUDIO</span>
+                  </span>
+                </div>
+                <div class="text-[11.5px] text-slate-300 mt-0.5 font-medium leading-relaxed italic" id="voice-agent-speech-transcript">"Ready to synthesize autonomous voice dialogue turn..."</div>
+              </div>
             </div>
-            <div>
-              <div class="text-xs font-bold text-white" id="voice-agent-audio-title">B2B Voice Channel (Live Speech Output)</div>
-              <div class="text-[11px] text-slate-400" id="voice-agent-speech-transcript">"Ready to synthesize autonomous voice dialogue turn..."</div>
+
+            <!-- Authentic Controls & Dynamic Audio Bars with Original SVGs -->
+            <div class="flex flex-wrap items-center gap-2 self-start lg:self-auto shrink-0">
+              <!-- Voice Mic (STT) Button with Authentic Microphone SVG -->
+              <button onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-[#1e293b] hover:bg-purple-900/60 text-purple-300 border border-purple-800 flex items-center gap-1.5 transition-all shadow-sm cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                <span>Voice Mic (STT)</span>
+              </button>
+
+              <!-- Replay Button with Speaker Wave SVG -->
+              <button onclick="replayLastSpeech()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#1e293b] hover:bg-[#334155] text-emerald-300 border border-[#334155] flex items-center gap-1.5 transition-all cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <span>Replay</span>
+              </button>
+
+              <!-- Stop Button with Clean Square SVG -->
+              <button onclick="stopSpeaking()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-[#1e293b] hover:bg-rose-950/60 text-rose-300 border border-[#334155] flex items-center gap-1 transition-all cursor-pointer" title="Stop audio playback">
+                <svg class="w-3.5 h-3.5 text-rose-400" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              </button>
+
+              <!-- Humanoid Voice Badge with Neural SVG -->
+              <span id="active-voice-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-800 mono flex items-center gap-1">
+                <svg class="w-3 h-3 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                <span>Humanoid Voice</span>
+              </span>
+
+              <!-- Waveform Bars -->
+              <div class="flex items-center gap-1 h-8 px-3 bg-[#090e17] rounded-lg border border-[#1e293b]" id="audio-wave-bars">
+                <span class="w-1 h-2 bg-emerald-500 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-4 bg-emerald-400 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-6 bg-emerald-300 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-3 bg-emerald-400 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-5 bg-emerald-500 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-2 bg-emerald-400 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-4 bg-emerald-300 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-1 bg-emerald-500 rounded-full wave-bar transition-all"></span>
+              </div>
             </div>
           </div>
 
-          <!-- Dynamic Audio Bars -->
-          <div class="flex items-center gap-1 h-8 px-4 bg-[#090e17] rounded-lg border border-[#1e293b]" id="audio-wave-bars">
-            <span class="w-1 h-2 bg-blue-500 rounded-full wave-bar"></span>
-            <span class="w-1 h-4 bg-blue-400 rounded-full wave-bar"></span>
-            <span class="w-1 h-6 bg-blue-300 rounded-full wave-bar"></span>
-            <span class="w-1 h-3 bg-blue-400 rounded-full wave-bar"></span>
-            <span class="w-1 h-5 bg-blue-500 rounded-full wave-bar"></span>
-            <span class="w-1 h-2 bg-blue-400 rounded-full wave-bar"></span>
-            <span class="w-1 h-4 bg-blue-300 rounded-full wave-bar"></span>
-            <span class="w-1 h-1 bg-blue-500 rounded-full wave-bar"></span>
+          <!-- Real-Time Voice Action Execution Bar (Integrated Direct Actions) -->
+          <div id="voice-integrated-action-bar" class="pt-3 border-t border-[#1e293b] flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0a1b2a] border border-sky-800/60 text-sky-300 text-[11px] font-semibold mono" id="voice-action-status-chip">
+                <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <span id="voice-status-text">Autonomous Dispatch Engine Active</span>
+              </span>
+              <span class="text-slate-400 text-[11px] mono hidden sm:inline" id="voice-invoice-ref-text">Invoice: <strong class="text-white">inv_enterprise_998</strong> (Acme Pvt Ltd)</span>
+            </div>
+
+            <!-- Action Buttons with Original Logos & SVGs -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <!-- View Dispatched Email Button with Authentic Mail Envelope SVG -->
+              <button onclick="openDispatchedEmailModal()" id="voice-bar-email-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white flex items-center gap-2 shadow-md transition-all cursor-pointer">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span>View Dispatched Tax Invoice</span>
+                <span class="px-1.5 py-0.5 text-[9px] bg-sky-950 text-sky-200 rounded font-mono font-bold border border-sky-400/40">RFC-822</span>
+              </button>
+
+              <!-- View WhatsApp Button with Official WhatsApp Brand Logo -->
+              <button onclick="openWhatsAppPreviewModal()" id="voice-bar-wa-btn" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-[#064e3b] hover:bg-[#065f46] text-[#34d399] border border-[#059669] flex items-center gap-2 shadow-sm transition-all cursor-pointer">
+                <svg class="w-4 h-4 text-[#34d399]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.194 8.194 0 01-5.82 2.41h-.01c-1.44 0-2.86-.38-4.11-1.12l-.3-.18-3.05.8 1-2.97-.19-.31a8.188 8.188 0 01-1.26-4.46c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+                <span>WhatsApp UPI</span>
+              </button>
+
+              <!-- SHA-256 Ledger Anchor Block -->
+              <span id="voice-bar-hash-chip" class="px-2.5 py-1.5 rounded-lg text-[10.5px] font-bold bg-[#0f172a] text-emerald-400 border border-[#1e293b] mono flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <span>SHA-256 Verified</span>
+              </span>
+
+              <!-- AWS Cedar Zero-Trust Authorization Badge -->
+              <button onclick="openAwsCedarModal()" id="voice-bar-cedar-chip" class="px-2.5 py-1.5 rounded-lg text-[10.5px] font-bold bg-[#1e1b4b] hover:bg-[#2e1065] text-indigo-300 border border-indigo-700/60 mono flex items-center gap-1.5 cursor-pointer shadow-sm transition-all" title="Inspect formal AWS Cedar zero-trust security policy">
+                <span>🛡️</span>
+                <span>Cedar Zero-Trust</span>
+                <span class="px-1 py-0.2 text-[9px] bg-emerald-950 text-emerald-300 rounded font-bold border border-emerald-500/40">ALLOW</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -2571,11 +2747,13 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-        <button onclick="triggerFastLoopPipeline()" id="fast-loop-btn" class="sm:col-span-2 h-10 rounded-lg btn-primary text-xs font-semibold flex items-center justify-center gap-2 shadow-sm">
-          <span>🚀 Ingest Webhook & Trigger Recovery Pipeline</span>
+        <button onclick="triggerFastLoopPipeline()" id="fast-loop-btn" class="sm:col-span-2 h-10 rounded-lg btn-primary text-xs font-semibold flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Ingest Webhook & Trigger Recovery Pipeline</span>
         </button>
-        <button onclick="openWhatsAppPreviewModal()" class="h-10 rounded-lg bg-[#064e3b] hover:bg-[#065f46] text-[#34d399] border border-[#059669] text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm">
-          <span>💬 Preview WhatsApp</span>
+        <button onclick="openWhatsAppPreviewModal()" class="h-10 rounded-lg bg-[#064e3b] hover:bg-[#065f46] text-[#34d399] border border-[#059669] text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer">
+          <svg class="w-4 h-4 text-[#34d399]" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.83a8.194 8.194 0 01-5.82 2.41h-.01c-1.44 0-2.86-.38-4.11-1.12l-.3-.18-3.05.8 1-2.97-.19-.31a8.188 8.188 0 01-1.26-4.46c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.98-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/></svg>
+          <span>Preview WhatsApp</span>
         </button>
       </div>
     </div>
@@ -2601,22 +2779,44 @@
 
       <div class="space-y-3">
         <div>
-          <label class="block text-[11px] text-slate-300 font-bold mb-1">Select Customer Objection / Speech (Hinglish/English)</label>
-          <select id="voice-speech-select" class="w-full bg-[#050c1b] border border-[#142442] rounded-lg px-3 py-2 text-xs text-slate-200 mono outline-none focus:border-purple-500">
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-[11px] text-slate-300 font-bold">Customer Objection / Speech Input (Hinglish/English)</label>
+            <div class="flex items-center gap-1.5">
+              <button type="button" onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-purple-900/60 text-purple-300 border border-purple-800 flex items-center gap-1.5 transition-all cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                <span>Mic (STT)</span>
+              </button>
+              <button type="button" onclick="replayLastSpeech()" class="px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-emerald-950/60 text-emerald-300 border border-emerald-800 flex items-center gap-1.5 transition-all cursor-pointer">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                <span>Replay</span>
+              </button>
+              <button type="button" onclick="stopSpeaking()" class="px-2 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-rose-950/60 text-rose-300 border border-rose-800 flex items-center gap-1 transition-all cursor-pointer" title="Stop audio">
+                <svg class="w-3.5 h-3.5 text-rose-400" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                <span>Stop</span>
+              </button>
+            </div>
+          </div>
+          <select id="voice-speech-select" onchange="document.querySelectorAll('#voice-custom-speech').forEach(el => el.value = this.value)" class="w-full bg-[#050c1b] border border-[#142442] rounded-lg px-3 py-2 text-xs text-slate-200 mono outline-none focus:border-purple-500">
             <option value="Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo">
-              "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo"
+              "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo" (GST Dispute)
             </option>
             <option value="Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje.">
-              "Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje (PTP Lock)"
+              "Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje" (PTP Lock)
             </option>
             <option value="PO number is incorrect in the current tax invoice.">
-              "PO number is incorrect in current tax invoice"
+              "PO number is incorrect in current tax invoice" (Commercial Dispute)
             </option>
             <option value="Ye product bilkul kharaab tha, hum payment nahi denge aur lawyer se baat karenge.">
-              "Ye product bilkul kharaab tha, hum payment nahi denge (Escalate to Legal)"
+              "Ye product bilkul kharaab tha, hum payment nahi denge" (Escalate to CFO)
             </option>
           </select>
+          <div class="mt-1.5">
+            <input type="text" id="voice-custom-speech" value="Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo" placeholder="Or type your own live objection / speak via microphone..." class="w-full bg-[#070e1e] border border-[#1a2e54] rounded-lg px-3 py-1.5 text-xs text-slate-100 mono outline-none focus:border-emerald-500">
+          </div>
         </div>
+
+        <!-- Active Mutation & Resolution Banner (Dynamically populated) -->
+        <div class="mutation-result-banner hidden p-3 rounded-lg bg-[#0a1b2a] border border-[#10b981]/50 text-xs"></div>
 
         <div class="grid grid-cols-3 gap-2.5">
           <div>
@@ -2709,8 +2909,9 @@
         <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-amber-900/60 text-amber-300 border border-amber-700">APPROVAL_GATED</span>
       </div>
 
-      <button onclick="triggerVoiceTurnAction()" id="voice-turn-btn" class="w-full h-10 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md transition-colors">
-        <span>🎙️ Process Autonomous Voice Dialogue Turn</span>
+      <button onclick="triggerVoiceTurnAction()" id="voice-turn-btn" class="w-full h-11 rounded-lg bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span>Execute Autonomous B2B Voice Turn & Dispatch Actions</span>
       </button>
     </div>
   </template>
@@ -3585,34 +3786,300 @@
       showToast("Resolution CSV exported successfully!", "success");
     }
 
-    // Web Speech API Voice Synthesizer with Audio Waveform Animation
-    function speakText(text) {
-      if ('speechSynthesis' in window) {
+    // =========================================================================
+    // Enhanced Single Humanoid Speech Engine (TTS) & Voice Recognition (STT)
+    // Enforces EXACTLY 1 single consistent, high-fidelity female humanoid voice
+    // Prevents dual-voice overlap, robotic pitch artifacts, and male/female switches
+    // =========================================================================
+    let cachedVoices = [];
+    let activeUtterance = null;
+    let recognition = null;
+    let isRecording = false;
+
+    const UnifiedVoiceEngine = {
+      lockedVoice: null,
+      waveformInterval: null,
+      isSpeaking: false,
+
+      isMaleVoice(v) {
+        if (!v || !v.name) return false;
+        const n = v.name.toLowerCase();
+        return n.includes("david") || n.includes("mark") || n.includes("male") ||
+               n.includes("guy") || n.includes("christopher") || n.includes("alex") ||
+               n.includes("daniel") || n.includes("george") || n.includes("prabhat") ||
+               n.includes("ravi");
+      },
+
+      loadVoices() {
+        if ('speechSynthesis' in window) {
+          cachedVoices = window.speechSynthesis.getVoices() || [];
+          this.getSingleHumanoidVoice();
+        }
+      },
+
+      getSingleHumanoidVoice() {
+        if (this.lockedVoice) return this.lockedVoice;
+        if (!cachedVoices || cachedVoices.length === 0) {
+          if ('speechSynthesis' in window) {
+            cachedVoices = window.speechSynthesis.getVoices() || [];
+          }
+        }
+        if (!cachedVoices || cachedVoices.length === 0) return null;
+
+        // Strictly exclude all male voices
+        const femaleOnly = cachedVoices.filter(v => !this.isMaleVoice(v));
+
+        // Prioritize the best natural humanoid voice:
+        // 1. Google हिन्दी (Natural Indian Female - ideal for Indian B2B Hinglish & English)
+        // 2. Microsoft Neerja / Swara / Heera (Neural Indian English)
+        // 3. Google UK English Female (Smooth Studio English)
+        // 4. Google US English (Female)
+        // 5. Microsoft Zira (Female)
+        const chosen = femaleOnly.find(v => v.name.includes("Google हिन्दी") || v.name.includes("Hindi")) ||
+                       femaleOnly.find(v => v.name.includes("Neerja") || v.name.includes("Swara") || v.name.includes("Heera")) ||
+                       femaleOnly.find(v => v.name === "Google UK English Female") ||
+                       femaleOnly.find(v => v.name === "Google US English") ||
+                       femaleOnly.find(v => v.name.includes("Zira")) ||
+                       femaleOnly[0] ||
+                       cachedVoices[0];
+
+        if (chosen) {
+          this.lockedVoice = chosen;
+          this.updateVoiceBadge(chosen.name);
+          console.log(`[UnifiedVoiceEngine] Locked to single natural voice: ${chosen.name} (${chosen.lang})`);
+        }
+        return this.lockedVoice;
+      },
+
+      setVoiceByName(name) {
+        const found = cachedVoices.find(v => v.name === name && !this.isMaleVoice(v));
+        if (found) {
+          this.lockedVoice = found;
+          this.updateVoiceBadge(found.name);
+          showToast(`🎙️ Single Voice set to: ${found.name}`, "info");
+        }
+      },
+
+      updateVoiceBadge(name) {
+        const badge = document.getElementById("active-voice-badge");
+        if (badge) {
+          const shortName = name.replace(/Google\s+/i, '').replace(/\s*\(.*?\)/g, '');
+          badge.textContent = `✨ Voice: ${shortName} (Natural)`;
+        }
+      },
+
+      cleanTextForHumanSpeech(text) {
+        return (text || "")
+          .replace(/[🤖⚡📱🎙️🛡️📊🏛️💾💳🚀🔇🔊✓✕▶•\*\#\_\`\:\;]/g, " ")
+          .replace(/\[\d+\]/g, "")
+          .replace(/https?:\/\/\S+/gi, "")
+          .replace(/\s+/g, " ")
+          .trim();
+      },
+
+      speak(text) {
+        if (!('speechSynthesis' in window)) {
+          showToast("Speech synthesis not supported in this browser.", "warning");
+          return;
+        }
+
+        // 1. Immediately cancel any currently active speech to prevent dual voice overlap
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 1.05;
+        this.stopWaveform();
+
+        const clean = this.cleanTextForHumanSpeech(text);
+        if (!clean) return;
+
+        const bestVoice = this.getSingleHumanoidVoice();
+        const utterance = new SpeechSynthesisUtterance(clean);
+
+        if (bestVoice) {
+          utterance.voice = bestVoice;
+          utterance.lang = bestVoice.lang || 'hi-IN';
+        } else {
+          utterance.lang = 'hi-IN';
+        }
+
+        // Natural Human Conversational Cadence Parameters
+        // 0.95 rate provides calm, articulate professional delivery without robotic dragging
+        utterance.rate = 0.95;
         utterance.pitch = 1.0;
-        
-        const bars = document.querySelectorAll('.wave-bar');
-        const interval = setInterval(() => {
-          bars.forEach(b => {
-            b.style.height = `${Math.floor(Math.random() * 24 + 4)}px`;
-          });
-        }, 80);
+        utterance.volume = 1.0;
+        activeUtterance = utterance;
+
+        utterance.onstart = () => {
+          this.isSpeaking = true;
+          this.startWaveform();
+        };
 
         utterance.onend = () => {
-          clearInterval(interval);
-          bars.forEach(b => b.style.height = '8px');
+          this.isSpeaking = false;
+          activeUtterance = null;
+          this.stopWaveform();
         };
 
         utterance.onerror = () => {
-          clearInterval(interval);
-          bars.forEach(b => b.style.height = '8px');
+          this.isSpeaking = false;
+          activeUtterance = null;
+          this.stopWaveform();
         };
 
-        window.speechSynthesis.speak(utterance);
+        // 2. Delay dispatch by 60ms to guarantee browser audio queue is fully flushed
+        setTimeout(() => {
+          try {
+            window.speechSynthesis.speak(utterance);
+          } catch (err) {
+            console.error("Speech synthesis error", err);
+          }
+        }, 60);
+      },
+
+      startWaveform() {
+        const statusIcons = document.querySelectorAll('#audio-status-icon');
+        statusIcons.forEach(el => {
+          el.classList.add('text-emerald-400', 'animate-pulse');
+          el.classList.remove('text-blue-400');
+        });
+
+        const bars = document.querySelectorAll('.wave-bar');
+        if (bars.length > 0 && !this.waveformInterval) {
+          this.waveformInterval = setInterval(() => {
+            bars.forEach(b => {
+              b.style.height = `${Math.floor(Math.random() * 24 + 6)}px`;
+            });
+          }, 75);
+        }
+      },
+
+      stopWaveform() {
+        if (this.waveformInterval) {
+          clearInterval(this.waveformInterval);
+          this.waveformInterval = null;
+        }
+        document.querySelectorAll('.wave-bar').forEach(b => b.style.height = '8px');
+        document.querySelectorAll('#audio-status-icon').forEach(el => {
+          el.classList.remove('text-emerald-400', 'animate-pulse');
+          el.classList.add('text-blue-400');
+        });
+      },
+
+      stop() {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          activeUtterance = null;
+          this.isSpeaking = false;
+          this.stopWaveform();
+          showToast("🔇 Audio playback stopped", "info");
+        }
+      }
+    };
+
+    function loadVoices() {
+      UnifiedVoiceEngine.loadVoices();
+    }
+
+    if ('speechSynthesis' in window) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    // Public unified speak helper
+    function speakText(text) {
+      UnifiedVoiceEngine.speak(text);
+    }
+
+    // Public unified stop helper
+    function stopSpeaking() {
+      UnifiedVoiceEngine.stop();
+    }
+
+    // Replay last spoken transcript using the single locked voice
+    function replayLastSpeech() {
+      const transcriptEl = document.getElementById("voice-agent-speech-transcript");
+      if (transcriptEl && transcriptEl.innerText) {
+        const text = transcriptEl.innerText.replace(/^"|"$/g, '');
+        if (text && !text.includes("Ready to synthesize")) {
+          UnifiedVoiceEngine.speak(text);
+          showToast("🔊 Replaying speech with Humanoid Voice...", "info");
+        }
       }
     }
+
+    function toggleMicrophoneSTT() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        showToast("⚠️ Speech-to-Text requires Chrome or Edge browser.", "warning");
+        return;
+      }
+
+      const micBtns = document.querySelectorAll('.mic-stt-btn');
+
+      if (isRecording && recognition) {
+        recognition.stop();
+        isRecording = false;
+        micBtns.forEach(btn => {
+          btn.classList.remove('bg-rose-600', 'animate-pulse', 'text-white');
+          btn.classList.add('bg-[#1e293b]', 'text-slate-300');
+          btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic (STT)</span>';
+        });
+        showToast("🛑 Microphone stopped", "info");
+        return;
+      }
+
+      recognition = new SpeechRec();
+      recognition.lang = 'hi-IN';
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onstart = () => {
+        isRecording = true;
+        micBtns.forEach(btn => {
+          btn.classList.remove('bg-[#1e293b]', 'text-slate-300');
+          btn.classList.add('bg-rose-600', 'animate-pulse', 'text-white');
+          btn.innerHTML = '<span>🔴</span> <span class="font-bold">Listening... Speak Now!</span>';
+        });
+        showToast("🎙️ Listening... Speak your objection in Hindi or English!", "info");
+      };
+
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          transcript += event.results[i][0].transcript;
+        }
+        if (transcript) {
+          document.querySelectorAll('#voice-custom-speech').forEach(input => { input.value = transcript; });
+          document.querySelectorAll('#voice-speech-select').forEach(sel => { sel.value = transcript; });
+        }
+      };
+
+      recognition.onend = () => {
+        isRecording = false;
+        micBtns.forEach(btn => {
+          btn.classList.remove('bg-rose-600', 'animate-pulse', 'text-white');
+          btn.classList.add('bg-[#1e293b]', 'text-slate-300');
+          btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic (STT)</span>';
+        });
+        showToast("✔ Speech Transcribed! Processing Autonomous Turn...", "success");
+        triggerVoiceTurnAction();
+      };
+
+      recognition.onerror = (event) => {
+        isRecording = false;
+        micBtns.forEach(btn => {
+          btn.classList.remove('bg-rose-600', 'animate-pulse', 'text-white');
+          btn.classList.add('bg-[#1e293b]', 'text-slate-300');
+          btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic (STT)</span>';
+        });
+        showToast("Microphone Notice: " + event.error, "error");
+      };
+
+      try {
+        recognition.start();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
 
     // Red-Team Live Attack Simulator
     async function runLiveAttack(vectorId) {
@@ -3775,8 +4242,16 @@
         showToast("📱 [Scenario B] Soft Balance Decline: 1-Click WhatsApp Recovery & UPI QR Generated!", "success");
       } else if (type === 'C') {
         switchNavTab('deep_loop');
-        document.querySelectorAll("#voice-speech-select").forEach(el => el.selectedIndex = 0);
-        triggerVoiceTurnAction();
+        const gstSpeech = "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo";
+        document.querySelectorAll("#voice-speech-select").forEach(el => {
+          el.value = gstSpeech;
+          if (el.selectedIndex < 0) el.selectedIndex = 0;
+        });
+        document.querySelectorAll("#voice-custom-speech").forEach(el => { el.value = gstSpeech; });
+        document.querySelectorAll("#voice-inv-id").forEach(el => { el.value = "inv_enterprise_998"; });
+        document.querySelectorAll("#voice-inv-amount").forEach(el => { el.value = 85000; });
+        
+        setTimeout(() => { triggerVoiceTurnAction(); }, 200);
         showToast("🎙️ [Scenario C] B2B GST Dispute: Voice Agent Proposed Mutation & Locked PTP", "info");
       } else if (type === 'D') {
         switchNavTab('ptp_calendar');
@@ -3846,13 +4321,17 @@
     }
 
     async function triggerVoiceTurnAction() {
-      const speech = document.querySelector("#voice-speech-select")?.value || "Humara GSTIN galat print ho gaya hai, revised invoice reissue kar do.";
+      const customSpeech = document.querySelector("#voice-custom-speech")?.value?.trim();
+      const selectSpeech = document.querySelector("#voice-speech-select")?.value;
+      const speech = customSpeech || selectSpeech || "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo";
       const invId = document.querySelector("#voice-inv-id")?.value || "inv_enterprise_998";
       const amt = parseFloat(document.querySelector("#voice-inv-amount")?.value || 85000);
 
+      UnifiedVoiceEngine.stop();
+
       document.querySelectorAll("#voice-turn-btn").forEach(btn => {
         btn.disabled = true;
-        btn.innerText = "🎙️ Processing Voice Dialogue...";
+        btn.innerHTML = "<span>⚙️</span> <span>Processing Autonomous Voice Dialogue...</span>";
       });
 
       try {
@@ -3863,13 +4342,97 @@
           invoice_amount: amt
         });
 
-        const transcriptEl = document.getElementById("voice-agent-speech-transcript");
-        if (transcriptEl) transcriptEl.innerText = `"${data.agent_speech_response}"`;
+        document.querySelectorAll("#voice-agent-speech-transcript").forEach(el => {
+          el.innerText = `"${data.agent_speech_response}"`;
+        });
 
-        // Speak the agent speech via Web Speech API
+        // Visually update the mutation resolution banner
+        document.querySelectorAll(".mutation-result-banner").forEach(banner => {
+          banner.classList.remove("hidden");
+          const dispatchBtn = data.dispatch_id ? `
+            <button onclick="openDispatchedEmailModal('${data.dispatch_id}')" class="px-2.5 py-1 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold rounded-lg text-xs flex items-center gap-1.5 shadow transition-all cursor-pointer">
+              <span>📧</span> <span>View Dispatched Email</span>
+            </button>
+          ` : '';
+
+          if (data.mutation_proposal) {
+            const m = data.mutation_proposal;
+            banner.innerHTML = `
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span class="text-white font-semibold">Structured Mutation Proposed:</span>
+                  <span class="text-amber-300 mono font-bold">${m.field_to_mutate || 'Tax Line'}</span>
+                  <span class="text-slate-400 text-[11px]">from</span>
+                  <span class="text-rose-400 line-through mono text-[11px]">${m.old_value || 'UNREGISTERED'}</span>
+                  <span class="text-slate-400 text-[11px]">➔</span>
+                  <span class="text-emerald-400 font-bold mono">${m.new_value || '29AABCU9603R1Z2'}</span>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${dispatchBtn}
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/60 text-emerald-300 border border-emerald-800 mono self-start sm:self-auto">POLICY APPROVED</span>
+                </div>
+              </div>
+            `;
+          } else if (data.should_escalate_to_human) {
+            banner.innerHTML = `
+              <div class="flex items-center justify-between text-xs font-semibold">
+                <div class="flex items-center gap-2 text-rose-400 font-bold">
+                  <span>🚨</span>
+                  <span>LEGAL DISPUTE FLAGGED: Escalated to Senior Accounts Director & Human CFO</span>
+                </div>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950/60 text-rose-300 border border-rose-800 mono">CFO_ESCALATED</span>
+              </div>
+            `;
+          } else {
+            banner.innerHTML = `
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-semibold">
+                <div class="flex items-center gap-2 text-sky-400">
+                  <span>📅</span>
+                  <span class="text-white font-bold">Commitment Registered:</span>
+                  <span class="text-sky-300">PTP Lock active until Friday 11:00 AM IST (Reminders Suppressed)</span>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  ${dispatchBtn}
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-950/60 text-sky-300 border border-sky-800 mono">PTP_LOCKED</span>
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        // Update live invoice display fields if returned
+        if (data.mutated_invoice_summary) {
+          const invSummary = data.mutated_invoice_summary;
+          if (invSummary.gstin) {
+            document.querySelectorAll("#voice-inv-gstin, .invoice-gstin-val").forEach(el => el.innerText = invSummary.gstin);
+          }
+        }
+
+        // Update the top integrated voice action station
+        const statusText = document.getElementById("voice-status-text");
+        if (statusText) {
+          if (data.dispatch_id) {
+            statusText.innerHTML = `Email Dispatched to <strong class="text-white">${data.dispatched_email_recipient || 'finance@acmepvt.com'}</strong> • Status: <span class="text-emerald-400 font-bold">DELIVERED</span>`;
+          } else if (data.mutation_proposal) {
+            statusText.innerHTML = `Mutation Proposed for <strong class="text-white">${data.mutation_proposal.field_to_mutate}</strong> • Policy Verified`;
+          } else {
+            statusText.innerText = `Turn Resolved: ${data.intent_detected}`;
+          }
+        }
+        if (data.dispatch_id) {
+          const emailBtn = document.getElementById("voice-bar-email-btn");
+          if (emailBtn) {
+            emailBtn.onclick = () => openDispatchedEmailModal(data.dispatch_id);
+            emailBtn.classList.add("ring-2", "ring-sky-400", "animate-pulse");
+            setTimeout(() => emailBtn.classList.remove("animate-pulse"), 4000);
+          }
+        }
+
+        // Speak the agent speech via Web Speech API with our Humanoid Voice!
         speakText(data.agent_speech_response);
 
-        showToast(`🎙️ Voice Turn Resolved! Intent: ${data.intent_detected} • PTP Locked`, "success");
+        showToast(`🎙️ Voice Turn Resolved! Intent: ${data.intent_detected} • FSM: ${data.fsm_current_state || 'RESOLUTION_PROPOSED'}`, "success");
         
         refreshAuditLedger();
         loadPTPRecords();
@@ -3878,7 +4441,7 @@
       } finally {
         document.querySelectorAll("#voice-turn-btn").forEach(btn => {
           btn.disabled = false;
-          btn.innerText = "🎙️ Process & Speak Autonomous Voice Turn";
+          btn.innerHTML = "<span>🎙️</span> <span>Process Autonomous Voice Dialogue Turn</span>";
         });
       }
     }
@@ -4746,6 +5309,67 @@
       }
     }
 
+    async function openDispatchedEmailModal(dispatchId) {
+      const modal = document.getElementById("dispatched-email-modal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.style.display = "flex";
+      }
+
+      try {
+        let dispatchData = null;
+        if (dispatchId) {
+          dispatchData = await safeApiCall(`/api/v1/communication/${dispatchId}`);
+        }
+        if (!dispatchData || dispatchData.error) {
+          const recents = await safeApiCall('/api/v1/communication/recent');
+          if (recents && recents.dispatches && recents.dispatches.length > 0) {
+            dispatchData = recents.dispatches[recents.dispatches.length - 1];
+            dispatchId = dispatchData.id;
+          }
+        }
+
+        if (dispatchData) {
+          const d = dispatchData.data || dispatchData;
+          const toEl = document.getElementById("dispatched-email-to");
+          const fromEl = document.getElementById("dispatched-email-from");
+          const subjEl = document.getElementById("dispatched-email-subject");
+          const hashEl = document.getElementById("dispatched-email-hash");
+          const statusEl = document.getElementById("dispatched-email-status-pill");
+
+          if (toEl) toEl.textContent = d.recipient || "finance@acme.com";
+          if (fromEl) fromEl.textContent = d.sender || "Razorpay Invoicing <invoices@enterprise.razorpay.com>";
+          if (subjEl) subjEl.textContent = d.subject || "Corrected Corporate Tax Invoice";
+          if (hashEl) hashEl.textContent = d.audit_hash ? d.audit_hash.substring(0, 32) + "..." : "sha256_verified_chain";
+          if (statusEl) statusEl.textContent = d.status || "DELIVERED";
+
+          const iframe = document.getElementById("dispatched-email-frame");
+          if (iframe) {
+            if (d.rendered_html) {
+              iframe.srcdoc = d.rendered_html;
+            } else {
+              const emailUrl = dispatchId ? `/api/v1/communication/${dispatchId}/html` : `/api/v1/communication/email/send`;
+              fetch(emailUrl).then(r => r.text()).then(html => {
+                iframe.srcdoc = html;
+              }).catch(() => {
+                iframe.src = emailUrl;
+              });
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Error opening dispatched email modal:", err);
+      }
+    }
+
+    function closeDispatchedEmailModal() {
+      const modal = document.getElementById("dispatched-email-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.style.display = "none";
+      }
+    }
+
     function simulateUpiAppPayment(appName) {
       const buttonsContainer = document.getElementById("wa-buttons-container");
       const successState = document.getElementById("wa-success-state");
@@ -5225,6 +5849,7 @@
       { id: "tour", title: "🧭 Start 60-Second Guided SRE Architecture Tour", category: "Actions", action: () => startGuidedTour() },
       { id: "benchmark", title: "🚀 Run 100-Batch Benchmark Simulation", category: "Actions", action: () => runBenchmarkAction() },
       { id: "whatsapp", title: "💬 Preview WhatsApp 1-Click Recovery & UPI QR", category: "Actions", action: () => openWhatsAppPreviewModal() },
+      { id: "email", title: "📧 Preview Dispatched Tax Invoice Email", category: "Actions", action: () => openDispatchedEmailModal() },
       { id: "copilot", title: "🤖 Open Razor Humanoid AI Copilot Drawer", category: "Actions", action: () => toggleAiCopilotDrawer() },
       { id: "scenario_a", title: "⚡ Scenario A: Bank Outage 504 (Weibull +45m Retry)", category: "Scenarios", action: () => selectScenario('A') },
       { id: "scenario_b", title: "📱 Scenario B: Soft Decline (1-Click UPI Payment Link)", category: "Scenarios", action: () => selectScenario('B') },
@@ -5607,6 +6232,251 @@
     </div>
   </div>
 
+  <!-- DISPATCHED CORPORATE INVOICE EMAIL PREVIEW MODAL -->
+  <div id="dispatched-email-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-4 z-[99999]" style="z-index: 99999 !important; display: none;" onclick="if(event.target===this) closeDispatchedEmailModal()">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[90vh]" onclick="event.stopPropagation()">
+      
+      <!-- Email Top Header Bar -->
+      <div class="bg-slate-800/90 px-4 py-3 border-b border-slate-700 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-sm">
+            📧
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white flex items-center gap-2">
+              <span>Dispatched Corporate Email</span>
+              <span id="dispatched-email-status-pill" class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 mono">DELIVERED</span>
+            </div>
+            <div class="text-[11px] text-slate-400">RFC-822 Compliant Corporate Tax Invoice via Open-Source Dispatch Engine</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="closeDispatchedEmailModal()" class="text-slate-400 hover:text-white font-bold text-lg p-1 cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <!-- Email Metadata Info Panel -->
+      <div class="bg-slate-950 px-4 py-2.5 border-b border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+        <div>
+          <span class="text-slate-500">From:</span>
+          <span id="dispatched-email-from" class="text-slate-200 mono font-semibold ml-1 truncate">Razorpay Invoicing &lt;invoices@enterprise.razorpay.com&gt;</span>
+        </div>
+        <div>
+          <span class="text-slate-500">To:</span>
+          <span id="dispatched-email-to" class="text-sky-300 mono font-semibold ml-1">finance@acme.com</span>
+        </div>
+        <div>
+          <span class="text-slate-500">Subject:</span>
+          <span id="dispatched-email-subject" class="text-slate-200 font-medium ml-1">Corrected Tax Invoice #inv_enterprise_998</span>
+        </div>
+        <div>
+          <span class="text-slate-500">Audit Hash:</span>
+          <span id="dispatched-email-hash" class="text-emerald-400 mono text-[11px] ml-1 truncate">sha256_verified_chain</span>
+        </div>
+      </div>
+
+      <!-- Live Email Body Preview in Iframe -->
+      <div class="p-3 bg-slate-900 flex-1 overflow-hidden flex flex-col min-h-[440px]">
+        <iframe id="dispatched-email-frame" class="w-full h-[460px] rounded-xl border border-slate-700 bg-white" title="Dispatched Corporate Invoice Email"></iframe>
+      </div>
+
+      <!-- Footer -->
+      <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 flex justify-between items-center text-[11px] text-slate-400">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>SMTP MIME Multipart Engine • SHA-256 Ledger Anchored</span>
+        </span>
+        <button onclick="closeDispatchedEmailModal()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg text-xs transition cursor-pointer">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AWS CLOUD & CEDAR ZERO-TRUST SECURITY RADAR MODAL -->
+  <div id="aws-cedar-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center z-50 p-3 sm:p-5">
+    <div class="bg-[#0b1324] border border-[#1e293b] rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-100">
+      
+      <!-- Modal Header -->
+      <div class="bg-[#070d19] px-4 sm:px-6 py-3.5 border-b border-[#1e293b] flex justify-between items-center flex-wrap gap-2">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#ea580c] via-[#f59e0b] to-[#0c55ea] p-0.5 flex items-center justify-center shadow-md">
+            <div class="w-full h-full bg-[#070d19] rounded-[10px] flex items-center justify-center text-base">☁️</div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="text-sm sm:text-base font-extrabold text-white">AWS Cloud Architecture & Cedar Zero-Trust Security Radar</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-950/80 text-amber-300 border border-amber-800 mono">Amazon Bedrock GenAI</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-950/80 text-indigo-300 border border-indigo-800 mono">Cedar v3.0</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-0.5">Formal Zero-Trust Policy Enforcement, Claude 3.5 Sonnet Reasoning, and EventBridge Failure Telemetry</p>
+          </div>
+        </div>
+
+        <button onclick="closeAwsCedarModal()" class="w-8 h-8 rounded-lg bg-[#142035] hover:bg-[#1e2d4a] text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition cursor-pointer">✕</button>
+      </div>
+
+      <!-- Modal Content Body -->
+      <div class="p-4 sm:p-5 overflow-y-auto flex-1 space-y-4">
+        
+        <!-- Top Cloud Summary Metric Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg">🤖</div>
+            <div>
+              <div class="text-[10.5px] text-slate-400 font-medium">Foundation LLM Model</div>
+              <div class="text-xs font-bold text-white mono" id="aws-modal-model">Claude 3.5 Sonnet v2</div>
+              <div class="text-[10px] text-emerald-400">ap-south-1 (Mumbai Region)</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg">🛡️</div>
+            <div>
+              <div class="text-[10.5px] text-slate-400 font-medium">Zero-Trust Policy Engine</div>
+              <div class="text-xs font-bold text-indigo-300 mono">AWS Cedar (Active Strict)</div>
+              <div class="text-[10px] text-slate-400 mono" id="aws-modal-hash">SHA: a207d935b0a9...</div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center text-lg">⚡</div>
+            <div>
+              <div class="text-[10.5px] text-slate-400 font-medium">Event Stream & Retry Rail</div>
+              <div class="text-xs font-bold text-sky-300 mono">AWS EventBridge + Lambda</div>
+              <div class="text-[10px] text-emerald-400">Weibull Mode Shift Active</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Cedar Policy Inspector & Interactive Playground -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
+          <!-- Left: Active Cedar Policy Source Code -->
+          <div class="bg-[#070d19] border border-[#1e293b] rounded-xl p-3.5 space-y-2 flex flex-col">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                <span>📜</span>
+                <span>Active AWS Cedar Policies (policies.cedar)</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-indigo-950 text-indigo-300 border border-indigo-800 mono">4 Formal Rules</span>
+            </div>
+            
+            <pre class="bg-[#030712] border border-[#15233c] rounded-lg p-3 text-[11px] font-mono text-slate-300 overflow-x-auto overflow-y-auto max-h-[300px] leading-relaxed select-all" id="aws-modal-policy-text">
+// POLICY 1: SRE Admin Circuit Breaker Override
+permit (
+    principal in Role::"SRE_Admin",
+    action in [Action::"TripCircuitBreaker", Action::"ResetCircuitBreaker"],
+    resource is BankingSwitch
+) when { context.mfa_verified == true && context.system_risk_score <= 85 };
+
+// POLICY 2: B2B Voice Agent GSTIN Tax Invoice Mutation
+permit (
+    principal in [Role::"Finance_Officer", Agent::"BedrockVoiceAgent"],
+    action in [Action::"MutateInvoiceGSTIN", Action::"ApprovePTP"],
+    resource is B2BInvoice
+) when { context.proposed_gstin like "??[A-Z0-9]*" && context.invoice_amount <= 500000 };
+
+// POLICY 3: Autonomous Dialogue Turn Execution
+permit (
+    principal in [Agent::"BedrockVoiceAgent", Role::"SRE_Admin"],
+    action in [Action::"ExecuteVoiceDialogueTurn", Action::"DispatchTaxInvoiceEmail"],
+    resource is B2BInvoice
+);
+
+// POLICY 4: Universal Immutability Guard
+forbid (
+    principal,
+    action in [Action::"DeleteAuditRecord", Action::"TruncateAuditLog"],
+    resource is AuditLog
+);</pre>
+            <div class="text-[10px] text-slate-400">Cryptographically locked with SHA-256 verification hash. Checked prior to every mutation.</div>
+          </div>
+
+          <!-- Right: Interactive Cedar Authorization Playground -->
+          <div class="bg-[#070d19] border border-[#1e293b] rounded-xl p-3.5 space-y-3 flex flex-col">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                <span>🧪</span>
+                <span>Cedar Policy Evaluation Playground</span>
+              </span>
+              <span class="text-[10.5px] text-emerald-400 font-semibold">Zero-Trust Evaluator</span>
+            </div>
+
+            <!-- Scenario Dropdown -->
+            <div>
+              <label class="block text-[10.5px] font-bold text-slate-300 mb-1">Select Security Test Case:</label>
+              <select id="cedar-test-case-select" onchange="applyCedarTestCase(this.value)" class="w-full bg-[#030712] border border-[#1e293b] rounded-lg px-2.5 py-1.5 text-xs text-slate-200 mono outline-none focus:border-indigo-500">
+                <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True) ➡️ ALLOW</option>
+                <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker ➡️ DENY</option>
+                <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000) ➡️ ALLOW</option>
+                <option value="audit_forbid">Scenario 4: SuperAdmin Deletes Audit Trail Record ➡️ FORBID/DENY</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px] mono">
+              <div>
+                <label class="block text-slate-400 text-[10px]">Principal:</label>
+                <input id="cedar-input-principal" type="text" value="Role::SRE_Admin" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+              </div>
+              <div>
+                <label class="block text-slate-400 text-[10px]">Action:</label>
+                <input id="cedar-input-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 text-[11px] mono">
+              <div>
+                <label class="block text-slate-400 text-[10px]">Resource:</label>
+                <input id="cedar-input-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+              </div>
+              <div>
+                <label class="block text-slate-400 text-[10px]">MFA Verified:</label>
+                <select id="cedar-input-mfa" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none">
+                  <option value="true">true</option>
+                  <option value="false">false</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Execute Button -->
+            <button onclick="runCedarTestEvaluation()" class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold shadow-md transition cursor-pointer flex items-center justify-center gap-1.5">
+              <span>⚡</span>
+              <span>Execute Real-Time Cedar Authorization Query</span>
+            </button>
+
+            <!-- Result Card -->
+            <div id="cedar-test-result-box" class="p-2.5 rounded-lg bg-[#030712] border border-[#1e293b] text-xs font-mono">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-[10.5px] text-slate-400">Cedar Policy Decision:</span>
+                <span id="cedar-result-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600">ALLOW</span>
+              </div>
+              <div id="cedar-result-details" class="text-[10px] text-slate-400 break-all leading-tight">
+                Policy ID: policy_sre_circuit_breaker_permit • Verified SRE_Admin with MFA under threshold.
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-[#1e293b] flex justify-between items-center text-[11px] text-slate-400">
+        <span class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>AWS App Runner Ready • SAM Serverless Pipeline Verified • AWS Hackathon 2026</span>
+        </span>
+        <button onclick="closeAwsCedarModal()" class="px-3.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg text-xs transition cursor-pointer">
+          Close Inspector
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- FIXED MOBILE BOTTOM NAVIGATION BAR (Visible on screens < lg) -->
   <nav id="mobile-bottom-nav" class="fixed bottom-0 left-0 right-0 h-16 bg-[#0c2340] border-t border-[#132f54] z-40 flex items-center justify-around px-2 lg:hidden shadow-2xl backdrop-blur-md">
     <!-- Overview Tab -->
@@ -5796,6 +6666,14 @@
         const typingEl = document.getElementById(typingId);
         if (typingEl) typingEl.remove();
 
+        const actionBtnHtml = data?.dispatch_id ? `
+          <div class="pt-1.5 flex flex-wrap gap-2">
+            <button onclick="openDispatchedEmailModal('${data.dispatch_id}')" class="px-2.5 py-1 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold rounded-lg text-[10.5px] flex items-center gap-1.5 shadow cursor-pointer">
+              <span>📧</span> <span>View Dispatched Tax Invoice (${data.dispatched_email_recipient || 'Delivered'})</span>
+            </button>
+          </div>
+        ` : '';
+
         const copilotBubble = document.createElement("div");
         copilotBubble.className = "flex gap-2.5 items-start";
         copilotBubble.innerHTML = `
@@ -5814,11 +6692,16 @@
             </div>
             <div class="copilot-msg-content leading-relaxed text-[11.5px]">
               ${formatMarkdownHtml(answer)}
+              ${actionBtnHtml}
             </div>
           </div>
         `;
         history.appendChild(copilotBubble);
         history.scrollTop = history.scrollHeight;
+
+        if (data?.action_executed) {
+          refreshAuditLedger();
+        }
 
       } catch (err) {
         const typingEl = document.getElementById(typingId);
@@ -5851,60 +6734,148 @@
       }
     }
 
-    // High-Fidelity Natural Speech Synthesis Engine
-    function speakText(text) {
-      if (!('speechSynthesis' in window)) {
-        showToast("Speech synthesis not supported in this browser.", "warning");
-        return;
+    // =========================================================================
+    // Copilot Voice Actions (Mapped to Single UnifiedVoiceEngine)
+    // =========================================================================
+    function speakLastCopilotMessage(buttonEl) {
+      try {
+        const parentCard = buttonEl.closest('.p-3, .custom-card, [class*="rounded-2xl"]');
+        const contentEl = parentCard ? parentCard.querySelector('.copilot-msg-content') : null;
+        const textToSpeak = contentEl ? contentEl.innerText : (buttonEl.parentElement?.nextElementSibling?.innerText || "");
+        if (textToSpeak) {
+          UnifiedVoiceEngine.speak(textToSpeak);
+          showToast("🔊 Speaking Copilot response with Natural Humanoid Voice...", "info");
+        }
+      } catch (err) {
+        console.error("Error reading copilot message", err);
       }
-
-      window.speechSynthesis.cancel(); // Stop any ongoing speech
-
-      // Clean robotic characters, markdown, symbols, brackets, and code syntax
-      const clean = text
-        .replace(/[🤖⚡📱🎙️🛡️📊🏛️💾💳🚀\[\]\(\)\*\#\_\`\:\;]/g, " ")
-        .replace(/\b(https?:\/\/\S+)/gi, "")
-        .replace(/\s+/g, " ")
-        .trim();
-
-      if (!clean) return;
-
-      const utterance = new SpeechSynthesisUtterance(clean);
-      const voices = window.speechSynthesis.getVoices();
-
-      // Prioritize High-Quality Human/Neural Natural voices in OS (Google, Microsoft Neural, Apple Samantha/Alex)
-      let selectedVoice = voices.find(v => 
-        (v.name.includes("Natural") || v.name.includes("Online") || v.name.includes("Neural")) && v.lang.startsWith("en")
-      ) || voices.find(v => 
-        (v.name.includes("Google") || v.name.includes("Samantha") || v.name.includes("Alex") || v.name.includes("Daniel") || v.name.includes("Karen") || v.name.includes("Ravi") || v.name.includes("Heera")) && v.lang.startsWith("en")
-      ) || voices.find(v => 
-        v.lang === "en-IN" || v.lang === "en-GB" || v.lang === "en-US"
-      );
-
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
-      }
-
-      // Natural Human Conversational Cadence Parameters
-      utterance.rate = 1.02;   // Natural lively pace (eliminates slow robotic drag)
-      utterance.pitch = 1.04;  // Friendly, clear, non-monotone pitch
-      utterance.volume = 1.0;
-
-      window.speechSynthesis.speak(utterance);
-    }
-
-    // Pre-populate voices on page load
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-      };
     }
 
     function speakCopilotResponse() {
       const box = document.getElementById("copilot-response-text");
       if (!box) return;
-      speakText(box.innerText);
+      UnifiedVoiceEngine.speak(box.innerText);
       showToast("🔊 Speaking in Natural AI SRE Voice...", "info");
+    }
+
+    // =========================================================================
+    // AWS Cloud & Cedar Zero-Trust Security Modal Controller
+    // =========================================================================
+    async function openAwsCedarModal() {
+      const modal = document.getElementById("aws-cedar-modal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+
+      // Fetch live Bedrock status
+      try {
+        const resp = await safeApiCall("/aws/bedrock/status");
+        if (resp && resp.data) {
+          const mEl = document.getElementById("aws-modal-model");
+          if (mEl) mEl.innerText = resp.data.foundation_model.split("-").slice(0, 3).join(" ") || "Claude 3.5 Sonnet";
+        }
+      } catch (e) {
+        console.warn("Bedrock status fetch failed", e);
+      }
+
+      // Fetch live Cedar policies
+      try {
+        const resp = await safeApiCall("/aws/cedar/policies");
+        if (resp && resp.data) {
+          const hEl = document.getElementById("aws-modal-hash");
+          if (hEl) hEl.innerText = `SHA: ${resp.data.policy_sha256.substring(0, 16)}...`;
+          const pEl = document.getElementById("aws-modal-policy-text");
+          if (pEl && resp.data.raw_policies) pEl.innerText = resp.data.raw_policies;
+        }
+      } catch (e) {
+        console.warn("Cedar policies fetch failed", e);
+      }
+    }
+
+    function closeAwsCedarModal() {
+      const modal = document.getElementById("aws-cedar-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.style.overflow = "auto";
+      }
+    }
+
+    function applyCedarTestCase(val) {
+      const principalInput = document.getElementById("cedar-input-principal");
+      const actionInput = document.getElementById("cedar-input-action");
+      const resourceInput = document.getElementById("cedar-input-resource");
+      const mfaSelect = document.getElementById("cedar-input-mfa");
+
+      if (val === "sre_allow") {
+        if (principalInput) principalInput.value = "Role::SRE_Admin";
+        if (actionInput) actionInput.value = "Action::TripCircuitBreaker";
+        if (resourceInput) resourceInput.value = "BankingSwitch::SBI";
+        if (mfaSelect) mfaSelect.value = "true";
+      } else if (val === "dev_deny") {
+        if (principalInput) principalInput.value = "Role::Junior_Dev";
+        if (actionInput) actionInput.value = "Action::TripCircuitBreaker";
+        if (resourceInput) resourceInput.value = "BankingSwitch::SBI";
+        if (mfaSelect) mfaSelect.value = "false";
+      } else if (val === "gstin_allow") {
+        if (principalInput) principalInput.value = "Agent::BedrockVoiceAgent";
+        if (actionInput) actionInput.value = "Action::MutateInvoiceGSTIN";
+        if (resourceInput) resourceInput.value = "B2BInvoice::inv_enterprise_998";
+        if (mfaSelect) mfaSelect.value = "true";
+      } else if (val === "audit_forbid") {
+        if (principalInput) principalInput.value = "Role::SuperAdmin";
+        if (actionInput) actionInput.value = "Action::DeleteAuditRecord";
+        if (resourceInput) resourceInput.value = "AuditLog::recovery_audit";
+        if (mfaSelect) mfaSelect.value = "true";
+      }
+      runCedarTestEvaluation();
+    }
+
+    async function runCedarTestEvaluation() {
+      const principal = document.getElementById("cedar-input-principal")?.value || "Role::SRE_Admin";
+      const action = document.getElementById("cedar-input-action")?.value || "Action::TripCircuitBreaker";
+      const resource = document.getElementById("cedar-input-resource")?.value || "BankingSwitch::SBI";
+      const mfa = document.getElementById("cedar-input-mfa")?.value === "true";
+
+      const badge = document.getElementById("cedar-result-badge");
+      const details = document.getElementById("cedar-result-details");
+      if (badge) {
+        badge.innerText = "EVALUATING...";
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 animate-pulse";
+      }
+
+      try {
+        const resp = await safeApiCall("/aws/cedar/evaluate", "POST", {
+          principal,
+          action,
+          resource,
+          context: { mfa_verified: mfa, system_risk_score: 35, proposed_gstin: "29AABCU9603R1Z2", invoice_amount: 125000, regulatory_compliance: "GST_RULE_46" }
+        });
+
+        if (resp && resp.data) {
+          const d = resp.data;
+          if (badge) {
+            if (d.decision === "ALLOW") {
+              badge.innerText = "ALLOW";
+              badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600";
+            } else {
+              badge.innerText = "DENY";
+              badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600";
+            }
+          }
+          if (details) {
+            details.innerText = `Policy: ${d.policy_id} • ${d.diagnostics?.reason || 'Verified Cedar evaluation'}`;
+          }
+        }
+      } catch (err) {
+        if (badge) {
+          badge.innerText = "ERROR";
+          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600";
+        }
+        if (details) details.innerText = "Evaluation call failed: " + err.message;
+      }
     }
   </script>
 </body>
