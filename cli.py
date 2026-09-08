@@ -320,6 +320,20 @@ Examples:
         help="Type of attack to simulate (default: storm)"
     )
     sub_attack.set_defaults(func=cmd_simulate_attack)
+
+    # sentinel daemon
+    sub_sentinel = subparsers.add_parser("sentinel", help="Launch Autonomous Sentinel Daemon with real-time recovery stream")
+    def cmd_sentinel(a):
+        import run_sentinel
+        run_sentinel.main()
+    sub_sentinel.set_defaults(func=cmd_sentinel)
+
+    # b2b conversational agent
+    sub_chat = subparsers.add_parser("chat", help="Launch interactive B2B Conversational Autonomous Agent")
+    def cmd_chat(a):
+        import run_agent_chat
+        run_agent_chat.main()
+    sub_chat.set_defaults(func=cmd_chat)
     
     args = parser.parse_args()
     if not args.command:

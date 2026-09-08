@@ -19,3 +19,12 @@ build/
 node_modules/
 presentation_script_master.md
 .vscode/
+
+# Android & Gradle Build Artifacts
+.gradle/
+**/build/
+.kotlin/
+*.apk
+*.aab
+local.properties
+!mobile/razorrevive-os.apk
