@@ -130,6 +130,12 @@ class DiagnosticEngine:
             "confidence": 0.94,
             "reasons": ["BANK_GATEWAY_TIMEOUT", "TRANSIENT_INFRASTRUCTURE_SPIKE"]
         },
+        "GATEWAY_TIMEOUT": {
+            "class": "TRANSIENT_GATEWAY",
+            "strategy": "DELAYED_RETRY",
+            "confidence": 0.95,
+            "reasons": ["BANK_GATEWAY_TIMEOUT", "TRANSIENT_INFRASTRUCTURE_SPIKE"]
+        },
         "SERVER_ERROR": {
             "class": "TRANSIENT_GATEWAY",
             "strategy": "DELAYED_RETRY",
@@ -393,11 +399,36 @@ class DiagnosticEngine:
                 summary = "Local Open-Source Vector Model flagged suspicious risk pattern."
             else:
                 f_class = "ABANDONED_AUTH"
-                strategy = "DISPATCH_PAYMENT_LINK"
-                requires_human = False
-                reasons = ["LOCAL_VECTOR_MATCH_UNCLASSIFIED_DROP_OFF"]
-                summary = "Local Open-Source Vector Model defaulted to alternate payment link proposal."
-
+                confidence = 0.55
+                strategy = "ESCALATE_HUMAN"
+                requires_human = True
+                reasons = ["LOCAL_VECTOR_UNCLASSIFIED_LOW_CONFIDENCE"]
+                summary = "Local Open-Source Vector Model could not confidently categorize failure; safe human escalation triggered."
+        # Enrich with Qdrant Vector Semantic Memory Advisory Evidence (Evidence Layer, NOT Authority)
+        try:
+            from backend.app.semantic_memory import semantic_memory_engine
+            bank_hint = meta.get("issuing_bank") or meta.get("bank") or "SBI"
+            rail_hint = meta.get("payment_rail") or meta.get("rail") or "UPI"
+            evidence = semantic_memory_engine.aggregate_precedent_evidence(
+                error_code=normalized_code,
+                bank=bank_hint,
+                rail=rail_hint,
+                amount=amount,
+                attempt_count=meta.get("attempt_count", 1),
+                top_k=5,
+                min_similarity=0.60
+            )
+            if evidence["evidence_available"]:
+                top_p = evidence["precedents"][0]
+                reasons.append(f"QDRANT_PRECEDENT_MATCH:{top_p['precedent_id']}")
+                reasons.append(f"QDRANT_EVIDENCE_STRENGTH:{evidence['evidence_strength']}")
+                if evidence["amount_scale_warning"]:
+                    reasons.append("QDRANT_AMOUNT_SCALE_DISPARITY_WARNING")
+                summary += f" [Qdrant Advisory: {evidence['matches_count']} matches, {evidence['mean_similarity']*100:.1f}% sim, strength={evidence['evidence_strength']}]"
+                # STRICT FINTECH SAFETY: Do NOT inflate confidence based on historical recovery rate.
+                # Historical recovery precedent serves as evidence, while deterministic PolicyEngine retains sole decision authority.
+        except Exception as e:
+            logger.debug("Semantic memory enrichment skipped: %s", e)
 
         # Pydantic schema validation guaranteed
         return DiagnosisProposal(

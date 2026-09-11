@@ -82,10 +82,14 @@ class RecoveryHazardOptimizer:
                 model_version="recovery-hazard-v1"
             )
 
+        # Input boundary clamping and sanitization
+        safe_attempt = max(1, min(10, attempt_number if isinstance(attempt_number, int) else 1))
+        safe_bank = str(bank_issuer or "DEFAULT").strip().upper()
+
         # Check live NPCI switch telemetry
-        switch_status = npci_telemetry.get_switch_status(bank_issuer)
+        switch_status = npci_telemetry.get_switch_status(safe_bank)
         
-        prof = cls.SYNTHETIC_BANK_HAZARD_PROFILES.get(bank_issuer.upper(), cls.SYNTHETIC_BANK_HAZARD_PROFILES["DEFAULT"])
+        prof = cls.SYNTHETIC_BANK_HAZARD_PROFILES.get(safe_bank, cls.SYNTHETIC_BANK_HAZARD_PROFILES["DEFAULT"])
         base_peak = prof["peak_window_min"]
 
         # Dynamic adjustment based on switch degradation
@@ -95,11 +99,11 @@ class RecoveryHazardOptimizer:
             base_peak = 120
         
         # Scaling delay with attempt number to prevent hammering degraded endpoints
-        target_delay = int(base_peak * math.pow(1.5, attempt_number - 1))
+        target_delay = int(base_peak * math.pow(1.5, safe_attempt - 1))
         
         # Find closest candidate window
         best_window = min(cls.CANDIDATE_WINDOWS_MINUTES, key=lambda w: abs(w - target_delay))
-        prob, hazard = cls.compute_cumulative_recovery_probability(best_window, bank_issuer)
+        prob, hazard = cls.compute_cumulative_recovery_probability(best_window, safe_bank)
 
         # Dynamic degradation penalty from live switch telemetry
         if switch_status.switch_state == "DEGRADED":
@@ -108,14 +112,14 @@ class RecoveryHazardOptimizer:
             prob = prob * 0.40
 
         # Decay probability slightly for higher attempt counts
-        decayed_prob = max(0.25, prob * math.pow(0.90, attempt_number - 1))
+        decayed_prob = max(0.25, prob * math.pow(0.90, safe_attempt - 1))
 
         switch_note = f" [NPCI Switch Status: {switch_status.switch_state}]"
         return RetryWindowRecommendation(
             recommended_retry_delay_minutes=best_window,
             success_probability=round(decayed_prob, 3),
             hazard_rate=hazard,
-            reason=f"Optimal recovery hazard peak for {bank_issuer} node at attempt {attempt_number}{switch_note}",
+            reason=f"Optimal recovery hazard peak for {safe_bank} node at attempt {safe_attempt}{switch_note}",
             model_version="recovery-hazard-v1"
         )
 

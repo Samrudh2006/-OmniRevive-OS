@@ -488,6 +488,7 @@ class ComprehensiveTestSuite:
         for i in range(1, 16):
             t_start = time.perf_counter()
             inv_id = f"inv_fsm_valid_{i:03d}"
+            b2b_fsm.reset_state(inv_id, "OVERDUE")
             # OVERDUE -> CONTACT_PENDING -> CONTACTED -> PTP_REGISTERED
             t1 = b2b_fsm.transition(inv_id, "CONTACT_PENDING", "VOICE_CALL_INITIATED")
             t2 = b2b_fsm.transition(inv_id, "CONTACTED", "CUSTOMER_ANSWERED_CALL")
@@ -505,6 +506,7 @@ class ComprehensiveTestSuite:
         for i in range(16, 26):
             t_start = time.perf_counter()
             inv_id = f"inv_fsm_illegal_{i:03d}"
+            b2b_fsm.reset_state(inv_id, "OVERDUE")
             rejected = False
             try:
                 # Attempt illegal jump: OVERDUE -> RECOVERED without intermediate contact

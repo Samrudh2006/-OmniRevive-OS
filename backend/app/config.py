@@ -25,6 +25,17 @@ class Settings(BaseSettings):
     EMBEDDED_AI_ENABLED: bool = True
 
 
+    # Security & Execution Modes
+    SAFE_DEMO_MODE: bool = True
+    API_AUTH_KEY: str = "rzp_sec_live_recovery_key_99"
+    CORS_ALLOWED_ORIGINS: list[str] = [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://localhost:3000",
+        "https://razorpay-target-0-1percent.onrender.com"
+    ]
+    REDIS_URL: Optional[str] = None
+
     MAX_RETRY_ATTEMPTS: int = 3
     MAX_DISCOUNT_PERCENT: float = 10.0
     MAX_DISCOUNT_AMOUNT_INR: float = 500.0

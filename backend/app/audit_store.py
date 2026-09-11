@@ -163,9 +163,34 @@ class CryptographicAuditLedger:
             }
 
         expected_prev_hash = GENESIS_HASH
+        last_sequence_id: Optional[int] = None
+
         for idx, r in enumerate(rows):
             seq_id, evt_id, trace_id, ts, m_id, p_id, evt_type, f_class, dec_json, pol_verd, act_taken, gw_json, prev_h, curr_h = r
             
+            # Check 0: Strict Monotonic Sequence & Deletion Gap Detection
+            if last_sequence_id is not None:
+                if seq_id < last_sequence_id:
+                    return {
+                        "valid": False,
+                        "total_events": len(rows),
+                        "tampering_detected": True,
+                        "broken_at_sequence": seq_id,
+                        "broken_event_id": evt_id,
+                        "anomaly_type": "BLOCK_SEQUENCE_REORDERED",
+                        "reason": f"Non-monotonic sequence ordering at sequence {seq_id} (preceded by {last_sequence_id})"
+                    }
+                elif seq_id > last_sequence_id + 1 and prev_h != expected_prev_hash:
+                    return {
+                        "valid": False,
+                        "total_events": len(rows),
+                        "tampering_detected": True,
+                        "broken_at_sequence": seq_id,
+                        "broken_event_id": evt_id,
+                        "anomaly_type": "DELETED_BLOCK_CHAIN_BROKEN",
+                        "reason": f"Deleted block gap detected between sequences {last_sequence_id} and {seq_id}: Expected prev_hash {expected_prev_hash[:8]} but found {prev_h[:8]}"
+                    }
+
             # Check 1: Prev hash continuity
             if prev_h != expected_prev_hash:
                 return {
@@ -174,10 +199,25 @@ class CryptographicAuditLedger:
                     "tampering_detected": True,
                     "broken_at_sequence": seq_id,
                     "broken_event_id": evt_id,
+                    "anomaly_type": "PREV_HASH_TAMPERED",
                     "reason": f"Broken chain link at sequence {seq_id}: Expected prev_hash {expected_prev_hash[:8]} but found {prev_h[:8]}"
                 }
 
-            # Check 2: Content integrity
+            # Check 2: Content and Timestamp integrity
+            try:
+                dec_obj = json.loads(dec_json)
+                gw_obj = json.loads(gw_json) if gw_json else {}
+            except Exception:
+                return {
+                    "valid": False,
+                    "total_events": len(rows),
+                    "tampering_detected": True,
+                    "broken_at_sequence": seq_id,
+                    "broken_event_id": evt_id,
+                    "anomaly_type": "MALFORMED_JSON_PAYLOAD",
+                    "reason": f"Corrupted JSON payload in audit block {seq_id}"
+                }
+
             canonical_payload = {
                 "event_id": evt_id,
                 "trace_id": trace_id,
@@ -186,10 +226,10 @@ class CryptographicAuditLedger:
                 "payment_id": p_id,
                 "event_type": evt_type,
                 "failure_class": f_class,
-                "decision": json.loads(dec_json),
+                "decision": dec_obj,
                 "policy_verdict": pol_verd,
                 "action_taken": act_taken,
-                "gateway_result": json.loads(gw_json) if gw_json else {}
+                "gateway_result": gw_obj
             }
             recalculated_hash = self.compute_canonical_hash(expected_prev_hash, canonical_payload)
             if recalculated_hash != curr_h:
@@ -199,10 +239,12 @@ class CryptographicAuditLedger:
                     "tampering_detected": True,
                     "broken_at_sequence": seq_id,
                     "broken_event_id": evt_id,
+                    "anomaly_type": "PAYLOAD_TAMPERED",
                     "reason": f"Payload tampered at sequence {seq_id}: Hash mismatch for event {evt_id}"
                 }
 
             expected_prev_hash = curr_h
+            last_sequence_id = seq_id
 
         return {
             "valid": True,

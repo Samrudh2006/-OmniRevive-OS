@@ -151,3 +151,27 @@ class BulkRecoveryBatchResponse(BaseModel):
     processing_time_ms: float
     items: List[Dict[str, Any]]
 
+# --- CFO Approval Workflow & Zero-Trust Governance ---
+CFOApprovalStatusType = Literal["REQUESTED", "PENDING_APPROVAL", "APPROVED", "EXECUTED", "REJECTED"]
+
+class CFOApprovalItem(BaseModel):
+    approval_id: str = Field(..., description="Unique CFO approval identifier, e.g. cfo_app_99182")
+    request_type: str = Field(default="HIGH_VALUE_RECOVERY_ANOMALY", description="Classification of escalated operation")
+    entity_id: str = Field(..., description="Associated payment_id or invoice_id")
+    amount: float = Field(..., ge=0.0, description="Transaction amount requiring executive authorization")
+    currency: str = Field(default="INR")
+    status: CFOApprovalStatusType = Field(default="PENDING_APPROVAL")
+    requester: str = Field(default="POLICY_ENGINE_GATE_3")
+    reason: str = Field(..., description="Reason for escalation (e.g. uncertain high-value anomaly)")
+    requested_at: float = Field(default_factory=time.time)
+    decided_at: Optional[float] = None
+    decided_by: Optional[str] = None
+    decision_notes: Optional[str] = None
+    cedar_policy_evaluated: Optional[str] = None
+    cedar_decision: Optional[str] = None
+
+class CFOApprovalActionRequest(BaseModel):
+    action: Literal["APPROVE", "REJECT"] = Field(..., description="Executive verdict")
+    notes: Optional[str] = Field(default="Approved after manual risk review", description="Audit reasoning")
+    cfo_token: Optional[str] = Field(default=None, description="Optional CFO session or API key token")
+

@@ -28,3 +28,10 @@ presentation_script_master.md
 *.aab
 local.properties
 !mobile/razorrevive-os.apk
+
+# Temporary scratch & media
+scratch/
+sample_voice.mp3
+test_voice.py
+frontend/test_puter.html
+docs/AWS_HACKATHON_PITCH.md

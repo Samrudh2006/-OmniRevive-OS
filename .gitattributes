@@ -1,0 +1,8 @@
+﻿# GitHub Linguist Configuration for RazorRevive-OS
+# Ensure Python correctly reflects as the primary core architecture language
+
+frontend/index.html linguist-detectable=false
+mobile/** linguist-vendored=true
+frontend/assets/** linguist-vendored=true
+benchmarks/** linguist-generated=true
+docs/** linguist-documentation=true

@@ -192,6 +192,32 @@ class CedarPolicyEngine:
                 timestamp_utc=now_str
             )
 
+        # Executive CFO Approval Gating Rule
+        if action in ["Action::ApproveCFOEscalation", "ApproveCFOEscalation", "Action::RejectCFOEscalation", "RejectCFOEscalation"]:
+            is_cfo = any(p in principal for p in ["CFO", "SRE_Admin", "Executive_Approver"])
+            if is_cfo:
+                return CedarEvaluationResult(
+                    decision="ALLOW",
+                    policy_id="policy_cfo_approval_permit",
+                    principal=principal,
+                    action=action,
+                    resource=resource,
+                    diagnostics={"reason": "ALLOW: Authorized CFO / Executive Approver role verified."},
+                    policy_sha256=self._policy_sha256,
+                    timestamp_utc=now_str
+                )
+            else:
+                return CedarEvaluationResult(
+                    decision="DENY",
+                    policy_id="policy_cfo_approval_permit",
+                    principal=principal,
+                    action=action,
+                    resource=resource,
+                    diagnostics={"reason": "DENY: Principal lacks Role::CFO or Role::SRE_Admin authorization."},
+                    policy_sha256=self._policy_sha256,
+                    timestamp_utc=now_str
+                )
+
         # Default Deny for unknown actions
         return CedarEvaluationResult(
             decision="DENY",

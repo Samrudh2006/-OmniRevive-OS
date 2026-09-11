@@ -1,3 +1,77 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "razorrevive-os"
+version = "1.0.0"
+description = "Autonomous AI Revenue Recovery Engine with Weibull Hazard Retries, AWS Cedar Zero-Trust, and Distributed CAS Idempotency."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+keywords = [
+    "razorpay",
+    "fintech",
+    "revenue-recovery",
+    "weibull-hazard",
+    "aws-cedar",
+    "zero-trust",
+    "fastapi",
+    "payments",
+    "npci"
+]
+authors = [
+    { name = "Samrudh Dwivedula", email = "samrudh2006@github.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Developers",
+    "Topic :: Office/Business :: Financial :: Point-Of-Sale",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: FastAPI"
+]
+dependencies = [
+    "fastapi>=0.110.0,<1.0.0",
+    "uvicorn[standard]>=0.28.0,<1.0.0",
+    "pydantic>=2.6.0,<3.0.0",
+    "pydantic-settings>=2.2.0,<3.0.0",
+    "razorpay>=1.4.1,<2.0.0",
+    "httpx>=0.27.0,<1.0.0",
+    "python-dotenv>=1.0.1,<2.0.0",
+    "python-multipart>=0.0.9,<1.0.0",
+    "numpy>=1.26.0,<2.0.0",
+    "scipy>=1.12.0,<2.0.0",
+    "redis>=5.0.0,<6.0.0",
+    "cryptography>=42.0.0,<43.0.0",
+    "structlog>=24.1.0,<25.0.0",
+    "prometheus-client>=0.20.0,<1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<9.0.0",
+    "pytest-asyncio>=0.23.0,<1.0.0",
+    "pytest-cov>=4.1.0,<5.0.0",
+    "build>=1.0.0",
+    "twine>=5.0.0"
+]
+
+[project.scripts]
+razorrevive = "cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Samrudh2006/Razorpay-Target-0.1percent-"
+Repository = "https://github.com/Samrudh2006/Razorpay-Target-0.1percent-"
+"Video Walkthrough" = "https://youtu.be/IBo7D1vHhd8"
+"Bug Tracker" = "https://github.com/Samrudh2006/Razorpay-Target-0.1percent-/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend", "aws"]
+include = ["cli.py"]
+
 [tool.pyright]
 venvPath = "."
 venv = ".venv"

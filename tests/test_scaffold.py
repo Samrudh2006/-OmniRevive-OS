@@ -23,3 +23,31 @@ def test_architecture_documentation_exists():
         assert "Three-Tier Financial Isolation Boundary Pattern" in content
         assert "HMAC SHA-256" in content
         assert "Poisson" in content
+
+def test_seo_crawler_endpoints():
+    from fastapi.testclient import TestClient
+    from backend.app.main import app
+    client = TestClient(app)
+    
+    # Test robots.txt
+    res_robots = client.get("/robots.txt")
+    assert res_robots.status_code == 200
+    assert "User-agent: *" in res_robots.text
+    assert "Sitemap:" in res_robots.text
+
+    # Test sitemap.xml
+    res_sitemap = client.get("/sitemap.xml")
+    assert res_sitemap.status_code == 200
+    assert "<?xml" in res_sitemap.text
+    assert "<urlset" in res_sitemap.text
+    assert "<loc>" in res_sitemap.text
+
+    # Test HTML SEO meta tags
+    res_html = client.get("/")
+    assert res_html.status_code == 200
+    assert '<meta name="description"' in res_html.text
+    assert '<meta property="og:title"' in res_html.text
+    assert '<meta name="twitter:card"' in res_html.text
+    assert 'application/ld+json' in res_html.text
+    assert '<h1' in res_html.text
+
