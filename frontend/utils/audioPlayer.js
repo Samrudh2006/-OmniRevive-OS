@@ -91,7 +91,7 @@ export const UnifiedVoiceEngine = {
     }
 
     // 2. Check for Telugu Transliteration tokens
-    if (/\b(mawa|bagunnava|bagunnara|bagunnanu|ela unnav|ela unnaru|repu|dabbulu|kudaradu|tagginchandi|kastam|ippude|kattestha|cheppandi|cheppu|meeru|nenu|emiti|enduku|cheyandi|ledu|kada|vastundi|pampana|cheddama|ivvana|kavali|nijame|chala|telugu|pampistha|matladandi)\b/i.test(lower)) {
+    if (/\b(mawa|bagunnava|bagunnara|bagunnanu|ela unnav|ela unnaru|repu|dabbulu|dabbu|kudaradu|tagginchandi|kastam|ippude|kattestha|cheppandi|cheppu|meeru|nenu|emiti|enduku|cheyandi|ledu|kada|kadha|vastundi|pampana|cheddama|ivvana|ivvandi|kavali|nijame|chala|telugu|pampistha|pampandi|matladandi|thappu|kothadi|undi|unnayi|chesthamu|chesamu|evaru|enti|sangathi|dhanyavadalu|namaskaram|andi|kadathanu|avunu|arthamaindi|taggichu|konchem|koddiga)\b/i.test(lower)) {
       return "te-IN-ShrutiNeural";
     }
 
@@ -101,7 +101,7 @@ export const UnifiedVoiceEngine = {
     }
 
     // 4. Check for Hindi Transliteration tokens
-    if (/\b(kaisi ho|kaise ho|aap kaise|chutkula|shukriya|badhiya|theek|madad|bol rahi|kya chal|kaisa chal|sun pa rahe|batayein|namaste|swara|shuddh hindi|joke|hasao|bhai)\b/i.test(lower)) {
+    if (/\b(kaisi ho|kaise ho|aap kaise|chutkula|shukriya|badhiya|theek|madad|bol rahi|kya chal|kaisa chal|sun pa rahe|batayein|namaste|swara|shuddh hindi|joke|hasao|bhai|hai|hain|humne|karenge|denge|dunga|paise|galat|bhejo|bhejiye|shukravar|somvar|parson|kal|haanji)\b/i.test(lower)) {
       return "hi-IN-SwaraNeural";
     }
 
@@ -207,9 +207,16 @@ export const UnifiedVoiceEngine = {
     // Immediately abort any microphone listening
     this.abortListening();
 
-    // Determine voice model
-    let chosenVoice = voiceOverride || this.currentNeuralVoice || "en-IN-NeerjaExpressiveNeural";
-    if (chosenVoice === "auto") {
+    // Determine voice model:
+    // 1. If user explicitly selected a specific voice from dropdown (not "auto"), respect it!
+    // 2. Otherwise use voiceOverride from backend response if provided (and not "auto")
+    // 3. Otherwise auto-detect dialect from text content
+    let chosenVoice = "en-IN-NeerjaExpressiveNeural";
+    if (this.currentNeuralVoice && this.currentNeuralVoice !== "auto") {
+      chosenVoice = this.currentNeuralVoice;
+    } else if (voiceOverride && voiceOverride !== "auto") {
+      chosenVoice = voiceOverride;
+    } else {
       chosenVoice = this.detectVoiceFromText(clean);
     }
     this.currentDialectVoice = chosenVoice;

@@ -1403,11 +1403,7 @@
               <!-- Neural Voice Model Selector -->
               <div class="relative inline-flex items-center">
                 <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1e293b] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
-                  <option value="auto">🌐 Auto Language Switch (Telugu/Hindi/EN)</option>
-                  <option value="en-IN-NeerjaExpressiveNeural" selected>🎙️ Neerja (English / Hinglish)</option>
-                  <option value="te-IN-ShrutiNeural">🎙️ Shruti (Native Telugu Neural)</option>
-                  <option value="hi-IN-SwaraNeural">🎙️ Swara (Native Hindi Neural)</option>
-                  <option value="en-IN-PrabhatNeural">🎙️ Prabhat (Male Neural)</option>
+                  <option value="auto" selected>🌐 Autonomous Multilingual AI (Telugu / Hindi / English)</option>
                 </select>
               </div>
 
@@ -2912,7 +2908,7 @@
       <div class="space-y-3">
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-[11px] text-slate-300 font-bold">Customer Objection / Speech Input (Hinglish/English)</label>
+            <label class="block text-[11px] text-slate-300 font-bold">Customer Objection / Speech Input (Telugu / Hindi / English)</label>
             <div class="flex items-center gap-1.5">
               <button type="button" onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-purple-900/60 text-purple-300 border border-purple-800 flex items-center gap-1.5 transition-all cursor-pointer">
                 <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
@@ -2929,21 +2925,51 @@
             </div>
           </div>
           <select id="voice-speech-select" onchange="document.querySelectorAll('#voice-custom-speech').forEach(el => el.value = this.value)" class="w-full bg-[#050c1b] border border-[#142442] rounded-lg px-3 py-2 text-xs text-slate-200 mono outline-none focus:border-purple-500">
-            <option value="Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo">
-              "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo" (GST Dispute)
-            </option>
-            <option value="Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje.">
-              "Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje" (PTP Lock)
-            </option>
-            <option value="PO number is incorrect in the current tax invoice.">
-              "PO number is incorrect in current tax invoice" (Commercial Dispute)
-            </option>
-            <option value="Ye product bilkul kharaab tha, hum payment nahi denge aur lawyer se baat karenge.">
-              "Ye product bilkul kharaab tha, hum payment nahi denge" (Escalate to CFO)
-            </option>
+            <optgroup label="🇮🇳 Telugu (Shruti Neural Voice)">
+              <option value="Mawa, invoice lo GST number thappu undi, kothadi 29AABCU9603R1Z2 pampistha update cheyandi">
+                "Mawa, invoice lo GST number thappu undi, kothadi 29AABCU9603R1Z2 pampistha update cheyandi" (Telugu GST Dispute)
+              </option>
+              <option value="Mawa nenu repu pakka dabbulu kathesthanu, call cut cheyandi">
+                "Mawa nenu repu pakka dabbulu kathesthanu, call cut cheyandi" (Telugu PTP Commitment)
+              </option>
+              <option value="Mawa konchem discount ivvandi, ippude settle chesthamu">
+                "Mawa konchem discount ivvandi, ippude settle chesthamu" (Telugu Discount Request)
+              </option>
+              <option value="Bagunnava mawa, nuvvu evaru? Neetho matladatam chala bagundi">
+                "Bagunnava mawa, nuvvu evaru? Neetho matladatam chala bagundi" (Telugu Banter & Identity)
+              </option>
+            </optgroup>
+            <optgroup label="🇮🇳 Hindi / Hinglish (Swara Neural Voice)">
+              <option value="Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo">
+                "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo" (Hindi GST Dispute)
+              </option>
+              <option value="Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje.">
+                "Haanji, accountant Friday ko aayega aur funds clear ho jayega 11 baje" (Hindi PTP Lock)
+              </option>
+              <option value="Bhai kuch discount mil sakta hai kya agar abhi payment karein?">
+                "Bhai kuch discount mil sakta hai kya agar abhi payment karein?" (Hindi Discount Concession)
+              </option>
+              <option value="Ye product bilkul kharaab tha, hum payment nahi denge aur lawyer se baat karenge.">
+                "Ye product bilkul kharaab tha, hum payment nahi denge" (Hindi Legal Escalation)
+              </option>
+            </optgroup>
+            <optgroup label="🇮🇳 Indian English (Neerja Expressive Voice)">
+              <option value="The GST number on this invoice is incorrect, please update it to 29AABCU9603R1Z2.">
+                "The GST number on this invoice is incorrect, please update it to 29AABCU9603R1Z2" (English GST Dispute)
+              </option>
+              <option value="We will clear the full payment next Tuesday morning at 11 AM.">
+                "We will clear the full payment next Tuesday morning at 11 AM" (English PTP Commitment)
+              </option>
+              <option value="Can you offer a prompt settlement discount on this invoice?">
+                "Can you offer a prompt settlement discount on this invoice?" (English Discount)
+              </option>
+              <option value="Hello Neerja, who are you and how does RazorRevive work?">
+                "Hello Neerja, who are you and how does RazorRevive work?" (English Platform Overview)
+              </option>
+            </optgroup>
           </select>
           <div class="mt-1.5">
-            <input type="text" id="voice-custom-speech" value="Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo" placeholder="Or type your own live objection / speak via microphone..." class="w-full bg-[#070e1e] border border-[#1a2e54] rounded-lg px-3 py-1.5 text-xs text-slate-100 mono outline-none focus:border-emerald-500">
+            <input type="text" id="voice-custom-speech" value="Mawa, invoice lo GST number thappu undi, kothadi 29AABCU9603R1Z2 pampistha update cheyandi" placeholder="Or type your own live objection / speak via microphone in Telugu, Hindi, or English..." class="w-full bg-[#070e1e] border border-[#1a2e54] rounded-lg px-3 py-1.5 text-xs text-slate-100 mono outline-none focus:border-emerald-500">
           </div>
         </div>
 

@@ -32,12 +32,15 @@ export async function triggerVoiceTurnAction() {
     btn.innerHTML = "<span>⚙️</span> <span>Processing Autonomous Voice Dialogue...</span>";
   });
 
+  const chosenVoice = document.querySelector("#neural-voice-select")?.value || "auto";
+
   try {
     const data = await safeApiCall("/api/v1/b2b/voice/turn", "POST", {
       call_session_id: "call_" + Math.floor(Math.random() * 8999 + 1000),
       invoice_id: invId,
       customer_speech_text: speech,
-      invoice_amount: amt
+      invoice_amount: amt,
+      preferred_voice: chosenVoice
     });
 
     document.querySelectorAll("#voice-agent-speech-transcript").forEach(el => {

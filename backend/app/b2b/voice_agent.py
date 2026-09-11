@@ -68,12 +68,74 @@ def detect_recommended_voice(agent_speech: str, user_speech: str = "") -> str:
     # 5. Default: Expressive Indian English / Hinglish
     return "en-IN-NeerjaExpressiveNeural"
 
+VOICE_MAP = {
+    "telugu": "te-IN-ShrutiNeural",
+    "hindi": "hi-IN-SwaraNeural",
+    "english": "en-IN-NeerjaExpressiveNeural"
+}
+
+def detect_customer_language(speech: str, preferred_voice: Optional[str] = None) -> str:
+    """
+    Detects whether the conversational turn is in 'telugu', 'hindi', or 'english'.
+    Respects explicit user-selected preferred_voice if specified.
+    """
+    if preferred_voice and preferred_voice.lower() != "auto":
+        pv_lower = preferred_voice.lower()
+        if "shruti" in pv_lower or "telugu" in pv_lower or "te-in" in pv_lower:
+            return "telugu"
+        if "swara" in pv_lower or "hindi" in pv_lower or "hi-in" in pv_lower:
+            return "hindi"
+        if "neerja" in pv_lower or "prabhat" in pv_lower or "en-in" in pv_lower:
+            return "english"
+
+    s_lower = speech.lower().strip()
+
+    # 1. Telugu Unicode or Transliteration markers
+    if any("\u0c00" <= ch <= "\u0c7f" for ch in speech):
+        return "telugu"
+
+    telugu_patterns = [
+        r"\bmawa\b", r"\bbagunnava\b", r"\bbagunnara\b", r"\bbagunnanu\b", r"\bela unnav\b", r"\bela unnaru\b",
+        r"\brepu\b", r"\bkadathanu\b", r"\bdabbulu\b", r"\bdabbu\b", r"\bkudaradu\b", r"\btagginchandi\b",
+        r"\bkastam\b", r"\bippude\b", r"\bkattestha\b", r"\bchusthanu\b", r"\bavunu\b", r"\bkaadu\b",
+        r"\bcheppandi\b", r"\bcheppu\b", r"\bmeeru\b", r"\bnenu\b", r"\bemiti\b", r"\benduku\b",
+        r"\bcheyandi\b", r"\bledu\b", r"\bkada\b", r"\bkadha\b", r"\bvastundi\b", r"\bvastanu\b",
+        r"\bpampana\b", r"\bpampandi\b", r"\bpampistha\b", r"\bcheddama\b", r"\bivvana\b", r"\bivvandi\b",
+        r"\bchesamu\b", r"\bchesthamu\b", r"\bkavali\b", r"\bnijame\b", r"\bchala\b", r"\btelugu\b",
+        r"\bmatladandi\b", r"\bmatladu\b", r"\bthappu\b", r"\bkothadi\b", r"\bundi\b", r"\bunnayi\b",
+        r"\bevaru\b", r"\benti\b", r"\bsangathi\b", r"\banduke\b", r"\bippudu\b", r"\btagginchu\b",
+        r"\bnamaskaram\b", r"\bdhanyavadalu\b"
+    ]
+    if any(re.search(pat, s_lower) for pat in telugu_patterns):
+        return "telugu"
+
+    # 2. Hindi Unicode or Transliteration markers
+    if any("\u0900" <= ch <= "\u097f" for ch in speech):
+        return "hindi"
+
+    hindi_patterns = [
+        r"\bhai\b", r"\bhain\b", r"\baap\b", r"\btum\b", r"\bhum\b", r"\bhumne\b", r"\bgalat\b",
+        r"\bbhejo\b", r"\bbhejiye\b", r"\bkaro\b", r"\bkijiye\b", r"\bkar do\b", r"\bchutkula\b",
+        r"\btheek\b", r"\bkaise\b", r"\bkaisi\b", r"\bkya\b", r"\bkyun\b", r"\bkaisa\b", r"\bbol\b",
+        r"\brahi\b", r"\braha\b", r"\bbatayein\b", r"\baaram\b", r"\bchai\b", r"\bshukravar\b",
+        r"\bsomvar\b", r"\bswara\b", r"\bnamaste\b", r"\bhaanji\b", r"\bji\b", r"\bbhai\b",
+        r"\bparson\b", r"\bkal\b", r"\bmadad\b", r"\bsawaal\b", r"\bpaise\b", r"\bkharaab\b",
+        r"\bdunga\b", r"\bdenge\b", r"\bkarenge\b", r"\bho jayega\b", r"\baaj\b", r"\bkuch\b",
+        r"\byeh\b", r"\bwoh\b", r"\biss\b", r"\biska\b", r"\biski\b", r"\bisko\b", r"\busne\b", r"\bbolo\b",
+        r"\bbilkul\b", r"\bbadhiya\b", r"\bshukriya\b"
+    ]
+    if any(re.search(pat, s_lower) for pat in hindi_patterns):
+        return "hindi"
+
+    return "english"
+
 class VoiceDialogueTurnRequest(BaseModel):
     call_session_id: str = Field(default="call_mock_1001")
     invoice_id: str = Field(default="inv_enterprise_998")
     customer_speech_text: str
     customer_phone: str = Field(default="+919876543210")
     invoice_amount: float = Field(default=85000.0)
+    preferred_voice: Optional[str] = None
 
 class VoiceDialogueResponse(BaseModel):
     call_session_id: str
@@ -236,9 +298,10 @@ def query_external_llm_if_configured(speech: str, inv_id: str, amt: float) -> Op
 
     return None
 
-def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterprise_998", amt: float = 85000.0) -> tuple[str, str]:
+def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterprise_998", amt: float = 85000.0, lang: str = "english") -> tuple[str, str]:
     """
     Synthesizes rich, natural, non-scripted responses for ANY question or casual talk.
+    Adapts response language dynamically to Telugu, Hindi, or English.
     Returns (spoken_response, intent_label)
     """
     # 0. Check for connected external LLM or live knowledge query
@@ -251,24 +314,30 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
 
     # 1. Meta-Commentary / Addressing Script Complaints ("why these many", "not like voice call", "like prebuilt script", "use ai")
     if any(k in s_lower for k in ["why these many", "prebuilt script", "not like voice call", "not answering", "scripted", "use ai", "talk naturally", "mat bolo script", "robot jaisa"]):
-        if any(w in s_lower for w in ["mawa", "telugu"]):
+        if lang == "telugu" or any(w in s_lower for w in ["mawa", "telugu"]):
             return (
                 "Nijame mawa! Mundu unna scripted templates robotic ga anipincharu. Anduke ippudu complete dynamic AI conversation set chesamu! Meeru casual ga aina, mana tech stack gurinchi aina edaina free ga adagavachu!",
                 "META_SCRIPT_CORRECTION"
             )
-        return (
-            "Aap bilkul theek keh rahe hain sir! Pehle ke hardcoded scripts repetitive lag rahe the, isliye maine unhe completely hata diya hai. Ab main aapse fully dynamic AI voice conversation kar rahi hoon—chahe casual talk ho, tech architecture ho, ya general questions. Aap batayein, kaisa chal raha hai aapka din?",
-            "META_SCRIPT_CORRECTION"
-        )
+        elif lang == "hindi":
+            return (
+                "Aap bilkul theek keh rahe hain sir! Pehle ke hardcoded scripts repetitive lag rahe the, isliye maine unhe completely hata diya hai. Ab main aapse fully dynamic AI voice conversation kar rahi hoon—chahe casual talk ho, tech architecture ho, ya general questions. Aap batayein, kaisa chal raha hai aapka din?",
+                "META_SCRIPT_CORRECTION"
+            )
+        else:
+            return (
+                "You are absolutely right sir! The previous scripted responses felt robotic and repetitive, so we replaced them with a fully dynamic conversational AI engine. Feel free to talk naturally about our tech stack, invoices, or anything casual!",
+                "META_SCRIPT_CORRECTION"
+            )
 
     # 2. Telugu Conversational Inquiries, Small Talk & Banter
-    if any(k in s_lower for k in ["mawa", "bagunnava", "ela unnav", "evaru meeru", "nuvvu evaru", "em chestunnav", "telugu", "enti sangathi", "cheppu mawa", "arere"]):
-        if any(k in s_lower for k in ["nuvvu evaru", "evaru meeru"]):
+    if lang == "telugu" or any(k in s_lower for k in ["mawa", "bagunnava", "ela unnav", "evaru meeru", "nuvvu evaru", "em chestunnav", "telugu", "enti sangathi", "cheppu mawa", "arere"]):
+        if any(k in s_lower for k in ["nuvvu evaru", "evaru meeru", "who are you", "who is this"]):
             return (
                 "Namaste! Nenu Neerja, Razorpay Accounts Desk nundi mee autonomous AI voice assistant ni! Meetho matladadam chala santhosham ga undi. Meeru mana platform gurinchi aina, payments gurinchi aina, leda general ga aina edaina adagavachu mawa!",
                 "TELUGU_IDENTITY_INQUIRY"
             )
-        if any(k in s_lower for k in ["bagunnava", "ela unnav"]):
+        if any(k in s_lower for k in ["bagunnava", "ela unnav", "how are you"]):
             return (
                 "Nenu chala bagunnanu mawa! Meeru ela unnaru? Hope your day is going great! Nenu meeku ela help cheyagalanu?",
                 "CASUAL_WELL_BEING"
@@ -278,189 +347,360 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
                 "Bas transactions monitor chesthu, meelanti clients tho interactive ga matladuthunnanu mawa! Meeru cheppandi, mee side em sangathulu?",
                 "TELUGU_CASUAL_BANTER"
             )
+        if re.search(r"\b(repu|taruvatha|repatlo)\b", s_lower) and any(w in s_lower for w in ["kadathanu", "pay", "dabbulu", "clear", "pampistha"]):
+            return (
+                "Sare mawa! Nenu repati varaku Promise-to-Pay schedule chesi dunning reminders freeze chesthunnanu. Repu me WhatsApp ki link active untundi!",
+                "PROMISE_TO_PAY_COMMITMENT"
+            )
+        if any(k in s_lower for k in ["dabbu ledu", "ippudu kudaradu", "paise ledu"]):
+            return (
+                "Parvaledu mawa, tension padakandi! Manam e invoice ni 2 installments ga split cheddama? Leda Friday varaku time ivvana?",
+                "PARTIAL_PAYMENT_SPLIT"
+            )
+        if any(k in s_lower for k in ["discount", "tagginchandi", "taggichu"]):
+            return (
+                "Policy prakaram prompt settlement ki INR 500 varaku discount offer cheyagalam mawa. Discount apply chesi updated WhatsApp link pampana?",
+                "DISCOUNT_NEGOTIATION"
+            )
         return (
             "Namaste mawa! Nenu Razorpay voice agent Neerja ni. Nenu Telugu, Hindi, English anni matladagalanu! Cheppandi, meeku em information kavali?",
             "TELUGU_CONVERSATION"
         )
 
-    # 3. Telugu Payment/Invoice Specific
-    if re.search(r"\b(repu|taruvatha|repatlo)\b", s_lower) and any(w in s_lower for w in ["kadathanu", "pay", "dabbulu", "clear", "pampistha"]):
-        return (
-            "Sare mawa! Nenu repati varaku Promise-to-Pay schedule chesi dunning reminders freeze chesthunnanu. Repu me WhatsApp ki link active untundi!",
-            "PROMISE_TO_PAY_COMMITMENT"
-        )
-    if any(k in s_lower for k in ["dabbu ledu", "ippudu kudaradu", "paise ledu"]):
-        return (
-            "Parvaledu mawa, tension padakandi! Manam e invoice ni 2 installments ga split cheddama? Leda Friday varaku time ivvana?",
-            "PARTIAL_PAYMENT_SPLIT"
-        )
-    if any(k in s_lower for k in ["discount", "tagginchandi", "taggichu"]):
-        return (
-            "Policy prakaram prompt settlement ki INR 500 varaku discount offer cheyagalam mawa. Discount apply chesi updated WhatsApp link pampana?",
-            "DISCOUNT_NEGOTIATION"
-        )
-
     # 4. Jokes & Entertainment
     if re.search(r"\b(joke|jokes|chutkula|funny|hasao|laugh|comedy)\b", s_lower):
-        return (
-            "Haha zaroor sir! Ek baar ek payment gateway ne doosre gateway se pucha: 'Tum itne nervous kyun ho?' Usne bola: 'HDFC ka server 504 timeout de raha hai aur RazorRevive mujhe dekh raha hai!' Haha, kaisa laga sir?",
-            "CASUAL_HUMOR"
-        )
+        if lang == "telugu":
+            return (
+                "Haha tappakunda mawa! Oka sari rendu payment gateways kalisi matladukunnayi: 'Nuvvu enduku antha tension paduthunnav?' ante, inkokati cheppindi: 'HDFC server 504 timeout ichindi, RazorRevive nannu chusthondi!' Haha bagunda mawa?",
+                "CASUAL_HUMOR"
+            )
+        elif lang == "hindi":
+            return (
+                "Haha zaroor sir! Ek baar ek payment gateway ne doosre gateway se pucha: 'Tum itne nervous kyun ho?' Usne bola: 'HDFC ka server 504 timeout de raha hai aur RazorRevive mujhe dekh raha hai!' Haha, kaisa laga sir?",
+                "CASUAL_HUMOR"
+            )
+        else:
+            return (
+                "Haha certainly sir! Why did the payment gateway cross the road? To avoid a 504 gateway timeout and reach RazorRevive! Haha, hope that made you smile!",
+                "CASUAL_HUMOR"
+            )
 
     # 5. Identity & Creator Inquiries
     if any(k in s_lower for k in ["who are you", "what is your name", "aap kaun ho", "tum kaun ho", "who made you", "who created you", "who designed you", "kaun bol raha hai", "who is this", "kis company se"]):
-        return (
-            "Namaste! Main Razorpay Accounts Desk se Neerja bol rahi hoon, aapki autonomous AI voice assistant! Main aapke payment queries, platform architecture, ya casual conversation sabhi mein naturally help kar sakti hoon. Aap batayein, aaj main aapki kya madad kar sakti hoon?",
-            "AGENT_IDENTITY_INQUIRY"
-        )
+        if lang == "hindi":
+            return (
+                "Namaste! Main Razorpay Accounts Desk se Neerja bol rahi hoon, aapki autonomous AI voice assistant! Main aapke payment queries, platform architecture, ya casual conversation sabhi mein naturally help kar sakti hoon. Aap batayein, aaj main aapki kya madad kar sakti hoon?",
+                "AGENT_IDENTITY_INQUIRY"
+            )
+        else:
+            return (
+                "Hello! I am Neerja from Razorpay Accounts Desk, your autonomous AI voice assistant! I can assist you with payment queries, platform architecture, or casual conversation. How may I help you today?",
+                "AGENT_IDENTITY_INQUIRY"
+            )
 
-    # 6. Casual Greetings & Well-Being (English & Hindi)
+    # 6. Casual Greetings & Well-Being
     if any(k in s_lower for k in ["how are you", "kaisi ho", "kaise ho", "how's it going", "how are you doing", "sab theek", "kya chal raha"]):
-        return (
-            "Main bilkul badhiya hoon sir! Shukriya puchne ke liye. Aap suniye, aapka din kaisa ja raha hai? Sab theek thaak?",
-            "CASUAL_WELL_BEING"
-        )
+        if lang == "hindi":
+            return (
+                "Main bilkul badhiya hoon sir! Shukriya puchne ke liye. Aap suniye, aapka din kaisa ja raha hai? Sab theek thaak?",
+                "CASUAL_WELL_BEING"
+            )
+        else:
+            return (
+                "I am doing great sir, bilkul badhiya! Thank you for asking. How is your day going? Everything going smoothly?",
+                "CASUAL_WELL_BEING"
+            )
     if re.search(r"\b(hi|hello|hey|namaste|good morning|good afternoon|good evening)\b", s_lower):
-        return (
-            "Namaste sir! Main Razorpay Accounts Desk se Neerja bol rahi hoon. Aapse baat karke bahut accha laga! Aaj main aapki kya madad kar sakti hoon?",
-            "CASUAL_GREETING"
-        )
+        if lang == "hindi":
+            return (
+                "Namaste sir! Main Razorpay Accounts Desk se Neerja bol rahi hoon. Aapse baat karke bahut accha laga! Aaj main aapki kya madad kar sakti hoon?",
+                "CASUAL_GREETING"
+            )
+        else:
+            return (
+                "Hello sir! I am Neerja from Razorpay Accounts Desk. Delighted to speak with you today! How may I assist you?",
+                "CASUAL_GREETING"
+            )
 
     # 7. Emotions, Mood & Human Empathy
     if any(k in s_lower for k in ["i am tired", "thak gaya", "exhausted"]):
-        return (
-            "Arre sir, din bhar ke kaam ke baad thakan hona swabhavik hai. Aap ek garam chai ya coffee lijiye aur thoda aaram kijiye! Koi bhi pending work ho toh main automate kar sakti hoon.",
-            "CASUAL_EMPATHY"
-        )
+        if lang == "hindi":
+            return (
+                "Arre sir, din bhar ke kaam ke baad thakan hona swabhavik hai. Aap ek garam chai ya coffee lijiye aur thoda aaram kijiye! Koi bhi pending work ho toh main automate kar sakti hoon.",
+                "CASUAL_EMPATHY"
+            )
+        else:
+            return (
+                "Take a deep breath and relax sir! You have had a long day. Grab a warm cup of coffee while RazorRevive handles all pending operational workflows automatically.",
+                "CASUAL_EMPATHY"
+            )
     if any(k in s_lower for k in ["i am sad", "mood off", "upset", "pareshan"]):
-        return (
-            "Aap bilkul chinta mat kijiye sir! Har mushkil ka koi na koi solution zaroor nikalta hai. Main yahan aapse baat karne ke liye hamesha ready hoon.",
-            "CASUAL_EMPATHY"
-        )
+        if lang == "hindi":
+            return (
+                "Aap bilkul chinta mat kijiye sir! Har mushkil ka koi na koi solution zaroor nikalta hai. Main yahan aapse baat karne ke liye hamesha ready hoon.",
+                "CASUAL_EMPATHY"
+            )
+        else:
+            return (
+                "Do not worry at all sir! Every challenge has a clear solution. I am right here to help resolve any issues smoothly.",
+                "CASUAL_EMPATHY"
+            )
     if any(k in s_lower for k in ["i am happy", "khush hoon", "great news", "party"]):
-        return (
-            "Yeh sunkar toh mera bhi din ban gaya sir! Khushi ke mauke par party toh banti hai! Batayein, kya special hua aaj?",
-            "CASUAL_EMPATHY"
-        )
+        if lang == "hindi":
+            return (
+                "Yeh sunkar toh mera bhi din ban gaya sir! Khushi ke mauke par party toh banti hai! Batayein, kya special hua aaj?",
+                "CASUAL_EMPATHY"
+            )
+        else:
+            return (
+                "That is wonderful news sir! Celebrating great milestones makes everything worthwhile. What was the special occasion today?",
+                "CASUAL_EMPATHY"
+            )
 
     # 8. AI Curiosity & Personal Questions
     if any(k in s_lower for k in ["are you single", "do you have boyfriend", "shadi", "marry me"]):
-        return (
-            "Haha, main toh server cloud mein dedicatedly code execute karti hoon sir! Mera pura focus Razorpay ke clients ko delight karne par hai.",
-            "CASUAL_WIT"
-        )
+        if lang == "hindi":
+            return (
+                "Haha, main toh server cloud mein dedicatedly code execute karti hoon sir! Mera pura focus Razorpay ke clients ko delight karne par hai.",
+                "CASUAL_WIT"
+            )
+        else:
+            return (
+                "Haha, I live happily in the cloud executing neural workflows sir! My entire dedication is focused on delighting Razorpay merchants.",
+                "CASUAL_WIT"
+            )
     if any(k in s_lower for k in ["what do you eat", "khana khaya", "food"]):
-        return (
-            "Mera khana toh pure clean electricity aur cloud computing cycles hain sir! Waise aapne lunch ya dinner kiya?",
-            "CASUAL_WIT"
-        )
+        if lang == "hindi":
+            return (
+                "Mera khana toh pure clean electricity aur cloud computing cycles hain sir! Waise aapne lunch ya dinner kiya?",
+                "CASUAL_WIT"
+            )
+        else:
+            return (
+                "I run on 100% clean electricity and high-performance server compute cycles! Have you had lunch or dinner yet?",
+                "CASUAL_WIT"
+            )
     if re.search(r"\b(ai|robot|insaan|human|bot)\b", s_lower):
-        return (
-            "Main Razorpay ki AI-powered conversational voice agent hoon sir. Par main aapse bilkul naturally real human ki tarah interact kar sakti hoon aur aapki kisi bhi query mein help kar sakti hoon!",
-            "AI_NATURE_INQUIRY"
-        )
+        if lang == "hindi":
+            return (
+                "Main Razorpay ki AI-powered conversational voice agent hoon sir. Par main aapse bilkul naturally real human ki tarah interact kar sakti hoon aur aapki kisi bhi query mein help kar sakti hoon!",
+                "AI_NATURE_INQUIRY"
+            )
+        else:
+            return (
+                "I am Razorpay's AI-powered conversational voice agent sir. I am designed to interact completely naturally like a human and assist across any query or workflow!",
+                "AI_NATURE_INQUIRY"
+            )
 
     # 9. Gratitude & Politeness
     if any(k in s_lower for k in ["thank you", "thanks", "dhanyavad", "shukriya", "great job", "awesome", "good job"]):
-        return (
-            "You're most welcome sir! Mujhe aapki madad karke bahut khushi hui. Agar koi aur sawaal ya help chahiye ho toh bina jhijhak bataiye!",
-            "CASUAL_GRATITUDE"
-        )
+        if lang == "hindi":
+            return (
+                "You're most welcome sir! Mujhe aapki madad karke bahut khushi hui. Agar koi aur sawaal ya help chahiye ho toh bina jhijhak bataiye!",
+                "CASUAL_GRATITUDE"
+            )
+        else:
+            return (
+                "You are most welcome sir! It is my absolute pleasure to assist you. Please let me know if you need anything else!",
+                "CASUAL_GRATITUDE"
+            )
 
     # 10. Weather & Everyday Casual Topics
     if any(k in s_lower for k in ["weather", "mausam", "barish", "rain", "temperature"]):
-        return (
-            "Main server cloud se aapse baat kar rahi hoon sir, par umeed hai aapke shehar mein mausam suhana hoga! Aapka din kaisa chal raha hai?",
-            "CASUAL_WEATHER"
-        )
+        if lang == "hindi":
+            return (
+                "Main server cloud se aapse baat kar rahi hoon sir, par umeed hai aapke shehar mein mausam suhana hoga! Aapka din kaisa chal raha hai?",
+                "CASUAL_WEATHER"
+            )
+        else:
+            return (
+                "Speaking to you from our cloud datacenter sir, but I hope the weather in your city is pleasant today! How is your work going?",
+                "CASUAL_WEATHER"
+            )
 
     # 11. Website, Platform & Architecture Explanations
     if any(k in s_lower for k in ["what is this website", "what is this platform", "what is razorrevive", "yeh website kya hai", "kya kaam karta hai", "about this"]):
-        return (
-            "Yeh RazorRevive-OS hai - Razorpay ka autonomous revenue recovery control plane! Yeh failed UPI aur card recurring payments ko real-time telemetry aur Weibull hazard modeling se bina merchant intervention ke recover karta hai.",
-            "PLATFORM_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Yeh RazorRevive-OS hai - Razorpay ka autonomous revenue recovery control plane! Yeh failed UPI aur card recurring payments ko real-time telemetry aur Weibull hazard modeling se bina merchant intervention ke recover karta hai.",
+                "PLATFORM_EXPLANATION"
+            )
+        else:
+            return (
+                "This is RazorRevive-OS - Razorpay's autonomous revenue recovery control plane! It recovers failed UPI and card recurring payments using real-time telemetry and Weibull hazard modeling without merchant intervention.",
+                "PLATFORM_EXPLANATION"
+            )
     if any(k in s_lower for k in ["what is fast loop", "fast loop kya hai", "fast loop"]):
-        return (
-            "Fast-Loop B2C recurring payments ke liye real-time engine hai. Jab bank ka server 504 timeout deta hai, yeh blind retries karne ke bajaye bank ke recovery curve ke hisaab se optimal window (+45 minutes) par auto-retry schedule karta hai.",
-            "FAST_LOOP_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Fast-Loop B2C recurring payments ke liye real-time engine hai. Jab bank ka server 504 timeout deta hai, yeh blind retries karne ke bajaye bank ke recovery curve ke hisaab se optimal window (+45 minutes) par auto-retry schedule karta hai.",
+                "FAST_LOOP_EXPLANATION"
+            )
+        else:
+            return (
+                "Fast-Loop is our real-time engine for B2C recurring payments. When bank servers face 504 timeouts, it calculates bank recovery curves and schedules retries at optimal windows (+45m).",
+                "FAST_LOOP_EXPLANATION"
+            )
     if any(k in s_lower for k in ["what is deep loop", "deep loop kya hai", "deep loop"]):
-        return (
-            "Deep-Loop high-value B2B enterprise invoices ke liye hamara conversational voice engine hai. Yeh phone call par customer se natural Hinglish mein baat karke GST, TDS aur discounts negotiate karta hai aur Promise-to-Pay register karta hai.",
-            "DEEP_LOOP_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Deep-Loop high-value B2B enterprise invoices ke liye hamara conversational voice engine hai. Yeh phone call par customer se natural Hinglish mein baat karke GST, TDS aur discounts negotiate karta hai aur Promise-to-Pay register karta hai.",
+                "DEEP_LOOP_EXPLANATION"
+            )
+        else:
+            return (
+                "Deep-Loop is our conversational voice engine for high-value B2B enterprise invoices. It speaks in native Telugu, Hindi, or English to resolve disputes and register Promise-to-Pay locks.",
+                "DEEP_LOOP_EXPLANATION"
+            )
     if any(k in s_lower for k in ["weibull", "hazard rate", "survival function", "optimal window"]):
-        return (
-            "Traditional payment gateways blind fixed exponential backoff (1m, 2m, 4m) use karte hain. Weibull hazard survival rate calculate karta hai ki kab retry karne par success chances highest honge - jaise SBI outage ke 45 minutes baad 91.4% peak success!",
-            "WEIBULL_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Traditional payment gateways blind fixed exponential backoff (1m, 2m, 4m) use karte hain. Weibull hazard survival rate calculate karta hai ki kab retry karne par success chances highest honge - jaise SBI outage ke 45 minutes baad 91.4% peak success!",
+                "WEIBULL_EXPLANATION"
+            )
+        else:
+            return (
+                "Traditional gateways use blind fixed backoff. Our Weibull hazard model calculates the optimal survival curve to achieve up to 91.4% recovery after bank outages!",
+                "WEIBULL_EXPLANATION"
+            )
     if any(k in s_lower for k in ["cedar", "zero trust", "aws cedar", "policy"]):
-        return (
-            "Amazon Cedar hamara cryptographic zero-trust policy engine hai. Yeh mathematically verify karta ki koi bhi discount INR 500 ya 10% se zyada na ho, aur audit logs ko koi tamper ya delete na kar sake.",
-            "CEDAR_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Amazon Cedar hamara cryptographic zero-trust policy engine hai. Yeh mathematically verify karta ki koi bhi discount INR 500 ya 10% se zyada na ho, aur audit logs ko koi tamper ya delete na kar sake.",
+                "CEDAR_EXPLANATION"
+            )
+        else:
+            return (
+                "Amazon Cedar is our cryptographic zero-trust policy engine. It mathematically enforces that discounts cannot exceed INR 500 or 10% and protects audit trails against tampering.",
+                "CEDAR_EXPLANATION"
+            )
     if any(k in s_lower for k in ["npci", "switch", "radar", "bank outage", "circuit breaker"]):
-        return (
-            "NPCI Switch Radar live banking networks (SBI, HDFC, ICICI, Axis) ki health aur latencies ko monitor karta hai. Agar kisi bank mein outage ho, toh circuit breaker activate karke retry storm rok deta hai.",
-            "NPCI_RADAR_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "NPCI Switch Radar live banking networks (SBI, HDFC, ICICI, Axis) ki health aur latencies ko monitor karta hai. Agar kisi bank mein outage ho, toh circuit breaker activate karke retry storm rok deta hai.",
+                "NPCI_RADAR_EXPLANATION"
+            )
+        else:
+            return (
+                "NPCI Switch Radar monitors live bank network latencies and failure spikes. When an outage occurs, it triggers circuit breakers to eliminate blind retry storms.",
+                "NPCI_RADAR_EXPLANATION"
+            )
     if any(k in s_lower for k in ["idempotency", "cas mutex", "double debit"]):
-        return (
-            "Hamara Distributed CAS Mutex guarantee karta hai ki distributed webhooks mein ek transaction sirf ek hi baar process ho, preventing 100% of duplicate debits!",
-            "CAS_MUTEX_EXPLANATION"
-        )
+        if lang == "hindi":
+            return (
+                "Hamara Distributed CAS Mutex guarantee karta hai ki distributed webhooks mein ek transaction sirf ek hi baar process ho, preventing 100% of duplicate debits!",
+                "CAS_MUTEX_EXPLANATION"
+            )
+        else:
+            return (
+                "Our Distributed CAS Mutex guarantees that transactions are processed exactly once across distributed webhooks, preventing 100% of duplicate customer debits.",
+                "CAS_MUTEX_EXPLANATION"
+            )
 
     # 12. Financial & Payment Queries
     if any(k in s_lower for k in ["why is the amount", "itna zyada", "breakdown", "kiska bill", "kis cheez ka", "invoice amount"]):
-        return (
-            f"Sir, yeh Acme Enterprises ka cloud infrastructure platform subscription invoice hai INR {amt:,.2f} ka. Agar aap chahein toh main aapke email par line-item tax invoice copy bhej sakti hoon.",
-            "INVOICE_DETAILS_INQUIRY"
-        )
+        if lang == "hindi":
+            return (
+                f"Sir, yeh Acme Enterprises ka cloud infrastructure platform subscription invoice hai INR {amt:,.2f} ka. Agar aap chahein toh main aapke email par line-item tax invoice copy bhej sakti hoon.",
+                "INVOICE_DETAILS_INQUIRY"
+            )
+        else:
+            return (
+                f"Sir, this is Acme Enterprises cloud infrastructure platform invoice for INR {amt:,.2f}. If you wish, I can dispatch a detailed line-item invoice copy to your email.",
+                "INVOICE_DETAILS_INQUIRY"
+            )
     if any(k in s_lower for k in ["credit card", "netbanking", "how to pay", "kaise pay karu", "modes of payment", "payment options"]):
-        return (
-            "Aap UPI, Rupay, Visa, Mastercard, Netbanking aur auto-debit kisi se bhi pay kar sakte hain. Kya main aapko instant 1-Click WhatsApp payment link bhej doon?",
-            "PAYMENT_MODES_INQUIRY"
-        )
+        if lang == "hindi":
+            return (
+                "Aap UPI, Rupay, Visa, Mastercard, Netbanking aur auto-debit kisi se bhi pay kar sakte hain. Kya main aapko instant 1-Click WhatsApp payment link bhej doon?",
+                "PAYMENT_MODES_INQUIRY"
+            )
+        else:
+            return (
+                "You can settle via UPI, RuPay, Visa, Mastercard, Netbanking, or auto-debit. Shall I dispatch an instant 1-click WhatsApp payment link?",
+                "PAYMENT_MODES_INQUIRY"
+            )
     if any(k in s_lower for k in ["no money", "paise nahi", "kangaal", "gareeb", "can't pay"]):
-        return (
-            "Koi baat nahi sir, main samajh sakti hoon. Kya hum is invoice ko do aasaan installments mein divide kar dein? Ya fir Friday tak ka time extend kar dein?",
-            "PARTIAL_PAYMENT_SPLIT"
-        )
+        if lang == "hindi":
+            return (
+                "Koi baat nahi sir, main samajh sakti hoon. Kya hum is invoice ko do aasaan installments mein divide kar dein? Ya fir Friday tak ka time extend kar dein?",
+                "PARTIAL_PAYMENT_SPLIT"
+            )
+        else:
+            return (
+                "We understand completely sir. Would you prefer to split this into two flexible installments, or extend the due date until Friday?",
+                "PARTIAL_PAYMENT_SPLIT"
+            )
 
     # 13. General Knowledge Queries
     if any(k in s_lower for k in ["prime minister", "narendra modi", "modi"]):
-        return (
-            "India ke Prime Minister Narendra Modi ji hain sir. Main ek financial AI voice assistant hoon, par aapki general queries mein bhi help kar sakti hoon! Kuch aur janna chahte hain?",
-            "GENERAL_KNOWLEDGE"
-        )
+        if lang == "hindi":
+            return (
+                "India ke Prime Minister Narendra Modi ji hain sir. Main ek financial AI voice assistant hoon, par aapki general queries mein bhi help kar sakti hoon! Kuch aur janna chahte hain?",
+                "GENERAL_KNOWLEDGE"
+            )
+        else:
+            return (
+                "The Prime Minister of India is Shri Narendra Modi. While I am a financial AI assistant, I am happy to help with general questions as well!",
+                "GENERAL_KNOWLEDGE"
+            )
     if any(k in s_lower for k in ["capital of india", "capital of france", "capital"]):
-        return (
-            "India ki capital New Delhi hai aur France ki capital Paris hai sir! Aap bataiye, aapka agla trip kahan plan ho raha hai?",
-            "GENERAL_KNOWLEDGE"
-        )
+        if lang == "hindi":
+            return (
+                "India ki capital New Delhi hai aur France ki capital Paris hai sir! Aap bataiye, aapka agla trip kahan plan ho raha hai?",
+                "GENERAL_KNOWLEDGE"
+            )
+        else:
+            return (
+                "The capital of India is New Delhi, and the capital of France is Paris! Where are you planning your next trip?",
+                "GENERAL_KNOWLEDGE"
+            )
     if any(k in s_lower for k in ["python", "programming", "code"]):
-        return (
-            "Python ek high-level, interpreted programming language hai jo simplicity aur readability ke liye famous hai. Hamara pura RazorRevive backend bhi FastAPI aur Python par bana hai!",
-            "GENERAL_KNOWLEDGE"
-        )
+        if lang == "hindi":
+            return (
+                "Python ek high-level, interpreted programming language hai jo simplicity aur readability ke liye famous hai. Hamara pura RazorRevive backend bhi FastAPI aur Python par bana hai!",
+                "GENERAL_KNOWLEDGE"
+            )
+        else:
+            return (
+                "Python is a high-level programming language praised for its elegance and readability. Our entire RazorRevive backend is engineered using Python and FastAPI!",
+                "GENERAL_KNOWLEDGE"
+            )
     if any(k in s_lower for k in ["upi", "unified payments"]):
-        return (
-            "UPI yaani Unified Payments Interface NPCI ka instant real-time payment system hai jo mobile devices par inter-bank peer-to-peer transactions ko power karta hai!",
-            "GENERAL_KNOWLEDGE"
-        )
+        if lang == "hindi":
+            return (
+                "UPI yaani Unified Payments Interface NPCI ka instant real-time payment system hai jo mobile devices par inter-bank peer-to-peer transactions ko power karta hai!",
+                "GENERAL_KNOWLEDGE"
+            )
+        else:
+            return (
+                "UPI stands for Unified Payments Interface, NPCI's instant real-time payment system powering mobile peer-to-peer bank transactions!",
+                "GENERAL_KNOWLEDGE"
+            )
 
     # 14. Intelligent Conversational Open-Ended Response (Zero Robotic Echo!)
     if s_lower.endswith("?") or any(w in s_lower for w in ["what", "why", "how", "when", "where", "can you", "kya", "kyun", "kaise"]):
+        if lang == "hindi":
+            return (
+                "Yeh ek interesting sawaal hai sir! Main aapse bilkul naturally interact karne ke liye design ki gayi hoon. Aap jo bhi puchna chahein bejhijhak puch sakte hain!",
+                "CONVERSATIONAL_RESPONSE"
+            )
+        else:
+            return (
+                "That is a great question sir! I am designed to interact naturally and assist you across any technical or payment queries. Feel free to ask anything!",
+                "CONVERSATIONAL_RESPONSE"
+            )
+    
+    if lang == "hindi":
         return (
-            "Yeh ek interesting sawaal hai sir! Main aapse bilkul naturally interact karne ke liye design ki gayi hoon. Aap jo bhi puchna chahein bejhijhak puch sakte hain!",
+            "Main aapki baat samajh rahi hoon sir! Hum kisi bhi topic par freely baat kar sakte hain—chahe platform features hon, financial assistance ho, ya normal discussion. Aap batayein, aage kya discuss karein?",
             "CONVERSATIONAL_RESPONSE"
         )
-    
-    return (
-        "Main aapki baat samajh rahi hoon sir! Hum kisi bhi topic par freely baat kar sakte hain—chahe platform features hon, financial assistance ho, ya normal discussion. Aap batayein, aage kya discuss karein?",
-        "CONVERSATIONAL_RESPONSE"
-    )
+    else:
+        return (
+            "I understand your thoughts completely sir! We can freely discuss any topic—platform architecture, invoice reconciliation, or general queries. How would you like to proceed?",
+            "CONVERSATIONAL_RESPONSE"
+        )
 
 def try_query_local_ollama(speech: str, inv_id: str, amt: float) -> Optional[str]:
     return query_external_llm_if_configured(speech, inv_id, amt)
@@ -479,7 +719,12 @@ class B2BVoiceDialogueEngine:
     def process_customer_turn(cls, req: VoiceDialogueTurnRequest) -> VoiceDialogueResponse:
         speech = req.customer_speech_text.strip()
         resp = cls._process_turn_internal(req)
-        resp.recommended_voice = detect_recommended_voice(resp.agent_speech_response, speech)
+        
+        # If user explicitly selected a voice from dropdown, strictly preserve it
+        if req.preferred_voice and req.preferred_voice.lower() != "auto":
+            resp.recommended_voice = req.preferred_voice
+        elif resp.recommended_voice == "en-IN-NeerjaExpressiveNeural":
+            resp.recommended_voice = detect_recommended_voice(resp.agent_speech_response, speech)
         return resp
 
     @classmethod
@@ -489,6 +734,10 @@ class B2BVoiceDialogueEngine:
         inv_id = req.invoice_id
         amt = req.invoice_amount
         phone = req.customer_phone
+        
+        # Determine language matching customer's question and preferred voice
+        lang = detect_customer_language(speech, req.preferred_voice)
+        target_voice = req.preferred_voice if (req.preferred_voice and req.preferred_voice.lower() != "auto") else VOICE_MAP.get(lang, "en-IN-NeerjaExpressiveNeural")
 
         # Ensure FSM is initialized or re-engaged for current voice call turn
         curr_state = b2b_fsm.get_state(inv_id)
@@ -504,90 +753,149 @@ class B2BVoiceDialogueEngine:
             b2b_fsm.transition(inv_id, "DISPUTE_DETECTED", "LEGAL_COMMERCIAL_DISPUTE_RAISED")
             b2b_fsm.transition(inv_id, "ESCALATED", "ESCALATE_TO_HUMAN_CFO")
             
+            if lang == "telugu":
+                resp_text = "Arthamaindi andi. Mee concern note chesukuni memu direct ga Senior Accounts Director ki escalate chesthunnamu. Varu meeku direct ga call chesi resolve chestharu andi."
+            elif lang == "hindi":
+                resp_text = "Hum samajh sakte hain sir. Aapki concern note kar li hai aur hum is case ko hamare Senior Accounts Director ko escalate kar rahe hain. Woh aapse direct contact karenge."
+            else:
+                resp_text = "We understand your concern completely. We have noted the dispute and immediately escalated this case to our Senior Accounts Director, who will reach out to you directly."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response="Hum samajh sakte hain sir. Aapki concern note kar li hai aur hum is case ko hamare Senior Accounts Director ko escalate kar rahe hain. Woh aapse direct contact karenge.",
+                agent_speech_response=resp_text,
                 intent_detected="COMMERCIAL_DISPUTE_ESCALATION",
                 action_taken="ESCALATE_TO_HUMAN_CFO",
+                recommended_voice=target_voice,
                 should_escalate_to_human=True,
                 fsm_current_state="ESCALATED"
             )
 
         # 2. Check for UTR / Bank Transfer Confirmation -> Verify & Transition to Payment Pending
         utr_match = re.search(r"\b(UTR|NEFT|RTGS|IMPS)?\s*([A-Z0-9]{8,18})\b", speech.upper())
-        if any(term in speech_lower for term in ["utr", "neft", "rtgs", "imps", "already paid", "transfer kar diya", "bhej diya", "payment ho gaya"]):
+        if any(term in speech_lower for term in ["utr", "neft", "rtgs", "imps", "already paid", "transfer kar diya", "bhej diya", "payment ho gaya", "dabbulu pampanu", "pay chesamu"]):
             extracted_utr = utr_match.group(2) if utr_match else "UTR" + str(int(time.time()))[-8:]
             b2b_fsm.transition(inv_id, "PTP_REGISTERED", f"CUSTOMER_SHARED_UTR_{extracted_utr}")
             b2b_fsm.transition(inv_id, "PAYMENT_PENDING", "BANK_RECONCILIATION_PENDING")
             
+            if lang == "telugu":
+                resp_text = f"Dhanyavadalu andi! Mee settlement reference {extracted_utr} note chesamu. Banking reconciliation verify chesi confirm chesthamu."
+            elif lang == "hindi":
+                resp_text = f"Shukriya sir. Humne aapka settlement reference {extracted_utr} note kar liya hai. Banking reconciliation team se verify karke aapko confirmation bhej rahe hain."
+            else:
+                resp_text = f"Thank you sir. We have registered your settlement reference {extracted_utr}. Our banking reconciliation team is verifying it and will send confirmation shortly."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Shukriya sir. Humne aapka settlement reference {extracted_utr} note kar liya hai. Banking reconciliation team se verify karke aapko confirmation bhej rahe hain.",
+                agent_speech_response=resp_text,
                 intent_detected="UTR_SETTLEMENT_CONFIRMATION",
                 action_taken="RECORD_SETTLEMENT_REFERENCE",
+                recommended_voice=target_voice,
                 fsm_current_state="PAYMENT_PENDING"
             )
 
         # 3. Check for Identity / Who is calling inquiry
-        if any(term in speech_lower for term in ["kaun bol", "who is this", "who are you", "kahan se", "kis company", "aap kaun"]):
+        if any(term in speech_lower for term in ["kaun bol", "who is this", "who are you", "kahan se", "kis company", "aap kaun", "nuvvu evaru", "evaru meeru"]):
+            if lang == "telugu":
+                resp_text = "Namaste! Nenu Neerja, Razorpay Accounts Desk nundi mee autonomous AI voice assistant ni! Meetho matladadam chala santhosham ga undi. Meeru mana platform gurinchi aina, payments gurinchi aina edaina adagavachu mawa!"
+                intent = "TELUGU_IDENTITY_INQUIRY"
+            elif lang == "hindi":
+                resp_text = "Namaste! Main Razorpay Accounts Desk se Neerja bol rahi hoon, aapki autonomous AI voice assistant! Main aapke payment queries, platform architecture, ya casual conversation sabhi mein naturally help kar sakti hoon. Aap batayein, aaj main aapki kya madad kar sakti hoon?"
+                intent = "AGENT_IDENTITY_INQUIRY"
+            else:
+                resp_text = "Hello! I am Neerja from Razorpay Accounts Desk, your autonomous AI voice assistant! I can assist you with payment queries, GST modifications, commitments, or answer any questions about our platform. How may I help you today?"
+                intent = "AGENT_IDENTITY_INQUIRY"
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response="Namaste! Main Razorpay Accounts Desk se Neerja bol rahi hoon, aapki autonomous AI voice assistant! Main aapke payment queries, platform architecture, ya casual conversation sabhi mein naturally help kar sakti hoon. Aap batayein, aaj main aapki kya madad kar sakti hoon?",
-                intent_detected="AGENT_IDENTITY_INQUIRY",
+                agent_speech_response=resp_text,
+                intent_detected=intent,
                 action_taken="CLARIFY_AGENT_IDENTITY",
+                recommended_voice=target_voice,
                 fsm_current_state=b2b_fsm.get_state(inv_id)
             )
 
         # 3b. Check for Specific Dunning Context Inquiry (Why did you call / Kis cheez ka bill)
-        if any(term in speech_lower for term in ["kiska bill", "kis cheez ka bill", "bill kyu", "kyun call kiya", "kis invoice"]):
+        if any(term in speech_lower for term in ["kiska bill", "kis cheez ka bill", "bill kyu", "kyun call kiya", "kis invoice", "enduku call chesaru", "deni gurinchi"]):
+            if lang == "telugu":
+                resp_text = f"Namaskaram andi! Idi Acme Enterprises pending invoice #{inv_id} gurinchi call. Meeru edaina adagali anukunte nenu chepthanu andi!"
+            elif lang == "hindi":
+                resp_text = f"Namaste sir! Yeh Acme Enterprises ke pending invoice #{inv_id} ke regarding notification hai. Par agar aap koi bhi sawaal ya casual baat karna chahein, main bilkul ready hoon!"
+            else:
+                resp_text = f"Hello sir! This call is regarding Acme Enterprises pending invoice #{inv_id}. Please let me know if you have any questions or require any adjustments!"
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Namaste sir! Yeh Acme Enterprises ke pending invoice #{inv_id} ke regarding notification hai. Par agar aap koi bhi sawaal ya casual baat karna chahein, main bilkul ready hoon!",
+                agent_speech_response=resp_text,
                 intent_detected="INVOICE_DETAILS_INQUIRY",
                 action_taken="CLARIFY_COLLECTION_CONTEXT",
+                recommended_voice=target_voice,
                 fsm_current_state=b2b_fsm.get_state(inv_id)
             )
 
         # 4. Check for Discount / Waiver / Rebate Request
-        if any(term in speech_lower for term in ["discount", "kam karo", "waiver", "off", "concession", "kam kar do", "kuch kam"]):
+        if any(term in speech_lower for term in ["discount", "kam karo", "waiver", "off", "concession", "kam kar do", "kuch kam", "tagginchandi", "taggichu"]):
             # Allowed instant discount under policy: up to 10% or ₹500
             allowed_discount = min(500.0, amt * 0.10)
             net_after_discount = amt - allowed_discount
             
+            if lang == "telugu":
+                resp_text = f"Andi, mana automated policy prakaram 1-click immediate settlement ki INR {allowed_discount:,.0f} prompt discount offer cheyagalam. Net amount INR {net_after_discount:,.2f} authundi. Updated payment link pampana?"
+            elif lang == "hindi":
+                resp_text = f"Sir, hamari automated policy ke mutabiq hum immediate 1-click settlement par INR {allowed_discount:,.0f} ka prompt settlement discount offer kar sakte hain, jisse aapka net payable INR {net_after_discount:,.2f} ho jayega. Kya hum is discounted amount ke saath payment link dispatch karein?"
+            else:
+                resp_text = f"Sir, per our automated policy, we can offer an instant prompt settlement discount of INR {allowed_discount:,.0f}, reducing your net payable to INR {net_after_discount:,.2f}. Shall we dispatch the updated payment link?"
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Sir, hamari automated policy ke mutabiq hum immediate 1-click settlement par INR {allowed_discount:,.0f} ka prompt settlement discount offer kar sakte hain, jisse aapka net payable INR {net_after_discount:,.2f} ho jayega. Kya hum is discounted amount ke saath payment link dispatch karein?",
+                agent_speech_response=resp_text,
                 intent_detected="DISCOUNT_NEGOTIATION",
                 action_taken="OFFER_COMPLIANT_PROMPT_DISCOUNT",
+                recommended_voice=target_voice,
                 fsm_current_state=b2b_fsm.get_state(inv_id)
             )
 
         # 5. Check for Partial Payment / Split Installments
-        if any(term in speech_lower for term in ["partial", "split", "adha", "half", "installment", "thoda abhi", "50%", "tranche", "remaining", "part payment", "bache hue"]):
+        if any(term in speech_lower for term in ["partial", "split", "adha", "half", "installment", "thoda abhi", "50%", "tranche", "remaining", "part payment", "bache hue", "konchem ippudu"]):
             p1, p2 = extract_partial_split(speech, amt)
             if b2b_fsm.get_state(inv_id) != "RESOLUTION_PROPOSED":
                 b2b_fsm.transition(inv_id, "RESOLUTION_PROPOSED", "INSTALLMENT_SCHEDULE_OFFERED")
             
+            if lang == "telugu":
+                resp_text = f"Thappakunda andi! Mee convenience kosam e invoice ni two tranches ga divide chesthunnamu: INR {p1:,.2f} ippude clear cheyandi, migatha INR {p2:,.2f} next week. WhatsApp lo link active undi andi."
+            elif lang == "hindi":
+                resp_text = f"Bilkul sir, cash flow assist karne ke liye hum is invoice ko do tranches mein divide kar dete hain—INR {p1:,.2f} aap aaj clear kar lijiye aur baaki INR {p2:,.2f} next week. Humne schedule lock kar diya hai aur link aapke WhatsApp par active hai."
+            else:
+                resp_text = f"Certainly sir! To assist your cash flow, we can split this invoice into two tranches: INR {p1:,.2f} today, and the remaining INR {p2:,.2f} next week. The split link has been sent to your WhatsApp."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Bilkul sir, cash flow assist karne ke liye hum is invoice ko do tranches mein divide kar dete hain—INR {p1:,.2f} aap aaj clear kar lijiye aur baaki INR {p2:,.2f} next week. Humne schedule lock kar diya hai aur link aapke WhatsApp par active hai.",
+                agent_speech_response=resp_text,
                 intent_detected="PARTIAL_PAYMENT_SPLIT",
                 action_taken="SCHEDULE_PARTIAL_INSTALLMENTS",
+                recommended_voice=target_voice,
                 fsm_current_state=b2b_fsm.get_state(inv_id)
             )
 
         # 6. Check for Call Back Later / Busy
-        if any(term in speech_lower for term in ["meeting", "busy", "driving", "baad mein", "call later", "abhi time nahi", "1 ghante", "sham ko", "kal subah"]):
+        if any(term in speech_lower for term in ["meeting", "busy", "driving", "baad mein", "call later", "abhi time nahi", "1 ghante", "sham ko", "kal subah", "tharuvatha call", "ippudu kudaradu"]):
+            if lang == "telugu":
+                resp_text = "Arthamaindi andi, meeku disturb cheyamu. Reminders ni 3 hours freeze chesamu, evening follow-up chesthamu. Good luck with your meeting!"
+            elif lang == "hindi":
+                resp_text = "Samajh gaya sir, hum aapko bilkul disturb nahi karenge. Humne automated dunning reminders 3 ghante ke liye pause kar diye hain aur sham ko follow-up karenge. Good luck with your meeting sir!"
+            else:
+                resp_text = "Understood sir, we will not disturb you right now. We have paused automated reminders for 3 hours and will follow up this evening. Good luck with your meeting!"
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response="Samajh gaya sir, hum aapko bilkul disturb nahi karenge. Humne automated dunning reminders 3 ghante ke liye pause kar diye hain aur sham ko follow-up karenge. Good luck with your meeting sir!",
+                agent_speech_response=resp_text,
                 intent_detected="CALLBACK_REQUESTED",
                 action_taken="SCHEDULE_CALL_SUPPRESSION",
+                recommended_voice=target_voice,
                 fsm_current_state=b2b_fsm.get_state(inv_id)
             )
 
         # 7. Check for Channel Preference / Dispatch on WhatsApp or Email
-        if any(term in speech_lower for term in ["whatsapp", "link bhej", "message", "mail", "email", "sms", "number par send"]):
+        if any(term in speech_lower for term in ["whatsapp", "link bhej", "message", "mail", "email", "sms", "number par send", "pampandi", "pampana"]):
             disp_email = dispatch_engine.dispatch_email(
                 to_email="finance@acmepvt.com",
                 invoice_id=inv_id,
@@ -599,11 +907,20 @@ class B2BVoiceDialogueEngine:
                 invoice_id=inv_id,
                 custom_note="1-click UPI payment link active. Pay directly via Google Pay / PhonePe / Paytm."
             )
+
+            if lang == "telugu":
+                resp_text = f"Avunu andi, instant 1-click payment link mee registered WhatsApp number ({phone}) mariyu email ki dispatch chesamu. Akkadi nundi direct UPI tho pay cheyavachu."
+            elif lang == "hindi":
+                resp_text = f"Haanji sir, humne instant 1-click payment link aapke registered WhatsApp number ({phone}) aur email par dispatch kar diya hai. Aap wahan se bina kisi delay ke direct UPI se settle kar sakte hain."
+            else:
+                resp_text = f"Yes sir, we have dispatched the instant 1-click payment link to your registered WhatsApp number ({phone}) and email. You can settle directly via UPI without any delay."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Haanji sir, humne instant 1-click payment link aapke registered WhatsApp number ({phone}) aur email par dispatch kar diya hai. Aap wahan se bina kisi delay ke direct UPI se settle kar sakte hain.",
+                agent_speech_response=resp_text,
                 intent_detected="DISPATCH_PAYMENT_LINK",
                 action_taken="DISPATCH_WHATSAPP_UPI_LINK",
+                recommended_voice=target_voice,
                 dispatch_id=disp_email.dispatch_id,
                 dispatched_email_recipient=disp_email.recipient,
                 dispatched_whatsapp_recipient=disp_wa.recipient,
@@ -635,11 +952,19 @@ class B2BVoiceDialogueEngine:
             gw_result = default_gateway.mutate_invoice(inv_id, {"net_amount": net_amt, "tds_amount": tds_deduction_amt})
             b2b_fsm.transition(inv_id, "RESOLUTION_PROPOSED", "INVOICE_ADJUSTED_FOR_TDS")
             
+            if lang == "telugu":
+                resp_text = f"Sare andi, Section 194 prakaram {tds_pct}% TDS (INR {tds_deduction_amt:,.2f}) deduct chesi, net INR {net_amt:,.2f} ki payment link update chesamu. Form 16A upload cheyandi."
+            elif lang == "hindi":
+                resp_text = f"Theek hai sir, Section 194 ke tehat {tds_pct}% TDS (INR {tds_deduction_amt:,.2f}) adjust karke net INR {net_amt:,.2f} ka payment link update kar diya hai. Form 16A quarterly upload kar dijiyega."
+            else:
+                resp_text = f"Certainly sir, adjusting {tds_pct}% TDS (INR {tds_deduction_amt:,.2f}) under Section 194, we have updated your net payable to INR {net_amt:,.2f}. Please upload Form 16A quarterly."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Theek hai sir, Section 194 ke tehat {tds_pct}% TDS (INR {tds_deduction_amt:,.2f}) adjust karke net INR {net_amt:,.2f} ka payment link update kar diya hai. Form 16A quarterly upload kar dijiyega.",
+                agent_speech_response=resp_text,
                 intent_detected="TDS_DEDUCTION_DISPUTE",
                 action_taken="MUTATE_INVOICE_TDS_ADJUSTMENT",
+                recommended_voice=target_voice,
                 mutation_proposal=proposal,
                 invoice_mutated=True,
                 new_invoice_details=gw_result,
@@ -704,11 +1029,19 @@ class B2BVoiceDialogueEngine:
             if b2b_fsm.get_state(inv_id) != "RESOLUTION_PROPOSED":
                 b2b_fsm.transition(inv_id, "RESOLUTION_PROPOSED", "INVOICE_MUTATED_AND_DISPATCHED")
 
+            if lang == "telugu":
+                resp_text = f"Avunu mawa! Mee GSTIN {new_gstin} update chesamu. Revised tax invoice copy mee registered email mariyu WhatsApp ki instant ga pampamu. Friday lopala payment process complete chesthara mawa?"
+            elif lang == "hindi":
+                resp_text = f"Haanji sir, humne aapka GSTIN {new_gstin} update kar diya hai aur revised invoice instantly aapke email aur WhatsApp par bhej diya hai. Kya hum payment Friday ko process kar sakte hain?"
+            else:
+                resp_text = f"Certainly sir, we have updated your GSTIN to {new_gstin} and dispatched the revised tax invoice to your registered email and WhatsApp. Can we process the settlement by Friday?"
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Haanji sir, humne aapka GSTIN {new_gstin} update kar diya hai aur revised invoice instantly aapke email aur WhatsApp par bhej diya hai. Kya hum payment Friday ko process kar sakte hain?",
+                agent_speech_response=resp_text,
                 intent_detected="GST_DISPUTE_RESOLUTION",
                 action_taken="MUTATE_RAZORPAY_INVOICE",
+                recommended_voice=target_voice,
                 mutation_proposal=proposal,
                 invoice_mutated=True,
                 new_invoice_details=gw_result,
@@ -723,7 +1056,7 @@ class B2BVoiceDialogueEngine:
 
         # 10. Check for Promise to Pay (PTP) -> Explicit Commitment Day/Date Registration
         has_ptp_intent = bool(re.search(r"\b(will pay|pay (on|by|tomorrow|next|later|friday|monday|tuesday|wednesday|thursday|saturday|sunday|kal|repu)|clear (ho jayega|kar dunga|karenge|kar denge)|payment (ho jayega|kar denge|kar dunga|karenge|clear)|dedenge|de dunga|bhej denge|repu kadathanu|funds clear)\b", speech_lower))
-        has_day_commitment = any(day in speech_lower for day in ["friday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday", "tomorrow", "kal", "parson", "next week", "month end"]) and any(act in speech_lower for act in ["pay", "clear", "funds", "karenge", "accountant", "dunga", "denge", "settle", "kadathanu", "confirm", "bhejo"])
+        has_day_commitment = any(day in speech_lower for day in ["friday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday", "tomorrow", "kal", "parson", "next week", "month end", "repu"]) and any(act in speech_lower for act in ["pay", "clear", "funds", "karenge", "accountant", "dunga", "denge", "settle", "kadathanu", "confirm", "bhejo"])
         is_not_general_question = not any(q in speech_lower for q in ["what", "why", "how", "who", "where", "tell me", "doubt", "explain"])
 
         if (has_ptp_intent or has_day_commitment) and is_not_general_question:
@@ -756,11 +1089,19 @@ class B2BVoiceDialogueEngine:
                 custom_note=f"Promise-to-Pay registered for {day_label}. Dunning reminders suppressed."
             )
 
+            if lang == "telugu":
+                resp_text = f"Chala dhanyavadalu andi! Memu {day_label} Promise-to-Pay confirm chesi reminders suppress chesamu. WhatsApp lo link active untundi."
+            elif lang == "hindi":
+                resp_text = f"Bahut shukriya sir! Humne {day_label} ka Promise-to-Pay note kar liya hai aur reminder lock kar diya hai. Link aapke WhatsApp par active rahega."
+            else:
+                resp_text = f"Thank you very much sir! We have registered your Promise-to-Pay for {day_label} and suppressed automated reminders. The link remains active on your WhatsApp."
+
             return VoiceDialogueResponse(
                 call_session_id=req.call_session_id,
-                agent_speech_response=f"Bahut shukriya sir! Humne {day_label} ka Promise-to-Pay note kar liya hai aur reminder lock kar diya hai. Link aapke WhatsApp par active rahega.",
+                agent_speech_response=resp_text,
                 intent_detected="PROMISE_TO_PAY_COMMITMENT",
                 action_taken="REGISTER_PTP_LOCK",
+                recommended_voice=target_voice,
                 ptp_created=True,
                 ptp_details=ptp_record,
                 dispatch_id=disp_email.dispatch_id,
@@ -771,7 +1112,7 @@ class B2BVoiceDialogueEngine:
             )
 
         # 11. Conversational Voice AI Dialogue Synthesizer (Casual Talk, Questions, Small Talk, Explanations)
-        rich_response, rich_intent = synthesize_rich_conversational_turn(speech, inv_id, amt)
+        rich_response, rich_intent = synthesize_rich_conversational_turn(speech, inv_id, amt, lang=lang)
 
         cedar_res = get_cedar_engine().evaluate(
             principal="Agent::BedrockVoiceAgent",
@@ -785,6 +1126,7 @@ class B2BVoiceDialogueEngine:
             agent_speech_response=rich_response,
             intent_detected=rich_intent,
             action_taken="EXECUTE_CONVERSATIONAL_TURN",
+            recommended_voice=target_voice,
             cedar_evaluation=cedar_res.to_dict(),
             bedrock_inference=bedrock_res.to_dict(),
             fsm_current_state=b2b_fsm.get_state(inv_id)
