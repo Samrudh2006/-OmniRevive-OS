@@ -296,7 +296,35 @@ def query_external_llm_if_configured(speech: str, inv_id: str, amt: float) -> Op
         except Exception:
             pass
 
+    # 4. OpenRouter free tier (no API key needed for some models, fallback)
+    try:
+        import httpx
+        openrouter_key = os.environ.get("OPENROUTER_API_KEY", "")
+        headers = {"Content-Type": "application/json", "HTTP-Referer": "https://razorrevive.razorpay.com"}
+        if openrouter_key:
+            headers["Authorization"] = f"Bearer {openrouter_key}"
+        with httpx.Client(timeout=2.0) as client:
+            resp = client.post(
+                "https://openrouter.ai/api/v1/chat/completions",
+                headers=headers,
+                json={
+                    "model": "meta-llama/llama-3.2-3b-instruct:free",
+                    "messages": [
+                        {"role": "system", "content": "You are Neerja, Razorpay's friendly AI voice assistant. Reply in 1-2 spoken sentences in the user's language (Telugu/Hindi/English). No markdown."},
+                        {"role": "user", "content": speech}
+                    ],
+                    "max_tokens": 100
+                }
+            )
+            if resp.status_code == 200:
+                txt = resp.json().get("choices", [{}])[0].get("message", {}).get("content", "").strip()
+                if txt and len(txt) > 5:
+                    return txt
+    except Exception:
+        pass
+
     return None
+
 
 def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterprise_998", amt: float = 85000.0, lang: str = "english") -> tuple[str, str]:
     """
@@ -678,29 +706,66 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
                 "GENERAL_KNOWLEDGE"
             )
 
-    # 14. Intelligent Conversational Open-Ended Response (Zero Robotic Echo!)
-    if s_lower.endswith("?") or any(w in s_lower for w in ["what", "why", "how", "when", "where", "can you", "kya", "kyun", "kaise"]):
-        if lang == "hindi":
-            return (
-                "Yeh ek interesting sawaal hai sir! Main aapse bilkul naturally interact karne ke liye design ki gayi hoon. Aap jo bhi puchna chahein bejhijhak puch sakte hain!",
-                "CONVERSATIONAL_RESPONSE"
-            )
-        else:
-            return (
-                "That is a great question sir! I am designed to interact naturally and assist you across any technical or payment queries. Feel free to ask anything!",
-                "CONVERSATIONAL_RESPONSE"
-            )
-    
-    if lang == "hindi":
-        return (
-            "Main aapki baat samajh rahi hoon sir! Hum kisi bhi topic par freely baat kar sakte hain—chahe platform features hon, financial assistance ho, ya normal discussion. Aap batayein, aage kya discuss karein?",
-            "CONVERSATIONAL_RESPONSE"
-        )
+    # 14. Intelligent Topic-Aware Open-Ended Response (actual contextual answers!)
+    # Extract key topic from speech and provide real, specific answers
+    topic_words = [w for w in s_lower.split() if len(w) > 3 and w not in
+                   {"what", "where", "when", "how", "why", "can", "could", "would", "should", "please", "about", "this", "that", "the", "and", "for"}]
+    topic_hint = topic_words[0] if topic_words else ""
+
+    # Topic-aware intelligent answers
+    if any(k in s_lower for k in ["temperature", "celsius", "fahrenheit", "hot", "cold"]):
+        topic_resp = {
+            "telugu": "Temperature gurinchi maatladataniki nenu climate data access cheyyaledhu mawa, kani payment platform questions ki naaku full access undi! Mee invoice gurinchi em cheppali?",
+            "hindi": "Main weather data access nahi kar sakti sir, lekin payment platform ke baare mein koi bhi sawaal pooch sakte hain!",
+            "english": "I cannot access real-time weather data sir, but I am your expert on all things payments and invoices! How can I assist you today?"
+        }
+    elif any(k in s_lower for k in ["time", "date", "today", "clock", "now", "tella"]):
+        import datetime as _dt
+        now_ist = _dt.datetime.now(_dt.timezone.utc).strftime("%I:%M %p UTC")
+        topic_resp = {
+            "telugu": f"Ippudu server time {now_ist} UTC undi mawa. Meeru IST lo lekkapothe 5:30 hrs add cheyandi!",
+            "hindi": f"Abhi server par {now_ist} UTC hai sir. IST ke liye 5:30 ghante add karein!",
+            "english": f"Current server time is {now_ist} UTC. Add 5 hours 30 minutes for IST."
+        }
+    elif any(k in s_lower for k in ["razorpay", "razorrevive", "company", "who made", "built", "created"]):
+        topic_resp = {
+            "telugu": "RazorRevive-OS ni Razorpay engineers team build chesindi mawa! Idi autonomous AI revenue recovery platform, failed UPI and card payments ni Weibull hazard modeling use chesi automatically recover chestundi!",
+            "hindi": "RazorRevive-OS Razorpay ki engineering team ne build kiya hai sir! Yeh autonomous AI revenue recovery platform hai jo failed UPI aur card payments ko Weibull hazard model use karke recover karta hai!",
+            "english": "RazorRevive-OS was built by the Razorpay engineering team! It is an autonomous AI revenue recovery platform that uses Weibull hazard modeling to automatically recover failed UPI and card payments!"
+        }
+    elif any(k in s_lower for k in ["joke", "funny", "chutkula", "hasao", "comedy", "entertain"]):
+        topic_resp = {
+            "telugu": "Oka chinna joke mawa: Oka UPI payment fail aindi, bank server ki 504 error vachindi. Atanu 45 minutes wait chesadu. Adi exact ga mana Weibull optimal retry window! Haha!",
+            "hindi": "Ek chutkula sir: Ek UPI payment fail hua, bank server ne 504 diya. Usne 45 minute wait kiya. Yahi toh hamara Weibull optimal retry window hai! Ha ha!",
+            "english": "Here is a fintech joke sir: A UPI payment failed with a 504 timeout. The user waited exactly 45 minutes and retried. That is literally our Weibull optimal recovery window! We call it accidental genius!"
+        }
+    elif any(k in s_lower for k in ["hello", "hi", "namaste", "hlo", "hey", "namaskar", "namaskaram"]):
+        topic_resp = {
+            "telugu": "Namaste mawa! Nenu Neerja, Razorpay Accounts Desk AI assistant ni. Meeru em adugali?",
+            "hindi": "Namaste sir! Main Neerja hoon, Razorpay ki AI voice assistant. Aaj main aapki kya madad kar sakti hoon?",
+            "english": "Hello! I am Neerja, Razorpay's AI voice assistant. How may I assist you today?"
+        }
+    elif any(k in s_lower for k in ["good", "fine", "okay", "ok", "theek", "badhiya", "bagundi", "nice", "great", "awesome"]):
+        topic_resp = {
+            "telugu": "Chala santhosham mawa! Meeru ela unnaaru? Mee invoice ki related em adigithe direct ga cheppandi!",
+            "hindi": "Bahut accha sir! Aap kaisa feel kar rahe hain aaj? Koi invoice ya payment query ho toh zaroor bataiyega!",
+            "english": "Wonderful! Glad to hear that sir. Feel free to ask about any invoice, payment, or platform queries you may have!"
+        }
+    elif topic_hint:
+        # Dynamic fallback with actual topic echo — sounds natural, not robotic
+        topic_resp = {
+            "telugu": f"'{topic_hint}' gurinchi meeru adugutunnaru mawa! Idi interesting topic. Nenu mee payment, invoice, leda platform questions ki better ga help cheyagalanu. Em cheppali?",
+            "hindi": f"Aap '{topic_hint}' ke baare mein pooch rahe hain sir! Yeh ek interesting topic hai. Main payment, invoice, ya platform questions mein aapki best help kar sakti hoon. Kya batana chahenge?",
+            "english": f"You are asking about '{topic_hint}' sir! That is an interesting topic. I can best assist you with payment, invoice, GST, and platform-related queries. What would you like to know?"
+        }
     else:
-        return (
-            "I understand your thoughts completely sir! We can freely discuss any topic—platform architecture, invoice reconciliation, or general queries. How would you like to proceed?",
-            "CONVERSATIONAL_RESPONSE"
-        )
+        topic_resp = {
+            "telugu": "Meeru emi cheppali anukunnaaru mawa? Nenu payments, invoices, GST, TDS, leda RazorRevive platform gurinchi aythe chala bagaa help cheyagalanu!",
+            "hindi": "Aap kya jaanna chahte hain sir? Main payments, invoices, GST, TDS, ya RazorRevive platform ke baare mein expert hoon!",
+            "english": "Could you share a bit more sir? I specialize in payments, invoices, GST compliance, TDS, and RazorRevive platform topics — happy to help with any of those!"
+        }
+
+    return (topic_resp.get(lang, topic_resp["english"]), "CONVERSATIONAL_RESPONSE")
 
 def try_query_local_ollama(speech: str, inv_id: str, amt: float) -> Optional[str]:
     return query_external_llm_if_configured(speech, inv_id, amt)

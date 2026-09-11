@@ -674,12 +674,14 @@ export function replayLastSpeech() {
 }
 
 /**
- * Voice Mic STT for form fields with authentic objection simulator fallback
+ * Speak (STT) — hands-free voice input.
+ * On speech end, automatically fires the AI voice dialogue turn.
+ * User experience: Click "Speak" → talk → AI responds in matching language. Done.
  */
 export function toggleMicrophoneSTT() {
   const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRec) {
-    // Elegant fallback: cycle through realistic customer voice objections
+    // Elegant fallback: cycle through realistic trilingual customer voice objections
     const samples = [
       "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo",
       "Invoice lo GST number thappu ga undi, correct GST update chesi kothadi pampandi",
@@ -697,12 +699,19 @@ export function toggleMicrophoneSTT() {
     document.querySelectorAll("#voice-speech-select").forEach((sel) => {
       sel.value = selectedSample;
     });
-    showToast("🎙️ Speech Captured: Loaded authentic invoice objection!", "info");
+    showToast("🎙️ Speak (STT) not supported — loaded sample objection. Click 'Execute' to hear AI response!", "info");
+    // Auto-trigger AI turn with the loaded sample
+    setTimeout(() => {
+      if (typeof window.triggerVoiceTurnAction === "function") {
+        window.triggerVoiceTurnAction();
+      }
+    }, 500);
     return;
   }
 
   const micBtns = document.querySelectorAll(".mic-stt-btn");
 
+  // Toggle off if already recording
   if (isOneOffRecording && oneOffRecognition) {
     try {
       oneOffRecognition.stop();
@@ -711,23 +720,27 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic</span>';
+      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
     });
     showToast("🛑 Microphone stopped", "info");
     return;
   }
 
   oneOffRecognition = new SpeechRec();
-  oneOffRecognition.lang = "te-IN"; // Defaults to Indian multilingual capture (Telugu, Hindi, English)
+  // Indian multilingual: Telugu, Hindi, English all captured by te-IN
+  oneOffRecognition.lang = "te-IN";
   oneOffRecognition.continuous = false;
   oneOffRecognition.interimResults = true;
 
+  let capturedTranscript = "";
+
   oneOffRecognition.onstart = () => {
     isOneOffRecording = true;
+    capturedTranscript = "";
     micBtns.forEach((btn) => {
-      btn.classList.remove("bg-[#1e293b]", "text-slate-300");
+      btn.classList.remove("bg-[#1e293b]", "text-slate-300", "bg-white", "text-purple-700", "dark:bg-[#142442]", "text-purple-300");
       btn.classList.add("bg-rose-600", "animate-pulse", "text-white");
-      btn.innerHTML = '<span>🔴</span> <span class="font-bold">Listening... Speak Now!</span>';
+      btn.innerHTML = '<span>🔴</span> <span class="font-bold">Listening...</span>';
     });
     showToast("🎙️ Listening... Speak in Telugu, Hindi or English!", "info");
   };
@@ -738,11 +751,16 @@ export function toggleMicrophoneSTT() {
       transcript += event.results[i][0].transcript;
     }
     if (transcript) {
+      capturedTranscript = transcript;
       document.querySelectorAll("#voice-custom-speech").forEach((input) => {
         input.value = transcript;
       });
       document.querySelectorAll("#voice-speech-select").forEach((sel) => {
         sel.value = transcript;
+      });
+      // Show interim transcript in the UI so user sees what was heard
+      micBtns.forEach((btn) => {
+        btn.innerHTML = `<span>🔴</span> <span class="font-bold text-[9px] max-w-[120px] truncate">${transcript.slice(0, 40)}...</span>`;
       });
     }
   };
@@ -752,24 +770,41 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic</span>';
+      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
     });
+
+    // 🔑 AUTO-TRIGGER: If we captured any speech, immediately send to AI
+    if (capturedTranscript && capturedTranscript.trim().length > 1) {
+      showToast(`🎙️ Heard: "${capturedTranscript.slice(0, 50)}" — Processing AI response...`, "info");
+      setTimeout(() => {
+        if (typeof window.triggerVoiceTurnAction === "function") {
+          window.triggerVoiceTurnAction();
+        }
+      }, 300);
+    }
   };
 
   oneOffRecognition.onerror = (e) => {
     console.warn("STT Error", e);
     isOneOffRecording = false;
+    capturedTranscript = "";
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Voice Mic</span>';
+      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
     });
+    if (e.error === "not-allowed") {
+      showToast("❌ Microphone access denied. Please allow mic access in browser settings.", "error");
+    } else if (e.error === "no-speech") {
+      showToast("⚠️ No speech detected. Try speaking louder or closer to the mic.", "info");
+    }
   };
 
   try {
     oneOffRecognition.start();
   } catch (e) {
-    console.warn("Could not start one-off recognition:", e);
+    console.warn("Could not start recognition:", e);
+    showToast("❌ Could not access microphone. Please check permissions.", "error");
   }
 }
 
