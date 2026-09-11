@@ -25,6 +25,16 @@ export async function verifyAuditLedgerIntegrity() {
   }
 }
 
+export async function fetchAuditEvents(limit = 8) {
+  try {
+    const data = await safeApiCall(`/api/v1/audit/events?limit=${limit}`);
+    return data?.events || [];
+  } catch (err) {
+    console.error("fetchAuditEvents failed", err);
+    return [];
+  }
+}
+
 export async function refreshAuditLedger() {
   try {
     const data = await safeApiCall("/api/v1/audit/events?limit=8");

@@ -766,8 +766,14 @@ export function toggleMicrophoneSTT() {
   }
 }
 
-// Bind toggleSTT to UnifiedVoiceEngine
+// Bind helper methods directly to UnifiedVoiceEngine
 UnifiedVoiceEngine.toggleSTT = toggleMicrophoneSTT;
+UnifiedVoiceEngine.replayLastSpeech = replayLastSpeech;
+UnifiedVoiceEngine.toggleLiveCall = toggleLiveVoiceCall;
+UnifiedVoiceEngine.startLiveCall = startLiveVoiceCall;
+UnifiedVoiceEngine.endLiveCall = endLiveVoiceCall;
+UnifiedVoiceEngine.speakText = speakText;
+UnifiedVoiceEngine.stopSpeaking = stopSpeaking;
 
 // Immediate window registration
 if (typeof window !== "undefined") {

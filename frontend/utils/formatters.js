@@ -52,3 +52,9 @@ export function validateGSTIN(gstin) {
   const regex = /^[0-3][0-9][A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
   return regex.test(clean);
 }
+
+export function truncateHash(hash, len = 8) {
+  if (!hash) return "N/A";
+  if (hash.length <= len * 2) return hash;
+  return `${hash.slice(0, len)}...${hash.slice(-len)}`;
+}

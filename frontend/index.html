@@ -3928,60 +3928,145 @@
     // Delegated Voice Engine (Powered by UnifiedVoiceEngine in audioPlayer.js)
     // Enforces single audio playback, zero dual-voice overlap, and zero-echo duplex call
     // =========================================================================
-    const UnifiedVoiceEngine = {
-      get isSpeaking() { return window.UnifiedVoiceEngine ? window.UnifiedVoiceEngine.isSpeaking : false; },
-      get isAiSpeakingOrLoading() { return window.UnifiedVoiceEngine ? window.UnifiedVoiceEngine.isAiSpeakingOrLoading : false; },
-      get currentNeuralVoice() { return window.UnifiedVoiceEngine ? window.UnifiedVoiceEngine.currentNeuralVoice : "auto"; },
-      set currentNeuralVoice(v) { if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.currentNeuralVoice = v; },
-      speak(...args) { return window.UnifiedVoiceEngine?.speak(...args); },
-      stop() { return window.UnifiedVoiceEngine?.stop(); },
-      loadVoices() { return window.UnifiedVoiceEngine?.loadVoices(); },
-      setNeuralVoice(v) { return window.UnifiedVoiceEngine?.setNeuralVoice(v); },
-      updateVoiceBadge(v, t) { return window.UnifiedVoiceEngine?.updateVoiceBadge(v, t); },
-      startLiveCall() { return window.UnifiedVoiceEngine?.startLiveCall(); },
-      endLiveCall() { return window.UnifiedVoiceEngine?.endLiveCall(); },
-      toggleLiveCall() { return window.UnifiedVoiceEngine?.toggleLiveCall(); },
-      replayLastSpeech() { return window.UnifiedVoiceEngine?.replayLastSpeech(); }
+    const LocalVoiceEngineShim = {
+      get isSpeaking() { return (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim) ? window.UnifiedVoiceEngine.isSpeaking : false; },
+      get isAiSpeakingOrLoading() { return (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim) ? window.UnifiedVoiceEngine.isAiSpeakingOrLoading : false; },
+      get currentNeuralVoice() { return (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim) ? window.UnifiedVoiceEngine.currentNeuralVoice : "auto"; },
+      set currentNeuralVoice(v) { if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim) window.UnifiedVoiceEngine.currentNeuralVoice = v; },
+      speak(...args) {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.speak === "function") {
+          return window.UnifiedVoiceEngine.speak(...args);
+        }
+        if ('speechSynthesis' in window && args[0]) {
+          try {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(args[0]);
+            if (typeof args[1] === "function") u.onend = args[1];
+            window.speechSynthesis.speak(u);
+          } catch (e) { console.warn("Fallback TTS error", e); }
+        }
+      },
+      stop() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.stop === "function") {
+          return window.UnifiedVoiceEngine.stop();
+        }
+        if ('speechSynthesis' in window) {
+          try { window.speechSynthesis.cancel(); } catch (e) {}
+        }
+      },
+      loadVoices() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.loadVoices === "function") {
+          return window.UnifiedVoiceEngine.loadVoices();
+        }
+      },
+      setNeuralVoice(v) {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.setNeuralVoice === "function") {
+          return window.UnifiedVoiceEngine.setNeuralVoice(v);
+        }
+      },
+      updateVoiceBadge(v, t) {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.updateVoiceBadge === "function") {
+          return window.UnifiedVoiceEngine.updateVoiceBadge(v, t);
+        }
+      },
+      startLiveCall() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.startLiveCall === "function") {
+          return window.UnifiedVoiceEngine.startLiveCall();
+        }
+        this.speak("Namaste sir! Main Razorpay Accounts Desk se Neerja bol rahi hoon Acme Enterprises invoice ke silsile mein. Meeru Telugu lo aina matladavachu, Hindi ya English kisi mein bhi!");
+      },
+      endLiveCall() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.endLiveCall === "function") {
+          return window.UnifiedVoiceEngine.endLiveCall();
+        }
+        this.stop();
+      },
+      toggleLiveCall() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.toggleLiveCall === "function") {
+          return window.UnifiedVoiceEngine.toggleLiveCall();
+        }
+        this.startLiveCall();
+      },
+      replayLastSpeech() {
+        if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.replayLastSpeech === "function") {
+          return window.UnifiedVoiceEngine.replayLastSpeech();
+        }
+        const transcriptEl = document.getElementById("voice-agent-speech-transcript");
+        let cleanText = "";
+        if (transcriptEl && transcriptEl.innerText) {
+          const raw = transcriptEl.innerText;
+          cleanText = raw.replace(/^[^:]+:\s*"/, "").replace(/"$/, "").trim();
+        }
+        if (!cleanText || cleanText.includes("Ready to synthesize") || cleanText.includes("Listening")) {
+          cleanText = "Namaste! Hamara autonomous B2B voice engine active hai. Invoice details verify kar rahe hain.";
+        }
+        this.speak(cleanText);
+      }
     };
+    const UnifiedVoiceEngine = LocalVoiceEngineShim;
 
     function changeNeuralVoice(voiceId) {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.setNeuralVoice(voiceId);
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.setNeuralVoice === "function") {
+        window.UnifiedVoiceEngine.setNeuralVoice(voiceId);
+      }
     }
 
     function loadVoices() {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.loadVoices();
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.loadVoices === "function") {
+        window.UnifiedVoiceEngine.loadVoices();
+      }
     }
 
     function speakText(text, onComplete = null, voiceOverride = null) {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.speak(text, onComplete, voiceOverride);
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.speak === "function") {
+        window.UnifiedVoiceEngine.speak(text, onComplete, voiceOverride);
+      } else {
+        LocalVoiceEngineShim.speak(text, onComplete, voiceOverride);
+      }
     }
 
     function stopSpeaking() {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.stop();
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.stop === "function") {
+        window.UnifiedVoiceEngine.stop();
+      } else {
+        LocalVoiceEngineShim.stop();
+      }
     }
 
     function replayLastSpeech() {
-      if (typeof window.replayLastSpeech === "function") {
-        window.replayLastSpeech();
-      } else if (window.UnifiedVoiceEngine) {
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.replayLastSpeech === "function") {
         window.UnifiedVoiceEngine.replayLastSpeech();
+      } else {
+        LocalVoiceEngineShim.replayLastSpeech();
       }
     }
 
     function toggleLiveVoiceCall() {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.toggleLiveCall();
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.toggleLiveCall === "function") {
+        window.UnifiedVoiceEngine.toggleLiveCall();
+      } else {
+        LocalVoiceEngineShim.toggleLiveCall();
+      }
     }
 
     function startLiveVoiceCall() {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.startLiveCall();
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.startLiveCall === "function") {
+        window.UnifiedVoiceEngine.startLiveCall();
+      } else {
+        LocalVoiceEngineShim.startLiveCall();
+      }
     }
 
     function endLiveVoiceCall() {
-      if (window.UnifiedVoiceEngine) window.UnifiedVoiceEngine.endLiveCall();
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.endLiveCall === "function") {
+        window.UnifiedVoiceEngine.endLiveCall();
+      } else {
+        LocalVoiceEngineShim.endLiveCall();
+      }
     }
 
     function toggleMicrophoneSTT() {
-      if (window.UnifiedVoiceEngine && typeof window.UnifiedVoiceEngine.toggleSTT === "function") {
+      if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.toggleSTT === "function") {
         window.UnifiedVoiceEngine.toggleSTT();
       } else if (typeof window._internalToggleMicrophoneSTT === "function") {
         window._internalToggleMicrophoneSTT();

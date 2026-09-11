@@ -2,10 +2,10 @@
  * RazorRevive-OS — Deep-Loop B2B Voice & PTP Service
  */
 
-import { safeApiCall, showToast } from "./apiClient.js";
-import { formatINR, formatDateIST } from "../utils/formatters.js";
-import { speakText, stopSpeaking } from "../utils/audioPlayer.js";
-import { refreshAuditLedger } from "./auditService.js";
+import { safeApiCall, showToast } from "./apiClient.js?v=2.1.0";
+import { formatINR, formatDateIST } from "../utils/formatters.js?v=2.1.0";
+import { speakText, stopSpeaking } from "../utils/audioPlayer.js?v=2.1.0";
+import { refreshAuditLedger } from "./auditService.js?v=2.1.0";
 
 export async function triggerVoiceTurnAction() {
   let customSpeech = "";

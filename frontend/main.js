@@ -3,9 +3,9 @@
  * Orchestrates modules, services, reactive state, and registers window actions.
  */
 
-import { safeApiCall } from "./services/apiClient.js";
-import { showToast } from "./utils/toast.js";
-import { formatINR, formatDateIST, maskPII, truncateHash } from "./utils/formatters.js";
+import { safeApiCall } from "./services/apiClient.js?v=2.1.0";
+import { showToast } from "./utils/toast.js?v=2.1.0";
+import { formatINR, formatDateIST, maskPII, truncateHash } from "./utils/formatters.js?v=2.1.0";
 import {
   UnifiedVoiceEngine,
   loadVoices,
@@ -17,7 +17,7 @@ import {
   toggleLiveVoiceCall,
   startLiveVoiceCall,
   endLiveVoiceCall
-} from "./utils/audioPlayer.js";
+} from "./utils/audioPlayer.js?v=2.1.0";
 
 import {
   triggerFastLoopPipeline,
@@ -25,25 +25,25 @@ import {
   generateAndLoadSampleCsv,
   handleBulkCsvFileSelected,
   exportBatchResolutionCsv
-} from "./services/recoveryService.js";
+} from "./services/recoveryService.js?v=2.1.0";
 
 import {
   triggerVoiceTurnAction,
   loadPTPRecords
-} from "./services/b2bVoiceService.js";
+} from "./services/b2bVoiceService.js?v=2.1.0";
 
 import {
   fetchAuditEvents,
   verifyAuditLedgerIntegrity,
   refreshAuditLedger,
   downloadAuditCertificate
-} from "./services/auditService.js";
+} from "./services/auditService.js?v=2.1.0";
 
 import {
   fetchCFOQueue,
   approveCFOItem,
   rejectCFOItem
-} from "./services/cfoService.js";
+} from "./services/cfoService.js?v=2.1.0";
 const fetchCfoQueue = fetchCFOQueue;
 const approveEscalation = approveCFOItem;
 const rejectEscalation = rejectCFOItem;
@@ -52,31 +52,31 @@ import {
   refreshCfoQueueUI,
   handleCfoApprove,
   handleCfoReject
-} from "./components/cfoApprovalModal.js";
+} from "./components/cfoApprovalModal.js?v=2.1.0";
 
-import { initFintech3DTopology } from "./components/topologyCanvas.js";
-import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js";
+import { initFintech3DTopology } from "./components/topologyCanvas.js?v=2.1.0";
+import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js?v=2.1.0";
 import {
   toggleAiCopilotDrawer,
   sendQuickPrompt,
   speakLastCopilotMessage,
   speakCopilotResponse,
   handleCopilotCustomQuery
-} from "./components/copilotDrawer.js";
+} from "./components/copilotDrawer.js?v=2.1.0";
 
 import {
   openAwsCedarModal,
   closeAwsCedarModal,
   applyCedarTestCase,
   runCedarTestEvaluation
-} from "./components/cedarModal.js";
+} from "./components/cedarModal.js?v=2.1.0";
 
 import {
   BANK_SWITCH_STATES,
   TOUR_STEPS,
   CMDK_COMMANDS,
   appState
-} from "./state/appState.js";
+} from "./state/appState.js?v=2.1.0";
 
 // =========================================================================
 // Component Mount Helper
@@ -1279,6 +1279,7 @@ window.triggerCelebrationConfetti = triggerCelebrationConfetti;
 window.countUpValue = countUpValue;
 window.animateAllKpis = animateAllKpis;
 
+window.UnifiedVoiceEngine = UnifiedVoiceEngine;
 window.loadVoices = loadVoices;
 window.speakText = speakText;
 window.stopSpeaking = stopSpeaking;
