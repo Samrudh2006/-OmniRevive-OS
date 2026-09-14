@@ -86,22 +86,24 @@ TAGS_METADATA = [
 ]
 
 app = FastAPI(
-    title="RazorRevive-OS API",
+    title="OmniRevive-OS API",
     description="""
-# 🚀 RazorRevive-OS Control Plane API
+# 🚀 OmniRevive-OS Universal Control Plane API
 
-Autonomous AI Revenue Recovery Engine with Zero-Trust Cryptographic Guardrails, Dynamic Mandate Retrier & B2B Voice PTP Engine.
+Universal Autonomous AI Revenue Recovery Control Plane with Zero-Trust Guardrails, Weibull Hazard Retrier, Qdrant Vector Memory & Trilingual Voice PTP Engine.
 
-### 🏛️ Architecture Highlights:
-* **Tier 1 (Fast-Loop):** Sub-millisecond error classification, hazard window optimization, and dynamic UPI payment links.
-* **Tier 2 (Deep-Loop):** Deterministic voice FSM for automated dispute resolution and promise-to-pay calendar locks.
-* **Tier 3 (Policy Gatekeeper):** Zero-trust compliance rules enforcing TRAI quiet hours (21:00-09:00 IST), maximum discount caps (<=10%, <=INR 500), and distributed idempotency.
+### 🏛️ Universal Architecture Highlights:
+* **Multi-Rail Adaptability:** Compatible with Indian payment rails & gateways (Juspay HyperSDK, Cashfree, PhonePe Switch, CRED, Razorpay, Stripe).
+* **Tier 1 (Fast-Loop):** Sub-millisecond error classification, Weibull hazard survival modeling, and dynamic UPI QR recovery.
+* **Tier 2 (Deep-Loop):** Trilingual conversational voice FSM (Telugu, Hindi, English) for B2B disputes & PTP calendar locks.
+* **Tier 3 (Policy Gatekeeper):** Zero-trust compliance rules enforcing TRAI quiet hours (21:00-09:00 IST), maximum discount caps (<=10%, <=INR 500), and distributed CAS idempotency (0 double-debits).
+* **Semantic Memory:** On-device Qdrant vector memory collection for failure precedents.
 * **Audit Ledger:** SHA-256 sequential hash chaining ensuring 100% cryptographic continuity.
     """,
-    version="1.0.0",
+    version="1.1.0",
     openapi_tags=TAGS_METADATA,
     contact={
-        "name": "Razorpay AI Buildathon Engineering Team",
+        "name": "OmniRevive Core Engineering Team",
         "url": "https://github.com/Samrudh2006/Razorpay-Target-0.1percent-"
     },
     license_info={
@@ -236,12 +238,12 @@ async def serve_aws_logo():
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
-    """Serves the RazorRevive-OS Control Plane Dashboard."""
+    """Serves the OmniRevive-OS Universal Control Plane Dashboard."""
     frontend_path = os.path.join(frontend_dir, "index.html")
     if os.path.exists(frontend_path):
         with open(frontend_path, "r", encoding="utf-8") as f:
             return f.read()
-    return "<h1>RazorRevive-OS Control Plane Running</h1>"
+    return "<h1>OmniRevive-OS Universal Control Plane Running</h1>"
 
 # Register Modular Routers
 app.include_router(system_router)

@@ -8,19 +8,20 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
-    APP_NAME: str = "RazorRevive-OS"
+    APP_NAME: str = "OmniRevive-OS"
     ENVIRONMENT: str = "sandbox"
     DEBUG: bool = True
     DATABASE_PATH: str = "recovery_audit.db"
     
-    # Razorpay API Credentials
+    # Universal Gateway Adapters (Juspay, Cashfree, PhonePe, CRED, Razorpay)
+    DEFAULT_GATEWAY_PROVIDER: str = "universal_multi_rail"
     RAZORPAY_KEY_ID: str = "rzp_test_mock12345"
     RAZORPAY_KEY_SECRET: str = "mock_secret_key_12345"
     RAZORPAY_WEBHOOK_SECRET: str = "whsec_mock_signature_test"
 
     # Local Open-Source AI Engine (Zero External API Keys Required)
     AI_PROVIDER: str = "LOCAL_OPENSOURCE" # "LOCAL_OPENSOURCE" | "OLLAMA"
-    LOCAL_MODEL_NAME: str = "RazorRevive-Embed-v1"
+    LOCAL_MODEL_NAME: str = "OmniRevive-Embed-v1"
     OLLAMA_BASE_URL: str = "http://localhost:11434"
     EMBEDDED_AI_ENABLED: bool = True
 

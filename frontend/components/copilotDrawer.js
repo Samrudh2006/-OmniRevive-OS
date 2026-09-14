@@ -58,7 +58,7 @@ function getClientSideCopilotResponse(queryText) {
     return (
       "⚡ **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n" +
       "Traditional gateways retry failed bank charges instantly, causing cascading 504 gateway timeouts.\n\n" +
-      "RazorRevive-OS solves this using a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
+      "OmniRevive-OS solves this using a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
       "1. Calculates recovery half-life dynamics from live NPCI switch signals.\n" +
       "2. Dynamically mode-shifts the retry window to the mathematical peak at **+45 minutes**.\n" +
       "3. Boosts cohort recovery yield from a 42.24% baseline to **78.39%** without triggering bank rate limits."
@@ -81,7 +81,7 @@ function getClientSideCopilotResponse(queryText) {
     );
   } else if (text.includes("architecture") || text.includes("3-tier") || text.includes("tier") || text.includes("how does") || text.includes("overview") || text.includes("control plane")) {
     return (
-      "🏛️ **RazorRevive-OS Three-Tier Financial Isolation Boundary**:\n\n" +
+      "🏛️ **OmniRevive-OS Three-Tier Financial Isolation Boundary**:\n\n" +
       "• **Tier 1 (Ingestion & Mutex)**: HMAC-SHA256 signature verification, replay drift checks (<300s), and atomic CAS idempotency locks.\n" +
       "• **Tier 2 (AI Reasoning Kernel)**: Fast-Loop Weibull hazard survival models & Deep-Loop B2B Hinglish conversational negotiation.\n" +
       "• **Tier 3 (Deterministic Policy Engine)**: Hard mathematical guardrails enforcing TRAI quiet-hours (21:00-09:00 IST), discount clamping (min(10%, ₹500)), and immutable SHA-256 audit chaining."
@@ -102,10 +102,10 @@ function getClientSideCopilotResponse(queryText) {
     );
   } else if (text.includes("stripe") || text.includes("netflix") || text.includes("uber") || text.includes("competitor") || text.includes("difference")) {
     return (
-      "🏆 **RazorRevive-OS vs. Tier-1 Industry Systems**:\n\n" +
-      "• **vs. Stripe Smart Retries**: Stripe optimizes discrete time slots on unconstrained credit cards. RazorRevive-OS uses continuous Weibull hazard models adapted for Indian attempt caps (NPCI pre-debit notices & NACH return fees).\n" +
-      "• **vs. Netflix Dunning**: Netflix does silent retries on ₹499 consumer plans. RazorRevive-OS handles high-value commercial B2B invoices (>₹50,000) with conversational voice negotiation.\n" +
-      "• **vs. Uber Arrears**: Uber waits for the next ride. RazorRevive-OS mathematically manufactures the recovery trigger at the Weibull hazard peak via 1-Click WhatsApp UPI Intent links."
+      "🏆 **OmniRevive-OS vs. Tier-1 Industry Systems**:\n\n" +
+      "• **vs. Stripe Smart Retries**: Stripe optimizes discrete time slots on unconstrained credit cards. OmniRevive-OS uses continuous Weibull hazard models adapted for Indian attempt caps (NPCI pre-debit notices & NACH return fees).\n" +
+      "• **vs. Netflix Dunning**: Netflix does silent retries on ₹499 consumer plans. OmniRevive-OS handles high-value commercial B2B invoices (>₹50,000) with conversational voice negotiation.\n" +
+      "• **vs. Uber Arrears**: Uber waits for the next ride. OmniRevive-OS mathematically manufactures the recovery trigger at the Weibull hazard peak via 1-Click WhatsApp UPI Intent links."
     );
   } else if (text.includes("benchmark") || text.includes("yield") || text.includes("rate") || text.includes("score") || text.includes("gmv") || text.includes("results")) {
     return (
@@ -117,10 +117,10 @@ function getClientSideCopilotResponse(queryText) {
     );
   } else {
     return (
-      `🤖 **Razor Copilot Architectural Intelligence** (Query: *"${queryText}"*):\n\n` +
-      "RazorRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
+      `🤖 **Omni Copilot Architectural Intelligence** (Query: *"${queryText}"*):\n\n` +
+      "OmniRevive-OS is actively operating as a **Universal 3-Tier Control Plane**:\n" +
       "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
-      "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
+      "• **Deep-Loop**: Conversational trilingual B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
       "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.\n\n" +
       "💡 *Tip: Ask me about '3-Tier Architecture', 'B2B Voice & PTP', 'Weibull hazard formula', 'CAS Mutex concurrency', 'TRAI quiet hours', or 'vs Stripe'!*"
     );

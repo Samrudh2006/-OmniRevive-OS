@@ -297,7 +297,7 @@ class DiagnosticEngine:
         Builds a structured prompt adhering to JSON schema contracts for LLM inference.
         """
         system_prompt = (
-            "You are RazorRevive-OS AI Diagnostic Kernel, an autonomous revenue recovery engine for Razorpay.\n"
+            "You are OmniRevive-OS AI Diagnostic Kernel, an autonomous multi-rail revenue recovery engine for universal payment gateways (Juspay, Cashfree, PhonePe, Razorpay, Stripe).\n"
             "Analyze the payment failure metadata and output a JSON object adhering to this schema:\n"
             "{\n"
             '  "failure_class": "TRANSIENT_GATEWAY" | "INSUFFICIENT_FUNDS" | "EXPIRED_MANDATE" | "ABANDONED_AUTH" | "SUSPICIOUS_VELOCITY",\n'

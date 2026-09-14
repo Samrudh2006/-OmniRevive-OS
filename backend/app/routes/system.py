@@ -23,9 +23,9 @@ async def healthcheck(request: Request):
         "success": True,
         "data": {
             "status": "healthy",
-            "service": "RazorRevive-OS",
-            "version": "1.0.0",
-            "architecture": "Three-Tier Deterministic Control Plane",
+            "service": "OmniRevive-OS",
+            "version": "1.1.0",
+            "architecture": "Universal Multi-Rail Deterministic Control Plane",
             "environment": settings.ENVIRONMENT
         },
         "trace_id": trace_id,

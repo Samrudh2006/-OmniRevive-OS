@@ -1,28 +1,29 @@
-# ARCHITECTURE SPECIFICATION: RazorRevive-OS
+# ARCHITECTURE SPECIFICATION: OmniRevive-OS
 
-> **Track 03:** AI Revenue Recovery — Razorpay AI Buildathon 2026  
-> **System Architecture Version:** 1.0.0 (Production-Grade)
+> **System Architecture:** Universal Multi-Rail Autonomous Revenue Recovery Control Plane  
+> **Target Ecosystems:** Juspay HyperSDK | Cashfree | PhonePe Switch | CRED | Razorpay | Stripe  
+> **System Architecture Version:** 1.1.0 (Production-Grade Multi-Rail)
 
 ---
 
 ## 1. System Overview
 
-**RazorRevive-OS** is an autonomous, dual-loop revenue recovery and mandate orchestration engine designed to prevent and recover lost gross merchandise value (GMV) across digital payments, failed recurring subscriptions, and overdue B2B invoices.
+**OmniRevive-OS** is an autonomous, universal multi-rail revenue recovery and mandate orchestration engine designed to prevent and recover lost gross merchandise value (GMV) across digital payment switches, failed recurring subscriptions, and overdue B2B invoices.
 
 The architecture enforces a **Three-Tier Financial Isolation Boundary Pattern**, ensuring that probabilistic LLM reasoning is strictly segregated from deterministic state execution, financial mutations, and regulatory compliance rules.
 
 ```mermaid
 flowchart TD
     subgraph IngestionLayer [Tier 1: Ingestion & Telemetry Gateway]
-        WH[Inbound Razorpay Webhook] --> SIG[HMAC SHA-256 Verifier]
+        WH[Inbound Multi-Rail Webhook: Juspay / Cashfree / PhonePe / Razorpay] --> SIG[HMAC SHA-256 Verifier]
         SIG --> MUTEX[Atomic Distributed Mutex: SQLite / Redis]
         MUTEX --> QUEUE[Async Normalizer & Event Buffer]
     end
 
     subgraph ReasoningLayer [Tier 2: Dual-Loop Reasoning Kernel]
         QUEUE --> CLASSIFIER[Root Cause Diagnostic Engine]
-        CLASSIFIER -->|Fast-Loop: B2C / Subscriptions| FAST[Poisson Bank Uptime Retrier & 1-Click UPI Link]
-        CLASSIFIER -->|Deep-Loop: High-Value B2B Invoices| DEEP[Hinglish Voice Agent & PTP State Machine]
+        CLASSIFIER -->|Fast-Loop: B2C / Subscriptions| FAST[Weibull Bank Uptime Retrier & 1-Click UPI Link]
+        CLASSIFIER -->|Deep-Loop: High-Value B2B Invoices| DEEP[Trilingual Voice Agent & PTP State Machine]
     end
 
     subgraph BoundaryLayer [Tier 3: Policy & Financial Boundary Gatekeeper]
@@ -31,14 +32,15 @@ flowchart TD
         GATE -->|TRAI Quiet Hours 9PM-9AM| DEFER[Scheduled Deferral Queue]
         GATE -->|Amount > ₹50K & Conf < 0.85| ESCALATE[Human CFO Queue]
         GATE -->|Confidence < 0.60| SUPPRESS[Safety Suppression]
-        GATE -->|All Constraints Satisfied| EXEC[Razorpay API Dispatcher]
+        GATE -->|All Constraints Satisfied| EXEC[Multi-Rail Gateway Dispatcher]
     end
 
-    subgraph ExecutionLayer [Razorpay API & Persistence]
-        EXEC --> RZP_PL[Payment Links API]
-        EXEC --> RZP_MANDATE[Recurring Mandate Retries]
-        EXEC --> RZP_INV[Dynamic Invoice Mutation API]
-        EXEC --> AUDIT[(Immutable SQLite WAL Audit Ledger)]
+    subgraph ExecutionLayer [Multi-Rail Gateway Execution & Persistence]
+        EXEC --> SWITCH[Dynamic Switch: Juspay / Cashfree / PhonePe / Razorpay]
+        SWITCH --> PAY_PL[Dynamic Payment Links API]
+        SWITCH --> PAY_MANDATE[Recurring Mandate Retries]
+        SWITCH --> PAY_INV[Dynamic Invoice Mutation API]
+        SWITCH --> AUDIT[(Immutable SQLite WAL Audit Ledger)]
     end
 ```
 
@@ -213,7 +215,7 @@ For enterprise B2B receivables negotiation in production telephony environments:
 [ASR Transcriber (Whisper / Local Speech Engine)]
                   │ (Transcript JSON)
                   ▼
-[RazorRevive-OS Hinglish Intent Extractor & State Machine]
+[OmniRevive-OS Trilingual (Hinglish/Telugu/English) Intent Extractor & State Machine]
                   │ (MutationProposal / PTP Decision)
                   ▼
 [Deterministic Policy Engine Boundary]
@@ -225,7 +227,7 @@ For enterprise B2B receivables negotiation in production telephony environments:
 [Telephony Gateway -> Customer Ear]
 ```
 
-* **Hinglish Intent Extraction:** Recognizes commercial payment terms (`"Galat GSTIN"`, `"Next Friday payment kar denge"`, `"UTR reference number ICIC9821034"`, `"Section 194J 10% TDS deduction"`).
+* **Trilingual Intent Extraction:** Recognizes commercial payment terms in English, Hindi/Hinglish (`"Galat GSTIN"`, `"Next Friday payment kar denge"`, `"UTR reference number ICIC9821034"`, `"Section 194J 10% TDS deduction"`), and Telugu (`"Invoice lo GSTIN tappuga undi"`, `"Repu payment chestamu"`).
 * **Zero-Hallucination Clamp:** AI can only mutate invoices within predefined merchant credit limit bounds and standard GSTIN validation algorithms.
 
 ---

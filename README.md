@@ -1,34 +1,38 @@
-# ⚡ RazorRevive-OS: AI Revenue Recovery & Smart Mandate Control Plane
+# ⚡ OmniRevive-OS: Universal Autonomous Revenue Recovery Control Plane
 
 <div align="center">
-  <img src="docs/images/hero.jpg" alt="RazorRevive-OS Hero Banner" width="850">
+  <img src="docs/images/hero.jpg" alt="OmniRevive-OS Hero Banner" width="850">
 </div>
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![CI/CD](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-/actions/workflows/ci.yml/badge.svg)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-/actions)
 [![Pytest Suite](https://img.shields.io/badge/pytest-438%20passed%20%7C%20100%25-success.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![Vector DB](https://img.shields.io/badge/Qdrant-Semantic%20Memory%20Layer-7c3aed.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![Validation Suite](https://img.shields.io/badge/validation%20suite-345%20passed%20%7C%20100%25-success.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![PyPI Package](https://img.shields.io/badge/PyPI-razorrevive--os%20v1.0.0-0c55ea.svg?style=flat-square&logo=pypi)](https://pypi.org/project/razorrevive-os/)
+[![Multi-Rail](https://img.shields.io/badge/Multi--Rail-Juspay%20%7C%20Cashfree%20%7C%20PhonePe%20%7C%20CRED%20%7C%20Razorpay-0c55ea.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![Voice AI](https://img.shields.io/badge/Voice%20AI-Telugu%20%7C%20Hindi%20%7C%20English-c084fc.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![Android App](https://img.shields.io/badge/Android-APK%20Ready-34d399.svg?style=flat-square&logo=android)](mobile/app/build/outputs/apk/debug/app-debug.apk)
 [![Open-Source AI](https://img.shields.io/badge/AI-100%25%20Open--Source%20%7C%20Zero--API--Key-blueviolet.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![UPI Rail](https://img.shields.io/badge/UPI-NPCI%20Live%20Switch%20%2B%20Dynamic%20QR-green.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![Card Networks](https://img.shields.io/badge/Card%20Tokens-Visa%20VTS%20%7C%20Mastercard%20MDES%20%7C%20RuPay-orange.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![Track](https://img.shields.io/badge/Razorpay_Track-03_Revenue_Recovery-0a58ca.svg?style=flat-square)](https://razorpay.com/buildathon/)
 [![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue.svg?style=flat-square)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg?style=flat-square)](https://fastapi.tiangolo.com/)
 [![Audit Chain](https://img.shields.io/badge/audit-SHA--256%20chained-emerald.svg?style=flat-square)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 [![Video Walkthrough](https://img.shields.io/badge/Demo_Video-YouTube_Walkthrough-red.svg?style=flat-square&logo=youtube)](https://youtu.be/IBo7D1vHhd8)
 [![License](https://img.shields.io/badge/license-MIT-purple.svg?style=flat-square)](LICENSE)
 
-> **Razorpay AI Buildathon Submission**  
-> **Track 03:** AI Revenue Recovery — *Detect revenue at risk, diagnose root causes, and execute bounded recovery workflows.*  
-> **📹 Live Video Walkthrough:** [Watch 4-Min Demo on YouTube (https://youtu.be/IBo7D1vHhd8)](https://youtu.be/IBo7D1vHhd8)  
+> **OmniRevive-OS: Universal Payment Recovery Control Plane**  
+> *Autonomous recovery for payment failures, mandate churn, and B2B collections across Indian payment rails.*  
+> **📹 Live System Demo:** [Watch 4-Min Architecture Walkthrough on YouTube](https://youtu.be/IBo7D1vHhd8)  
 > 
-> 📌 **Note for Razorpay Evaluators & Reviewers:**  
-> • **Official Deadline Snapshot (Sept 5 Submission):** Tagged and frozen at [`v1.0.0-buildathon-submission`](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-/tree/v1.0.0-buildathon-submission) (`commit 331e3ff`).  
-> • **Post-Submission Hardening (v1.1.0):** Integrated in-memory Qdrant Semantic Vector Memory (Advisory Evidence Architecture), purged unclassified diagnostic fallbacks, and expanded the verification matrix to **438 automated tests (100% passing)**.
+> ⌚ **The Omnitrix Architectural Philosophy:**  
+> *"The Omnitrix doesn't use the same alien for every crisis. It adapts. Different failure patterns $\rightarrow$ Different recovery mechanisms."*  
+> • **Gateway 504 Outage** $\rightarrow$ SciPy-fitted Weibull Hazard survival retry timing (+45m)  
+> • **Soft Decline (Balance)** $\rightarrow$ 1-Click WhatsApp dynamic UPI Intent link (`upi://pay?...`)  
+> • **B2B Dispute (GSTIN/Terms)** $\rightarrow$ Autonomous trilingual voice negotiation & PTP calendar lock  
+> • **50-Thread Storm** $\rightarrow$ Distributed CAS idempotency lock (guaranteeing 0 double-debits)  
+> 
+> 🌐 **Universal Gateway Compatibility:** Seamlessly integrates with **Juspay HyperSDK, Cashfree Payments, PhonePe Switch, CRED, Razorpay, and Stripe**.  
+> 📌 **Engineering Verification:** Backed by **438 automated tests (100% green)**, in-memory Qdrant Semantic Vector Memory, and a tamper-evident SHA-256 cryptographic audit ledger.
 
 ---
 

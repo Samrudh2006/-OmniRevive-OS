@@ -17,7 +17,7 @@ export const TOUR_STEPS = [
   {
     target: "nav-overview",
     title: "1. Mission Control Overview",
-    desc: "Welcome to RazorRevive-OS. This unified cockpit orchestrates real-time autonomous revenue recovery for high-velocity Indian payments."
+    desc: "Welcome to OmniRevive-OS. This universal cockpit orchestrates real-time autonomous revenue recovery across Indian payment rails (Juspay, Cashfree, PhonePe, CRED, Razorpay)."
   },
   {
     target: "nav-fast_loop",

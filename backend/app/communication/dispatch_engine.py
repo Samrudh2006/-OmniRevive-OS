@@ -79,10 +79,10 @@ class DispatchEngine:
           <tr>
             <td>
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 20px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">RazorRevive<span style="color: #38bdf8;">-OS</span></span>
+                <span style="font-size: 20px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">OmniRevive<span style="color: #38bdf8;">-OS</span></span>
                 <span style="background-color: rgba(255,255,255,0.18); color: #ffffff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 99px; text-transform: uppercase; margin-left: 8px;">Enterprise B2B</span>
               </div>
-              <div style="color: #bfdbfe; font-size: 12px; margin-top: 4px;">Razorpay Autonomous Revenue Control Plane</div>
+              <div style="color: #bfdbfe; font-size: 12px; margin-top: 4px;">Universal Autonomous Revenue Control Plane</div>
             </td>
             <td align="right">
               <span style="background-color: #064e3b; color: #34d399; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 6px; border: 1px solid #059669; text-transform: uppercase;">
@@ -170,14 +170,14 @@ class DispatchEngine:
             ⚡ Pay ₹{invoice.amount:,.2f} via 1-Click UPI (GPay / PhonePe / Paytm)
           </a>
           <div style="color: #64748b; font-size: 11px; margin-top: 8px; font-family: monospace;">
-            VPA: razorrevive.enterprise@razorpay • Zero Surcharge
+            VPA: omnirevive.enterprise@fintech • Zero Surcharge
           </div>
         </div>
 
         <!-- Cryptographic Audit & Compliance Footnote -->
         <div style="border-top: 1px solid #142442; padding-top: 16px; color: #64748b; font-size: 11px; line-height: 1.6;">
           <div><strong>SHA-256 Chain Verification:</strong> Genesis Block Linked • RFC-3161 Timestamped</div>
-          <div>This electronic invoice advice is deterministically signed by the RazorRevive-OS SRE Engine under TRAI quiet-hours compliance.</div>
+          <div>This electronic invoice advice is deterministically signed by the OmniRevive-OS SRE Engine under TRAI quiet-hours compliance.</div>
         </div>
 
       </td>
@@ -186,7 +186,7 @@ class DispatchEngine:
     <!-- Footer -->
     <tr>
       <td style="padding: 16px 32px; background-color: #050a14; border-top: 1px solid #142442; text-align: center; color: #475569; font-size: 10.5px;">
-        © 2026 Razorpay Software Pvt Ltd • 1st Floor SJR Cyber, Hosur Road, Bengaluru 560030
+        © 2026 OmniRevive-OS Multi-Rail Control Plane • Bengaluru, India
       </td>
     </tr>
   </table>
@@ -212,16 +212,16 @@ class DispatchEngine:
         
         # Compose RFC-822 MIME Structure
         msg = MIMEMultipart("alternative")
-        msg["From"] = "RazorRevive Billing <billing@razorrevive.razorpay.com>"
+        msg["From"] = "OmniRevive Billing <billing@omnirevive.io>"
         msg["To"] = recipient_email
         msg["Subject"] = email_subject
         msg["Date"] = formatdate(localtime=True)
-        msg["Message-ID"] = make_msgid(domain="razorrevive.razorpay.com")
-        msg["X-RazorRevive-Invoice-ID"] = invoice_id
-        msg["X-RazorRevive-GSTIN"] = inv.gstin
-        msg["X-RazorRevive-Delivery-Status"] = "DELIVERED"
+        msg["Message-ID"] = make_msgid(domain="omnirevive.io")
+        msg["X-OmniRevive-Invoice-ID"] = invoice_id
+        msg["X-OmniRevive-GSTIN"] = inv.gstin
+        msg["X-OmniRevive-Delivery-Status"] = "DELIVERED"
         if audit_hash:
-            msg["X-RazorRevive-Audit-Hash"] = audit_hash
+            msg["X-OmniRevive-Audit-Hash"] = audit_hash
 
         html_body = self.generate_html_invoice_email(inv, custom_note=custom_note)
         plain_text = f"Tax Invoice #{inv.invoice_id} for INR {inv.amount:,.2f}. GSTIN: {inv.gstin}. Pay online via UPI."

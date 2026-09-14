@@ -41,10 +41,10 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
     # 1. Attempt Local Ollama connection (if available)
     ollama_url = "http://localhost:11434/api/generate"
     system_prompt = (
-        "You are RazorRevive AI Copilot, a senior enterprise SRE & payment recovery architect for RazorRevive-OS at Razorpay. "
-        "RazorRevive-OS is a 3-tier deterministic recovery control plane for Indian payments (Fast-Loop B2C, Deep-Loop B2B Voice, and Governance). "
+        "You are OmniRevive AI Copilot, a senior enterprise SRE & payment recovery architect for OmniRevive-OS across universal payment rails (Juspay, Cashfree, PhonePe, Razorpay, Stripe). "
+        "OmniRevive-OS is a 3-tier deterministic recovery control plane for Indian payments (Fast-Loop B2C, Deep-Loop B2B Voice, and Governance). "
         "Key specs: Real-time NPCI switch telemetry, SciPy-fitted Weibull hazard retries (+45m on SBI 504 outage), 1-Click WhatsApp dynamic UPI links, "
-        "autonomous Hinglish B2B voice dispute resolution & PTP locks, Distributed CAS Mutex with 0 double debits, SQLite WAL mode, "
+        "autonomous Hinglish/Telugu/English B2B voice dispute resolution & PTP locks, Distributed CAS Mutex with 0 double debits, SQLite WAL mode, "
         "TRAI quiet hours (21:00-09:00 IST), max 10%/500 INR discount clamp, and 42.24% Net GMV Recovery Yield across 100 cases. "
         "Answer warmly, concisely, professionally, and like a brilliant senior software engineer."
     )
@@ -61,8 +61,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
                 }
             )
             if resp.status_code == 200:
-                data = resp.json()
-                ollama_response = data.get("response", "").strip()
+                ollama_response = resp.json().get("response")
     except Exception:
         ollama_response = None
 
@@ -70,7 +69,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         return {
             "success": True,
             "data": {
-                "source": "ollama_local",
+                "source": "local_ollama_llama3",
                 "response": ollama_response
             },
             "trace_id": trace_id,
@@ -82,18 +81,18 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
 
     if any(k in q for k in ["hi", "hello", "hey", "who are you", "what are you", "what can you do", "help me"]):
         answer = (
-            "👋 Hello! I am your autonomous **Razor SRE Copilot & Revenue Recovery Architect**.\n\n"
-            "I am fully trained to operate and explain the **RazorRevive-OS 3-Tier Control Plane**:\n"
+            "👋 Hello! I am your autonomous **Omni SRE Copilot & Multi-Rail Revenue Recovery Architect**.\n\n"
+            "I am fully trained to operate and explain the **OmniRevive-OS 3-Tier Control Plane**:\n"
             "• **Tier 1 (Fast-Loop B2C)**: SciPy Weibull hazard retries & 1-Click WhatsApp UPI dynamic QR links.\n"
-            "• **Tier 2 (Deep-Loop B2B)**: Autonomous Hinglish voice negotiations, GSTIN invoice mutation & Promise-to-Pay (PTP) scheduling.\n"
+            "• **Tier 2 (Deep-Loop B2B)**: Autonomous Hinglish/Telugu/English voice negotiations, GSTIN invoice mutation & Promise-to-Pay (PTP) scheduling.\n"
             "• **Tier 3 (Governance & Safety)**: Atomic CAS Mutex locks (0 double-debits) and TRAI/DPDP compliance guardrails.\n\n"
-            "Feel free to ask me anything about our architecture, formulas, or live benchmarks!"
+            "Feel free to ask me anything about our multi-rail architecture, formulas, or live benchmarks!"
         )
     elif any(k in q for k in ["sbi", "hdfc", "outage", "504", "weibull", "retry", "hazard", "fast loop"]):
         answer = (
             "⚡ **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n"
             "When an issuing bank (like SBI or HDFC) experiences gateway timeouts (>890ms latency, NPCI-202), standard payment gateways blindly retry immediately and fail.\n\n"
-            "Instead, RazorRevive uses a **SciPy-fitted Weibull Hazard Survival Function**:\n"
+            "Instead, OmniRevive uses a **SciPy-fitted Weibull Hazard Survival Function**:\n"
             "1. It detects bank recovery half-life curves from live telemetry.\n"
             "2. It shifts the optimal retry execution window to **+45 minutes** (peak 91.4% success probability).\n"
             "3. It activates local circuit breakers to protect merchant reliability and prevent customer panic."
@@ -102,15 +101,15 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         answer = (
             "📱 **1-Click WhatsApp Recovery & Dynamic Dense UPI QR**:\n\n"
             "When a customer card fails due to soft declines or insufficient funds:\n"
-            "1. RazorRevive halts aggressive card charges to eliminate bank decline fees.\n"
+            "1. OmniRevive halts aggressive card charges to eliminate bank decline fees.\n"
             "2. It instantly dispatches a verified WhatsApp message containing a pre-filled UPI Intent link (`upi://pay?...`) and a dense scannable QR code.\n"
             "3. The customer taps once to open Google Pay/PhonePe/Paytm and completes payment in under 3 seconds with a **78.39% live cohort recovery yield**."
         )
     elif any(k in q for k in ["voice", "gst", "gstin", "b2b", "call", "hinglish", "speech", "invoice", "ptp"]):
         answer = (
-            "🎙️ **Autonomous B2B Hinglish Voice & Promise-to-Pay (PTP) Engine**:\n\n"
+            "🎙️ **Autonomous B2B Trilingual Voice & Promise-to-Pay (PTP) Engine**:\n\n"
             "For large B2B enterprise invoices (>₹50,000):\n"
-            "1. **Hinglish Conversational Parser**: When a client says *'Invoice mein hamara GST galat hai'*, the agent detects dispute intent and extracts the 15-character GSTIN.\n"
+            "1. **Trilingual Conversational Parser**: When a client speaks in English, Hindi, or Telugu (e.g. *'Invoice mein hamara GST galat hai'*), the agent detects dispute intent and extracts the 15-character GSTIN.\n"
             "2. **CFO Approval Gate**: Proposes an invoice mutation flagged for CFO review before tax ledger updates.\n"
             "3. **PTP Calendar Lock**: Registers an auto-debit Promise-to-Pay for **Friday 11:00 AM IST** and automatically suppresses annoying reminder calls."
         )
@@ -149,28 +148,30 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         )
     elif any(k in q for k in ["better", "compare", "stripe", "razorpay", "0.1", "why", "difference"]):
         answer = (
-            "🏆 **Why RazorRevive-OS represents the Top 0.1% Approach**:\n\n"
+            "🏆 **Why OmniRevive-OS represents the Top 0.1% Approach**:\n\n"
             "Traditional payment systems use naive static retries (e.g. retry after 5 seconds), which worsen bank rate limits and cause customer double-charges.\n\n"
-            "RazorRevive-OS replaces this with **Deterministic Signal Orchestration**:\n"
+            "OmniRevive-OS replaces this with **Deterministic Signal Orchestration**:\n"
             "1. Real-time bank outage telemetry + SciPy survival models.\n"
-            "2. Omnichannel instant pivot (WhatsApp UPI QR for soft declines, Hinglish Voice for B2B).\n"
-            "3. Strict mathematical guardrails guaranteeing 0 compliance breaches and 0 double-debits."
+            "2. Omnichannel instant pivot (WhatsApp UPI QR for soft declines, Hinglish/Telugu/English Voice for B2B).\n"
+            "3. Strict mathematical guardrails guaranteeing 0 compliance breaches and 0 double-debits.\n"
+            "4. Multi-rail interoperability: Deployable atop Juspay HyperSDK, Cashfree, PhonePe Switch, Razorpay, or Stripe."
         )
     else:
         answer = (
-            f"🤖 **Razor Copilot Domain Architect Insight** (Query: *\"{query}\"*):\n\n"
-            "As an autonomous **Fintech SRE & Revenue Recovery Copilot**, my reasoning scope is strictly bounded to the RazorRevive-OS operational telemetry:\n\n"
+            f"🤖 **Omni Copilot Domain Architect Insight** (Query: *\"{query}\"*):\n\n"
+            "As an autonomous **Fintech SRE & Revenue Recovery Copilot**, my reasoning scope is strictly bounded to the OmniRevive-OS operational telemetry:\n\n"
             "• **Issuing Bank Resilience**: SciPy Weibull survival models dynamically mode-shift retry windows (+45m optimal delay on 504 timeouts).\n"
             "• **Omnichannel Pivot**: Instant 1-Click WhatsApp UPI Intent & QR dispatch on soft card declines.\n"
-            "• **B2B Autonomous Voice**: Hinglish negotiation with CFO approval gates and Promise-to-Pay (PTP) locks.\n"
-            "• **Zero-Trust Safety**: Distributed CAS Mutex locks guaranteeing 0 double-debit collisions.\n\n"
+            "• **B2B Autonomous Voice**: Trilingual (English/Hindi/Telugu) negotiation with CFO approval gates and Promise-to-Pay (PTP) locks.\n"
+            "• **Zero-Trust Safety**: Distributed CAS Mutex locks guaranteeing 0 double-debit collisions.\n"
+            "• **Multi-Rail Interoperability**: Seamless routing across Juspay, Cashfree, PhonePe, and Razorpay switches.\n\n"
             "💡 *Tip: Try asking me about 'Weibull hazard formula', 'CAS Mutex concurrency', 'TRAI quiet hours', or 'B2B GSTIN dispute'!*"
         )
 
     return {
         "success": True,
         "data": {
-            "source": "razor_neural_index",
+            "source": "omni_neural_index",
             "response": answer
         },
         "trace_id": trace_id,
