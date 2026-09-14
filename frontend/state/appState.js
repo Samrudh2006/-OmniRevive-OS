@@ -55,10 +55,14 @@ export const CMDK_COMMANDS = [
   { id: "tab-overview", label: "Go to Mission Control Overview", icon: "📊", action: () => window.switchNavTab("overview") },
   { id: "tab-fast-loop", label: "Open Fast-Loop Sub-Second Engine", icon: "⚡", action: () => window.switchNavTab("fast_loop") },
   { id: "tab-deep-loop", label: "Open Deep-Loop B2B Voice & WhatsApp", icon: "🎙️", action: () => window.switchNavTab("deep_loop") },
+  { id: "tab-evaluation", label: "Open AI Evaluation Suite (Ragas, DeepEval, LangGraph)", icon: "🧠", action: () => window.switchNavTab("evaluation") },
   { id: "tab-cfo", label: "Open CFO Executive Approval Queue", icon: "🏛️", action: () => window.switchNavTab("cfo_approvals") },
   { id: "tab-card-tokens", label: "Inspect RBI Card Network Tokens", icon: "💳", action: () => window.switchNavTab("card_tokens") },
   { id: "tab-audit", label: "Verify Cryptographic Audit Ledger", icon: "🛡️", action: () => window.switchNavTab("audit_ledger") },
   { id: "tab-benchmark", label: "Run 100-Case Benchmark Suite", icon: "🎯", action: () => window.openDetailedBenchmarkSuite() },
+  { id: "theme-obsidian", label: "Switch Palette: Cyber Obsidian", icon: "🌌", action: () => window.applyThemePalette("cyber-obsidian") },
+  { id: "theme-velvet", label: "Switch Palette: Stripe Velvet", icon: "💳", action: () => window.applyThemePalette("stripe-velvet") },
+  { id: "theme-carbon", label: "Switch Palette: Vercel Carbon", icon: "▲", action: () => window.applyThemePalette("vercel-carbon") },
   { id: "theme-toggle", label: "Toggle Dark / Light Mode", icon: "🌓", action: () => window.toggleThemeMode() },
   { id: "circuit-sbi", label: "Toggle SBI Circuit Breaker / Degraded Rail", icon: "🔌", action: () => window.toggleSbiCircuitBreaker() }
 ];

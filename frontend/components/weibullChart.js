@@ -72,8 +72,10 @@ export function renderWeibullCanvasChart() {
 
   ctx.clearRect(0, 0, w, h);
 
+  const isLight = document.documentElement.classList.contains("light");
+
   // Grid Lines
-  ctx.strokeStyle = "#142442";
+  ctx.strokeStyle = isLight ? "#e2e8f0" : "#142442";
   ctx.lineWidth = 1;
   for (let x = 40; x < w; x += 60) {
     ctx.beginPath();
@@ -104,8 +106,13 @@ export function renderWeibullCanvasChart() {
 
   // Draw Gradient Fill
   const grad = ctx.createLinearGradient(0, 0, 0, h - 25);
-  grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
-  grad.addColorStop(1, "rgba(56, 189, 248, 0.02)");
+  if (isLight) {
+    grad.addColorStop(0, "rgba(2, 132, 199, 0.25)");
+    grad.addColorStop(1, "rgba(2, 132, 199, 0.01)");
+  } else {
+    grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
+    grad.addColorStop(1, "rgba(56, 189, 248, 0.02)");
+  }
 
   ctx.beginPath();
   ctx.moveTo(40, h - 25);
@@ -128,7 +135,7 @@ export function renderWeibullCanvasChart() {
     if (idx === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   });
-  ctx.strokeStyle = "#38bdf8";
+  ctx.strokeStyle = isLight ? "#0284c7" : "#38bdf8";
   ctx.lineWidth = 2.5;
   ctx.stroke();
 
@@ -138,19 +145,19 @@ export function renderWeibullCanvasChart() {
   ctx.setLineDash([4, 4]);
   ctx.moveTo(peakX, 10);
   ctx.lineTo(peakX, h - 25);
-  ctx.strokeStyle = "#10b981";
+  ctx.strokeStyle = isLight ? "#059669" : "#10b981";
   ctx.lineWidth = 1.5;
   ctx.stroke();
   ctx.setLineDash([]);
 
   ctx.beginPath();
   ctx.arc(peakX, 20, 5, 0, Math.PI * 2);
-  ctx.fillStyle = "#10b981";
+  ctx.fillStyle = isLight ? "#047857" : "#10b981";
   ctx.fill();
 
   // Axis Labels
-  ctx.fillStyle = "#94a3b8";
-  ctx.font = "10px Inter, monospace";
+  ctx.fillStyle = isLight ? "#475569" : "#94a3b8";
+  ctx.font = "bold 10px Inter, monospace";
   ctx.fillText("0m", 35, h - 10);
   ctx.fillText(`+${Math.round(lambda)}m`, 40 + (lambda / maxTime) * (w - 60) - 10, h - 10);
   ctx.fillText(`+${Math.round(maxTime)}m`, w - 40, h - 10);

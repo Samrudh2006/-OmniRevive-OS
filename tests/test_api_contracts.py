@@ -102,4 +102,32 @@ def test_contract_upi_qr_generation():
     assert "gpay" in data["data"]["app_intents"]
     assert "<svg" in data["data"]["svg_qr"]
 
+def test_contract_server_reachability():
+    response = client.get("/api/v1/system/server-reach")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "nodes" in data["data"]
+    assert len(data["data"]["nodes"]) == 7
+    assert "ap-south-1" in data["data"]["active_region"]
+    assert "load_balancer" in data["data"]
+    assert "HDFC" in data["data"]["load_balancer"]["active_distribution"]
+
+def test_contract_rebalance_traffic():
+    # Test optimal rebalancing
+    response = client.post("/api/v1/system/rebalance-traffic", json={"action": "OPTIMIZE"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "updated_distribution" in data
+    assert data["updated_distribution"]["HDFC"] >= 40
+
+    # Test SBI 504 failover
+    response_failover = client.post("/api/v1/system/rebalance-traffic", json={"action": "FAILOVER_SBI"})
+    assert response_failover.status_code == 200
+    data_failover = response_failover.json()
+    assert data_failover["success"] is True
+    assert data_failover["updated_distribution"]["SBI"] == 0
+
+
 

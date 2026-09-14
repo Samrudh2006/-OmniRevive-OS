@@ -169,5 +169,30 @@ def test_gateway_rest_endpoints():
     assert sim_data["provider"] == "CRED"
     assert sim_data["concurrency_guarantee"] == "ATOMIC_CAS_MUTEX_0_DOUBLE_DEBIT"
 
+    # 4. POST /api/v1/gateways/simulate with specialized scenarios
+    resp_sbi = client.post("/api/v1/gateways/simulate", json={
+        "scenario": "test_sbi_outage",
+        "amount": 12500.0
+    })
+    assert resp_sbi.status_code == 200
+    assert resp_sbi.json()["data"]["incident"] == "NPCI_SBI_504_GATEWAY_TIMEOUT"
+    assert resp_sbi.json()["data"]["failover_target"] == "PHONEPE_YES_BANK_SWITCH"
+
+    resp_cas = client.post("/api/v1/gateways/simulate", json={
+        "scenario": "test_cas_race",
+        "amount": 95000.0
+    })
+    assert resp_cas.status_code == 200
+    assert resp_cas.json()["data"]["double_debits_prevented"] == 9
+    assert resp_cas.json()["data"]["actual_double_debits"] == 0
+
+    resp_fx = client.post("/api/v1/gateways/simulate", json={
+        "scenario": "test_cross_border_fx",
+        "amount": 21625.0
+    })
+    assert resp_fx.status_code == 200
+    assert resp_fx.json()["data"]["rbi_purpose_code"] == "P0802_SOFTWARE_CONSULTING_EXPORTS"
+
     # Restore to universal_auto
     client.post("/api/v1/gateways/select", json={"rail_id": "universal_auto"})
+

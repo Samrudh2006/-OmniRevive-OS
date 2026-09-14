@@ -1,49 +1,190 @@
 /* ==============================================================================
-   RazorRevive-OS Control Plane — Main Design System & Visual Tokens
-   Specification: Vanilla CSS with Custom Properties, Light/Dark Modes,
-   Fintech Contrast Legibility Engine, & Micro-Animations
+   OmniRevive-OS Control Plane — Main Design System & Visual Tokens
+   Conforms to: DESIGN.md (Google Stitch DTCG Alpha, Anthropic Anti-Slop Directive,
+   Vercel Web Interface Guidelines, Rauno Freiberg Interfaces, Bergside WCAG 2.2 AA)
    ============================================================================== */
 
 :root, html.light {
-  --bg-page: #f8fafc;
+  /* Razorpay Signature Light Blue & White Canvas */
+  --bg-page: #f4f8fe;
   --bg-header: #ffffff;
-  --border-header: #e2e8f0;
-  --bg-sidebar: #0c2340;
-  --border-sidebar: #132f54;
+  --border-header: #d4e5f9;
+  --bg-sidebar: #ffffff;
+  --border-sidebar: #d4e5f9;
   --bg-card: #ffffff;
-  --border-card: #e2e8f0;
-  --bg-inner: #f1f5f9;
-  --border-inner: #e2e8f0;
-  --text-title: #0f172a;
-  --text-sub: #334155;
-  --text-meta: #64748b;
-  --color-brand: #0c55ea;
-  --card-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
+  --border-card: #d4e5f9;
+  --bg-inner: #f0f6ff;
+  --border-inner: #d8e8fa;
+  
+  /* Razorpay Ultra High-Contrast Text (WCAG 2.2 AA Compliant: 14:1+ Contrast) */
+  --text-title: #0c2340;
+  --text-sub: #1b3152;
+  --text-meta: #475569;
+  
+  /* Razorpay Signature Electric Blue & Fintech Accents */
+  --color-brand: #0c6cf2;
+  --color-cyan: #0284c7;
+  --color-emerald: #059669;
+  --color-amber: #d97706;
+  --color-rose: #e11d48;
+  --color-purple: #6b21a8;
+  
+  /* Razorpay Elevation & Blue Aura Shadows */
+  --card-shadow: 0 2px 10px -1px rgba(12, 108, 242, 0.07), 0 1px 3px -1px rgba(12, 108, 242, 0.04);
+  --shadow-elevated: 0 12px 30px -4px rgba(12, 108, 242, 0.12), 0 4px 12px -2px rgba(12, 108, 242, 0.06);
+  --glow-cyan: 0 0 24px rgba(12, 108, 242, 0.18);
+  --glow-emerald: 0 0 24px rgba(5, 150, 105, 0.18);
+
+  /* Fluid Typography Scale */
+  --font-size-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --font-size-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --font-size-base: clamp(0.9rem, 0.85rem + 0.35vw, 1.0rem);
+  --font-size-lg: clamp(1.1rem, 1.0rem + 0.5vw, 1.25rem);
+  --font-size-xl: clamp(1.3rem, 1.15rem + 0.75vw, 1.5rem);
 }
 
 html.dark {
-  --bg-page: #080e1a;
-  --bg-header: #0c182c;
-  --border-header: #142442;
-  --bg-sidebar: #0c2340;
-  --border-sidebar: #132f54;
-  --bg-card: #0c182c;
-  --border-card: #142442;
-  --bg-inner: #081224;
-  --border-inner: #142442;
+  /* Surface & Canvas (Deep Obsidian Navy — Anti-Slop Directive) */
+  --bg-page: #030712;
+  --bg-header: #070e1c;
+  --border-header: #101e38;
+  --bg-sidebar: #060d1d;
+  --border-sidebar: #0e1b32;
+  --bg-card: #060d1d;
+  --border-card: #101e38;
+  --bg-inner: #040814;
+  --border-inner: #0f1c34;
+  
+  /* Text & Contrast (High legibility) */
+  --text-title: #f8fafc;
+  --text-sub: #cbd5e1;
+  --text-meta: #94a3b8;
+  
+  /* Accents */
+  --color-brand: #0c55ea;
+  --color-cyan: #06b6d4;
+  --color-emerald: #10b981;
+  --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
+  
+  /* Multi-Layered Shadows & Glows */
+  --card-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 20px 35px -10px rgba(0, 0, 0, 0.7), 0 10px 15px -5px rgba(0, 0, 0, 0.5);
+  --glow-cyan: 0 0 25px rgba(6, 182, 212, 0.22);
+  --glow-emerald: 0 0 25px rgba(16, 185, 129, 0.22);
+}
+
+/* =========================================================================
+   2026 THEME PALETTE ENGINE (Cyber Obsidian / Stripe Velvet / Vercel Carbon)
+   ========================================================================= */
+
+/* 1. Cyber Obsidian Theme (Default Enhanced) */
+[data-theme="cyber-obsidian"] {
+  --bg-page: #030712;
+  --bg-header: #070e1c;
+  --border-header: #101e38;
+  --bg-sidebar: #060d1d;
+  --border-sidebar: #0e1b32;
+  --bg-card: #060d1d;
+  --border-card: #101e38;
+  --bg-inner: #040814;
+  --border-inner: #0f1c34;
   --text-title: #f8fafc;
   --text-sub: #cbd5e1;
   --text-meta: #94a3b8;
   --color-brand: #0c55ea;
-  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --color-cyan: #06b6d4;
+  --color-emerald: #10b981;
+  --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
 }
+
+/* 2. Stripe Velvet Theme (Royal Indigo & Deep Violet) */
+[data-theme="stripe-velvet"] {
+  --bg-page: #0b0f1f;
+  --bg-header: #11162e;
+  --border-header: #212952;
+  --bg-sidebar: #0d1226;
+  --border-sidebar: #1e264d;
+  --bg-card: #131a38;
+  --border-card: #273266;
+  --bg-inner: #090c1a;
+  --border-inner: #1c2347;
+  --text-title: #f8fafc;
+  --text-sub: #d0d7e6;
+  --text-meta: #a0abc0;
+  --color-brand: #6366f1;
+  --color-cyan: #38bdf8;
+  --color-emerald: #10b981;
+  --color-amber: #f59e0b;
+  --color-rose: #f43f5e;
+}
+
+[data-theme="stripe-velvet"] .custom-card {
+  background: linear-gradient(180deg, rgba(19, 26, 56, 0.85) 0%, rgba(13, 18, 38, 0.95) 100%) !important;
+  border: 1px solid rgba(139, 92, 246, 0.22) !important;
+  box-shadow: 0 4px 20px -2px rgba(99, 102, 241, 0.14), 0 2px 6px -1px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="stripe-velvet"] #app-header {
+  background-color: #11162e !important;
+  border-bottom-color: #212952 !important;
+}
+
+[data-theme="stripe-velvet"] #app-sidebar {
+  background-color: #0d1226 !important;
+  border-right-color: #1e264d !important;
+}
+
+/* 3. Vercel Carbon Minimal Theme (Pitch Black, Monolithic, Neon Green) */
+[data-theme="vercel-carbon"] {
+  --bg-page: #000000;
+  --bg-header: #0a0a0a;
+  --border-header: #1f1f1f;
+  --bg-sidebar: #000000;
+  --border-sidebar: #1a1a1a;
+  --bg-card: #0d0d0d;
+  --border-card: #222222;
+  --bg-inner: #050505;
+  --border-inner: #1a1a1a;
+  --text-title: #ffffff;
+  --text-sub: #e5e5e5;
+  --text-meta: #a3a3a3;
+  --color-brand: #ffffff;
+  --color-cyan: #38bdf8;
+  --color-emerald: #22c55e;
+  --color-amber: #eab308;
+  --color-rose: #f43f5e;
+}
+
+[data-theme="vercel-carbon"] .custom-card {
+  background: #0d0d0d !important;
+  border: 1px solid #222222 !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 0.5rem !important;
+}
+
+[data-theme="vercel-carbon"] .custom-card:hover {
+  border-color: #383838 !important;
+}
+
+[data-theme="vercel-carbon"] #app-header {
+  background-color: #000000 !important;
+  border-bottom-color: #1f1f1f !important;
+}
+
+[data-theme="vercel-carbon"] #app-sidebar {
+  background-color: #000000 !important;
+  border-right-color: #1a1a1a !important;
+}
+
 
 body {
   background-color: var(--bg-page);
   color: var(--text-title);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mono {
@@ -51,15 +192,23 @@ body {
 }
 
 .custom-card {
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-card) !important;
-  border-radius: 0.75rem;
-  box-shadow: var(--card-shadow);
+  background: linear-gradient(180deg, rgba(12, 27, 51, 0.75) 0%, rgba(7, 16, 31, 0.9) 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.12) !important;
+  border-radius: 0.875rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.25);
   color: var(--text-title);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-card:hover {
+  border-color: rgba(56, 189, 248, 0.22) !important;
+  box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.08);
 }
 
 /* =========================================================================
-   COMPREHENSIVE LIGHT THEME CONTRAST & LEGIBILITY ENGINE
+   COMPREHENSIVE LIGHT THEME CONTRAST & LEGIBILITY ENGINE (2026 ULTRA-CRISP)
    ========================================================================= */
 html.light body {
   background-color: #f1f5f9 !important;
@@ -69,7 +218,10 @@ html.light body {
 /* Main view backgrounds & Cards in Light Mode */
 html.light main {
   background-color: #f1f5f9 !important;
+  color: #0f172a !important;
 }
+
+/* Universal Card & Panel Light Mode Reskin */
 html.light main .bg-\[\#0c182c\],
 html.light main .bg-\[\#0c2340\],
 html.light main .bg-\[\#081224\],
@@ -78,19 +230,36 @@ html.light main .bg-\[\#071328\],
 html.light main .bg-\[\#0a1628\],
 html.light main .bg-\[\#090e17\],
 html.light main .bg-\[\#0f172a\],
-html.light main .bg-\[\#060a12\] {
+html.light main .bg-\[\#060a12\],
+html.light main .bg-\[\#0d1522\],
+html.light main .bg-\[\#081426\],
+html.light main .bg-\[\#0b172a\],
+html.light main .bg-\[\#0e1e38\],
+html.light main .bg-\[\#0a1930\],
+html.light main .bg-\[\#0b1528\],
+html.light main .bg-slate-900,
+html.light main .bg-slate-950,
+html.light main .bg-slate-800,
+html.light main .custom-card {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+  color: #0f172a !important;
 }
 
-/* Inner containers, nested panels, & table wrappers */
+/* Inner containers, nested panels, code wells, & stat pods */
 html.light main .bg-\[\#0d1b30\],
 html.light main .bg-\[\#060e1d\],
 html.light main .bg-\[\#091322\],
-html.light main .bg-\[\#08101e\] {
+html.light main .bg-\[\#08101e\],
+html.light main .bg-\[\#050a14\],
+html.light main .bg-\[\#070e1c\],
+html.light main .bg-\[\#03060c\],
+html.light main .bg-\[\#081220\],
+html.light main .bg-\[\#0a1424\] {
   background-color: #f8fafc !important;
-  border-color: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
 /* General Border Color normalization */
@@ -100,95 +269,143 @@ html.light main .border-\[\#132f54\],
 html.light main .border-\[\#1e293b\],
 html.light main .border-\[\#1e3a6a\],
 html.light main .border-\[\#1b345f\],
-html.light main .border-\[\#2a4365\] {
-  border-color: #e2e8f0 !important;
+html.light main .border-\[\#2a4365\],
+html.light main .border-slate-800,
+html.light main .border-slate-700 {
+  border-color: #cbd5e1 !important;
 }
 
-/* Text Color Legibility Upgrades in Light Mode */
+/* Text Color Legibility Upgrades in Light Mode (Deep Pitch Dark Slate) */
 html.light main .text-white,
-html.light main .text-slate-100 {
+html.light main .text-slate-100,
+html.light main .text-slate-50 {
   color: #0f172a !important;
-  font-weight: 600;
+  font-weight: 700 !important;
 }
 html.light main .text-slate-200 {
   color: #1e293b !important;
+  font-weight: 600 !important;
 }
 html.light main .text-slate-300 {
   color: #334155 !important;
+  font-weight: 500 !important;
 }
 html.light main .text-slate-400 {
-  color: #64748b !important;
+  color: #475569 !important;
+  font-weight: 500 !important;
 }
 html.light main .text-slate-500 {
-  color: #475569 !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+html.light main .text-slate-600 {
+  color: #334155 !important;
 }
 
-/* Accent & Brand Colors in Light Mode */
+/* Accent & High-Contrast Brand Colors in Light Mode */
 html.light main .text-sky-300,
-html.light main .text-sky-400 {
+html.light main .text-sky-400,
+html.light main .text-sky-500,
+html.light main .text-cyan-300,
+html.light main .text-cyan-400 {
   color: #0284c7 !important;
+  font-weight: 700 !important;
 }
 html.light main .text-emerald-300,
-html.light main .text-emerald-400 {
-  color: #059669 !important;
+html.light main .text-emerald-400,
+html.light main .text-emerald-500,
+html.light main .text-green-400 {
+  color: #047857 !important;
+  font-weight: 700 !important;
 }
 html.light main .text-amber-300,
-html.light main .text-amber-400 {
-  color: #d97706 !important;
+html.light main .text-amber-400,
+html.light main .text-amber-500,
+html.light main .text-yellow-400 {
+  color: #b45309 !important;
+  font-weight: 700 !important;
 }
 html.light main .text-purple-300,
-html.light main .text-purple-400 {
-  color: #7c3aed !important;
+html.light main .text-purple-400,
+html.light main .text-purple-500,
+html.light main .text-violet-400 {
+  color: #6d28d9 !important;
+  font-weight: 700 !important;
 }
 html.light main .text-indigo-300,
-html.light main .text-indigo-400 {
-  color: #4f46e5 !important;
+html.light main .text-indigo-400,
+html.light main .text-indigo-500 {
+  color: #4338ca !important;
+  font-weight: 700 !important;
 }
 html.light main .text-rose-300,
-html.light main .text-rose-400 {
-  color: #e11d48 !important;
+html.light main .text-rose-400,
+html.light main .text-rose-500,
+html.light main .text-red-400 {
+  color: #be123c !important;
+  font-weight: 700 !important;
 }
 
-/* Badges & Status Pills in Light Mode */
-html.light main .bg-\[\#063b22\] {
-  background-color: #ecfdf5 !important;
+/* High-Contrast Badges & Status Pills in Light Mode */
+html.light main [class*="bg-emerald-500/"],
+html.light main [class*="bg-emerald-900/"],
+html.light main .bg-\[\#063b22\],
+html.light main .bg-\[\#0b2518\] {
+  background-color: #dcfce7 !important;
   color: #065f46 !important;
-  border: 1px solid #a7f3d0 !important;
+  border: 1px solid #86efac !important;
+  font-weight: 700 !important;
 }
+html.light main [class*="bg-sky-500/"],
+html.light main [class*="bg-sky-900/"],
+html.light main [class*="bg-blue-950/"],
+html.light main .bg-\[\#08284d\] {
+  background-color: #e0f2fe !important;
+  color: #0369a1 !important;
+  border: 1px solid #7dd3fc !important;
+  font-weight: 700 !important;
+}
+html.light main [class*="bg-amber-500/"],
+html.light main [class*="bg-amber-900/"],
 html.light main .bg-\[\#25131d\],
 html.light main .bg-\[\#1e1208\] {
-  background-color: #fffbeb !important;
+  background-color: #fef3c7 !important;
   color: #92400e !important;
-  border: 1px solid #fde68a !important;
+  border: 1px solid #fcd34d !important;
+  font-weight: 700 !important;
 }
+html.light main [class*="bg-rose-500/"],
+html.light main [class*="bg-rose-900/"],
 html.light main .bg-\[\#380b10\],
 html.light main .bg-\[\#3f0f13\],
 html.light main .bg-\[\#1c080b\] {
-  background-color: #fef2f2 !important;
+  background-color: #fee2e2 !important;
   color: #991b1b !important;
-  border: 1px solid #fecaca !important;
+  border: 1px solid #fca5a5 !important;
+  font-weight: 700 !important;
 }
-html.light main .bg-\[\#08284d\] {
-  background-color: #eff6ff !important;
-  color: #1e40af !important;
-  border: 1px solid #bfdbfe !important;
-}
+html.light main [class*="bg-purple-500/"],
+html.light main [class*="bg-purple-900/"],
 html.light main .bg-\[\#2e1065\] {
-  background-color: #faf5ff !important;
+  background-color: #f3e8ff !important;
   color: #6b21a8 !important;
-  border: 1px solid #e9d5ff !important;
+  border: 1px solid #d8b4fe !important;
+  font-weight: 700 !important;
 }
 
 /* Interactive Buttons & Quick-Action Pills in Light Mode */
 html.light main .bg-\[\#142442\],
 html.light main .bg-\[\#122038\],
-html.light main .bg-\[\#182a4d\] {
-  background-color: #f1f5f9 !important;
-  color: #1e293b !important;
+html.light main .bg-\[\#182a4d\],
+html.light main .bg-slate-800 {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
   border: 1px solid #cbd5e1 !important;
+  font-weight: 600 !important;
 }
 html.light main .bg-\[\#142442\]:hover,
-html.light main .bg-\[\#122038\]:hover {
+html.light main .bg-\[\#122038\]:hover,
+html.light main .bg-slate-800:hover {
   background-color: #e2e8f0 !important;
   color: #0f172a !important;
 }
@@ -200,7 +417,8 @@ html.light textarea {
   background-color: #ffffff !important;
   border: 1px solid #cbd5e1 !important;
   color: #0f172a !important;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  font-weight: 500 !important;
 }
 html.light input:focus,
 html.light select:focus,
@@ -209,49 +427,43 @@ html.light textarea:focus {
   outline: 2px solid rgba(12, 85, 234, 0.2) !important;
 }
 
-/* Tables in Light Mode */
+/* High-Contrast Tables in Light Mode */
+html.light table {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
 html.light table thead tr {
-  background-color: #f8fafc !important;
-  border-bottom: 2px solid #e2e8f0 !important;
+  background-color: #f1f5f9 !important;
+  border-bottom: 2px solid #cbd5e1 !important;
 }
 html.light table thead th {
-  color: #475569 !important;
-  font-weight: 700 !important;
+  color: #0f172a !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em !important;
 }
 html.light table tbody tr {
-  border-bottom: 1px solid #f1f5f9 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background-color: #ffffff !important;
 }
 html.light table tbody tr:hover {
   background-color: #f8fafc !important;
 }
 html.light table tbody td {
   color: #1e293b !important;
+  font-weight: 500 !important;
 }
 
-/* Terminals, Console Logs, & Code Blocks (Sleek Dark Navy Contrast in ALL Themes) */
-#red-team-console,
-#event-log-container,
-.mono-code-block,
-.terminal-window {
-  background-color: #070d18 !important;
-  border: 1px solid #1e293b !important;
-  color: #38bdf8 !important;
-}
-#red-team-console .text-slate-400,
-#event-log-container .text-slate-400 {
-  color: #94a3b8 !important;
-}
-#red-team-console .text-emerald-400,
-#event-log-container .text-emerald-400 {
-  color: #34d399 !important;
-}
-#red-team-console .text-rose-400,
-#event-log-container .text-rose-400 {
-  color: #fb7185 !important;
-}
-#red-team-console .text-amber-400,
-#event-log-container .text-amber-400 {
-  color: #fbbf24 !important;
+/* Modal Dialogs in Light Mode */
+html.light .modal-content,
+html.light #aws-cedar-modal > div > div,
+html.light #guided-tour-modal > div > div,
+html.light #command-palette-modal > div > div,
+html.light #whatsapp-preview-modal > div > div,
+html.light #tax-invoice-modal > div > div {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25) !important;
 }
 
 /* Header Theme Engine: Perfect Dynamic Contrast in Both Modes */
@@ -274,8 +486,8 @@ html.dark #app-header .header-center-sub {
 
 html.light #app-header {
   background-color: #ffffff !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #cbd5e1 !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08) !important;
 }
 html.light #app-header .header-brand-title,
 html.light #app-header .header-brand-title .brand-main-text {
@@ -288,32 +500,84 @@ html.light #app-header .header-center-sub {
   color: #475569 !important;
 }
 
-/* Sidebar ALWAYS Stays Premium Deep Navy with High-Contrast White Text */
-#app-sidebar,
-html.light #app-sidebar,
+/* ==============================================================================
+   SIDEBAR: Crisp Razorpay White & Blue in Light Mode, Deep Navy in Dark Mode
+   ============================================================================== */
+html.light #app-sidebar {
+  background-color: #ffffff !important;
+  border-right: 1px solid #d4e5f9 !important;
+  box-shadow: 2px 0 16px 0 rgba(12, 108, 242, 0.04) !important;
+}
+html.light #app-sidebar [class*="uppercase"] {
+  color: #0c2340 !important;
+  font-weight: 800 !important;
+  border-bottom-color: #e2efff !important;
+}
+html.light #app-sidebar [class*="uppercase"] span:last-child {
+  color: #0c6cf2 !important;
+  font-weight: 700 !important;
+}
+html.light #app-sidebar .text-white,
+html.light #app-sidebar span {
+  color: #1b3152 !important;
+}
+html.light #app-sidebar .text-slate-400 {
+  color: #475569 !important;
+}
+html.light #app-sidebar .nav-btn-inactive {
+  color: #1b3152 !important;
+  font-weight: 500 !important;
+  border-radius: 0.5rem !important;
+  border: 1px solid transparent !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+html.light #app-sidebar .nav-btn-inactive:hover {
+  background-color: #f0f7ff !important;
+  color: #0c6cf2 !important;
+  border-color: #d4e5f9 !important;
+  transform: translateX(2px);
+}
+html.light #app-sidebar .nav-btn-inactive:hover span,
+html.light #app-sidebar .nav-btn-inactive:hover svg {
+  color: #0c6cf2 !important;
+}
+html.light #app-sidebar .nav-btn-active {
+  background-color: #edf5fe !important;
+  color: #0c6cf2 !important;
+  font-weight: 700 !important;
+  border: 1px solid #b8daff !important;
+  box-shadow: 0 2px 8px -1px rgba(12, 108, 242, 0.12) !important;
+  border-radius: 0.5rem !important;
+}
+html.light #app-sidebar .nav-btn-active span,
+html.light #app-sidebar .nav-btn-active svg {
+  color: #0c6cf2 !important;
+}
+html.light #app-sidebar .sidebar-footer-version {
+  background-color: #f0f7ff !important;
+  border-color: #d4e5f9 !important;
+  color: #475569 !important;
+}
+
+/* Dark Mode Sidebar */
 html.dark #app-sidebar {
   background-color: #0c2340 !important;
   border-right: 1px solid #132f54 !important;
 }
-#app-sidebar .text-white,
-html.light #app-sidebar .text-white {
+html.dark #app-sidebar .text-white {
   color: #ffffff !important;
 }
-#app-sidebar .text-slate-400,
-html.light #app-sidebar .text-slate-400 {
+html.dark #app-sidebar .text-slate-400 {
   color: #94a3b8 !important;
 }
-#app-sidebar .nav-btn-inactive,
-html.light #app-sidebar .nav-btn-inactive {
+html.dark #app-sidebar .nav-btn-inactive {
   color: #cbd5e1 !important;
 }
-#app-sidebar .nav-btn-inactive:hover,
-html.light #app-sidebar .nav-btn-inactive:hover {
+html.dark #app-sidebar .nav-btn-inactive:hover {
   background-color: #132f54 !important;
   color: #ffffff !important;
 }
-#app-sidebar .nav-btn-active,
-html.light #app-sidebar .nav-btn-active {
+html.dark #app-sidebar .nav-btn-active {
   background-color: #0c55ea !important;
   color: #ffffff !important;
 }
@@ -543,4 +807,1170 @@ html.light .fintech-glass {
   background: rgba(255, 255, 255, 0.85) !important;
   border: 1px solid rgba(226, 232, 240, 0.9) !important;
 }
+
+/* ==============================================================================
+   THREE.JS 3D CYBER-TOPOLOGY & NETWORK CONSTELLATION CONTAINER
+   ============================================================================== */
+#threejs-topology-mount {
+  width: 100%;
+  height: 280px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, rgba(3, 7, 18, 0.95) 75%);
+}
+
+html.light #threejs-topology-mount {
+  background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.08) 0%, rgba(248, 250, 252, 0.95) 75%);
+}
+
+/* ==============================================================================
+   RESIZABLE MULTI-PANE SPLITTER SYSTEM (Vercel & Linear Standard)
+   ============================================================================== */
+.split-pane-container {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.pane-left {
+  flex: 1 1 60%;
+  min-width: 320px;
+}
+
+.pane-right {
+  flex: 1 1 40%;
+  min-width: 280px;
+}
+
+.split-divider {
+  width: 6px;
+  cursor: col-resize;
+  background-color: var(--border-card);
+  transition: background-color 0.2s ease;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.split-divider:hover,
+.split-divider.active {
+  background-color: var(--color-cyan);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+}
+
+.split-divider::after {
+  content: "";
+  width: 2px;
+  height: 28px;
+  border-radius: 1px;
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* ==============================================================================
+   TACTILE MICRO-INTERACTION BUTTONS (Rauno Freiberg Interfaces)
+   ============================================================================== */
+.btn-tactile {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+}
+
+.btn-tactile:hover {
+  transform: translateY(-1px);
+}
+
+.btn-tactile:active {
+  transform: scale(0.97) translateY(0);
+}
+
+/* ==============================================================================
+   WCAG 2.2 AA KEYBOARD FOCUS RINGS (Vercel Guidelines)
+   ============================================================================== */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-cyan) !important;
+  outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==============================================================================
+   MODERN HIGH-TECH SCROLLBAR (Linear & Stripe Standard)
+   ============================================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(3, 7, 18, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.22);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.5);
+}
+
+/* ==============================================================================
+   2026 SRE HUD BOOT SEQUENCE & CINEMATIC LANDING SHOWCASE STYLES
+   ============================================================================== */
+.hud-grid-background {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@keyframes hud-scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.hud-scanline-beam {
+  animation: hud-scanline 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.radar-sweep-beam {
+  animation: radar-sweep 4s linear infinite;
+  transform-origin: center center;
+}
+
+.landing-glow-card {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-glow-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.5), 0 0 25px rgba(56, 189, 248, 0.12) !important;
+}
+
+html.light .landing-glow-card:hover {
+  border-color: rgba(2, 132, 199, 0.4) !important;
+  box-shadow: 0 12px 30px -5px rgba(15, 23, 42, 0.1), 0 0 20px rgba(2, 132, 199, 0.08) !important;
+}
+
+/* ==============================================================================
+   DESKTOP SIDEBAR FULL SLIDE-OUT COLLAPSIBLE STYLES (Razorpay Layout)
+   ============================================================================== */
+#app-sidebar {
+  width: 17rem !important;
+  min-width: 17rem !important;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              min-width 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              padding 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.25s ease, 
+              visibility 0.35s ease !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+#app-sidebar.sidebar-collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-right-width: 0 !important;
+  border-right-color: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  overflow: hidden !important;
+}
+
+#app-sidebar button {
+  white-space: nowrap !important;
+}
+
+#app-sidebar button:hover {
+  transform: translateX(2px);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+/* ==============================================================================
+   2026 HIGH-FIDELITY LANDING GATEWAY & SHOWCASE (RiskSentinel-X Inspired)
+   ============================================================================== */
+
+/* 1. Typewriter Blinking Cursor */
+@keyframes typewriter-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background-color: #38bdf8;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: typewriter-blink 0.8s infinite;
+}
+
+html.light .typewriter-cursor {
+  background-color: #0c55ea;
+}
+
+/* 2. 3D Card Tilt & Micro-Interactions */
+.tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.tilt-card:hover {
+  transform: translateY(-5px) scale(1.015);
+}
+
+/* 3. Automated Horizontal Infinite Marquee Carousel */
+@keyframes continuous-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: continuous-marquee 35s linear infinite;
+}
+
+.marquee-container:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+/* 4. Light Theme Overrides for Landing Gateway */
+html.light #landing-gateway-container {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light #landing-gateway-container nav {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light #landing-gateway-container nav a {
+  color: #475569 !important;
+}
+
+html.light #landing-gateway-container nav a:hover {
+  color: #0c55ea !important;
+}
+
+html.light #landing-gateway-container .landing-card-surface,
+html.light #landing-gateway-container .bg-slate-900\/80,
+html.light #landing-gateway-container .bg-slate-900\/70,
+html.light #landing-gateway-container .bg-slate-900\/90,
+html.light #landing-gateway-container .bg-\[\#03060c\],
+html.light #landing-gateway-container .bg-\[\#070e1c\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light #landing-gateway-container .bg-\[\#020408\] {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #landing-gateway-container .text-white {
+  color: #0f172a !important;
+}
+
+html.light #landing-gateway-container .text-slate-100 {
+  color: #1e293b !important;
+}
+
+html.light #landing-gateway-container .text-slate-200 {
+  color: #334155 !important;
+}
+
+html.light #landing-gateway-container .text-slate-300 {
+  color: #475569 !important;
+}
+
+html.light #landing-gateway-container .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light #landing-gateway-container footer {
+  background-color: #ffffff !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+html.light #landing-gateway-container footer .text-white {
+  color: #0f172a !important;
+}
+
+html.light #landing-gateway-container footer .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light #landing-gateway-container footer .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.light #landing-gateway-container footer .border-slate-800 {
+  border-color: #e2e8f0 !important;
+}
+
+/* ==============================================================================
+   SVGATOR 31 INSPIRATION ANIMATION SUITE & INTERACTIVE VISUAL ENGINE
+   Conforms to: https://www.svgator.com/blog/website-animation-examples-and-effects/
+   ============================================================================== */
+
+/* #1 Real-Time Rendering & #6 Ambient Background Aurora Mesh */
+@keyframes aurora-mesh-float {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(30px, -25px) scale(1.1);
+    opacity: 0.45;
+  }
+}
+
+.aurora-mesh-orb-1 {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(12, 85, 234, 0.35) 0%, rgba(56, 189, 248, 0) 70%);
+  filter: blur(70px);
+  animation: aurora-mesh-float 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora-mesh-orb-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0) 70%);
+  filter: blur(80px);
+  animation: aurora-mesh-float 15s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* #7 Line Animation & #8 Self-Drawing SVG Graph Paths */
+@keyframes self-draw-stroke {
+  from {
+    stroke-dashoffset: 1200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.self-drawing-curve {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: self-draw-stroke 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* #9 Morphing Animation Effects */
+@keyframes morphing-blob {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+.morphing-blob-pulse {
+  animation: morphing-blob 8s ease-in-out infinite;
+}
+
+/* #10 Animated Logos & #11 Animated Pulse Icons */
+@keyframes logo-bolt-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(12, 85, 234, 0.9));
+    transform: scale(1.05);
+  }
+}
+
+.animated-logo-bolt {
+  animation: logo-bolt-pulse 3s ease-in-out infinite;
+}
+
+/* #12 Microinteractions & Voice Waveform Dance */
+@keyframes voice-wave-oscillate {
+  0%, 100% {
+    height: 4px;
+    opacity: 0.4;
+  }
+  50% {
+    height: 28px;
+    opacity: 1;
+  }
+}
+
+.voice-wave-bar-1 { animation: voice-wave-oscillate 0.9s ease-in-out infinite 0.1s; }
+.voice-wave-bar-2 { animation: voice-wave-oscillate 0.7s ease-in-out infinite 0.25s; }
+.voice-wave-bar-3 { animation: voice-wave-oscillate 1.1s ease-in-out infinite 0.05s; }
+.voice-wave-bar-4 { animation: voice-wave-oscillate 0.8s ease-in-out infinite 0.35s; }
+.voice-wave-bar-5 { animation: voice-wave-oscillate 1.0s ease-in-out infinite 0.15s; }
+
+/* #17 Liquid Motion & #18 Animated Gradient Shimmer */
+@keyframes liquid-gradient-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.liquid-gradient-cta {
+  background: linear-gradient(135deg, #0c55ea, #06b6d4, #10b981, #3b82f6);
+  background-size: 300% 300%;
+  animation: liquid-gradient-sweep 6s ease infinite;
+}
+
+/* #24 Loading Skeleton Screens & Shimmer */
+@keyframes skeleton-shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-loading-bar {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 25%, rgba(56, 189, 248, 0.12) 37%, rgba(255, 255, 255, 0.04) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer-sweep 1.6s ease infinite;
+}
+
+html.light .skeleton-loading-bar {
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.04) 25%, rgba(12, 85, 234, 0.1) 37%, rgba(15, 23, 42, 0.04) 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer-sweep 1.6s ease infinite;
+}
+
+/* #27 Neumorphic, #28 Glassmorphic & #29 Claymorphic Design System */
+.glassmorphic-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(7, 14, 28, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.45);
+}
+
+html.light .glassmorphic-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 12px 36px 0 rgba(15, 23, 42, 0.07);
+}
+
+.claymorphic-pill {
+  border-radius: 9999px;
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(12, 85, 234, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.claymorphic-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 8px 24px rgba(12, 85, 234, 0.35);
+}
+
+/* #14 Faux 3D Specular Glare Layer on Hover */
+.glare-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.tilt-card:hover .glare-overlay {
+  opacity: 1;
+}
+
+/* #2 Scrollytelling Active Step Pulse */
+.scrolly-active-indicator {
+  position: relative;
+}
+
+.scrolly-active-indicator::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #0c6cf2;
+  border-radius: 4px;
+  box-shadow: 0 0 12px #0c6cf2;
+}
+
+/* ==============================================================================
+   RAZORPAY SIGNATURE BLUE & WHITE LIGHT THEME — COMPREHENSIVE DESIGN SYSTEM
+   High Contrast (14:1+ Ratio), Crisp Visual Hierarchy & Razorpay Brand Aesthetics
+   ============================================================================== */
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #f4f8fe !important;
+  color: #0c2340 !important;
+}
+
+/* 1. Header & Workspace Navigation Bar */
+html.light #app-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #d4e5f9 !important;
+  box-shadow: 0 2px 12px 0 rgba(12, 108, 242, 0.05) !important;
+}
+
+html.light #header-breadcrumb-root {
+  color: #475569 !important;
+}
+
+html.light #header-breadcrumb-active {
+  color: #0c2340 !important;
+  font-weight: 700 !important;
+}
+
+html.light #sidebar-toggle-btn {
+  background-color: #f0f6ff !important;
+  border-color: #cbdff5 !important;
+  color: #0c6cf2 !important;
+}
+
+html.light #sidebar-toggle-btn:hover {
+  background-color: #e2efff !important;
+  border-color: #0c6cf2 !important;
+  color: #0040b0 !important;
+}
+
+/* 2. Workspace Sidebar (Razorpay Clean White with Electric Blue Accents) */
+html.light #app-sidebar {
+  background-color: #ffffff !important;
+  border-right: 1px solid #d4e5f9 !important;
+  box-shadow: 2px 0 16px 0 rgba(12, 108, 242, 0.04) !important;
+}
+
+html.light #app-sidebar [class*="uppercase"] {
+  color: #0c2340 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+}
+
+html.light #app-sidebar button {
+  color: #1e3a6a !important;
+  font-weight: 500 !important;
+  border-radius: 0.625rem !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+html.light #app-sidebar button:hover {
+  background-color: #f0f6ff !important;
+  color: #0c6cf2 !important;
+}
+
+html.light #app-sidebar button.bg-slate-800,
+html.light #app-sidebar button.bg-slate-800\/60,
+html.light #app-sidebar button.active,
+html.light #app-sidebar button[class*="border-sky-500"],
+html.light #app-sidebar button[class*="text-sky-400"] {
+  background-color: #edf5fe !important;
+  color: #0c6cf2 !important;
+  font-weight: 700 !important;
+  border: 1px solid #b8daff !important;
+  box-shadow: 0 2px 8px -1px rgba(12, 108, 242, 0.12) !important;
+}
+
+html.light #app-sidebar button .nav-badge,
+html.light #app-sidebar button span.text-\[9px\] {
+  background-color: #e0effe !important;
+  color: #0c6cf2 !important;
+  border: 1px solid #b8daff !important;
+  font-weight: 700 !important;
+}
+
+/* 3. Cards, Bento Grids & Panels */
+html.light .custom-card,
+html.light .landing-glow-card,
+html.light [class*="bg-slate-900"],
+html.light [class*="bg-[#0c182c]"],
+html.light [class*="bg-[#070e1c]"],
+html.light [class*="bg-[#060d1d]"] {
+  background-color: #ffffff !important;
+  border-color: #d4e5f9 !important;
+  color: #0c2340 !important;
+  box-shadow: 0 3px 16px -2px rgba(12, 108, 242, 0.06), 0 1px 3px -1px rgba(12, 108, 242, 0.04) !important;
+}
+
+html.light .custom-card:hover,
+html.light .landing-glow-card:hover {
+  border-color: #0c6cf2 !important;
+  box-shadow: 0 10px 28px -4px rgba(12, 108, 242, 0.14) !important;
+}
+
+html.light [class*="bg-slate-950"],
+html.light [class*="bg-[#040814]"],
+html.light [class*="bg-[#081224]"],
+html.light [class*="bg-black\/"] {
+  background-color: #f0f6ff !important;
+  border-color: #d8e8fa !important;
+  color: #0c2340 !important;
+}
+
+/* 4. High-Contrast Typography & Headings */
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6,
+html.light [class*="text-white"],
+html.light [class*="text-slate-100"],
+html.light [class*="text-slate-200"] {
+  color: #0c2340 !important;
+}
+
+html.light p,
+html.light span,
+html.light label,
+html.light [class*="text-slate-300"],
+html.light [class*="text-slate-400"] {
+  color: #1b3152 !important;
+}
+
+html.light [class*="text-slate-500"],
+html.light [class*="text-slate-600"] {
+  color: #475569 !important;
+}
+
+html.light [class*="text-sky-400"],
+html.light [class*="text-blue-400"],
+html.light [class*="text-cyan-400"] {
+  color: #0c6cf2 !important;
+  font-weight: 600 !important;
+}
+
+html.light [class*="text-emerald-400"],
+html.light [class*="text-green-400"] {
+  color: #057a55 !important;
+  font-weight: 600 !important;
+}
+
+html.light [class*="text-amber-400"],
+html.light [class*="text-yellow-400"] {
+  color: #b45309 !important;
+  font-weight: 600 !important;
+}
+
+html.light [class*="text-rose-400"],
+html.light [class*="text-red-400"] {
+  color: #e02424 !important;
+  font-weight: 600 !important;
+}
+
+html.light [class*="text-purple-400"],
+html.light [class*="text-indigo-400"] {
+  color: #6b21a8 !important;
+  font-weight: 600 !important;
+}
+
+/* 5. Status Badges & Pills */
+html.light [class*="bg-emerald-500\/10"],
+html.light [class*="bg-emerald-500\/20"],
+html.light [class*="bg-emerald-950"] {
+  background-color: #e6fbf3 !important;
+  color: #036c46 !important;
+  border-color: #a8ebd0 !important;
+}
+
+html.light [class*="bg-sky-500\/10"],
+html.light [class*="bg-sky-500\/20"],
+html.light [class*="bg-blue-500\/10"],
+html.light [class*="bg-blue-950"] {
+  background-color: #ebf5ff !important;
+  color: #0052cc !important;
+  border-color: #b8daff !important;
+}
+
+html.light [class*="bg-amber-500\/10"],
+html.light [class*="bg-amber-500\/20"],
+html.light [class*="bg-amber-950"] {
+  background-color: #fffbeb !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+
+html.light [class*="bg-rose-500\/10"],
+html.light [class*="bg-rose-500\/20"],
+html.light [class*="bg-rose-950"] {
+  background-color: #fdf2f2 !important;
+  color: #b91c1c !important;
+  border-color: #fbcaca !important;
+}
+
+html.light [class*="bg-purple-500\/10"],
+html.light [class*="bg-purple-500\/20"],
+html.light [class*="bg-purple-950"] {
+  background-color: #f5f3ff !important;
+  color: #5b21b6 !important;
+  border-color: #ddd6fe !important;
+}
+
+/* 6. Data Tables & Grids */
+html.light th {
+  background-color: #edf5fe !important;
+  color: #0c2340 !important;
+  border-bottom: 2px solid #d4e5f9 !important;
+  font-weight: 700 !important;
+}
+
+html.light td {
+  color: #0c2340 !important;
+  border-color: #e8f2fe !important;
+}
+
+html.light tr:hover td {
+  background-color: #f0f7ff !important;
+}
+
+/* 7. Forms, Inputs & Select Elements */
+html.light input,
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0c2340 !important;
+  border: 1px solid #cbdff5 !important;
+}
+
+html.light input:focus,
+html.light select:focus,
+html.light textarea:focus {
+  border-color: #0c6cf2 !important;
+  box-shadow: 0 0 0 3px rgba(12, 108, 242, 0.15) !important;
+}
+
+/* 8. Code & Telemetry Terminal Blocks */
+html.light pre,
+html.light code.terminal-block {
+  background-color: #0c2340 !important;
+  color: #38bdf8 !important;
+  border: 1px solid #1e3a6a !important;
+}
+
+/* 9. Landing Gateway & Showcase Light Theme */
+html.light #landing-gateway-container {
+  background-color: #f4f8fe !important;
+  color: #0c2340 !important;
+}
+
+html.light #landing-gateway-container nav {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1px solid #d4e5f9 !important;
+}
+
+html.light #landing-gateway-container footer {
+  background-color: transparent !important;
+}
+
+/* ==============================================================================
+   SIGNATURE ENTERPRISE CONTROL PLANE FOOTER (Uniquely Highlighted, Luxury & Distinct)
+   ============================================================================== */
+.signature-enterprise-footer {
+  position: relative;
+  background: radial-gradient(120% 100% at 50% 0%, #071533 0%, #030a1c 50%, #010309 100%);
+  border-top: 3px solid transparent;
+  border-image: linear-gradient(90deg, #0c6cf2 0%, #00d285 25%, #38bdf8 50%, #a855f7 75%, #0c6cf2 100%) 1;
+  box-shadow: 0 -12px 50px -10px rgba(12, 108, 242, 0.25);
+}
+
+html.light .signature-enterprise-footer {
+  background: radial-gradient(120% 100% at 50% 0%, #dbeafe 0%, #eaf3fe 45%, #f4f8fe 100%) !important;
+  border-top: 3px solid transparent !important;
+  border-image: linear-gradient(90deg, #0c6cf2 0%, #00d285 25%, #38bdf8 50%, #a855f7 75%, #0c6cf2 100%) 1 !important;
+  box-shadow: 0 -12px 50px -10px rgba(12, 108, 242, 0.18) !important;
+}
+
+html.light .signature-enterprise-footer .footer-title {
+  color: #0c2340 !important;
+}
+
+html.light .signature-enterprise-footer .footer-link {
+  color: #334155 !important;
+}
+
+html.light .signature-enterprise-footer .footer-link:hover {
+  color: #0c6cf2 !important;
+}
+
+html.light .signature-enterprise-footer .footer-desc {
+  color: #475569 !important;
+}
+
+html.light .signature-enterprise-footer .footer-badge-emerald {
+  background-color: #ecfdf5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .signature-enterprise-footer .footer-badge-sky {
+  background-color: #f0f9ff !important;
+  color: #0369a1 !important;
+  border-color: #bae6fd !important;
+}
+
+html.light .signature-enterprise-footer .footer-badge-purple {
+  background-color: #faf5ff !important;
+  color: #6b21a8 !important;
+  border-color: #e9d5ff !important;
+}
+
+html.light .signature-enterprise-footer .footer-vault-bar {
+  background-color: #d2e4f9 !important;
+  border-color: #bfdbfe !important;
+  color: #1e3a8a !important;
+}
+
+
+/* ==============================================================================
+   INDIAN FINTECH HERO SCENIC BACKDROP (India Gate + Map Constellation + Vande Bharat)
+   ============================================================================== */
+.hero-scenic-bg {
+  position: relative;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  transition: background-image 0.3s ease;
+}
+
+html.light .hero-scenic-bg {
+  background-image: linear-gradient(180deg, rgba(244, 248, 254, 0.35) 0%, rgba(244, 248, 254, 0.05) 40%, rgba(244, 248, 254, 0.85) 100%), url('/static/assets/hero_fintech_india_day.png');
+}
+
+html.dark .hero-scenic-bg {
+  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.35) 0%, rgba(7, 14, 28, 0.05) 40%, rgba(7, 14, 28, 0.85) 100%), url('/static/assets/hero_fintech_india_night.png');
+}
+
+html.light .aurora-mesh-orb-1 {
+  background: radial-gradient(circle, rgba(12, 108, 242, 0.15) 0%, transparent 70%) !important;
+}
+
+html.light .aurora-mesh-orb-2 {
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, transparent 70%) !important;
+}
+
+/* ==============================================================================
+   ADVANCED FINTECH ANIMATION ADDONS & MICRO-EFFECTS
+   ============================================================================== */
+
+/* Razorpay High-Tech Live Pulse Ring */
+@keyframes rzp-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(12, 108, 242, 0.5);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(12, 108, 242, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(12, 108, 242, 0);
+  }
+}
+
+.rzp-pulse-dot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: #0c6cf2;
+  animation: rzp-pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Razorpay Electric Blue Gradient Button */
+.rzp-btn-primary {
+  background: linear-gradient(135deg, #0c6cf2 0%, #0040b0 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px 0 rgba(12, 108, 242, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.rzp-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(12, 108, 242, 0.45) !important;
+}
+
+.rzp-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Razorpay Card Elevation Aura */
+.rzp-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.rzp-card:hover {
+  transform: translateY(-3px);
+  border-color: #0c6cf2 !important;
+  box-shadow: 0 12px 28px -4px rgba(12, 108, 242, 0.16) !important;
+}
+
+/* ==============================================================================
+   CIRCULAR MULTI-RAIL ORBITAL CONSTELLATION & RADAR SWEEP ANIMATIONS
+   ============================================================================== */
+
+@keyframes orbit-ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes node-pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(12, 108, 242, 0.3), inset 0 0 10px rgba(56, 189, 248, 0.2);
+    border-color: rgba(56, 189, 248, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(12, 108, 242, 0.6), inset 0 0 20px rgba(56, 189, 248, 0.4);
+    border-color: rgba(56, 189, 248, 0.9);
+  }
+}
+
+@keyframes radar-sweep-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.constellation-orbit-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px dashed rgba(12, 108, 242, 0.25);
+  pointer-events: none;
+}
+
+html.light .constellation-orbit-ring {
+  border-color: rgba(12, 108, 242, 0.2);
+}
+
+.orbital-node-card {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.orbital-node-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: #0c6cf2 !important;
+  box-shadow: 0 12px 28px -4px rgba(12, 108, 242, 0.3), 0 0 20px rgba(56, 189, 248, 0.2) !important;
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(56, 189, 248, 0.3) 0deg, transparent 60deg, transparent 360deg);
+  animation: radar-sweep-spin 4s linear infinite;
+  pointer-events: none;
+}
+
+/* Modal Drawer Backdrop Animation */
+#architecture-node-modal {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ==============================================================================
+   SRE HUD BOOTLOADER: Always High-Contrast Dark Neon Terminal in Light & Dark Mode
+   ============================================================================== */
+#sre-hud-boot-overlay {
+  background-color: rgba(3, 7, 18, 0.96) !important;
+  color: #f8fafc !important;
+}
+
+#sre-hud-boot-overlay .hud-terminal-box {
+  background-color: #030712 !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+#sre-hud-boot-overlay .text-white {
+  color: #ffffff !important;
+}
+
+#sre-hud-boot-overlay .text-sky-400 {
+  color: #38bdf8 !important;
+}
+
+#sre-hud-boot-overlay .text-emerald-400 {
+  color: #34d399 !important;
+}
+
+#sre-hud-boot-overlay .text-slate-400,
+#sre-hud-boot-overlay .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+/* ==============================================================================
+   SANDBOX SCENARIO CHIPS (Dynamic Highlight State in Light & Dark Themes)
+   ============================================================================== */
+.sb-scenario-chip {
+  padding: 0.45rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid #cbdff5;
+  background-color: #ffffff;
+  color: #0c2340;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.dark .sb-scenario-chip {
+  background-color: rgba(15, 23, 42, 0.8);
+  border-color: #1e293b;
+  color: #cbd5e1;
+}
+
+.sb-scenario-chip:hover {
+  border-color: #0c6cf2;
+  color: #0c6cf2;
+  transform: translateY(-1px);
+}
+
+html.dark .sb-scenario-chip:hover {
+  background-color: #1e293b;
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+.sb-scenario-chip.active {
+  background-color: #0c6cf2 !important;
+  border-color: #0c6cf2 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px 0 rgba(12, 108, 242, 0.35) !important;
+  transform: scale(1.02);
+}
+
+html.dark .sb-scenario-chip.active {
+  background-color: #0284c7 !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px 0 rgba(2, 132, 199, 0.4) !important;
+}
+
+/* ==============================================================================
+   ARCHITECTURE NODE MODAL ("Click to know more") High-Fidelity Dialog
+   ============================================================================== */
+html.light #architecture-node-modal .modal-inner-card {
+  background-color: #ffffff !important;
+  border: 1px solid #cbdff5 !important;
+  color: #0c2340 !important;
+  box-shadow: 0 25px 60px -15px rgba(12, 35, 64, 0.3) !important;
+}
+
+html.light #architecture-node-modal .modal-inner-card .text-white {
+  color: #0c2340 !important;
+}
+
+html.light #architecture-node-modal .modal-inner-card .text-slate-300,
+html.light #architecture-node-modal .modal-inner-card .text-slate-400 {
+  color: #334155 !important;
+}
+
+html.light #architecture-node-modal .modal-inner-card .bg-slate-900\/80,
+html.light #architecture-node-modal .modal-inner-card .bg-\[\#03060c\] {
+  background-color: #f0f7ff !important;
+  border-color: #d4e5f9 !important;
+}
+
+html.light #architecture-node-modal .modal-inner-card pre {
+  background-color: #0c1c36 !important;
+  color: #38bdf8 !important;
+}
+
+html.dark #architecture-node-modal .modal-inner-card {
+  background-color: #08101e !important;
+  border: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7) !important;
+}
+
+
+
+
 

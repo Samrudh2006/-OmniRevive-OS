@@ -56,6 +56,7 @@ import {
 
 import { initFintech3DTopology } from "./components/topologyCanvas.js?v=2.1.0";
 import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js?v=2.1.0";
+import { landingGateway } from "./components/landingGateway.js?v=2.1.0";
 import {
   toggleAiCopilotDrawer,
   sendQuickPrompt,
@@ -77,6 +78,8 @@ import {
   CMDK_COMMANDS,
   appState
 } from "./state/appState.js?v=2.1.0";
+
+import { evalDashboard } from "./components/evalDashboard.js?v=2.1.0";
 
 // =========================================================================
 // Component Mount Helper
@@ -114,6 +117,7 @@ export function mountComponents() {
 }
 
 // =========================================================================
+// =========================================================================
 // Navigation Tab Switcher
 // =========================================================================
 export function switchNavTab(tabName) {
@@ -130,11 +134,38 @@ export function switchNavTab(tabName) {
     activeBtn.classList.add("nav-btn-active");
   }
 
+  // Dynamic Breadcrumb Label Update (RiskSentinel-X Alignment)
+  const tabLabels = {
+    overview: "Overview",
+    fast_loop: "Fast Loop (B2C)",
+    npci_switch: "NPCI Switch Radar",
+    bulk_recovery: "Bulk CSV Recovery",
+    card_tokens: "Card Token Vault",
+    deep_loop: "Deep Loop (Voice)",
+    financial_yield: "Financial Yield Forecaster",
+    red_team: "Red-Team Attack Lab",
+    ptp_calendar: "PTP Promise Calendar",
+    audit_ledger: "Merkle Audit Ledger",
+    benchmark: "100-Case Benchmark",
+    policy_engine: "AWS Cedar Policy Gate",
+    analytics: "Weibull Hazard Analytics",
+    configuration: "Control Plane Config",
+    logs: "Structured Event Stream",
+    alerts: "Security & SRE Alerts",
+    docs: "Production Playbook",
+    cfo_approvals: "CFO Dual-Key Approvals",
+    evaluation: "AI Evaluation Suite"
+  };
+  const breadcrumbEl = document.getElementById("header-breadcrumb-active");
+  if (breadcrumbEl && tabLabels[tabName]) {
+    breadcrumbEl.textContent = tabLabels[tabName];
+  }
+
   const views = [
     "overview", "fast_loop", "npci_switch", "bulk_recovery", "card_tokens",
     "deep_loop", "financial_yield", "red_team", "ptp_calendar",
     "audit_ledger", "benchmark", "policy_engine", "analytics",
-    "configuration", "logs", "alerts", "docs", "cfo_approvals"
+    "configuration", "logs", "alerts", "docs", "cfo_approvals", "evaluation"
   ];
 
   views.forEach((v) => {
@@ -148,6 +179,7 @@ export function switchNavTab(tabName) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  if (tabName === "evaluation") evalDashboard.refreshMetrics();
   if (tabName === "cfo_approvals") refreshCfoQueueUI();
   if (tabName === "ptp_calendar") loadPTPRecords();
   if (tabName === "logs") loadLiveLogs();
@@ -159,6 +191,16 @@ export function switchNavTab(tabName) {
   if (tabName === "financial_yield") updateLiveRoiCalculator();
   if (tabName === "benchmark") runBenchmarkAction();
 }
+
+export function toggleDesktopSidebar() {
+  const sidebar = document.getElementById("app-sidebar");
+  if (sidebar) {
+    sidebar.classList.toggle("sidebar-collapsed");
+    const isCollapsed = sidebar.classList.contains("sidebar-collapsed");
+    localStorage.setItem("omnirevive_sidebar_collapsed", isCollapsed ? "true" : "false");
+  }
+}
+window.toggleDesktopSidebar = toggleDesktopSidebar;
 
 export function openDetailedBenchmarkSuite() {
   switchNavTab("benchmark");
@@ -193,6 +235,41 @@ export function toggleThemeMode() {
     if (text) text.textContent = "Light";
     appState.setTheme("dark");
     showToast("🌙 Switched to Deep Navy Dark Mode", "info");
+  }
+
+  setTimeout(renderWeibullCurve, 50);
+}
+
+// 2026 Theme Palette Controller
+export function toggleThemePaletteMenu() {
+  const dropdown = document.getElementById("theme-palette-dropdown");
+  if (dropdown) {
+    dropdown.classList.toggle("hidden");
+  }
+}
+
+export function applyThemePalette(paletteName) {
+  const html = document.documentElement;
+  const iconEl = document.getElementById("theme-palette-icon");
+  const labelEl = document.getElementById("theme-palette-label");
+  const dropdown = document.getElementById("theme-palette-dropdown");
+  if (dropdown) dropdown.classList.add("hidden");
+
+  html.setAttribute("data-theme", paletteName);
+  localStorage.setItem("omnirevive_palette", paletteName);
+
+  if (paletteName === "cyber-obsidian") {
+    if (iconEl) iconEl.innerText = "🌌";
+    if (labelEl) labelEl.innerText = "Cyber Obsidian";
+    showToast("🌌 Activated Cyber Obsidian Theme", "info");
+  } else if (paletteName === "stripe-velvet") {
+    if (iconEl) iconEl.innerText = "💳";
+    if (labelEl) labelEl.innerText = "Stripe Velvet";
+    showToast("💳 Activated Stripe Velvet Theme", "info");
+  } else if (paletteName === "vercel-carbon") {
+    if (iconEl) iconEl.innerText = "▲";
+    if (labelEl) labelEl.innerText = "Vercel Carbon";
+    showToast("▲ Activated Vercel Carbon Theme", "info");
   }
 
   setTimeout(renderWeibullCurve, 50);
@@ -1372,6 +1449,9 @@ window.onclick = function (event) {
   if (!event.target.closest("#scenarios-btn") && !event.target.closest("#scenarios-dropdown")) {
     document.getElementById("scenarios-dropdown")?.classList.add("hidden");
   }
+  if (!event.target.closest("#theme-palette-btn") && !event.target.closest("#theme-palette-dropdown")) {
+    document.getElementById("theme-palette-dropdown")?.classList.add("hidden");
+  }
 };
 
 // 21st.dev Dynamic Spotlight cursor tracking
@@ -1405,7 +1485,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (text) text.textContent = "Dark";
   }
 
+  const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
+  applyThemePalette(savedPalette);
+
   mountComponents();
+  landingGateway.init();
+  evalDashboard.init();
   updateOverviewBankGrid();
   refreshAuditLedger();
   refreshFullNPCISwitchView();
@@ -1422,7 +1507,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Immediate execution if script is loaded after DOMContentLoaded
 if (document.readyState === "complete" || document.readyState === "interactive") {
+  const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
+  applyThemePalette(savedPalette);
   mountComponents();
+  landingGateway.init();
+  evalDashboard.init();
   updateOverviewBankGrid();
   refreshAuditLedger();
   refreshFullNPCISwitchView();
@@ -1432,3 +1521,8 @@ if (document.readyState === "complete" || document.readyState === "interactive")
   animateAllKpis();
   refreshCfoQueueUI();
 }
+
+window.toggleThemePaletteMenu = toggleThemePaletteMenu;
+window.applyThemePalette = applyThemePalette;
+window.evalDashboard = evalDashboard;
+window.landingGateway = landingGateway;

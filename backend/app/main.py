@@ -50,6 +50,7 @@ from backend.app.routes.aws_router import router as aws_router
 from backend.app.routes.cfo import router as cfo_router
 from backend.app.routes.memory import router as memory_router
 from backend.app.routes.gateways import router as gateways_router
+from backend.app.routes.evaluation import router as evaluation_router
 
 TAGS_METADATA = [
     {
@@ -83,6 +84,10 @@ TAGS_METADATA = [
     {
         "name": "AWS Generative AI",
         "description": "Amazon Bedrock foundation model orchestration for voice synthesis and dispute parsing.",
+    },
+    {
+        "name": "AI Evaluation & Observability",
+        "description": "Ragas, DeepEval, and LangGraph/CrewAI agentic metrics and evaluation testbench.",
     }
 ]
 
@@ -259,3 +264,4 @@ app.include_router(aws_router)
 app.include_router(cfo_router)
 app.include_router(memory_router)
 app.include_router(gateways_router)
+app.include_router(evaluation_router)

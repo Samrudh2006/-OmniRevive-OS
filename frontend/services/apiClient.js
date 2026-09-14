@@ -152,7 +152,7 @@ export async function safeApiCall(url, method = "GET", body = null, headers = {}
     return {
       valid: true,
       total_events: 52,
-      tampering_detected: False,
+      tampering_detected: false,
       genesis_hash: "0000000000000000000000000000000000000000000000000000000000000000"
     };
   }
@@ -175,3 +175,8 @@ export async function safeApiCall(url, method = "GET", body = null, headers = {}
 
   return { success: true, message: "Hermetic offline simulated response" };
 }
+
+export const apiClient = {
+  get: (url) => safeApiCall(url, "GET"),
+  post: (url, body) => safeApiCall(url, "POST", body)
+};
