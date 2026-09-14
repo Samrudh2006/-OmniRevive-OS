@@ -1970,6 +1970,66 @@ html.dark #architecture-node-modal .modal-inner-card {
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7) !important;
 }
 
+/* ==============================================================================
+   APK & AI EVALUATION MODALS LIGHT THEME OVERRIDES
+   ============================================================================== */
+html.light #apk-download-modal > div,
+html.light #ai-eval-modal > div {
+  background-color: #ffffff !important;
+  border-color: #cbdff5 !important;
+  color: #0c2340 !important;
+  box-shadow: 0 25px 50px -12px rgba(12, 35, 64, 0.25) !important;
+}
+
+html.light #apk-download-modal .text-white,
+html.light #ai-eval-modal .text-white {
+  color: #0c2340 !important;
+}
+
+html.light #apk-download-modal .bg-slate-900\/90,
+html.light #apk-download-modal .bg-slate-900\/80,
+html.light #apk-download-modal .bg-slate-950\/60,
+html.light #ai-eval-modal .bg-slate-900\/90 {
+  background-color: #f0f7ff !important;
+  border-color: #d4e5f9 !important;
+}
+
+html.light #apk-download-modal .text-slate-300,
+html.light #apk-download-modal .text-slate-400,
+html.light #ai-eval-modal .text-slate-300,
+html.light #ai-eval-modal .text-slate-400 {
+  color: #334155 !important;
+}
+
+/* ==============================================================================
+   COMPREHENSIVE MOBILE RESPONSIVE ADAPTATIONS (max-width: 768px)
+   ============================================================================== */
+@media (max-width: 768px) {
+  .hero-scenic-bg {
+    background-position: 70% top !important;
+    background-size: cover !important;
+  }
+
+  .orbital-node-card {
+    min-width: 140px;
+    padding: 0.75rem !important;
+  }
+
+  #apk-download-modal > div,
+  #ai-eval-modal > div {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 1.25rem !important;
+    border-radius: 1.5rem !important;
+  }
+
+  .signature-enterprise-footer {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+
 
 
 

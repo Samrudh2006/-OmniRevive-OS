@@ -591,7 +591,7 @@
       </div>
 
       <!-- Right Action CTA -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <!-- Theme Mode Toggle -->
         <button onclick="toggleThemeMode()" class="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-sm" title="Toggle Light / Dark Mode">
           <span>☀️</span>
@@ -1208,11 +1208,17 @@
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30">180ms Turn</span>
           </div>
 
-          <!-- Transcript Bubble -->
-          <div class="p-4 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-2">
-            <div class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">REAL-TIME CONVERSATIONAL STREAM</div>
+          <!-- Transcript Bubble with Play Audio CTA -->
+          <div class="p-4 rounded-2xl bg-purple-950/20 border border-purple-500/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">REAL-TIME CONVERSATIONAL STREAM</div>
+              <button onclick="playLandingVoiceDemo(window.landingGateway ? window.landingGateway.activeVoiceLang || 'telugu' : 'telugu')" class="px-3 py-1 rounded-full bg-purple-600 hover:bg-purple-500 text-white text-[11px] font-bold flex items-center gap-1.5 shadow-md transition cursor-pointer hover:scale-105 active:scale-95">
+                <span>▶️</span>
+                <span>Synthesize Speech</span>
+              </button>
+            </div>
             <p id="landing-voice-transcript" class="text-sm font-semibold text-white leading-relaxed">
-              "Mawa, invoice lo GST number thappu undi, kothadi 29AABCU9603R1Z2 pampistha, 19th September pay chestha."
+              "నమస్కారం అండి, మీ ₹85,000 ఇన్‌వాయిస్ చెల్లింపులో GSTIN సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్‌ను వాట్సాప్ లింక్ ద్వారా పంపించాము..."
             </p>
           </div>
 
@@ -9268,4 +9274,5 @@ forbid (
   <script type="module" src="/static/main.js"></script>
 </body>
 </html>
+
 
