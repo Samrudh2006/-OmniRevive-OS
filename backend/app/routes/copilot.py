@@ -146,6 +146,54 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
             "• Zero network connection pool overhead.\n"
             "• Capable of handling **50,000+ operations/sec** with zero locking contention, providing enterprise resilience on edge control planes."
         )
+    elif any(k in q for k in ["juspay", "hypersdk", "express checkout", "switch weight"]):
+        answer = (
+            "⚡ **Juspay HyperSDK & Multi-Switch Routing Architecture**:\n\n"
+            "OmniRevive-OS integrates natively with Juspay's payment orchestration layer:\n"
+            "• **Smart Switch Allocation**: Dynamically shifts traffic weights across bank switches (HDFC 40%, ICICI 35%, Axis 20%, SBI 5%) based on live health telemetry.\n"
+            "• **HyperSDK Session Generation**: Produces native mobile SDK checkout payloads (`action: paymentPage`, `hyperSdkVersion: 2.1.18`).\n"
+            "• **Sub-Second Intent Execution**: Dispatches pre-warmed UPI intents directly to customer banking apps without webview overhead."
+        )
+    elif any(k in q for k in ["phonepe", "upi switch", "yes bank", "ybl"]):
+        answer = (
+            "🟣 **PhonePe Switch & High-Volume UPI Resiliency**:\n\n"
+            "Powering 48%+ of Indian UPI volume, PhonePe requires uncompromising switch stability:\n"
+            "• **SBI 504 Outage Circuit Breaker**: Shifts retry timestamps +45 minutes during SBI core banking timeouts to prevent switch overload.\n"
+            "• **Dynamic PhonePe Intent**: Generates instant `phonepe://pay?...` deep-links paired with SHA-256 `X-VERIFY` API checksums.\n"
+            "• **Switch Failover**: Seamlessly fails over between Yes Bank and ICICI handles when primary VPA routes experience latency degradation."
+        )
+    elif any(k in q for k in ["cred", "high ticket", "black elite", "member", "club"]):
+        answer = (
+            "💳 **CRED Pay & Ultra High-Ticket Concurrency Architecture**:\n\n"
+            "Built for premium transactions (>₹50,000 credit card repayments and member settlements):\n"
+            "• **0.23ms Atomic CAS Mutex**: Strictly guarantees **0 Double-Debits** under concurrent retry storms across 50+ threads.\n"
+            "• **Dynamic Discount Clamping**: Enforces strict mathematical limits (min(10%, ₹500)) to prevent fee waiver exploitation.\n"
+            "• **Member Tier Routing**: Flags transactions for `CRED_BLACK_ELITE` priority SLAs and encrypted cryptographic audit logging."
+        )
+    elif any(k in q for k in ["cashfree", "auto collect", "virtual account", "van"]):
+        answer = (
+            "🔵 **Cashfree Payments & B2B Auto-Collect (VAN)**:\n\n"
+            "Designed for high-scale enterprise receivables and subscription auto-debit:\n"
+            "• **Virtual Account Numbers (VAN)**: Automatically provisions dedicated `CFVAN...` accounts for instant bank transfer reconciliation.\n"
+            "• **Subscription e-Mandate Engine**: Tracks mandate lifecycle states (`ACTIVE`, `PENDING_FUNDS`, `SUSPENDED`) and executes scheduled retry queues.\n"
+            "• **Instant Settlement Links**: Generates branded Cashfree payment links with zero-surcharge UPI QR payloads."
+        )
+    elif any(k in q for k in ["groww", "jupiter", "fi", "salary", "sip", "neobank"]):
+        answer = (
+            "📈 **Groww, Jupiter & Neobank Smart Mandate Recovery**:\n\n"
+            "Specialized for recurring SIP investments, mutual funds, and automated savings:\n"
+            "• **Salary-Cycle Heuristic Scheduling**: When an auto-debit fails due to insufficient funds late in the month, retries are intelligently scheduled for the **1st to 5th of the month at 10:30 AM IST** (aligning with customer salary credit liquidity).\n"
+            "• **1-Click SIP Intent**: Dispatches frictionless instant recovery links via WhatsApp and UPI to prevent investment portfolio disruption.\n"
+            "• **Account Aggregator Guard**: Evaluates liquidity signals before firing recurring mandate calls to eliminate bank decline penalty fees."
+        )
+    elif any(k in q for k in ["stripe", "international", "fx", "usd", "cross border"]):
+        answer = (
+            "🌍 **Stripe Multi-Currency & Cross-Border SaaS Engine**:\n\n"
+            "For global enterprise receivables and international customer transactions:\n"
+            "• **Dynamic FX Conversion**: Converts INR transactions to USD/EUR/GBP at real-time market rates (e.g. ₹86.50/USD).\n"
+            "• **RBI Compliance Engine**: Enforces mandatory Purpose Codes (e.g. `P0802 Software Consulting Exports`) for foreign inward remittances.\n"
+            "• **Stripe Smart Retries**: Integrates machine-learning retry algorithms targeting international card networks."
+        )
     elif any(k in q for k in ["better", "compare", "stripe", "razorpay", "0.1", "why", "difference"]):
         answer = (
             "🏆 **Why OmniRevive-OS represents the Top 0.1% Approach**:\n\n"

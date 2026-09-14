@@ -543,11 +543,12 @@
               <span class="brand-main-text">OmniRevive</span><span class="brand-highlight text-[#0c55ea] dark:text-[#38bdf8]">-OS</span>
               <span class="sr-only"> - Universal AI Revenue Recovery Control Plane (Juspay • Cashfree • PhonePe • CRED • Razorpay)</span>
             </h1>
-            <!-- LIVE SIMULATION STATUS BADGE -->
-            <div class="h-5 px-2 rounded-full bg-emerald-500/10 border border-emerald-500/25 hidden sm:flex items-center gap-1.5 shadow-xs">
+            <!-- LIVE MULTI-RAIL SWITCHER BUTTON -->
+            <button onclick="openMultiRailModal()" id="btn-header-rail-switcher" title="Click to view & switch payment rails (Juspay, PhonePe, CRED, Cashfree, Groww, Stripe)" class="h-5 sm:h-6 px-2 sm:px-2.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/30 flex items-center gap-1.5 shadow-xs transition cursor-pointer">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider mono uppercase">MULTI-RAIL</span>
-            </div>
+              <span id="header-rail-badge-text" class="text-[9px] font-bold text-emerald-600 dark:text-emerald-400 tracking-wider mono uppercase">MULTI-RAIL: AUTO</span>
+              <svg class="w-2.5 h-2.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
           </div>
           <div class="text-[10px] sm:text-[11px] header-center-sub text-slate-500 dark:text-slate-400 font-medium leading-none mt-0.5 hidden xs:block">Universal Fintech Recovery Control Plane</div>
         </div>
@@ -7362,6 +7363,201 @@ forbid (
       </div>
     </div>
   </div>
+  <!-- MULTI-RAIL FINTECH CONTROL CENTER MODAL -->
+  <div id="multi-rail-modal" class="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="w-full max-w-4xl max-h-[90vh] bg-[#0c182c] border border-emerald-500/30 rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-[#081224]">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-xl shadow-inner">
+            ⚡
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base sm:text-lg font-extrabold text-white">Universal Multi-Rail Control Center</h2>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase mono">Omnitrix Engine</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">Seamless routing across India's premier payment switches &amp; global rails</p>
+          </div>
+        </div>
+        <button onclick="closeMultiRailModal()" class="w-8 h-8 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <!-- Active Rail Indicator Banner -->
+      <div class="px-5 py-2.5 bg-emerald-950/40 border-b border-emerald-500/20 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-300">Active Routing Rail:</span>
+          <span id="active-rail-display-name" class="font-bold text-emerald-400 mono">OMNITRIX AUTO-SWITCH</span>
+        </div>
+        <span class="text-[11px] text-slate-400 mono">Adaptive Context-Aware Dispatch</span>
+      </div>
+
+      <!-- Modal Body (Scrollable Rails Grid) -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-4">
+        <div id="rails-cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <!-- Dynamically populated or rendered -->
+        </div>
+
+        <!-- Live Simulation Inspector Box -->
+        <div class="mt-4 p-4 rounded-xl bg-[#060c18] border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <span class="text-emerald-400">⚡</span> Live Rail Simulation Payload Inspector
+            </span>
+            <span id="sim-status-badge" class="text-[10px] text-slate-400 font-mono">Ready to inspect</span>
+          </div>
+          <pre id="rail-sim-json" class="p-3 bg-[#030712] rounded-lg border border-slate-900 text-[11px] font-mono text-emerald-400 overflow-x-auto max-h-44">// Click "Simulate Recovery" on any rail above to view its live payload contract.</pre>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3 border-t border-slate-800 flex items-center justify-between bg-[#081224]">
+        <div class="text-[11px] text-slate-400">
+          Targeting: <strong class="text-slate-300">Juspay • PhonePe • CRED • Cashfree • Groww • Stripe</strong>
+        </div>
+        <button onclick="closeMultiRailModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition cursor-pointer">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.openMultiRailModal = async function() {
+      const modal = document.getElementById('multi-rail-modal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      await window.loadMultiRailData();
+    };
+
+    window.closeMultiRailModal = function() {
+      const modal = document.getElementById('multi-rail-modal');
+      if (modal) modal.classList.add('hidden');
+    };
+
+    window.loadMultiRailData = async function() {
+      try {
+        const res = await fetch('/api/v1/gateways/rails');
+        const json = await res.json();
+        if (!json.success) return;
+
+        const data = json.data;
+        const activeRail = data.active_rail;
+        const displayNameEl = document.getElementById('active-rail-display-name');
+        if (displayNameEl) {
+          displayNameEl.textContent = activeRail.toUpperCase().replace('_', ' ');
+        }
+        const headerBadgeEl = document.getElementById('header-rail-badge-text');
+        if (headerBadgeEl) {
+          headerBadgeEl.textContent = 'MULTI-RAIL: ' + activeRail.toUpperCase().replace('_', ' ');
+        }
+
+        const container = document.getElementById('rails-cards-container');
+        if (!container) return;
+
+        const railIcons = {
+          'universal_auto': '🌐',
+          'juspay': '⚡',
+          'phonepe': '🟣',
+          'cred': '💳',
+          'cashfree': '🔵',
+          'neobank': '📈',
+          'stripe': '🌍',
+          'razorpay': '🟦'
+        };
+
+        container.innerHTML = data.rails.map(rail => {
+          const isActive = rail.id === activeRail;
+          const icon = railIcons[rail.id] || '💳';
+          return `
+            <div class="p-4 rounded-xl border transition-all ${isActive ? 'bg-emerald-950/30 border-emerald-500/60 shadow-lg shadow-emerald-950/30' : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'} flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-start justify-between gap-2">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-xl">${icon}</span>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <h3 class="text-sm font-bold text-white">${rail.name}</h3>
+                        ${isActive ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-500 text-black uppercase mono">Active</span>' : ''}
+                      </div>
+                      <div class="text-[11px] text-slate-400">${rail.tagline}</div>
+                    </div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 mono whitespace-nowrap">
+                    ${rail.tier}
+                  </span>
+                </div>
+                <div class="mt-2.5 text-[11px] text-slate-300 leading-relaxed">
+                  ${rail.core_feature}
+                </div>
+                <div class="mt-2 text-[10px] font-mono text-amber-400/90">
+                  Stipend Bracket: ${rail.stipend_bracket}
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                <button onclick="window.selectRail('${rail.id}')" class="px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${isActive ? 'bg-emerald-500 text-black' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'}">
+                  ${isActive ? '✓ Selected' : 'Activate Rail'}
+                </button>
+                <button onclick="window.simulateRailRecovery('${rail.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition cursor-pointer">
+                  Simulate
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error('Error loading rails data:', err);
+      }
+    };
+
+    window.selectRail = async function(railId) {
+      try {
+        const res = await fetch('/api/v1/gateways/select', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ rail_id: railId })
+        });
+        const json = await res.json();
+        if (json.success) {
+          await window.loadMultiRailData();
+          window.simulateRailRecovery(railId);
+        }
+      } catch (err) {
+        console.error('Error selecting rail:', err);
+      }
+    };
+
+    window.simulateRailRecovery = async function(railId) {
+      const inspector = document.getElementById('rail-sim-json');
+      const statusBadge = document.getElementById('sim-status-badge');
+      if (statusBadge) statusBadge.textContent = 'Simulating ' + railId.toUpperCase() + '...';
+      if (inspector) inspector.textContent = '// Dispatching simulated recovery intent via ' + railId.toUpperCase() + '...';
+
+      try {
+        const res = await fetch('/api/v1/gateways/simulate', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            rail_id: railId,
+            amount: railId === 'cred' ? 85000.0 : 14500.0,
+            customer_name: 'Aditya Birla Telecom',
+            customer_email: railId === 'stripe' ? 'cfo@globalfintech.io' : 'aditya@client.in'
+          })
+        });
+        const json = await res.json();
+        if (inspector) inspector.textContent = JSON.stringify(json.data, null, 2);
+        if (statusBadge) statusBadge.textContent = 'Dispatched 200 OK via ' + (json.data.provider || railId.toUpperCase());
+      } catch (err) {
+        if (inspector) inspector.textContent = '// Error during simulation: ' + err;
+      }
+    };
+  </script>
+
   <script type="module" src="/static/main.js"></script>
 </body>
 </html>

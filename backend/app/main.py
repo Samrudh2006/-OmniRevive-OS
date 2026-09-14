@@ -49,6 +49,7 @@ from backend.app.routes.copilot import router as copilot_router
 from backend.app.routes.aws_router import router as aws_router
 from backend.app.routes.cfo import router as cfo_router
 from backend.app.routes.memory import router as memory_router
+from backend.app.routes.gateways import router as gateways_router
 
 TAGS_METADATA = [
     {
@@ -257,3 +258,4 @@ app.include_router(copilot_router)
 app.include_router(aws_router)
 app.include_router(cfo_router)
 app.include_router(memory_router)
+app.include_router(gateways_router)
