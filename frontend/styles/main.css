@@ -1702,18 +1702,32 @@ html.light .signature-enterprise-footer .footer-vault-bar {
    ============================================================================== */
 .hero-scenic-bg {
   position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+
+.hero-scenic-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  transition: background-image 0.3s ease;
+  z-index: -1;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
-html.light .hero-scenic-bg {
-  background-image: linear-gradient(180deg, rgba(244, 248, 254, 0.35) 0%, rgba(244, 248, 254, 0.05) 40%, rgba(244, 248, 254, 0.85) 100%), url('/static/assets/hero_fintech_india_day.png');
+html.light .hero-scenic-bg::before {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 45%, rgba(241, 246, 253, 0.25) 80%, rgba(241, 246, 253, 0.95) 100%), url('../assets/hero_fintech_india_day.png'), url('/assets/hero_fintech_india_day.png'), url('assets/hero_fintech_india_day.png'), url('/static/assets/hero_fintech_india_day.png');
+  filter: contrast(1.18) saturate(1.25) brightness(1.02);
+  opacity: 1;
 }
 
-html.dark .hero-scenic-bg {
-  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.35) 0%, rgba(7, 14, 28, 0.05) 40%, rgba(7, 14, 28, 0.85) 100%), url('/static/assets/hero_fintech_india_night.png');
+html.dark .hero-scenic-bg::before {
+  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.25) 0%, rgba(7, 14, 28, 0.0) 40%, rgba(7, 14, 28, 0.85) 100%), url('../assets/hero_fintech_india_night.png'), url('/assets/hero_fintech_india_night.png'), url('assets/hero_fintech_india_night.png'), url('/static/assets/hero_fintech_india_night.png');
+  filter: contrast(1.12) saturate(1.2) brightness(1.05);
+  opacity: 1;
 }
 
 html.light .aurora-mesh-orb-1 {

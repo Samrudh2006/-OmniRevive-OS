@@ -587,7 +587,6 @@
         <a href="#showcase-workspace" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📊</span> Decision Workspace</a>
         <a href="#showcase-voice-studio" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🎙️</span> Voice AI Studio</a>
         <a href="#showcase-decision-trail" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📜</span> Audit Trail</a>
-        <a href="#showcase-capabilities" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🛡️</span> Capabilities</a>
       </div>
 
       <!-- Right Action CTA -->
@@ -688,147 +687,360 @@
          1. SIGNATURE INTERACTIVE CIRCULAR MULTI-RAIL CONSTELLATION
          "Click to Know More" Architecture Hub with Orbiting Satellite Engines
          ========================================================================= -->
-    <section id="showcase-constellation" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80 space-y-8">
+    <section id="showcase-constellation" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-200 dark:border-slate-800/80 space-y-8 transition-colors">
       <div class="text-center space-y-3 max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-[#0c6cf2] dark:text-blue-400 text-xs font-bold">
           <span>🪐 ARCHITECTURE CONSTELLATION</span>
         </div>
-        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#0c2340] dark:text-white tracking-tight leading-tight">
           The Autonomous Recovery Constellation
         </h2>
-        <p class="text-sm text-slate-300">
-          Eight interconnected mathematical and policy engines revolving around a real-time neural core. <strong class="text-sky-400">Click any engine node to inspect deep-dive architecture</strong>.
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+          Eight interconnected mathematical and policy engines revolving around a real-time neural core. <strong class="text-[#0c6cf2] dark:text-sky-400">Click any engine node to inspect deep-dive architecture</strong>.
         </p>
       </div>
 
-      <!-- Orbital Node Grid (8 Interactive Satellites) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+      <!-- Orbital Node Grid (8 Interactive Satellites matching reference illustration) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-4">
         
-        <!-- Node 1: Weibull Hazard -->
-        <div onclick="openNodeDeepDive('weibull_retries')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">📈</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">3.2ms SLA</span>
+        <!-- Node 1: Weibull Dynamic Retries -->
+        <div onclick="openNodeDeepDive('weibull_retries')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Waveform & Trend Curve Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <path d="M10 80 Q40 50 80 65 T155 18 L155 95 L10 95 Z" fill="url(#const-wb-grad-light)" class="dark:hidden"/>
+              <path d="M10 80 Q40 50 80 65 T155 18 L155 95 L10 95 Z" fill="url(#const-wb-grad-dark)" class="hidden dark:block"/>
+              <rect x="45" y="65" width="10" height="30" rx="2" fill="#93c5fd" fill-opacity="0.5" class="dark:fill-sky-500 dark:fill-opacity-30"/>
+              <rect x="75" y="55" width="10" height="40" rx="2" fill="#93c5fd" fill-opacity="0.6" class="dark:fill-sky-500 dark:fill-opacity-40"/>
+              <rect x="105" y="38" width="10" height="57" rx="2" fill="#60a5fa" fill-opacity="0.7" class="dark:fill-sky-400 dark:fill-opacity-50"/>
+              <rect x="135" y="20" width="10" height="75" rx="2" fill="#3b82f6" fill-opacity="0.8" class="dark:fill-sky-400 dark:fill-opacity-60"/>
+              <path d="M10 80 Q40 50 80 65 T155 18" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" class="dark:stroke-sky-400"/>
+              <circle cx="155" cy="18" r="4" fill="#0284c7" class="dark:fill-sky-300"/>
+              <defs>
+                <linearGradient id="const-wb-grad-light" x1="80" y1="18" x2="80" y2="95" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#38bdf8" stop-opacity="0.35"/>
+                  <stop offset="1" stop-color="#38bdf8" stop-opacity="0.02"/>
+                </linearGradient>
+                <linearGradient id="const-wb-grad-dark" x1="80" y1="18" x2="80" y2="95" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#38bdf8" stop-opacity="0.45"/>
+                  <stop offset="1" stop-color="#0c6cf2" stop-opacity="0.05"/>
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">Weibull Dynamic Retries</div>
-            <div class="text-xs text-slate-400 mt-1">Poisson hazard modeling replaces blind exponential backoff.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Ascending Growth Chart with Bars & Trendline -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <rect x="3" y="22" width="6" height="10" rx="1.5" fill="#38bdf8" class="dark:fill-sky-400"/>
+                  <rect x="11" y="16" width="6" height="16" rx="1.5" fill="#0ea5e9" class="dark:fill-sky-400"/>
+                  <rect x="19" y="10" width="6" height="22" rx="1.5" fill="#0284c7" class="dark:fill-sky-300"/>
+                  <rect x="27" y="4" width="6" height="28" rx="1.5" fill="#0369a1" class="dark:fill-sky-200"/>
+                  <path d="M4 20 L13 14 L21 8 L31 2" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" class="dark:stroke-white"/>
+                  <path d="M25 2 H31 V8" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-white"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-mono shadow-sm">3.2ms SLA</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Weibull Dynamic Retries</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Poisson hazard modeling replaces blind exponential backoff.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Mathematical Decay</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Mathematical Decay</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 2: NPCI Switch Radar -->
-        <div onclick="openNodeDeepDive('npci_switch')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">📡</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-sky-500/15 text-sky-400 border border-sky-500/30">18 Banks</span>
+        <div onclick="openNodeDeepDive('npci_switch')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated City Skyline Silhouette Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <rect x="50" y="38" width="18" height="62" rx="1" fill="#bae6fd" fill-opacity="0.6" class="dark:fill-[#0c4a6e] dark:fill-opacity-70"/>
+              <rect x="72" y="48" width="16" height="52" rx="1" fill="#bae6fd" fill-opacity="0.7" class="dark:fill-[#0c4a6e] dark:fill-opacity-80"/>
+              <rect x="92" y="24" width="24" height="76" rx="1" fill="#93c5fd" fill-opacity="0.6" class="dark:fill-[#075985] dark:fill-opacity-75"/>
+              <rect x="120" y="40" width="18" height="60" rx="1" fill="#bae6fd" fill-opacity="0.6" class="dark:fill-[#0c4a6e] dark:fill-opacity-70"/>
+              <rect x="142" y="52" width="16" height="48" rx="1" fill="#bae6fd" fill-opacity="0.5" class="dark:fill-[#0c4a6e] dark:fill-opacity-60"/>
+              <!-- Skyline Windows -->
+              <circle cx="100" cy="35" r="1.5" fill="#38bdf8" class="opacity-80"/>
+              <circle cx="108" cy="35" r="1.5" fill="#38bdf8" class="opacity-80"/>
+              <circle cx="100" cy="45" r="1.5" fill="#38bdf8" class="opacity-80"/>
+              <circle cx="108" cy="45" r="1.5" fill="#38bdf8" class="opacity-80"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">NPCI Switch Radar</div>
-            <div class="text-xs text-slate-400 mt-1">Live telemetry across HDFC, ICICI, SBI, Axis &amp; UPI 2.0.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Telecom Antenna Mast with Radiating Wave Arcs -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <path d="M18 6 L12 30 H24 L18 6 Z" stroke="#0284c7" stroke-width="2" stroke-linejoin="round" class="dark:stroke-sky-400"/>
+                  <path d="M14 18 H22 M13 24 H23" stroke="#0284c7" stroke-width="1.8" class="dark:stroke-sky-400"/>
+                  <circle cx="18" cy="6" r="2.5" fill="#0284c7" class="dark:fill-sky-300"/>
+                  <path d="M9 11 C7 13.5 7 18.5 9 21 M27 11 C29 13.5 29 18.5 27 21" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" class="dark:stroke-sky-300"/>
+                  <path d="M5 7 C2 11.5 2 20.5 5 25 M31 7 C34 11.5 34 20.5 31 25" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" class="dark:stroke-sky-200"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-mono shadow-sm">18 Banks</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">NPCI Switch Radar</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Live telemetry across HDFC, ICICI, SBI, Axis &amp; UPI 2.0.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Switch Telemetry</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Switch Telemetry</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 3: AWS Cedar Policy -->
-        <div onclick="openNodeDeepDive('cedar_policy')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">⚖️</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">0.28ms Gate</span>
+        <div onclick="openNodeDeepDive('cedar_policy')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Supreme Court / Capitol Dome Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <!-- Parliament Dome & Pillars -->
+              <path d="M90 38 C90 18 135 18 135 38 Z" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
+              <rect x="80" y="38" width="65" height="6" rx="1" fill="#fcd34d" fill-opacity="0.7" class="dark:fill-[#b45309] dark:fill-opacity-90"/>
+              <rect x="86" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
+              <rect x="100" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
+              <rect x="114" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
+              <rect x="128" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
+              <rect x="76" y="86" width="73" height="10" rx="1" fill="#fcd34d" fill-opacity="0.7" class="dark:fill-[#b45309] dark:fill-opacity-90"/>
+              <circle cx="112" cy="15" r="3" fill="#f59e0b" class="dark:fill-amber-400"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">AWS Cedar Zero-Trust</div>
-            <div class="text-xs text-slate-400 mt-1">Deterministic compliance enforcing TRAI hours &amp; discount limits.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Golden 3D Scales of Justice -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <path d="M18 4 V29 M11 29 H25" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-amber-400"/>
+                  <path d="M9 8 H27" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-amber-400"/>
+                  <!-- Left Pan -->
+                  <path d="M9 8 L5 16 C5 18.5 9 18.5 9 16 L9 8 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.8" class="dark:fill-amber-950/80 dark:stroke-amber-400"/>
+                  <!-- Right Pan -->
+                  <path d="M27 8 L23 16 C23 18.5 27 18.5 27 16 L27 8 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.8" class="dark:fill-amber-950/80 dark:stroke-amber-400"/>
+                  <circle cx="18" cy="4" r="2.5" fill="#d97706" class="dark:fill-amber-300"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/30 font-mono shadow-sm">0.28ms Gate</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">AWS Cedar Zero-Trust</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Deterministic compliance enforcing TRAI hours &amp; discount limits.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Policy Guard</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Policy Guard</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 4: Trilingual Voice FSM -->
-        <div onclick="openNodeDeepDive('voice_fsm')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">🎙️</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30">Trilingual</span>
+        <div onclick="openNodeDeepDive('voice_fsm')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Floating Speech Bubbles Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <!-- Bubble 1 -->
+              <rect x="70" y="16" width="54" height="28" rx="14" fill="#e9d5ff" fill-opacity="0.65" class="dark:fill-[#581c87] dark:fill-opacity-80"/>
+              <circle cx="86" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
+              <circle cx="97" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
+              <circle cx="108" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
+              <!-- Bubble 2 -->
+              <rect x="110" y="48" width="45" height="26" rx="13" fill="#ddd6fe" fill-opacity="0.6" class="dark:fill-[#4c1d95] dark:fill-opacity-75"/>
+              <circle cx="123" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
+              <circle cx="132" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
+              <circle cx="141" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">Trilingual Voice Agent</div>
-            <div class="text-xs text-slate-400 mt-1">Autonomous B2B negotiation in Telugu, Hindi &amp; English with PTP locks.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Studio Mic with Soundwave Bars -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <rect x="14" y="4" width="8" height="15" rx="4" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" class="dark:fill-purple-950/80 dark:stroke-purple-400"/>
+                  <path d="M9 13 C9 18 13 22 18 22 C23 22 27 18 27 13" stroke="#9333ea" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-400"/>
+                  <path d="M18 22 V29 M12 29 H24" stroke="#9333ea" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-400"/>
+                  <path d="M6 12 V16 M3 13 V15 M30 12 V16 M33 13 V15" stroke="#c084fc" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-300"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 font-mono shadow-sm">Trilingual</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Trilingual Voice Agent</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Autonomous B2B negotiation in Telugu, Hindi &amp; English with PTP locks.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Conversational AI</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Conversational AI</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 5: Redis CAS Mutex -->
-        <div onclick="openNodeDeepDive('redis_cas')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">🔒</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-teal-500/15 text-teal-400 border border-teal-500/30">0.23ms Mutex</span>
+        <div onclick="openNodeDeepDive('redis_cas')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Tiered Cloud Database Servers Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <path d="M125 32 C142 32 154 42 154 58 C154 72 142 82 125 82 L75 82 C60 82 48 72 48 58 C48 45 60 35 74 33 C80 20 110 20 125 32 Z" fill="#bae6fd" fill-opacity="0.5" class="dark:fill-[#0c4a6e] dark:fill-opacity-70"/>
+              <!-- Stacked database cylinders -->
+              <rect x="75" y="44" width="48" height="9" rx="4.5" fill="#38bdf8" fill-opacity="0.6" class="dark:fill-sky-400 dark:fill-opacity-60"/>
+              <rect x="75" y="56" width="48" height="9" rx="4.5" fill="#38bdf8" fill-opacity="0.6" class="dark:fill-sky-400 dark:fill-opacity-60"/>
+              <rect x="75" y="68" width="48" height="9" rx="4.5" fill="#38bdf8" fill-opacity="0.6" class="dark:fill-sky-400 dark:fill-opacity-60"/>
+              <circle cx="114" cy="48.5" r="1.5" fill="#ffffff"/>
+              <circle cx="114" cy="60.5" r="1.5" fill="#ffffff"/>
+              <circle cx="114" cy="72.5" r="1.5" fill="#ffffff"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">Redis CAS Idempotency</div>
-            <div class="text-xs text-slate-400 mt-1">Guarantees zero double-debit charges across 10,000 req/sec.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Vibrant 3D Red Padlock -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <rect x="7" y="14" width="22" height="18" rx="4" fill="#f43f5e" stroke="#e11d48" stroke-width="2" class="dark:fill-rose-600 dark:stroke-rose-400"/>
+                  <path d="M12 14 V9.5 C12 6.5 14.5 4 18 4 C21.5 4 24 6.5 24 9.5 V14" stroke="#e11d48" stroke-width="2.5" stroke-linecap="round" class="dark:stroke-rose-300"/>
+                  <circle cx="18" cy="22" r="2.5" fill="#ffffff"/>
+                  <path d="M18 24 V27" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-mono shadow-sm">0.23ms Mutex</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Redis CAS Idempotency</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Guarantees zero double-debit charges across 10,000 req/sec.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Atomic Lock</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Atomic Lock</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 6: Card Token Lifecycle -->
-        <div onclick="openNodeDeepDive('card_tokens')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">💳</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/30">COF Tokens</span>
+        <div onclick="openNodeDeepDive('card_tokens')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated PCB Circuit Trace Bus Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <path d="M55 45 H100 L125 70 H155" stroke="#0284c7" stroke-width="2" class="dark:stroke-sky-400"/>
+              <path d="M75 25 V45 L100 70 V90" stroke="#0284c7" stroke-width="2" class="dark:stroke-sky-400"/>
+              <circle cx="100" cy="45" r="3.5" fill="#0284c7" class="dark:fill-sky-300"/>
+              <circle cx="125" cy="70" r="3.5" fill="#0284c7" class="dark:fill-sky-300"/>
+              <path d="M110 15 L145 28 V65 C145 88 110 98 110 98 C110 98 75 88 75 65 V28 Z" fill="#bae6fd" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1.8" class="dark:fill-[#0c4a6e] dark:fill-opacity-50"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">Card Token Lifecycle</div>
-            <div class="text-xs text-slate-400 mt-1">Automatic cryptogram refresh &amp; RBI COF token fallback.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Blue Credit Card with Circular Sync Cycle Arrows -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <rect x="3" y="10" width="20" height="15" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="1.8" class="dark:fill-sky-600 dark:stroke-sky-400"/>
+                  <rect x="3" y="14" width="20" height="3" fill="#0c4a6e" class="dark:fill-[#082f49]"/>
+                  <rect x="6" y="19" width="5" height="3" rx="0.5" fill="#bae6fd" class="dark:fill-sky-200"/>
+                  <!-- Rotating sync arrows -->
+                  <path d="M29 10 C32 12.5 33 15.5 33 18" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-sky-300"/>
+                  <path d="M30 8 L33.5 11 L29 14" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-sky-300"/>
+                  <path d="M29 26 C26 23.5 25 20.5 25 18" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-sky-300"/>
+                  <path d="M28 28 L24.5 25 L29 22" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-sky-300"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-mono shadow-sm">COF Tokens</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Card Token Lifecycle</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Automatic cryptogram refresh &amp; RBI COF token fallback.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Token Engine</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Token Engine</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 7: Merkle Ledger -->
-        <div onclick="openNodeDeepDive('merkle_ledger')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">📜</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">SHA-256</span>
+        <div onclick="openNodeDeepDive('merkle_ledger')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Cryptographic Binary Matrix Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <text x="65" y="32" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">1010010101</text>
+              <text x="65" y="52" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">0111000110</text>
+              <text x="65" y="72" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">0100010111</text>
+              <path d="M125 25 L145 15 L145 35 L125 45 Z" fill="#c084fc" fill-opacity="0.5" class="dark:fill-purple-600 dark:fill-opacity-70"/>
+              <path d="M105 15 L125 25 L125 45 L105 35 Z" fill="#a855f7" fill-opacity="0.6" class="dark:fill-purple-500 dark:fill-opacity-80"/>
+              <path d="M105 15 L125 5 L145 15 L125 25 Z" fill="#e9d5ff" fill-opacity="0.7" class="dark:fill-purple-300 dark:fill-opacity-80"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">Merkle Audit Ledger</div>
-            <div class="text-xs text-slate-400 mt-1">Cryptographic sequential hashing of all recovery decisions.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Folder / Document with Security Shield -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <rect x="5" y="6" width="18" height="22" rx="2.5" fill="#faf5ff" stroke="#9333ea" stroke-width="2" class="dark:fill-purple-950/80 dark:stroke-purple-400"/>
+                  <path d="M9 12 H17 M9 17 H19 M9 22 H15" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" class="dark:stroke-purple-300"/>
+                  <!-- Purple Security Shield -->
+                  <path d="M21 16 L29 13 V21 C29 25 25 28 21 30 C17 28 13 25 13 21 V13 L21 16 Z" fill="#a855f7" stroke="#7e22ce" stroke-width="2" class="dark:fill-purple-600 dark:stroke-purple-300"/>
+                  <path d="M18 21.5 L20 23.5 L24 19" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 font-mono shadow-sm">SHA-256</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Merkle Audit Ledger</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Cryptographic sequential hashing of all recovery decisions.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Audit Trail</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Audit Trail</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
         <!-- Node 8: CFO Governance -->
-        <div onclick="openNodeDeepDive('cfo_approval')" class="p-5 rounded-2xl bg-[#03060c] border border-slate-800 hover:border-blue-500/60 shadow-xl orbital-node-card space-y-3 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <span class="text-2xl">🏛️</span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">Dual-Key</span>
+        <div onclick="openNodeDeepDive('cfo_approval')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
+          <!-- Background Illustrated Branching Governance Circuits Watermark -->
+          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
+            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
+              <path d="M50 48 H95 L120 28 H155" stroke="#f43f5e" stroke-width="2.2" class="dark:stroke-rose-400"/>
+              <path d="M95 48 L120 68 H155" stroke="#f43f5e" stroke-width="2.2" class="dark:stroke-rose-400"/>
+              <circle cx="120" cy="28" r="3.5" fill="#f43f5e" class="dark:fill-rose-300"/>
+              <circle cx="120" cy="68" r="3.5" fill="#f43f5e" class="dark:fill-rose-300"/>
+              <circle cx="150" cy="28" r="3.5" fill="#f43f5e" class="dark:fill-rose-300"/>
+              <circle cx="150" cy="68" r="3.5" fill="#f43f5e" class="dark:fill-rose-300"/>
+            </svg>
           </div>
-          <div>
-            <div class="text-sm font-black text-white group-hover:text-sky-400 transition">CFO Dual-Key Gate</div>
-            <div class="text-xs text-slate-400 mt-1">Executive circuit breaker for mutations >₹50,000 INR.</div>
+
+          <div class="space-y-3 relative z-10">
+            <div class="flex items-start justify-between">
+              <!-- Illustrated Left Icon: Classical Bank / Treasury Facade with Pillars -->
+              <div class="w-10 h-10 flex items-center justify-center">
+                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
+                  <path d="M5 12 L18 4 L31 12 H5 Z" fill="#fce7f3" stroke="#db2777" stroke-width="2" class="dark:fill-rose-950/80 dark:stroke-rose-400"/>
+                  <rect x="7" y="12" width="4" height="15" rx="1" fill="#db2777" class="dark:fill-rose-400"/>
+                  <rect x="13" y="12" width="4" height="15" rx="1" fill="#db2777" class="dark:fill-rose-400"/>
+                  <rect x="19" y="12" width="4" height="15" rx="1" fill="#db2777" class="dark:fill-rose-400"/>
+                  <rect x="25" y="12" width="4" height="15" rx="1" fill="#db2777" class="dark:fill-rose-400"/>
+                  <rect x="4" y="27" width="28" height="5" rx="1" fill="#fce7f3" stroke="#db2777" stroke-width="2" class="dark:fill-rose-950/80 dark:stroke-rose-400"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30 font-mono shadow-sm">Dual-Key</span>
+            </div>
+            <div>
+              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">CFO Dual-Key Gate</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Executive circuit breaker for mutations >₹50,000 INR.</div>
+            </div>
           </div>
-          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-            <span class="text-slate-500">Governance Gate</span>
-            <span class="text-blue-400 font-bold group-hover:underline">Click to know more →</span>
+          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
+            <span class="text-slate-400 dark:text-slate-500 font-medium">Governance Gate</span>
+            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
 
@@ -1352,10 +1564,13 @@
       </div>
     </section>
 
+
+
     <!-- =========================================================================
          6. GOVERNED DECISIONING ARCHITECTURE SECTION (Subtle Supporting Section)
          ========================================================================= -->
     <section class="w-full bg-[#f8fbff] dark:bg-[#030610] text-slate-800 dark:text-slate-300 py-14 px-4 sm:px-8 border-t border-sky-100 dark:border-slate-800/60">
+
       <div class="max-w-6xl mx-auto space-y-6">
         
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-sky-200/80 dark:border-slate-800/60">
