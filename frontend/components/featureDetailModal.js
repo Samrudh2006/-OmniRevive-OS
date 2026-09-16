@@ -354,30 +354,30 @@ export function openFeatureDetailModal(featureKey) {
   }
 
   container.innerHTML = `
-    <div class="bg-[#0c1e38] text-slate-100 border border-sky-500/30 rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden my-auto max-h-[90vh] flex flex-col">
+    <div id="feature-detail-modal-box" class="bg-[var(--modal-background)] text-[var(--text-primary)] border border-[var(--border)] rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden my-auto max-h-[90vh] flex flex-col">
       
       <!-- Background Glowing Orbs -->
       <div class="absolute -top-24 -right-24 w-60 h-60 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Header Section -->
-      <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-5 shrink-0">
+      <div class="flex items-start justify-between gap-4 border-b border-[var(--border)] pb-5 shrink-0">
         <div class="space-y-1.5">
           <div class="flex items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/15 text-sky-400 border border-sky-500/30 uppercase mono tracking-wider">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 uppercase mono tracking-wider">
               ${data.category}
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 mono">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 mono">
               ${data.badge}
             </span>
           </div>
-          <h2 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2.5 tracking-tight">
+          <h2 class="text-xl sm:text-2xl font-black text-[var(--text-primary)] flex items-center gap-2.5 tracking-tight">
             <span class="text-2xl">${data.icon}</span>
             <span>${data.title}</span>
           </h2>
         </div>
-        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full flex items-center justify-center text-lg transition shrink-0 cursor-pointer shadow-md" style="background-color: #0f172a !important; border: 1px solid #334155 !important; color: #ffffff !important;">
-          <span style="color: #ffffff !important;">✕</span>
+        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full bg-[var(--surface-secondary)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center justify-center text-lg transition shrink-0 cursor-pointer">
+          ✕
         </button>
       </div>
 
@@ -387,20 +387,20 @@ export function openFeatureDetailModal(featureKey) {
         <!-- 4 Key Metrics Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           ${data.metrics.map(m => `
-            <div class="p-3 rounded-2xl bg-slate-900/90 border border-slate-800/80 space-y-1">
-              <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${m.label}</div>
-              <div class="text-lg font-black text-sky-400 mono">${m.value}</div>
-              <div class="text-[9px] text-slate-500 font-medium">${m.sub}</div>
+            <div class="p-3 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border)] space-y-1">
+              <div class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">${m.label}</div>
+              <div class="text-lg font-black text-sky-600 dark:text-sky-400 mono">${m.value}</div>
+              <div class="text-[9px] text-[var(--text-muted)] font-medium">${m.sub}</div>
             </div>
           `).join('')}
         </div>
 
         <!-- Overview Matter -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-sky-400">📖</span> Technical Overview & Business Impact
+          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+            <span class="text-sky-600 dark:text-sky-400">📖</span> Technical Overview & Business Impact
           </h3>
-          <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-4 rounded-2xl border border-slate-800/60">
+          <p class="text-xs text-[var(--text-secondary)] leading-relaxed bg-[var(--surface-secondary)] p-4 rounded-2xl border border-[var(--border)]">
             ${data.overview}
           </p>
         </div>
@@ -408,10 +408,10 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Math Formula Box -->
         ${data.mathFormula ? `
           <div class="space-y-2">
-            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-              <span class="text-emerald-400">∑</span> Mathematical Model & Stochastic Equation
+            <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+              <span class="text-emerald-600 dark:text-emerald-400">∑</span> Mathematical Model & Stochastic Equation
             </h3>
-            <div class="p-3.5 rounded-2xl bg-[#061325] border border-sky-500/20 text-sky-300 mono text-xs font-bold overflow-x-auto text-center">
+            <div class="p-3.5 rounded-2xl bg-[var(--surface-secondary)] border border-sky-500/30 text-sky-600 dark:text-sky-300 mono text-xs font-bold overflow-x-auto text-center">
               <code>${data.mathFormula}</code>
             </div>
           </div>
@@ -419,13 +419,13 @@ export function openFeatureDetailModal(featureKey) {
 
         <!-- Architecture Workflow -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-amber-400">⚙️</span> Architectural Execution Pipeline
+          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+            <span class="text-amber-600 dark:text-amber-400">⚙️</span> Architectural Execution Pipeline
           </h3>
-          <div class="space-y-1.5 bg-slate-900/60 p-4 rounded-2xl border border-slate-800/60 text-xs text-slate-300">
+          <div class="space-y-1.5 bg-[var(--surface-secondary)] p-4 rounded-2xl border border-[var(--border)] text-xs text-[var(--text-secondary)]">
             ${data.architecture.map(item => `
               <div class="flex items-start gap-2">
-                <span class="text-sky-400 shrink-0 font-mono font-bold">›</span>
+                <span class="text-sky-600 dark:text-sky-400 shrink-0 font-mono font-bold">›</span>
                 <span>${item}</span>
               </div>
             `).join('')}
@@ -434,24 +434,24 @@ export function openFeatureDetailModal(featureKey) {
 
         <!-- Live Code Snippet -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-purple-400">💻</span> Production Code & Kernel Implementation
+          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+            <span class="text-purple-600 dark:text-purple-400">💻</span> Production Code & Kernel Implementation
           </h3>
-          <pre class="p-4 rounded-2xl bg-[#070f1e] border border-slate-800 text-[11px] text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
+          <pre class="p-4 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border)] text-[11px] text-emerald-600 dark:text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
         </div>
 
       </div>
 
       <!-- Action Footer -->
-      <div class="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3 shrink-0">
-        <div class="text-[11px] text-slate-400 font-mono">
-          Status: <span class="text-emerald-400 font-bold">● Active in Production</span>
+      <div class="pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div class="text-[11px] text-[var(--text-muted)] font-mono">
+          Status: <span class="text-emerald-600 dark:text-emerald-400 font-bold">● Active in Production</span>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer">
+          <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer">
             <span>🚀 Open Interactive Workspace Tab</span>
           </button>
-          <button onclick="closeFeatureDetailModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition cursor-pointer">
+          <button onclick="closeFeatureDetailModal()" class="px-4 py-2.5 rounded-xl bg-[var(--surface-secondary)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] font-semibold text-xs transition cursor-pointer border border-[var(--border)]">
             Close
           </button>
         </div>
