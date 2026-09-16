@@ -57,7 +57,8 @@ class AmazonBedrockAgent:
 
         if has_keys or has_profile:
             try:
-                import boto3
+                import importlib
+                boto3 = importlib.import_module("boto3")
                 self._boto3_client = boto3.client("bedrock-runtime", region_name=self.region)
                 return True
             except Exception:

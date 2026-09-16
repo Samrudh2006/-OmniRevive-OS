@@ -51,7 +51,7 @@ async def send_invoice_email_endpoint(req: EmailDispatchRequest, request: Reques
     }
 
 @router.get("/api/v1/communication/recent", tags=["Communication Dispatch"], summary="List Recent Sent Communications")
-async def list_recent_communications(limit: int = 20, request: Request = None):
+async def list_recent_communications(request: Request, limit: int = 20):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
     items = dispatch_engine.list_recent(limit=limit)
     return {

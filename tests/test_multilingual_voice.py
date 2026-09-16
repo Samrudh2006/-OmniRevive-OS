@@ -109,3 +109,39 @@ def test_voice_turn_explicit_preferred_voice_override():
     res = b2b_voice_engine.process_customer_turn(req)
     assert res.recommended_voice == "te-IN-ShrutiNeural"
 
+def test_get_voice_ai_models_registry():
+    client = TestClient(app)
+    res = client.get("/api/v1/b2b/voice/models")
+    assert res.status_code == 200
+    payload = res.json()
+    assert payload["success"] is True
+    data = payload["data"]
+    assert "asr_models" in data
+    assert "tts_models" in data
+    
+    asr_names = [m["name"] for m in data["asr_models"]]
+    assert "ai4bharat/indic-conformer-600m-multilingual" in asr_names
+    assert "openai/whisper-large-v3-turbo" in asr_names
+    assert "distil-whisper/distil-large-v3" in asr_names
+
+    tts_names = [m["name"] for m in data["tts_models"]]
+    assert "hexgrad/Kokoro-82M" in tts_names
+    assert "ai4bharat/indic-parler-tts" in tts_names
+    assert "k2-fsa/OmniVoice" in tts_names
+    assert "Qwen/Qwen3-TTS-12Hz-1.7B" in tts_names
+
+def test_voice_turn_acoustic_telemetry():
+    req = VoiceDialogueTurnRequest(
+        customer_speech_text="Invoice check karo",
+        stt_model="distil-whisper/distil-large-v3",
+        tts_model="hexgrad/Kokoro-82M"
+    )
+    res = b2b_voice_engine.process_customer_turn(req)
+    assert res.active_stt_model == "distil-whisper/distil-large-v3"
+    assert res.active_tts_model == "hexgrad/Kokoro-82M"
+    assert res.acoustic_telemetry is not None
+    assert res.acoustic_telemetry["stt_latency_ms"] == 65
+    assert res.acoustic_telemetry["tts_latency_ms"] == 45
+    assert res.acoustic_telemetry["total_duplex_latency_ms"] == 110
+
+

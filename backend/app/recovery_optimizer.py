@@ -2,7 +2,7 @@ import math
 import logging
 from typing import Dict, Any, List, Tuple
 import numpy as np
-from scipy import stats
+from scipy import stats  # type: ignore
 from backend.app.schemas import RetryWindowRecommendation, FailureClassType
 from backend.app.telemetry_npci import npci_telemetry
 
@@ -84,7 +84,7 @@ class RecoveryHazardOptimizer:
 
         # Input boundary clamping and sanitization
         safe_attempt = max(1, min(10, attempt_number if isinstance(attempt_number, int) else 1))
-        safe_bank = str(bank_issuer or "DEFAULT").strip().upper()
+        safe_bank = (bank_issuer or "DEFAULT").strip().upper()
 
         # Check live NPCI switch telemetry
         switch_status = npci_telemetry.get_switch_status(safe_bank)

@@ -238,9 +238,9 @@ async def inspect_card_token_failure(req: InspectTokenRequest, request: Request)
 
 @router.post("/api/v1/recovery/batch-upload", summary="Upload & Process Bulk Failed Payment CSV Batch")
 async def upload_bulk_recovery_csv(
+    request: Request,
     file: UploadFile = File(...),
-    merchant_id: str = "merch_enterprise_default",
-    request: Request = None
+    merchant_id: str = "merch_enterprise_default"
 ):
     """
     Ingests an enterprise CSV file of failed transactions, runs sub-millisecond vector

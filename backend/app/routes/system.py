@@ -99,7 +99,7 @@ async def get_policy_rules(request: Request):
     }
 
 @router.get("/api/v1/logs/recent", tags=["System & Telemetry"], summary="Live Ring-Buffer System Logs")
-async def get_recent_logs(limit: int = 50, request: Request = None):
+async def get_recent_logs(request: Request, limit: int = 50):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else "tr_logs"
     return {
         "success": True,
@@ -127,11 +127,11 @@ async def get_active_alerts(request: Request):
 @router.get("/api/v1/analytics/roi", tags=["System & Telemetry"], summary="Calculate Merchant Revenue Recovery ROI")
 @router.get("/api/v1/roi/calculator", tags=["System & Telemetry"], summary="ROI Calculator Alias")
 async def calculate_merchant_roi(
+    request: Request,
     monthly_gmv: float = 10000000.0,
     failure_rate_pct: float = 12.5,
     avg_ticket_size: float = 2500.0,
-    margin_bps: int = 200,
-    request: Request = None
+    margin_bps: int = 200
 ):
     """
     Computes business impact and net recovered revenue for Razorpay merchants

@@ -206,6 +206,8 @@ class DispatchEngine:
         inv = invoice_store.get_invoice(invoice_id)
         if not inv:
             inv = invoice_store.mutate_invoice_field(invoice_id, "status", "MUTATED", reason="Autocreated on dispatch")
+        if not inv:
+            raise ValueError(f"Invoice {invoice_id} could not be resolved or created.")
 
         recipient_email = to_email or inv.customer_email
         email_subject = subject or f"Tax Invoice & Settlement Advice #{inv.invoice_id} ({inv.customer_name})"
@@ -262,6 +264,8 @@ class DispatchEngine:
         inv = invoice_store.get_invoice(invoice_id)
         if not inv:
             inv = invoice_store.mutate_invoice_field(invoice_id, "status", "MUTATED", reason="Autocreated on dispatch")
+        if not inv:
+            raise ValueError(f"Invoice {invoice_id} could not be resolved or created.")
 
         recipient_phone = to_phone or inv.customer_phone
         dispatch_id = f"disp_wa_{uuid.uuid4().hex[:10]}"

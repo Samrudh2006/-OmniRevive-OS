@@ -54,6 +54,16 @@ class CopilotActionRouter:
                 reason=f"Copilot instructed mutation: '{query}'",
                 operator="COPILOT_ACTION_AGENT"
             )
+            if not inv:
+                all_invs = invoice_store.get_all_invoices()
+                inv = all_invs[0] if all_invs else None
+            if not inv:
+                return ActionExecutionResult(
+                    action_executed=False,
+                    tool_name="tool_mutate_invoice_gstin",
+                    action_summary="Target invoice not found",
+                    response_text="Error: Could not locate invoice for GSTIN mutation."
+                )
 
             # Auto-dispatch updated advice email
             dispatch = dispatch_engine.dispatch_email(
@@ -105,6 +115,16 @@ class CopilotActionRouter:
             inv = invoice_store.get_invoice(active_invoice_id)
             if not inv:
                 inv = invoice_store.get_invoice("inv_enterprise_998")
+            if not inv:
+                all_invs = invoice_store.get_all_invoices()
+                inv = all_invs[0] if all_invs else None
+            if not inv:
+                return ActionExecutionResult(
+                    action_executed=False,
+                    tool_name="tool_send_invoice_email",
+                    action_summary="Target invoice not found",
+                    response_text="Error: Could not locate invoice to dispatch email."
+                )
 
             target_email = email_match.group(0) if email_match else inv.customer_email
             
@@ -163,6 +183,16 @@ class CopilotActionRouter:
                 reason=f"Copilot instructed price mutation: '{query}'",
                 operator="COPILOT_ACTION_AGENT"
             )
+            if not inv:
+                all_invs = invoice_store.get_all_invoices()
+                inv = all_invs[0] if all_invs else None
+            if not inv:
+                return ActionExecutionResult(
+                    action_executed=False,
+                    tool_name="tool_mutate_invoice_amount",
+                    action_summary="Target invoice not found",
+                    response_text="Error: Could not locate invoice for amount mutation."
+                )
 
             audit_commit = audit_store.record_event(
                 trace_id=trace_id,

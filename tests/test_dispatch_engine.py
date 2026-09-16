@@ -18,6 +18,7 @@ def test_invoice_store_mutation():
         new_value="29AABCU9603R1Z2",
         reason="Customer dispute resolution"
     )
+    assert updated is not None
     assert updated.gstin == "29AABCU9603R1Z2"
     assert updated.status == "MUTATED"
     assert len(updated.mutations) > 0
@@ -32,6 +33,7 @@ def test_dispatch_engine_email_generation():
     )
     assert dispatch.dispatch_id.startswith("disp_em_")
     assert dispatch.delivery_status == "DELIVERED"
+    assert dispatch.rendered_html is not None
     assert "Tax Invoice" in dispatch.rendered_html
     assert "upi://pay?" in dispatch.rendered_html
     assert "29AABCU9603R1Z2" in dispatch.rendered_html
@@ -56,6 +58,7 @@ def test_b2b_voice_turn_real_mutation_and_dispatch():
 
     # Verify state in invoice store was updated
     inv = invoice_store.get_invoice("inv_enterprise_998")
+    assert inv is not None
     assert inv.gstin == "36AAACB9876Q1Z1"
 
 def test_copilot_action_router_email_dispatch():

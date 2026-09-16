@@ -34,14 +34,52 @@ export async function triggerVoiceTurnAction() {
 
   const chosenVoice = document.querySelector("#neural-voice-select")?.value || "auto";
 
+  let sttModel = "ai4bharat/indic-conformer-600m-multilingual";
+  let ttsModel = "ai4bharat/indic-parler-tts";
+  const cvLower = chosenVoice.toLowerCase();
+
+  if (cvLower.includes("kokoro")) {
+    sttModel = "distil-whisper/distil-large-v3";
+    ttsModel = "hexgrad/Kokoro-82M";
+  } else if (cvLower.includes("omnivoice")) {
+    sttModel = "openai/whisper-large-v3-turbo";
+    ttsModel = "k2-fsa/OmniVoice";
+  } else if (cvLower.includes("whisper")) {
+    sttModel = chosenVoice;
+    ttsModel = "ai4bharat/indic-parler-tts";
+  } else if (cvLower.includes("qwen")) {
+    sttModel = "openai/whisper-large-v3";
+    ttsModel = "Qwen/Qwen3-TTS-12Hz-1.7B";
+  } else if (cvLower.includes("xtts")) {
+    sttModel = "openai/whisper-large-v3-turbo";
+    ttsModel = "coqui/XTTS-v2";
+  } else if (cvLower.includes("svara")) {
+    sttModel = "ai4bharat/indic-conformer-600m-multilingual";
+    ttsModel = "kenpath/svara-tts-v1";
+  } else if (cvLower.includes("s2-pro")) {
+    sttModel = "openai/whisper-large-v3";
+    ttsModel = "fishaudio/s2-pro";
+  }
+
   try {
     const data = await safeApiCall("/api/v1/b2b/voice/turn", "POST", {
       call_session_id: "call_" + Math.floor(Math.random() * 8999 + 1000),
       invoice_id: invId,
       customer_speech_text: speech,
       invoice_amount: amt,
-      preferred_voice: chosenVoice
+      preferred_voice: chosenVoice,
+      stt_model: sttModel,
+      tts_model: ttsModel
     });
+
+    if (data.acoustic_telemetry) {
+      const telemEl = document.getElementById("acoustic-pipeline-label");
+      if (telemEl) {
+        const sttShort = data.acoustic_telemetry.stt_engine.split("/")[1] || data.acoustic_telemetry.stt_engine;
+        const ttsShort = data.acoustic_telemetry.tts_engine.split("/")[1] || data.acoustic_telemetry.tts_engine;
+        telemEl.innerText = `ASR: ${sttShort} (${data.acoustic_telemetry.stt_latency_ms}ms) | TTS: ${ttsShort} (${data.acoustic_telemetry.tts_latency_ms}ms) • ${data.acoustic_telemetry.sample_rate}`;
+      }
+    }
 
     document.querySelectorAll("#voice-agent-speech-transcript").forEach(el => {
       el.innerText = `"${data.agent_speech_response}"`;

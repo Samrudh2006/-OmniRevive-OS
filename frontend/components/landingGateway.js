@@ -209,6 +209,7 @@ if (invoiceValue > 50000) {
     this.initTypewriterEffect();
     this.initCardTiltInteractions();
     this.initScrollytelling();
+    this.updateLandingRoiCalculator();
   },
 
   bindEvents() {

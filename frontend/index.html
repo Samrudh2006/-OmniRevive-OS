@@ -74,6 +74,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <!-- High-Priority Instant Asset Preloading for Scenic Hero Backgrounds -->
+  <link rel="preload" as="image" href="/assets/hero_fintech_india_night.png" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/hero_fintech_india_day.png" fetchpriority="high">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1543,24 +1548,30 @@
 
 
     <!-- =========================================================================
-         6. GOVERNED DECISIONING ARCHITECTURE SECTION (Subtle Supporting Section)
+         6. GOVERNED DECISIONING & AUDIT TRAIL SECTION
          ========================================================================= -->
-    <section class="w-full bg-[#f8fbff] dark:bg-[#030610] text-slate-800 dark:text-slate-300 py-14 px-4 sm:px-8 border-t border-sky-100 dark:border-slate-800/60">
+    <section id="showcase-decision-trail" class="w-full bg-[#f8fbff] dark:bg-[#030610] text-slate-800 dark:text-slate-300 py-14 px-4 sm:px-8 border-t border-sky-100 dark:border-slate-800/60">
 
       <div class="max-w-6xl mx-auto space-y-6">
         
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-sky-200/80 dark:border-slate-800/60">
           <div class="space-y-1.5">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-[#0c6cf2] dark:text-blue-400 text-[11px] font-bold">
-              <span>⚖️ GOVERNED DECISIONING</span>
+              <span>⚖️ GOVERNED DECISIONING &amp; AUDIT TRAIL</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-[#0c2340] dark:text-white tracking-tight">
               One evidence bundle. One accountable outcome.
             </h2>
           </div>
-          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
-            Every contributor remains visible from initial score to final enforcement. Recommendations inform the decision; policy owns it.
-          </p>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+              Every contributor remains visible from initial score to final enforcement. Recommendations inform the decision; policy owns it.
+            </p>
+            <button onclick="downloadMerkleCertificate('AUDIT-LEDGER-2026')" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-purple-500/20 transition cursor-pointer hover:scale-105 shrink-0">
+              <span>📜</span>
+              <span>Download Merkle Proof</span>
+            </button>
+          </div>
         </div>
 
         <!-- 5-Column Accountable Metric Grid -->
@@ -2663,10 +2674,29 @@
                 <span id="live-call-btn-text">Live Call</span>
               </button>
 
-              <!-- Neural Voice Model Selector -->
+              <!-- Neural Voice Model Selector with Next-Gen Models Registry -->
               <div class="relative inline-flex items-center">
                 <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1e293b] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
-                  <option value="auto" selected>🌐 Autonomous Multilingual AI (Telugu / Hindi / English)</option>
+                  <optgroup label="🌐 Autonomous Dialect Switching">
+                    <option value="auto" selected>Auto-Adaptive Neural AI (Telugu / Hindi / English)</option>
+                  </optgroup>
+                  <optgroup label="🇮🇳 AI4Bharat Indic Speech Suite (22 Languages)">
+                    <option value="ai4bharat/indic-parler-tts">ai4bharat/indic-parler-tts (21 Indic Langs • 69 Voices • 341K/mo)</option>
+                    <option value="te-IN-ShrutiNeural">Indic Shruti Neural — Telugu (తెలుగు • High Fidelity)</option>
+                    <option value="hi-IN-SwaraNeural">Indic Swara Neural — Hindi (हिंदी • Natural Prosody)</option>
+                  </optgroup>
+                  <optgroup label="⚡ Sub-80ms Real-Time Voice Engines">
+                    <option value="hexgrad/Kokoro-82M">hexgrad/Kokoro-82M (82M Params • Sub-45ms Real-Time • 14.1M/mo)</option>
+                    <option value="k2-fsa/OmniVoice">k2-fsa/OmniVoice (Compact Stream TTS • 2.39M/mo)</option>
+                    <option value="kenpath/svara-tts-v1">kenpath/svara-tts-v1 (Low-Latency Indian TTS • 123K/mo)</option>
+                  </optgroup>
+                  <optgroup label="🧠 Multilingual & Voice Cloning Models">
+                    <option value="openai/whisper-large-v3-turbo">openai/whisper-large-v3-turbo (Pruned Decoder ASR • 11.3M/mo)</option>
+                    <option value="distil-whisper/distil-large-v3">distil-whisper/distil-large-v3 (6x Faster ASR • 7.66M/mo)</option>
+                    <option value="Qwen/Qwen3-TTS-12Hz-1.7B">Qwen/Qwen3-TTS-12Hz-1.7B (Alibaba Multilingual • 2.04M/mo)</option>
+                    <option value="coqui/XTTS-v2">coqui/XTTS-v2 (Zero-Shot 17-Lang Voice Cloning • 1.91M/mo)</option>
+                    <option value="fishaudio/s2-pro">fishaudio/s2-pro (High-Fidelity Studio Audio • 440K/mo)</option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -2682,6 +2712,11 @@
               <span id="active-voice-badge" class="px-2 py-1 rounded-md text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 mono flex items-center gap-1">
                 <span>✨ Voice: Neerja (Studio Expressive)</span>
                 <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">NEURAL</span>
+              </span>
+
+              <span id="acoustic-telemetry-badge" class="hidden sm:inline-flex px-2 py-1 rounded-md text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 mono items-center gap-1.5" title="Active Acoustic Engine Pipeline Telemetry">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span id="acoustic-pipeline-label">ASR: Conformer-600M | TTS: Indic-Parler &lt;65ms</span>
               </span>
             </div>
           </div>
@@ -5429,6 +5464,15 @@
       setNeuralVoice(v) {
         if (window.UnifiedVoiceEngine && window.UnifiedVoiceEngine !== LocalVoiceEngineShim && typeof window.UnifiedVoiceEngine.setNeuralVoice === "function") {
           return window.UnifiedVoiceEngine.setNeuralVoice(v);
+        }
+        const badge = document.getElementById("active-voice-badge");
+        if (badge) {
+          const isTelugu = v && (v.includes("Shruti") || v.includes("te-IN"));
+          const isHindi = v && (v.includes("Swara") || v.includes("hi-IN"));
+          const isKokoro = v && v.includes("Kokoro");
+          const isIndic = v && v.includes("indic");
+          const tag = isTelugu ? "🇮🇳 TELUGU" : (isHindi ? "🇮🇳 HINDI" : (isKokoro ? "⚡ SUB-45MS" : (isIndic ? "🇮🇳 22 LANGS" : "✨ NEURAL")));
+          badge.innerHTML = `<span>✨ Voice: ${v}</span> <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">${tag}</span>`;
         }
       },
       updateVoiceBadge(v, t) {

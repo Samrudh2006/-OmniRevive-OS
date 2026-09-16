@@ -150,6 +150,8 @@ async def add_security_headers(request: Request, call_next):
     ]
     response.headers["Content-Security-Policy"] = "; ".join(csp_directives)
     response.headers["X-Trace-ID"] = trace_id
+    if request.url.path.startswith("/assets") or request.url.path.startswith("/static"):
+        response.headers["Cache-Control"] = "public, max-age=86400, stale-while-revalidate=3600"
     return response
 
 # Standardized Error Handling Middleware & Exception Handlers
