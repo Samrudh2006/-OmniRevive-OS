@@ -376,8 +376,8 @@ export function openFeatureDetailModal(featureKey) {
             <span>${data.title}</span>
           </h2>
         </div>
-        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-lg transition shrink-0 cursor-pointer">
-          ✕
+        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full flex items-center justify-center text-lg transition shrink-0 cursor-pointer shadow-md" style="background-color: #0f172a !important; border: 1px solid #334155 !important; color: #ffffff !important;">
+          <span style="color: #ffffff !important;">✕</span>
         </button>
       </div>
 
