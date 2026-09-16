@@ -349,21 +349,27 @@ export function openFeatureDetailModal(featureKey) {
   if (!container) {
     container = document.createElement("div");
     container.id = "feature-detail-modal";
-    container.className = "fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 sm:p-6 overflow-y-auto transition-all duration-300";
+    container.className = "fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto transition-all duration-300";
     document.body.appendChild(container);
+  } else {
+    container.className = "fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 overflow-y-auto transition-all duration-300";
   }
 
   container.innerHTML = `
-    <div id="feature-detail-modal-box" class="bg-[var(--modal-background)] text-[var(--text-primary)] border border-[var(--border)] rounded-3xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden my-auto max-h-[90vh] flex flex-col">
+    <!-- Separate Backdrop Layer (Never propagates opacity to modal box) -->
+    <div id="feature-detail-modal-backdrop" class="fixed inset-0 transition-opacity duration-300 cursor-pointer" onclick="closeFeatureDetailModal()"></div>
+
+    <!-- Modal Box Shell (Uses semantic active theme tokens) -->
+    <div id="feature-detail-modal-box" class="relative z-10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
       
       <!-- Background Glowing Orbs -->
       <div class="absolute -top-24 -right-24 w-60 h-60 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Header Section -->
-      <div class="flex items-start justify-between gap-4 border-b border-[var(--border)] pb-5 shrink-0">
+      <div class="modal-header-region flex items-start justify-between gap-4 pb-5 shrink-0">
         <div class="space-y-1.5">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 uppercase mono tracking-wider">
               ${data.category}
             </span>
@@ -371,36 +377,36 @@ export function openFeatureDetailModal(featureKey) {
               ${data.badge}
             </span>
           </div>
-          <h2 class="text-xl sm:text-2xl font-black text-[var(--text-primary)] flex items-center gap-2.5 tracking-tight">
+          <h2 class="modal-title-text text-xl sm:text-2xl font-black flex items-center gap-2.5 tracking-tight">
             <span class="text-2xl">${data.icon}</span>
             <span>${data.title}</span>
           </h2>
         </div>
-        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full bg-[var(--surface-secondary)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] flex items-center justify-center text-lg transition shrink-0 cursor-pointer">
+        <button onclick="closeFeatureDetailModal()" class="modal-close-button w-9 h-9 rounded-full flex items-center justify-center text-lg transition shrink-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50" aria-label="Close modal">
           ✕
         </button>
       </div>
 
       <!-- Scrollable Content Body -->
-      <div class="space-y-6 overflow-y-auto pr-1 flex-1 custom-scrollbar">
+      <div class="modal-scroll-body space-y-6 overflow-y-auto pr-1 flex-1">
         
         <!-- 4 Key Metrics Cards -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           ${data.metrics.map(m => `
-            <div class="p-3 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border)] space-y-1">
-              <div class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">${m.label}</div>
+            <div class="modal-metric-card p-3 rounded-2xl space-y-1">
+              <div class="modal-metric-label text-[10px] font-bold uppercase tracking-wider">${m.label}</div>
               <div class="text-lg font-black text-sky-600 dark:text-sky-400 mono">${m.value}</div>
-              <div class="text-[9px] text-[var(--text-muted)] font-medium">${m.sub}</div>
+              <div class="modal-metric-sub text-[9px] font-medium">${m.sub}</div>
             </div>
           `).join('')}
         </div>
 
         <!-- Overview Matter -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+          <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
             <span class="text-sky-600 dark:text-sky-400">📖</span> Technical Overview & Business Impact
           </h3>
-          <p class="text-xs text-[var(--text-secondary)] leading-relaxed bg-[var(--surface-secondary)] p-4 rounded-2xl border border-[var(--border)]">
+          <p class="modal-surface-card text-xs leading-relaxed p-4 rounded-2xl">
             ${data.overview}
           </p>
         </div>
@@ -408,10 +414,10 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Math Formula Box -->
         ${data.mathFormula ? `
           <div class="space-y-2">
-            <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+            <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
               <span class="text-emerald-600 dark:text-emerald-400">∑</span> Mathematical Model & Stochastic Equation
             </h3>
-            <div class="p-3.5 rounded-2xl bg-[var(--surface-secondary)] border border-sky-500/30 text-sky-600 dark:text-sky-300 mono text-xs font-bold overflow-x-auto text-center">
+            <div class="modal-formula-card p-3.5 rounded-2xl mono text-xs font-bold overflow-x-auto text-center">
               <code>${data.mathFormula}</code>
             </div>
           </div>
@@ -419,10 +425,10 @@ export function openFeatureDetailModal(featureKey) {
 
         <!-- Architecture Workflow -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+          <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
             <span class="text-amber-600 dark:text-amber-400">⚙️</span> Architectural Execution Pipeline
           </h3>
-          <div class="space-y-1.5 bg-[var(--surface-secondary)] p-4 rounded-2xl border border-[var(--border)] text-xs text-[var(--text-secondary)]">
+          <div class="modal-surface-card space-y-1.5 p-4 rounded-2xl text-xs">
             ${data.architecture.map(item => `
               <div class="flex items-start gap-2">
                 <span class="text-sky-600 dark:text-sky-400 shrink-0 font-mono font-bold">›</span>
@@ -434,24 +440,24 @@ export function openFeatureDetailModal(featureKey) {
 
         <!-- Live Code Snippet -->
         <div class="space-y-2">
-          <h3 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-1.5">
+          <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
             <span class="text-purple-600 dark:text-purple-400">💻</span> Production Code & Kernel Implementation
           </h3>
-          <pre class="p-4 rounded-2xl bg-[var(--surface-secondary)] border border-[var(--border)] text-[11px] text-emerald-600 dark:text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
+          <pre class="modal-code-card p-4 rounded-2xl text-[11px] text-emerald-700 dark:text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
         </div>
 
       </div>
 
       <!-- Action Footer -->
-      <div class="pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 shrink-0">
-        <div class="text-[11px] text-[var(--text-muted)] font-mono">
+      <div class="modal-footer-region pt-4 flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div class="modal-status-label text-[11px] font-mono">
           Status: <span class="text-emerald-600 dark:text-emerald-400 font-bold">● Active in Production</span>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer">
+          <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
             <span>🚀 Open Interactive Workspace Tab</span>
           </button>
-          <button onclick="closeFeatureDetailModal()" class="px-4 py-2.5 rounded-xl bg-[var(--surface-secondary)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] font-semibold text-xs transition cursor-pointer border border-[var(--border)]">
+          <button onclick="closeFeatureDetailModal()" class="modal-btn-close px-4 py-2.5 rounded-xl font-semibold text-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
             Close
           </button>
         </div>
@@ -463,6 +469,15 @@ export function openFeatureDetailModal(featureKey) {
   container.classList.remove("hidden");
   container.classList.add("flex");
   document.body.style.overflow = "hidden";
+
+  // Bind escape key listener
+  const onEscPress = (e) => {
+    if (e.key === "Escape") {
+      closeFeatureDetailModal();
+      window.removeEventListener("keydown", onEscPress);
+    }
+  };
+  window.addEventListener("keydown", onEscPress);
 }
 
 export function closeFeatureDetailModal() {
