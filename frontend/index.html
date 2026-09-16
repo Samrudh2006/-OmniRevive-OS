@@ -1480,83 +1480,59 @@
           <!-- Mockup Header -->
           <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-              <span class="font-bold text-white">Payment review</span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="font-bold text-white uppercase tracking-wider">Live GMV Recovery Calculator</span>
             </div>
-            <span class="text-[10px] text-slate-400 mono">PREVIEW / CASE-ORX184</span>
+            <span class="text-[10px] text-slate-400 mono">ROI_SIMULATOR_v1</span>
           </div>
 
-          <!-- 4 Tab Switchers inside Card -->
-          <div class="flex items-center border-b border-slate-800 text-xs">
-            <button onclick="selectWorkspaceMockupTab('detect')" id="ws-mockup-tab-detect" class="px-4 py-2 border-b-2 border-blue-500 text-blue-400 font-bold">01 Detect</button>
-            <button onclick="selectWorkspaceMockupTab('connect')" id="ws-mockup-tab-connect" class="px-4 py-2 text-slate-400 hover:text-white font-medium">02 Connect</button>
-            <button onclick="selectWorkspaceMockupTab('investigate')" id="ws-mockup-tab-investigate" class="px-4 py-2 text-slate-400 hover:text-white font-medium">03 Investigate</button>
-            <button onclick="selectWorkspaceMockupTab('decide')" id="ws-mockup-tab-decide" class="px-4 py-2 text-slate-400 hover:text-white font-medium">04 Decide</button>
-          </div>
-
-          <!-- Card Body: 2 Columns -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-1 text-xs">
-            
-            <!-- Left Info -->
+          <!-- Sliders -->
+          <div class="space-y-6 pt-2">
+            <!-- Monthly GMV Slider -->
             <div class="space-y-3">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">TRANSACTION</span>
-                  <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-rose-500/15 text-rose-400 border border-rose-500/30">Critical Retry</span>
-                </div>
-                <div class="text-2xl font-black text-white mt-0.5">₹48,900<span class="text-sm text-slate-400 font-normal">.00</span></div>
-                <div class="text-[10px] text-slate-400 mono">pay_PM71JD29</div>
+              <div class="flex items-center justify-between text-xs font-bold">
+                <span class="text-slate-300">Monthly Processing Volume (GMV)</span>
+                <span class="text-sky-400 font-mono text-sm" id="roi-gmv-display">₹10 Cr</span>
               </div>
-
-              <div class="space-y-1.5 pt-2 border-t border-slate-800/80 text-[11px]">
-                <div class="flex items-center justify-between text-slate-300">
-                  <span class="text-slate-400">Merchant</span>
-                  <span class="font-semibold text-white">Nova Electronics</span>
-                </div>
-                <div class="flex items-center justify-between text-slate-300">
-                  <span class="text-slate-400">Customer</span>
-                  <span class="font-semibold text-white">Aarav S.</span>
-                </div>
-                <div class="flex items-center justify-between text-slate-300">
-                  <span class="text-slate-400">Device</span>
-                  <span class="font-mono text-slate-300">DVC-9821</span>
-                </div>
-                <div class="flex items-center justify-between text-slate-300">
-                  <span class="text-slate-400">Network</span>
-                  <span class="font-mono text-slate-300">49.37.***.82</span>
-                </div>
+              <input type="range" id="roi-gmv-slider" min="1" max="100" value="10" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500" oninput="updateLandingRoiCalculator()">
+              <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                <span>₹1 Cr</span>
+                <span>₹100 Cr</span>
               </div>
             </div>
 
-            <!-- Right Risk Score & Evidence -->
-            <div class="space-y-2 border-l border-slate-800/80 pl-0 sm:pl-6">
-              <div class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">CALIBRATED RISK SCORE</div>
-              <div class="text-3xl font-black text-white">94 <span class="text-lg text-slate-400 font-normal">/ 100</span></div>
-              <p class="text-[11px] text-slate-400 leading-relaxed">
-                Device, velocity and merchant switch signals are scored together.
-              </p>
-              <div class="space-y-1.5 pt-2 text-[11px] text-slate-300">
-                <div class="flex items-start gap-1.5">
-                  <span class="text-blue-400 font-bold mt-0.5">•</span>
-                  <span>Unusual transaction velocity across 11 accounts</span>
-                </div>
-                <div class="flex items-start gap-1.5">
-                  <span class="text-blue-400 font-bold mt-0.5">•</span>
-                  <span>Soft balance decline, dynamic UPI link candidate</span>
-                </div>
-                <div class="flex items-start gap-1.5">
-                  <span class="text-blue-400 font-bold mt-0.5">•</span>
-                  <span>0.23ms CAS Mutex lock acquired</span>
-                </div>
+            <!-- Failure Rate Slider -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs font-bold">
+                <span class="text-slate-300">Average Payment Failure Rate</span>
+                <span class="text-rose-400 font-mono text-sm" id="roi-failure-display">12%</span>
+              </div>
+              <input type="range" id="roi-failure-slider" min="5" max="30" value="12" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500" oninput="updateLandingRoiCalculator()">
+              <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                <span>5%</span>
+                <span>30%</span>
               </div>
             </div>
+          </div>
 
+          <!-- Output Metrics -->
+          <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800/80">
+            <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Annual Revenue Recovered</div>
+              <div class="text-2xl font-black text-emerald-400" id="roi-recovered-display">₹93.6 L</div>
+              <div class="text-[10px] text-emerald-500/70 font-mono">Assumes 78% AI recovery rate</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
+              <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Customer Accounts Saved</div>
+              <div class="text-2xl font-black text-sky-400" id="roi-accounts-display">18,720</div>
+              <div class="text-[10px] text-sky-500/70 font-mono">Reduced churn / drop-offs</div>
+            </div>
           </div>
 
           <!-- Mockup Footer -->
           <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-[10px] text-slate-400 font-mono">
-            <span>One payment. One accountable record.</span>
-            <span class="text-blue-400 font-bold">Policy owns the outcome.</span>
+            <span>Payback Velocity: <strong class="text-purple-400">Under 14 Days</strong></span>
+            <span class="text-emerald-400 font-bold">Instant ROI Generation</span>
           </div>
 
         </div>
@@ -9413,10 +9389,16 @@ forbid (
         <button onclick="closeNodeDeepDive()" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition cursor-pointer">
           Close Inspector
         </button>
-        <button id="modal-node-launch-btn" class="px-6 py-2.5 rounded-xl rzp-btn-primary text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-blue-500/25 transition cursor-pointer hover:scale-105">
-          <span>⚡</span>
-          <span>Open Engine in Live Workspace →</span>
-        </button>
+        <div class="flex items-center gap-3">
+          <button onclick="downloadMerkleCertificate('CERT-ORX-9921')" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-purple-500/25 transition cursor-pointer hover:scale-105">
+            <span>📜</span>
+            <span>Download Merkle Proof</span>
+          </button>
+          <button id="modal-node-launch-btn" class="px-6 py-2.5 rounded-xl rzp-btn-primary text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-blue-500/25 transition cursor-pointer hover:scale-105">
+            <span>⚡</span>
+            <span>Open Engine in Live Workspace →</span>
+          </button>
+        </div>
       </div>
 
     </div>
