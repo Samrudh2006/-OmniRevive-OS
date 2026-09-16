@@ -12,6 +12,7 @@ from backend.app.communication.dispatch_engine import dispatch_engine
 from backend.app.gateways import default_gateway
 from aws.cedar.cedar_engine import get_cedar_engine
 from aws.bedrock.bedrock_client import get_bedrock_agent
+from backend.app.b2b.ai_voice_brain import get_best_ai_response, normalize_lang
 
 logger = logging.getLogger("RazorRevive.B2B.VoiceAgent")
 
@@ -932,7 +933,21 @@ class B2BVoiceDialogueEngine:
     def process_customer_turn(cls, req: VoiceDialogueTurnRequest) -> VoiceDialogueResponse:
         speech = req.customer_speech_text.strip()
         resp = cls._process_turn_internal(req)
-        
+
+        if not resp.agent_speech_response:
+            lang_key = normalize_lang(
+                req.preferred_voice or resp.recommended_voice or "english"
+            )
+            ai_reply = get_best_ai_response(
+                user_speech=speech,
+                lang=lang_key,
+                invoice_amount=req.invoice_amount or 85000.0,
+                invoice_id=req.invoice_id or "inv_enterprise_998",
+            )
+            if ai_reply:
+                resp.agent_speech_response = ai_reply
+        # ---
+
         resp.active_stt_model = req.stt_model or "ai4bharat/indic-conformer-600m-multilingual"
         resp.active_tts_model = req.tts_model or "ai4bharat/indic-parler-tts"
 

@@ -7,7 +7,10 @@ import { formatINR, formatDateIST } from "../utils/formatters.js";
 
 export async function fetchCFOQueue(status = null) {
   const url = status ? `/api/v1/cfo/queue?status=${status}` : "/api/v1/cfo/queue";
-  return await safeApiCall(url);
+  const res = await safeApiCall(url);
+  if (Array.isArray(res)) return res;
+  if (res && Array.isArray(res.queue)) return res.queue;
+  return [];
 }
 
 export async function approveCFOItem(approvalId, notes = "Approved after executive review") {

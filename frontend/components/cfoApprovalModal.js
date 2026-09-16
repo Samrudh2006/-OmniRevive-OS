@@ -16,7 +16,8 @@ export async function refreshCfoQueueUI() {
   const countEl = document.getElementById("cfo-pending-count");
 
   try {
-    const queue = await fetchCfoQueue("PENDING_APPROVAL");
+    const rawQueue = await fetchCfoQueue("PENDING_APPROVAL");
+    const queue = Array.isArray(rawQueue) ? rawQueue : (rawQueue && Array.isArray(rawQueue.queue) ? rawQueue.queue : []);
     
     if (badgeEl) {
       if (queue.length > 0) {

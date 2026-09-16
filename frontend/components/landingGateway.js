@@ -373,6 +373,39 @@ if (invoiceValue > 50000) {
   /**
    * Live Interactive Failure-to-Recovery Sandbox on Landing Page
    */
+  resetPipelineStages() {
+    const stageTitles = ["1. Ingested", "2. Mutex Lock", "3. Weibull Math", "4. Cedar Policy", "5. Dispatched"];
+    document.querySelectorAll(".landing-sb-step").forEach((step, idx) => {
+      // Use theme-neutral base classes — CSS !important handles dark vs light bg/text
+      step.className = "landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5";
+      const titleSpan = step.querySelector(".stage-title");
+      if (titleSpan) titleSpan.textContent = stageTitles[idx] || step.textContent.trim();
+    });
+  },
+
+  inspectPipelineStage(idx) {
+    const stageDetails = [
+      "> [STAGE 1 INGESTION]: Razorpay webhook HMAC-SHA256 signature verified with constant-time compare in 0.04ms.",
+      "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired (0.23ms). 0 race condition collisions across 10,000 req/sec.",
+      "> [STAGE 3 WEIBULL MATH]: Continuous Poisson-Weibull temporal decay computed peak recovery inflection at T+45m.",
+      "> [STAGE 4 CEDAR POLICY]: AWS Cedar evaluated 8 regulatory rules: Daytime window valid, discount <=10%, attempts 1 <= 3. Verdict: ALLOWED.",
+      "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed in 18.4ms. Cryptographic Merkle Block sealed to SHA-256 Ledger."
+    ];
+    const term = document.getElementById("landing-sandbox-terminal");
+    if (term && stageDetails[idx]) {
+      term.innerHTML += `<span class="text-emerald-400 font-bold">${stageDetails[idx]}</span>\n`;
+      term.scrollTop = term.scrollHeight;
+    }
+    const steps = document.querySelectorAll(".landing-sb-step");
+    if (steps[idx]) {
+      steps[idx].classList.add("ring-2", "ring-sky-400", "scale-105");
+      setTimeout(() => steps[idx].classList.remove("ring-2", "ring-sky-400", "scale-105"), 1200);
+    }
+    if (typeof window.playFintechAudio === "function") {
+      window.playFintechAudio("switch");
+    }
+  },
+
   selectLandingScenario(scenarioKey) {
     const data = this.sandboxScenarios[scenarioKey];
     if (!data) return;
@@ -406,6 +439,8 @@ if (invoiceValue > 50000) {
       }
     });
 
+    this.resetPipelineStages();
+
     if (typeof window.playFintechAudio === "function") {
       window.playFintechAudio("click");
     }
@@ -425,14 +460,18 @@ if (invoiceValue > 50000) {
       window.playFintechAudio("click");
     }
 
-    term.innerHTML = `<span class="text-emerald-400">> [${new Date().toLocaleTimeString()}] INGESTION: Razorpay webhook payload received (HMAC SHA-256 VALIDATED)...</span>\n`;
+    this.resetPipelineStages();
+
+    term.innerHTML = `<span class="text-emerald-400 font-bold">> [${new Date().toLocaleTimeString()}] INGESTION: Razorpay webhook payload received (HMAC SHA-256 VALIDATED)...</span>\n`;
+
+    const stageLabels = ["⚡ 1. Ingested ✓", "🔒 2. Mutex Lock ✓", "📈 3. Weibull Math ✓", "⚖️ 4. Cedar Policy ✓", "🚀 5. Dispatched ✓"];
 
     const logs = [
-      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS lock acquired (0.23ms) -> 0 double-debit guarantee sealed.`, delay: 300, step: 0 },
-      { text: `> [${new Date().toLocaleTimeString()}] QDRANT: Matched 4 historical recovery precedents with cosine similarity 0.942.`, delay: 650, step: 1 },
-      { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability window at T+45min.`, delay: 1000, step: 2 },
-      { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1350, step: 3 },
-      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! 🚀`, delay: 1700, step: 4 }
+      { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
+      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
+      { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
+      { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
+      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! 🚀`, delay: 1650, step: 4 }
     ];
 
     logs.forEach(log => {
@@ -440,13 +479,14 @@ if (invoiceValue > 50000) {
         term.innerHTML += `<span class="text-sky-300">${log.text}</span>\n`;
         term.scrollTop = term.scrollHeight;
         if (progressSteps[log.step]) {
-          progressSteps[log.step].classList.remove("opacity-30", "bg-slate-800");
-          progressSteps[log.step].classList.add("opacity-100", "bg-emerald-500/20", "text-emerald-300", "border-emerald-500/50");
+          progressSteps[log.step].className = "landing-sb-step step-active p-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.4)] ring-1 ring-emerald-400/50 scale-105 transition-all duration-300 flex flex-col items-center justify-center gap-0.5";
+          const titleSpan = progressSteps[log.step].querySelector(".stage-title");
+          if (titleSpan) titleSpan.textContent = stageLabels[log.step];
         }
         if (log.step === 4 && typeof window.playFintechAudio === "function") {
           window.playFintechAudio("success");
           if (typeof window.confetti === "function") {
-            window.confetti({ particleCount: 30, spread: 60, origin: { y: 0.8 } });
+            window.confetti({ particleCount: 40, spread: 70, origin: { y: 0.8 } });
           }
         }
       }, log.delay);
@@ -456,8 +496,10 @@ if (invoiceValue > 50000) {
   /**
    * Trilingual Voice Studio Demonstration
    */
+  _landingAudio: null,
+
   playLandingVoiceDemo(lang) {
-    this.activeVoiceLang = lang;
+    this.activeVoiceLang = lang || 'telugu';
     const transcripts = {
       telugu: {
         text: '"నమస్కారం అండి, మీ ₹85,000 ఇన్‌వాయిస్ చెల్లింపులో GSTIN సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్‌ను వాట్సాప్ లింక్ ద్వారా పంపించాము..."',
@@ -465,7 +507,8 @@ if (invoiceValue > 50000) {
         intent: "GSTIN Error Disputed & PTP Booked (19 Sept 11:00 AM)",
         audioWave: "Active Voice Synthesis (Telugu / te-IN)",
         langName: "Telugu (తెలుగు)",
-        langCode: "te-IN"
+        langCode: "te-IN",
+        voice: "te-IN-ShrutiNeural"
       },
       hindi: {
         text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने 0.23ms में वैकल्पिक UPI रेल तैयार की है..."',
@@ -473,7 +516,8 @@ if (invoiceValue > 50000) {
         intent: "Switch Timeout Fallback -> UPI Dynamic QR Auto-Dispatched",
         audioWave: "Active Voice Synthesis (Hindi / hi-IN)",
         langName: "Hindi (हिंदी)",
-        langCode: "hi-IN"
+        langCode: "hi-IN",
+        voice: "hi-IN-SwaraNeural"
       },
       english: {
         text: '"Hi OmniRevive, we are updating our ERP vendor registration. Please re-route the payment link via Dynamic UPI."',
@@ -481,13 +525,12 @@ if (invoiceValue > 50000) {
         intent: "Dynamic UPI Link Re-routed & Immediate Settlement",
         audioWave: "Active Voice Synthesis (Indian English / en-IN)",
         langName: "English (en-IN)",
-        langCode: "en-IN"
+        langCode: "en-IN",
+        voice: "en-IN-NeerjaExpressiveNeural"
       }
     };
 
-    const data = transcripts[lang];
-    if (!data) return;
-
+    const data = transcripts[this.activeVoiceLang] || transcripts.telugu;
     const transcriptEl = document.getElementById("landing-voice-transcript");
     const intentEl = document.getElementById("landing-voice-intent");
     const statusEl = document.getElementById("landing-voice-status");
@@ -499,35 +542,106 @@ if (invoiceValue > 50000) {
     ["telugu", "hindi", "english"].forEach(l => {
       const btn = document.getElementById(`voice-lang-btn-${l}`);
       if (btn) {
-        if (l === lang) {
-          btn.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-600 text-white border border-purple-400 shadow-md transition cursor-pointer";
+        if (l === this.activeVoiceLang) {
+          btn.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-600 text-white border border-purple-400 shadow-lg shadow-purple-500/30 transition cursor-pointer ring-2 ring-purple-400/40";
         } else {
           btn.className = "px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition cursor-pointer";
         }
       }
     });
 
-    // Voice Synthesis Playback
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(data.rawText || data.text);
-      utterance.lang = data.langCode;
-      utterance.rate = 1.0;
-      utterance.pitch = 1.05;
-      
-      const bars = document.querySelectorAll('.voice-wave-bar-1, .voice-wave-bar-2, .voice-wave-bar-3, .voice-wave-bar-4, .voice-wave-bar-5');
-      bars.forEach(b => b.classList.add('animate-pulse'));
+    // Animate equalizer bars
+    const bars = document.querySelectorAll('.voice-wave-bar-1, .voice-wave-bar-2, .voice-wave-bar-3, .voice-wave-bar-4, .voice-wave-bar-5');
+    bars.forEach(b => {
+      b.classList.add('animate-pulse');
+      b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`;
+    });
 
-      utterance.onend = () => {
-        bars.forEach(b => b.classList.remove('animate-pulse'));
-      };
+    const stopBars = () => {
+      bars.forEach(b => {
+        b.classList.remove('animate-pulse');
+        b.style.height = '';
+      });
+    };
 
-      utterance.onerror = () => {
-        bars.forEach(b => b.classList.remove('animate-pulse'));
-      };
-
-      window.speechSynthesis.speak(utterance);
+    // Stop any existing audio playback & speech synthesis
+    if (this._landingAudio) {
+      try { this._landingAudio.pause(); this._landingAudio.currentTime = 0; } catch (e) {}
+      this._landingAudio = null;
     }
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch(e) {}
+    }
+
+    const playAudioFileFallback = () => {
+      try {
+        const audioSrc = `/assets/voice_${this.activeVoiceLang}.mp3`;
+        const audio = new Audio(audioSrc);
+        this._landingAudio = audio;
+        bars.forEach(b => {
+          b.classList.add('animate-pulse');
+          b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`;
+        });
+        audio.onended = stopBars;
+        audio.onerror = stopBars;
+        audio.play().catch(() => stopBars());
+      } catch (e) {
+        stopBars();
+      }
+    };
+
+    // Primary: Use edge-tts backend for guaranteed multilingual audio (te-IN, hi-IN, en-IN)
+    // This is far more reliable than browser SpeechSynthesis for Telugu/Hindi
+    try {
+      const ttsUrl = `/api/v1/b2b/voice/synthesize?text=${encodeURIComponent(data.rawText || data.text)}&voice=${encodeURIComponent(data.voice)}`;
+      const audio = new Audio(ttsUrl);
+      this._landingAudio = audio;
+
+      audio.oncanplay = () => {
+        bars.forEach(b => {
+          b.classList.add('animate-pulse');
+          b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`;
+        });
+      };
+      audio.onended = stopBars;
+      audio.onerror = () => {
+        // Backend TTS failed → try browser SpeechSynthesis
+        if ('speechSynthesis' in window) {
+          try {
+            const utterance = new SpeechSynthesisUtterance(data.rawText || data.text);
+            utterance.lang = data.langCode;
+            utterance.rate = 1.0;
+            utterance.pitch = 1.05;
+            const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+            if (voices.length > 0) {
+              const matchVoice = voices.find(v => v.lang === data.langCode || v.lang.replace('_','-').startsWith(data.langCode.split('-')[0]));
+              if (matchVoice) utterance.voice = matchVoice;
+            }
+            utterance.onend = stopBars;
+            utterance.onerror = playAudioFileFallback;
+            window.speechSynthesis.speak(utterance);
+          } catch(e) { playAudioFileFallback(); }
+        } else {
+          playAudioFileFallback();
+        }
+      };
+
+      // Timeout: if no audio in 4 seconds, fall back
+      const fallbackTimer = setTimeout(() => {
+        if (this._landingAudio === audio) {
+          try { audio.pause(); } catch(e) {}
+          this._landingAudio = null;
+          playAudioFileFallback();
+        }
+      }, 4000);
+      audio.oncanplay = () => { clearTimeout(fallbackTimer); bars.forEach(b => { b.classList.add('animate-pulse'); b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`; }); };
+
+      audio.play().catch(() => playAudioFileFallback());
+    } catch(e) {
+      playAudioFileFallback();
+    }
+
+
 
     if (typeof window.playFintechAudio === "function") {
       window.playFintechAudio("click");
@@ -901,4 +1015,6 @@ window.closeAiEvalModal = () => landingGateway.closeAiEvalModal();
 window.runLiveAiEvalSuite = () => landingGateway.runLiveAiEvalSuite();
 window.updateLandingRoiCalculator = () => landingGateway.updateLandingRoiCalculator();
 window.downloadMerkleCertificate = (id) => landingGateway.downloadMerkleCertificate(id);
+window.inspectPipelineStage = (idx) => landingGateway.inspectPipelineStage(idx);
+
 

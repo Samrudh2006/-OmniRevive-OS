@@ -32,11 +32,10 @@ function createToastContainer() {
 }
 
 export async function safeApiCall(url, method = "GET", body = null, headers = {}) {
+  const origin = typeof window !== "undefined" && window.location ? window.location.origin : "";
   const targetUrls = [
     url,
-    (typeof window !== "undefined" && window.location ? window.location.origin + url : url),
-    "http://localhost:8000" + url,
-    "http://127.0.0.1:8000" + url
+    origin ? `${origin}${url.startsWith("/") ? "" : "/"}${url}` : url
   ];
 
   const traceId = "tr_" + Math.random().toString(36).substring(2, 12);
@@ -65,7 +64,7 @@ export async function safeApiCall(url, method = "GET", body = null, headers = {}
       }
     } catch (e) {
       if (e.message && e.message.includes("Rate limit")) throw e;
-      // Fall through to next URL or simulator
+      // Fall through to simulator
     }
   }
 

@@ -220,11 +220,16 @@ app.add_middleware(SlidingWindowRateLimiter)
 
 # Static Asset Serving & Dashboard Root
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend"))
+docs_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs"))
+
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
     assets_dir = os.path.join(frontend_dir, "assets")
     if os.path.exists(assets_dir):
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+if os.path.exists(docs_dir):
+    app.mount("/docs", StaticFiles(directory=docs_dir), name="docs")
 
 @app.get("/copilot_avatar.jpg")
 async def serve_copilot_avatar():

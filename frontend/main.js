@@ -59,6 +59,15 @@ import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } f
 import { landingGateway } from "./components/landingGateway.js?v=2.1.0";
 import {
   toggleAiCopilotDrawer,
+  minimizeCopilotDrawer,
+  setCopilotMode,
+  resetCopilotHeroCard,
+  renderCopilotHeroCard,
+  renderCopilotSuggestions,
+  triggerCopilotSuggestion,
+  renderFocusedHeroCard,
+  copilotAttachFilePrompt,
+  updateCopilotCurrentPage,
   sendQuickPrompt,
   speakLastCopilotMessage,
   speakCopilotResponse,
@@ -1526,3 +1535,34 @@ window.toggleThemePaletteMenu = toggleThemePaletteMenu;
 window.applyThemePalette = applyThemePalette;
 window.evalDashboard = evalDashboard;
 window.landingGateway = landingGateway;
+window.launchControlPlane = (tab) => landingGateway.launchControlPlane(tab);
+window.returnToShowcase = () => landingGateway.returnToShowcase();
+window.selectDecisionTrailStep = (idx) => landingGateway.selectDecisionTrailStep(idx);
+window.selectShowcaseTab = (key) => landingGateway.selectShowcaseTab(key);
+window.selectWorkspaceMockupTab = (key) => landingGateway.selectWorkspaceMockupTab(key);
+window.openNodeDeepDive = (node) => landingGateway.openNodeDeepDive(node);
+window.closeNodeDeepDive = () => landingGateway.closeNodeDeepDive();
+window.selectLandingScenario = (scen) => landingGateway.selectLandingScenario(scen);
+window.runLandingSandboxSimulation = () => landingGateway.runLandingSandboxSimulation();
+window.playLandingVoiceDemo = (lang) => landingGateway.playLandingVoiceDemo(lang);
+window.openApkDownloadModal = () => landingGateway.openApkDownloadModal();
+window.closeApkDownloadModal = () => landingGateway.closeApkDownloadModal();
+window.openAiEvalModal = () => landingGateway.openAiEvalModal();
+window.closeAiEvalModal = () => landingGateway.closeAiEvalModal();
+window.updateLandingRoiCalculator = () => landingGateway.updateLandingRoiCalculator();
+window.downloadMerkleCertificate = (id) => landingGateway.downloadMerkleCertificate(id);
+window.inspectPipelineStage = (idx) => landingGateway.inspectPipelineStage(idx);
+window.toggleAiCopilotDrawer = toggleAiCopilotDrawer;
+window.minimizeCopilotDrawer = minimizeCopilotDrawer;
+window.setCopilotMode = setCopilotMode;
+window.resetCopilotHeroCard = resetCopilotHeroCard;
+window.renderCopilotHeroCard = renderCopilotHeroCard;
+window.renderCopilotSuggestions = renderCopilotSuggestions;
+window.triggerCopilotSuggestion = triggerCopilotSuggestion;
+window.renderFocusedHeroCard = renderFocusedHeroCard;
+window.copilotAttachFilePrompt = copilotAttachFilePrompt;
+window.updateCopilotCurrentPage = updateCopilotCurrentPage;
+window.sendQuickPrompt = sendQuickPrompt;
+window.speakLastCopilotMessage = speakLastCopilotMessage;
+window.speakCopilotResponse = speakCopilotResponse;
+window.handleCopilotCustomQuery = handleCopilotCustomQuery;

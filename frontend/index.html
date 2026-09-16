@@ -163,6 +163,20 @@
       box-shadow: var(--card-shadow);
       color: var(--text-title);
     }
+    .custom-copilot-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-copilot-scrollbar::-webkit-scrollbar-track {
+      background: rgba(8, 21, 43, 0.4);
+      border-radius: 9999px;
+    }
+    .custom-copilot-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(14, 165, 233, 0.4);
+      border-radius: 9999px;
+    }
+    .custom-copilot-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(14, 165, 233, 0.8);
+    }
 
     /* =========================================================================
        COMPREHENSIVE LIGHT THEME CONTRAST & LEGIBILITY ENGINE
@@ -1140,22 +1154,27 @@
         <!-- Right Live Terminal & Visual Stages -->
         <div class="lg:col-span-7 space-y-4">
           
-          <!-- 5 Pipeline Steps Visualizer -->
-          <div class="grid grid-cols-5 gap-2 text-center text-[10px] font-bold">
-            <div class="landing-sb-step p-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 transition opacity-30">
-              1. Ingested
+          <!-- 5 Pipeline Steps Visualizer (Interactive SRE Stages) -->
+          <div class="grid grid-cols-5 gap-2 text-center text-[10px] font-bold select-none">
+            <div id="sb-stage-0" onclick="inspectPipelineStage(0)" class="landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5" title="Click to inspect: Stage 1 Ingestion &amp; HMAC SHA-256 Validation">
+              <span class="stage-num font-mono text-[9px] text-slate-500">STAGE 1</span>
+              <span class="stage-title">1. Ingested</span>
             </div>
-            <div class="landing-sb-step p-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 transition opacity-30">
-              2. Mutex Lock
+            <div id="sb-stage-1" onclick="inspectPipelineStage(1)" class="landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5" title="Click to inspect: Stage 2 Redis CAS Atomic Mutex (0.23ms)">
+              <span class="stage-num font-mono text-[9px] text-slate-500">STAGE 2</span>
+              <span class="stage-title">2. Mutex Lock</span>
             </div>
-            <div class="landing-sb-step p-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 transition opacity-30">
-              3. Weibull Math
+            <div id="sb-stage-2" onclick="inspectPipelineStage(2)" class="landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5" title="Click to inspect: Stage 3 Weibull Hazard Rate Curve Inflection">
+              <span class="stage-num font-mono text-[9px] text-slate-500">STAGE 3</span>
+              <span class="stage-title">3. Weibull Math</span>
             </div>
-            <div class="landing-sb-step p-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 transition opacity-30">
-              4. Cedar Policy
+            <div id="sb-stage-3" onclick="inspectPipelineStage(3)" class="landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5" title="Click to inspect: Stage 4 AWS Cedar Zero-Trust Compliance">
+              <span class="stage-num font-mono text-[9px] text-slate-500">STAGE 4</span>
+              <span class="stage-title">4. Cedar Policy</span>
             </div>
-            <div class="landing-sb-step p-2 rounded-xl bg-slate-800 text-slate-400 border border-slate-700 transition opacity-30">
-              5. Dispatched
+            <div id="sb-stage-4" onclick="inspectPipelineStage(4)" class="landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5" title="Click to inspect: Stage 5 Multi-Rail Recovery Link Dispatched">
+              <span class="stage-num font-mono text-[9px] text-slate-500">STAGE 5</span>
+              <span class="stage-title">5. Dispatched</span>
             </div>
           </div>
 
@@ -2642,82 +2661,89 @@
           </div>
 
           <!-- MIDDLE SECTION: Live Audio Dialogue & Controls Deck -->
-          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-[#07101f] border border-slate-200 dark:border-[#132238] flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <!-- Transcript display -->
-            <div class="flex-1 min-w-0">
-              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-600 dark:text-slate-300 mb-0.5">Live Dialogue Transcript</div>
-              <div class="text-xs text-slate-800 dark:text-slate-200 font-medium leading-relaxed italic truncate" id="voice-agent-speech-transcript">
-                "Ready to synthesize autonomous voice dialogue turn..."
+          <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-[#07101f] border border-slate-200 dark:border-[#132238] flex flex-col gap-2.5">
+            <!-- Row 1: Dialogue Transcript & Live Waveform -->
+            <div class="flex items-center justify-between gap-3 border-b border-slate-200/60 dark:border-slate-800/60 pb-2">
+              <div class="flex items-center gap-2 min-w-0 flex-1">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400 shrink-0">Live Dialogue:</span>
+                <span class="text-xs text-slate-800 dark:text-slate-200 font-medium italic truncate" id="voice-agent-speech-transcript">
+                  "Ready to synthesize autonomous voice dialogue turn..."
+                </span>
               </div>
-            </div>
-
-            <!-- Audio Waveform and Action Buttons -->
-            <div class="flex items-center gap-2 shrink-0 flex-wrap">
               <!-- Waveform Bars -->
-              <div class="flex items-center gap-1 h-7 px-2.5 bg-white dark:bg-[#050c18] rounded-md border border-slate-300 dark:border-[#1e293b]" id="audio-wave-bars">
+              <div class="flex items-center gap-1 h-6 px-2 bg-white dark:bg-[#050c18] rounded-md border border-slate-300 dark:border-[#1e293b] shrink-0" id="audio-wave-bars">
                 <span class="w-1 h-2 bg-emerald-500 rounded-full wave-bar transition-all"></span>
-                <span class="w-1 h-4 bg-emerald-400 rounded-full wave-bar transition-all"></span>
+                <span class="w-1 h-3.5 bg-emerald-400 rounded-full wave-bar transition-all"></span>
                 <span class="w-1 h-5 bg-emerald-300 rounded-full wave-bar transition-all"></span>
                 <span class="w-1 h-3 bg-emerald-400 rounded-full wave-bar transition-all"></span>
                 <span class="w-1 h-2 bg-emerald-500 rounded-full wave-bar transition-all"></span>
               </div>
+            </div>
 
-              <!-- Voice Controls Group -->
-              <button onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-purple-50 dark:hover:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-800 flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Click to speak hands-free via microphone">
-                <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
-                <span>Speak</span>
-              </button>
+            <!-- Row 2: Voice Action Controls, Model Selector, and Telemetry Badges -->
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <!-- Left Controls: Speak, Live Call, Model Select, Replay, Stop -->
+              <div class="flex items-center gap-2 flex-wrap">
+                <!-- Voice Controls Group -->
+                <button onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-purple-50 dark:hover:bg-purple-900/40 text-purple-700 dark:text-purple-300 border border-purple-300 dark:border-purple-800 flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Click to speak hands-free via microphone">
+                  <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                  <span>Speak</span>
+                </button>
 
-              <!-- Live Duplex Call Button -->
-              <button onclick="toggleLiveVoiceCall()" id="live-call-toggle-btn" class="live-call-toggle-btn shimmer-btn px-3 py-1.5 rounded-md text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Start live duplex hands-free phone call">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                <span id="live-call-btn-text">Live Call</span>
-              </button>
+                <!-- Live Duplex Call Button -->
+                <button onclick="toggleLiveVoiceCall()" id="live-call-toggle-btn" class="live-call-toggle-btn shimmer-btn px-3 py-1.5 rounded-md text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Start live duplex hands-free phone call">
+                  <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  <span id="live-call-btn-text">Live Call</span>
+                </button>
 
-              <!-- Neural Voice Model Selector with Next-Gen Models Registry -->
-              <div class="relative inline-flex items-center">
-                <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1e293b] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
-                  <optgroup label="🌐 Autonomous Dialect Switching">
-                    <option value="auto" selected>Auto-Adaptive Neural AI (Telugu / Hindi / English)</option>
-                  </optgroup>
-                  <optgroup label="🇮🇳 AI4Bharat Indic Speech Suite (22 Languages)">
-                    <option value="ai4bharat/indic-parler-tts">ai4bharat/indic-parler-tts (21 Indic Langs • 69 Voices • 341K/mo)</option>
-                    <option value="te-IN-ShrutiNeural">Indic Shruti Neural — Telugu (తెలుగు • High Fidelity)</option>
-                    <option value="hi-IN-SwaraNeural">Indic Swara Neural — Hindi (हिंदी • Natural Prosody)</option>
-                  </optgroup>
-                  <optgroup label="⚡ Sub-80ms Real-Time Voice Engines">
-                    <option value="hexgrad/Kokoro-82M">hexgrad/Kokoro-82M (82M Params • Sub-45ms Real-Time • 14.1M/mo)</option>
-                    <option value="k2-fsa/OmniVoice">k2-fsa/OmniVoice (Compact Stream TTS • 2.39M/mo)</option>
-                    <option value="kenpath/svara-tts-v1">kenpath/svara-tts-v1 (Low-Latency Indian TTS • 123K/mo)</option>
-                  </optgroup>
-                  <optgroup label="🧠 Multilingual & Voice Cloning Models">
-                    <option value="openai/whisper-large-v3-turbo">openai/whisper-large-v3-turbo (Pruned Decoder ASR • 11.3M/mo)</option>
-                    <option value="distil-whisper/distil-large-v3">distil-whisper/distil-large-v3 (6x Faster ASR • 7.66M/mo)</option>
-                    <option value="Qwen/Qwen3-TTS-12Hz-1.7B">Qwen/Qwen3-TTS-12Hz-1.7B (Alibaba Multilingual • 2.04M/mo)</option>
-                    <option value="coqui/XTTS-v2">coqui/XTTS-v2 (Zero-Shot 17-Lang Voice Cloning • 1.91M/mo)</option>
-                    <option value="fishaudio/s2-pro">fishaudio/s2-pro (High-Fidelity Studio Audio • 440K/mo)</option>
-                  </optgroup>
-                </select>
+                <!-- Neural Voice Model Selector with Next-Gen Models Registry -->
+                <div class="relative inline-flex items-center">
+                  <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="max-w-[240px] sm:max-w-xs truncate px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1e293b] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
+                    <optgroup label="🌐 Autonomous Dialect Switching">
+                      <option value="auto" selected>Auto-Adaptive Neural AI (Telugu / Hindi / English)</option>
+                    </optgroup>
+                    <optgroup label="🇮🇳 AI4Bharat Indic Speech Suite (22 Languages)">
+                      <option value="ai4bharat/indic-parler-tts">ai4bharat/indic-parler-tts (21 Indic Langs • 69 Voices)</option>
+                      <option value="te-IN-ShrutiNeural">Indic Shruti Neural — Telugu (తెలుగు • High Fidelity)</option>
+                      <option value="hi-IN-SwaraNeural">Indic Swara Neural — Hindi (हिंदी • Natural Prosody)</option>
+                    </optgroup>
+                    <optgroup label="⚡ Sub-80ms Real-Time Voice Engines">
+                      <option value="hexgrad/Kokoro-82M">hexgrad/Kokoro-82M (82M Params • Sub-45ms Real-Time)</option>
+                      <option value="k2-fsa/OmniVoice">k2-fsa/OmniVoice (Compact Stream TTS)</option>
+                      <option value="kenpath/svara-tts-v1">kenpath/svara-tts-v1 (Low-Latency Indian TTS)</option>
+                    </optgroup>
+                    <optgroup label="🧠 Multilingual & Voice Cloning Models">
+                      <option value="openai/whisper-large-v3-turbo">openai/whisper-large-v3-turbo (Pruned Decoder ASR)</option>
+                      <option value="distil-whisper/distil-large-v3">distil-whisper/distil-large-v3 (6x Faster ASR)</option>
+                      <option value="Qwen/Qwen3-TTS-12Hz-1.7B">Qwen/Qwen3-TTS-12Hz-1.7B (Alibaba Multilingual)</option>
+                      <option value="coqui/XTTS-v2">coqui/XTTS-v2 (Zero-Shot 17-Lang Voice Cloning)</option>
+                      <option value="fishaudio/s2-pro">fishaudio/s2-pro (High-Fidelity Studio Audio)</option>
+                    </optgroup>
+                  </select>
+                </div>
+
+                <button onclick="replayLastSpeech()" class="px-2.5 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-emerald-50 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Replay voice dialogue">
+                  <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+                  <span>Replay</span>
+                </button>
+
+                <button onclick="stopSpeaking()" class="px-2 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-rose-50 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-800 flex items-center transition cursor-pointer shadow-xs" title="Stop audio playback">
+                  <svg class="w-3.5 h-3.5 text-rose-500" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                </button>
               </div>
 
-              <button onclick="replayLastSpeech()" class="px-2.5 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-emerald-50 dark:hover:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5 transition cursor-pointer shadow-xs" title="Replay voice dialogue">
-                <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
-                <span>Replay</span>
-              </button>
+              <!-- Right Telemetry Badges: Active Voice & Acoustic Pipeline -->
+              <div class="flex items-center gap-2 flex-wrap">
+                <span id="active-voice-badge" class="px-2 py-1 rounded-md text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 mono flex items-center gap-1 shrink-0">
+                  <span>✨ Voice: Neerja (Studio Expressive)</span>
+                  <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">NEURAL</span>
+                </span>
 
-              <button onclick="stopSpeaking()" class="px-2 py-1.5 rounded-md text-xs font-bold bg-white dark:bg-[#142442] hover:bg-rose-50 dark:hover:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-800 flex items-center transition cursor-pointer shadow-xs" title="Stop audio playback">
-                <svg class="w-3.5 h-3.5 text-rose-500" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
-              </button>
-
-              <span id="active-voice-badge" class="px-2 py-1 rounded-md text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 mono flex items-center gap-1">
-                <span>✨ Voice: Neerja (Studio Expressive)</span>
-                <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">NEURAL</span>
-              </span>
-
-              <span id="acoustic-telemetry-badge" class="hidden sm:inline-flex px-2 py-1 rounded-md text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 mono items-center gap-1.5" title="Active Acoustic Engine Pipeline Telemetry">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span id="acoustic-pipeline-label">ASR: Conformer-600M | TTS: Indic-Parler &lt;65ms</span>
-              </span>
+                <span id="acoustic-telemetry-badge" class="inline-flex px-2 py-1 rounded-md text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 mono items-center gap-1.5 shrink-0" title="Active Acoustic Engine Pipeline Telemetry">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span id="acoustic-pipeline-label">ASR: Conformer-600M | TTS: Indic-Parler &lt;65ms</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -4810,7 +4836,7 @@
   <!-- FLOATING RAZOR CYBER-HUMANOID AI COPILOT WIDGET (BOTTOM RIGHT) -->
   <!-- ========================================================================= -->
   <!-- Floating Trigger Pill (Elevated on mobile above bottom nav bar: bottom-20 lg:bottom-6) -->
-  <div class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
+  <div id="ai-copilot-trigger-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
     <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#38bdf8] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 hover:scale-105 active:scale-95 transition-all duration-200 border-2 border-white/50 cursor-pointer">
       <span class="absolute -top-1 -right-1 flex h-4 w-4">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -4827,87 +4853,181 @@
     </button>
   </div>
 
-  <!-- Floating Copilot Interactive Drawer (Elevated above mobile nav) -->
-  <div id="ai-copilot-drawer" class="hidden fixed bottom-24 right-3 left-3 sm:left-auto sm:right-6 sm:bottom-22 z-[10000] w-auto sm:w-[440px] max-h-[78vh] overflow-y-auto rounded-3xl bg-white dark:bg-[#0c182c] border-2 border-blue-500/60 shadow-2xl p-4 sm:p-5 space-y-4 transition-all duration-300 text-xs" style="z-index: 10000 !important;">
+  <!-- Floating Copilot Interactive Drawer (Elevated and perfectly proportioned) -->
+  <div id="ai-copilot-drawer" class="hidden fixed bottom-3 sm:bottom-6 right-2 sm:right-6 z-[10000] w-[95vw] sm:w-[470px] max-h-[92vh] sm:max-h-[86vh] rounded-3xl bg-[#061224] text-slate-100 border border-sky-500/30 shadow-2xl shadow-sky-950/90 p-4 sm:p-5 flex flex-col justify-between gap-3 transition-all duration-300 text-xs backdrop-blur-xl overflow-hidden" style="z-index: 10000 !important;">
     
-    <!-- Header with Big Front-Facing Cyber Humanoid Avatar -->
-    <div class="flex items-center justify-between border-b border-slate-200 dark:border-[#142442] pb-3.5">
-      <div class="flex items-center gap-3.5">
-        <!-- Big Front-Facing Avatar Badge -->
-        <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl p-0.5 bg-gradient-to-tr from-emerald-400 via-sky-400 to-blue-600 shadow-xl shrink-0">
-          <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Copilot Avatar" class="w-full h-full rounded-2xl object-cover">
-          <span class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white dark:border-[#0c182c]"></span>
-        </div>
-        <div>
-          <div class="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-1.5 flex-wrap">
-            <span>Razor Humanoid Copilot</span>
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-400 border border-emerald-500/40">AI SRE</span>
+    <!-- Top Header Bar with Ben 10 Avatar, Title, Window Controls (Pinned at top) -->
+    <div class="flex flex-col gap-2 border-b border-sky-950/80 pb-2.5 shrink-0">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <!-- Avatar with green glowing ring and online indicator dot -->
+          <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-500 shadow-lg shadow-emerald-500/20 shrink-0">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Humanoid Copilot" class="w-full h-full rounded-full object-cover">
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#061224] ring-1 ring-emerald-500 shadow-sm animate-pulse"></span>
           </div>
-          <div class="text-[10.5px] sm:text-[11px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5">● Fully Trained on RazorRevive Control Plane</div>
-          <div class="text-[10px] text-slate-500 dark:text-slate-400">Autonomous Payment Recovery Intelligence</div>
+          <div>
+            <div class="font-extrabold text-sm sm:text-base text-white flex items-center gap-1.5 flex-wrap leading-tight">
+              <span>Razor Humanoid Copilot</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">AI</span>
+              <span class="text-amber-300 text-xs">✨</span>
+            </div>
+            <div class="text-[10px] text-slate-400 font-medium">Autonomous Payment Recovery Intelligence</div>
+          </div>
         </div>
-      </div>
-      <button onclick="toggleAiCopilotDrawer()" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-xl bg-slate-100 dark:bg-slate-800 transition font-bold text-sm cursor-pointer">✕</button>
-    </div>
 
-    <!-- Interactive Multi-Turn Chat Conversation Window (ChatGPT / WhatsApp Style) -->
-    <div id="copilot-chat-history" class="space-y-3 p-3 rounded-2xl bg-slate-50 dark:bg-[#071328] border border-slate-200 dark:border-blue-900/40 min-h-[220px] max-h-[320px] overflow-y-auto text-xs">
-      
-      <!-- Initial Welcome Message from Copilot -->
-      <div class="flex gap-2.5 items-start">
-        <div class="w-7 h-7 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm">
-          <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
-        </div>
-        <div class="flex-1 bg-white dark:bg-[#0c1b33] p-3 rounded-2xl rounded-tl-sm border border-slate-200 dark:border-[#192f54] shadow-sm space-y-1.5 text-slate-800 dark:text-slate-200">
-          <div class="flex items-center justify-between text-[10px] text-slate-400">
-            <span class="font-bold text-sky-600 dark:text-sky-400">Razor Copilot</span>
-            <button onclick="speakLastCopilotMessage(this)" class="text-sky-500 hover:text-sky-400 flex items-center gap-1 font-semibold cursor-pointer">
-              🔊 Speak
-            </button>
-          </div>
-          <div class="copilot-msg-content leading-relaxed text-[11.5px]">
-            👋 Hello! I am your autonomous <strong>Razor SRE Copilot</strong>. Ask me anything about our 3-tier recovery architecture, Weibull hazard formulas, CAS mutex locks, or 100-batch benchmarks!
-          </div>
+        <!-- Window Actions (Minimize & Close) -->
+        <div class="flex items-center gap-1 text-slate-400">
+          <button onclick="minimizeCopilotDrawer()" title="Minimize" class="w-6 h-6 rounded-lg hover:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition font-bold text-xs cursor-pointer">—</button>
+          <button onclick="toggleAiCopilotDrawer()" title="Close" class="w-6 h-6 rounded-lg hover:bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white transition font-bold text-xs cursor-pointer">✕</button>
         </div>
       </div>
 
-    </div>
-
-    <!-- Quick Question Chips -->
-    <div class="space-y-1">
-      <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center justify-between">
-        <span>Quick Diagnostic Prompts:</span>
-        <span class="text-[9px] text-sky-500 font-normal">Click to ask</span>
-      </div>
-      <div class="flex flex-wrap gap-1.5">
-        <button onclick="sendQuickPrompt('Explain SBI 504 Outage & Weibull Retry Curve')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          ⚡ SBI 504 Outage
+      <!-- Mode Selector Pills Row (Ask, Investigate, Explain, Explore) -->
+      <div class="flex items-center justify-end gap-1.5 py-0.5 overflow-x-auto scrollbar-none">
+        <button id="copilot-mode-ask" onclick="setCopilotMode('Ask')" class="copilot-mode-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0c66ee] text-white shadow-md shadow-blue-500/30 transition-all cursor-pointer">
+          Ask
         </button>
-        <button onclick="sendQuickPrompt('How does 1-Click WhatsApp dynamic UPI QR recovery work?')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          📱 WhatsApp UPI QR
+        <button id="copilot-mode-investigate" onclick="setCopilotMode('Investigate')" class="copilot-mode-btn px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1">
+          <span>🔍</span> <span>Investigate</span>
         </button>
-        <button onclick="sendQuickPrompt('How does B2B Voice agent handle GST disputes and PTP?')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          🎙️ B2B GST Voice
+        <button id="copilot-mode-explain" onclick="setCopilotMode('Explain')" class="copilot-mode-btn px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1">
+          <span>💡</span> <span>Explain</span>
         </button>
-        <button onclick="sendQuickPrompt('How does Atomic CAS Mutex prevent double-debits during webhook storms?')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          🛡️ Zero Double-Debits
-        </button>
-        <button onclick="sendQuickPrompt('What are the results of the 100-case empirical benchmark?')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          📊 100 Benchmark Yield
-        </button>
-        <button onclick="sendQuickPrompt('How do you enforce TRAI Quiet Hours and DPDP compliance?')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-[#142442] dark:hover:bg-[#1e3a6a] text-slate-700 dark:text-slate-200 text-[10.5px] font-medium transition cursor-pointer">
-          🏛️ TRAI Compliance
+        <button id="copilot-mode-explore" onclick="setCopilotMode('Explore')" class="copilot-mode-btn px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1">
+          <span>🧭</span> <span>Explore</span>
         </button>
       </div>
     </div>
 
-    <!-- Natural Language Chat Input Form -->
-    <form onsubmit="handleCopilotCustomQuery(event)" class="flex gap-2 pt-1">
-      <input type="text" id="copilot-user-input" placeholder="Ask anything (e.g. 'How does Fast Loop work?')..." class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-[#081224] border border-slate-300 dark:border-[#142442] text-slate-800 dark:text-slate-200 text-xs focus:outline-none focus:border-[#38bdf8] focus:ring-1 focus:ring-[#38bdf8] transition-all">
-      <button type="submit" id="copilot-send-btn" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#0c55ea] to-[#0284c7] hover:from-[#0942b8] hover:to-[#0369a1] active:scale-95 text-white font-bold text-xs shadow-lg transition-all cursor-pointer flex items-center justify-center gap-1">
-        <span>Send</span>
-        <span>➤</span>
-      </button>
+    <!-- Scrollable Middle Body (Card + Suggestions + Status Chips) -->
+    <div class="flex-1 overflow-y-auto min-h-0 space-y-3 pr-0.5 custom-copilot-scrollbar">
+      <!-- Active Card Container (Single Focused Card - Never Stacks) -->
+      <div id="copilot-chat-history" class="w-full transition-all">
+        <!-- Initial Greeting Message Bubble from Copilot (Exact Match to User Screenshot) -->
+        <div class="flex gap-2.5 items-start">
+          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[#08152b]"></span>
+          </div>
+          <div class="flex-1 bg-[#0d2142] p-3 rounded-2xl rounded-tl-sm border border-sky-900/40 shadow-sm space-y-1.5 text-slate-200">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 border-b border-sky-900/30 pb-1">
+              <span class="font-bold text-sky-400 flex items-center gap-1">
+                <span>Razor SRE Copilot</span>
+                <span class="px-1.5 py-0.2 rounded text-[8.5px] bg-[#07152b] text-sky-300 font-mono">SRE Intelligence</span>
+              </span>
+              <button onclick="speakLastCopilotMessage(this)" class="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold cursor-pointer">
+                🔊 Speak
+              </button>
+            </div>
+            <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1">
+              <div>Hey Sanmudh! 👋</div>
+              <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+              <div class="text-slate-300 font-medium pt-0.5">What would you like to do today?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- "Suggested for this page" 2x3 Grid Cards (Matching User Screenshot) -->
+      <div id="copilot-suggestions-container" class="space-y-1.5">
+        <div id="copilot-suggested-header" class="text-[11px] font-bold text-slate-300 flex items-center gap-1.5">
+          <span id="copilot-suggested-icon" class="text-sky-400">🎯</span>
+          <span id="copilot-suggested-title">Suggested for this page</span>
+        </div>
+        <div id="copilot-suggestions-grid" class="grid grid-cols-2 gap-2">
+          <!-- Card 1: What's happening today? -->
+          <button onclick="triggerCopilotSuggestion('whats_happening_today')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-teal-400 group-hover:scale-110 transition-transform shrink-0">📊</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">What's happening today?</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 2: Find failed payments -->
+          <button onclick="triggerCopilotSuggestion('find_failed_payments')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-sky-400 group-hover:scale-110 transition-transform shrink-0">🔍</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">Find failed payments</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 3: Show revenue at risk -->
+          <button onclick="triggerCopilotSuggestion('show_revenue_at_risk')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-amber-400 group-hover:scale-110 transition-transform shrink-0">⚠️</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">Show revenue at risk</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 4: Analyze recovery rate -->
+          <button onclick="triggerCopilotSuggestion('analyze_recovery_rate')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-cyan-400 group-hover:scale-110 transition-transform shrink-0">📈</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">Analyze recovery rate</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 5: Explain this metric -->
+          <button onclick="triggerCopilotSuggestion('explain_this_metric')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-yellow-400 group-hover:scale-110 transition-transform shrink-0">💡</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">Explain this metric</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 6: Start guided tour -->
+          <button onclick="triggerCopilotSuggestion('start_guided_tour')" class="w-full px-2.5 py-2 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-blue-400 group-hover:scale-110 transition-transform shrink-0">▶️</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white truncate">Start guided tour</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Status Chips Bar (Current page, Time range, Mode) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto text-[10px] scrollbar-none pt-0.5 pb-0.5">
+        <div class="px-2 py-0.5 rounded-lg bg-[#0a1b35] border border-sky-900/50 text-slate-300 flex items-center gap-1 shrink-0 shadow-sm">
+          <span>🖥️</span>
+          <span>Current page: <strong id="copilot-page-label" class="text-white">Overview</strong></span>
+        </div>
+        <div class="px-2 py-0.5 rounded-lg bg-[#0a1b35] border border-sky-900/50 text-slate-300 flex items-center gap-1 shrink-0 shadow-sm">
+          <span>📅</span>
+          <span>Time range: <strong class="text-white">Last 7 days</strong></span>
+        </div>
+        <div class="px-2 py-0.5 rounded-lg bg-[#0a1b35] border border-sky-900/50 text-slate-300 flex items-center gap-1 shrink-0 shadow-sm">
+          <span>💬</span>
+          <span>Mode: <strong id="copilot-mode-label" class="text-sky-400">Ask</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Rounded Pill Chat Input Bar (Pinned at bottom) -->
+    <form onsubmit="handleCopilotCustomQuery(event)" class="pt-1.5 border-t border-sky-950/70 shrink-0">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#091830] border border-sky-900/70 focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-400 transition-all shadow-inner">
+        <!-- Paperclip attachment button -->
+        <button type="button" onclick="copilotAttachFilePrompt()" title="Attach Context / Trace" class="text-slate-400 hover:text-sky-300 transition p-0.5 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+          </svg>
+        </button>
+
+        <!-- Input -->
+        <input type="text" id="copilot-user-input" placeholder="Ask anything (e.g. 'Why did this payment fail?')..." class="flex-1 bg-transparent text-white placeholder-slate-400 text-xs focus:outline-none">
+
+        <!-- Solid vibrant blue circular send button -->
+        <button type="submit" id="copilot-send-btn" title="Send Query" class="w-7 h-7 rounded-full bg-[#0c66ee] hover:bg-[#0952c2] active:scale-95 text-white flex items-center justify-center shadow-md shadow-blue-500/30 transition-all cursor-pointer shrink-0">
+          <svg class="w-3.5 h-3.5 fill-current transform rotate-45 -ml-0.5" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
     </form>
 
   </div>
@@ -4943,6 +5063,602 @@
       if (bmDedicated && document.getElementById('tmpl-benchmark-summary')) bmDedicated.innerHTML = document.getElementById('tmpl-benchmark-summary').innerHTML;
       if (alDedicated && document.getElementById('tmpl-audit-ledger')) alDedicated.innerHTML = document.getElementById('tmpl-audit-ledger').innerHTML;
     };
+
+    // Launch Live Control Plane from Landing Showcase
+    function launchControlPlane(targetTab = 'overview') {
+      if (window.landingGateway && typeof window.landingGateway.launchControlPlane === 'function') {
+        return window.landingGateway.launchControlPlane(targetTab);
+      }
+      const landing = document.getElementById("landing-gateway-container");
+      const appShell = document.getElementById("app-workspace-shell");
+      const hud = document.getElementById("sre-hud-boot-overlay");
+      if (hud) {
+        hud.classList.remove("hidden");
+        hud.classList.add("flex");
+        setTimeout(() => {
+          hud.classList.add("hidden");
+          hud.classList.remove("flex");
+          if (landing) landing.classList.add("hidden");
+          if (appShell) appShell.classList.remove("hidden");
+          if (typeof switchNavTab === "function") switchNavTab(targetTab);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 600);
+      } else {
+        if (landing) landing.classList.add("hidden");
+        if (appShell) appShell.classList.remove("hidden");
+        if (typeof switchNavTab === "function") switchNavTab(targetTab);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function returnToShowcase() {
+      if (window.landingGateway && typeof window.landingGateway.returnToShowcase === 'function') {
+        return window.landingGateway.returnToShowcase();
+      }
+      const landing = document.getElementById("landing-gateway-container");
+      const appShell = document.getElementById("app-workspace-shell");
+      if (appShell) appShell.classList.add("hidden");
+      if (landing) landing.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ==========================================
+    // LANDING GATEWAY INTERACTIVE ACTIONS & RESILIENT FALLBACKS
+    // ==========================================
+    const LANDING_SCENARIOS = {
+      hdfc_504: {
+        title: "HDFC Bank Timeout 504",
+        amount: "₹2,499.00",
+        customer: "Aarav Sharma (+91 98765 43210)",
+        paymentId: "pay_HDFC_9A12BC34",
+        error: "GATEWAY_TIMEOUT_504",
+        confidence: "95.4%",
+        decision: "Weibull Hazard Retry at T+45m (Optimal Inflection)",
+        window: "45 mins (11:00:24 AM)",
+        policy: "● Policy ALLOWED"
+      },
+      upi_u16: {
+        title: "UPI U16 Insufficient Funds",
+        amount: "₹4,850.00",
+        customer: "Priya Patel (+91 91234 56789)",
+        paymentId: "pay_UPI_U16_77812",
+        error: "NPCI_U16_INSUFFICIENT_FUNDS",
+        confidence: "91.8%",
+        decision: "Dynamic WhatsApp UPI Deep-Link Auto-Dispatched",
+        window: "Instant (+0m)",
+        policy: "● Policy ALLOWED"
+      },
+      card_token: {
+        title: "Card Token Cryptogram Expired",
+        amount: "₹1,299.00 / mo",
+        customer: "Vikram Malhotra (+91 99887 76655)",
+        paymentId: "pay_COF_TOK_4419",
+        error: "TOKEN_CRYPT_EXPIRED",
+        confidence: "98.2%",
+        decision: "Silent Background COF Cryptogram Auto-Refresh",
+        window: "Pre-Retry (-2m)",
+        policy: "● Policy ALLOWED"
+      },
+      high_val_invoice: {
+        title: "₹85k Enterprise GST Dispute",
+        amount: "₹85,000.00",
+        customer: "Acme Enterprises (+91 98111 22334)",
+        paymentId: "inv_CORP_GST_9918",
+        error: "GSTIN_MISMATCH_DISPUTE",
+        confidence: "93.6%",
+        decision: "GSTIN Mutation Proposed -> Pending CFO Dual-Key Sign-off",
+        window: "Approval Gated",
+        policy: "APPROVAL_GATED (Invoice > ₹50,000 Threshold Breached)"
+      }
+    };
+
+    const ARCHITECTURE_NODES = {
+      weibull_retries: {
+        title: "Weibull Hazard Dynamic Retries",
+        subsystem: "Mathematical Failure Decay Engine",
+        sla: "3.2ms Window Computation",
+        badge: "Mathematical Invariant",
+        description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
+        handledCodes: ["GATEWAY_504", "NPCI_TIMEOUT_91", "HDFC_DOWN_500", "BANK_SWITCH_DEGRADE"],
+        codeSnippet: "// Weibull Hazard Rate Function\nfunction calculateOptimalRetry(beta = 1.42, alpha = 45.0) {\n  const t_optimal = alpha * Math.pow((beta - 1) / beta, 1 / beta);\n  return { retryAt: 'T+' + Math.round(t_optimal) + 'm', confidence: '95.4%' };\n}",
+        metrics: "78.39% Recovery Rate · ₹4.25L Recovered",
+        workspaceTab: "analytics"
+      },
+      npci_switch: {
+        title: "NPCI Switch Radar & UPI 2.0 Telemetry",
+        subsystem: "Real-Time Switch Health Ingestion",
+        sla: "Sub-50ms Polling & Telemetry",
+        badge: "Multi-Rail Invariant",
+        description: "Live synthetic health probes and webhook telemetry monitoring 18 major Indian bank switches (HDFC, ICICI, SBI, Axis, Kotak) to prevent failed transaction routing during switch degradation.",
+        handledCodes: ["NPCI_U16", "NPCI_U69", "UPI_LIMIT_EXCEEDED", "REMITTER_DOWN"],
+        codeSnippet: "// NPCI Switch Health Resolver\nconst switchHealth = await npciRadar.evaluateSwitchCluster({\n  banks: ['HDFC', 'ICICI', 'SBI'],\n  degradationThreshold: 0.12,\n  routeFallback: 'DYNAMIC_UPI_LINK'\n});",
+        metrics: "18 Bank Endpoints · 99.99% Uptime",
+        workspaceTab: "npci_switch"
+      },
+      cedar_policy: {
+        title: "AWS Cedar Zero-Trust Policy Gatekeeper",
+        subsystem: "Deterministic Compliance Engine",
+        sla: "0.28ms Sub-Millisecond Evaluation",
+        badge: "Zero-Trust Invariant",
+        description: "Formally verified zero-trust rules enforce TRAI quiet hours (21:00-09:00 IST), maximum discount clamping (<=10%, <=500 INR), and non-coercive regulatory compliance. AI recommendations never bypass policy.",
+        handledCodes: ["POLICY_QUIET_HOURS", "DISCOUNT_EXCEEDED", "MAX_ATTEMPTS_BREACH", "COERCIVE_OUTREACH"],
+        codeSnippet: "// AWS Cedar Deterministic Policy Rule\npermit(\n  principal == Role::\"RecoveryAgent\",\n  action == Action::\"TriggerRecovery\",\n  resource == Payment::\"FailedTransaction\"\n) when {\n  context.time_ist.hour >= 9 && context.time_ist.hour < 21 &&\n  context.discount_pct <= 10 && context.attempts < 3\n};",
+        metrics: "100% Policy Pass · 0 Compliance Violations",
+        workspaceTab: "policy_engine"
+      },
+      voice_fsm: {
+        title: "Trilingual B2B Voice Dialogue FSM",
+        subsystem: "Deep-Loop Conversational AI",
+        sla: "180ms Turn Response (Telugu / Hindi / English)",
+        badge: "Trilingual Engine",
+        description: "Autonomous multi-turn voice negotiation engine that extracts customer dispute intents, dynamically updates GSTIN invoice errors, and secures binding Promise-to-Pay (PTP) commitments.",
+        handledCodes: ["INVOICE_DISPUTE_GST", "BILLING_MISMATCH", "PAYMENT_DEFERRED", "PARTIAL_DISPUTE"],
+        codeSnippet: "// Trilingual Dialogue State Machine\nconst fsmState = await voiceAgent.processTurn({\n  audioStream: rawPCM,\n  detectedLanguage: 'te-IN',\n  currentIntent: 'GST_NUMBER_CORRECTION',\n  ptpCommitment: '2026-09-19T11:00:00+05:30'\n});",
+        metrics: "3 Languages · 92.4% PTP Settlement Rate",
+        workspaceTab: "deep_loop"
+      },
+      redis_cas: {
+        title: "Redis CAS Distributed Idempotency Mutex",
+        subsystem: "Zero Double-Debit Protection",
+        sla: "0.23ms Atomic Mutex Gate",
+        badge: "Concurrency Invariant",
+        description: "Compare-And-Swap (CAS) distributed lock ensures high-frequency webhooks across 10,000 req/sec never trigger concurrent duplicate charges or double-debited accounts.",
+        handledCodes: ["CONCURRENT_WEBHOOK", "DUPLICATE_RETRY", "RACE_CONDITION", "IDEMPOTENCY_COLLISION"],
+        codeSnippet: "// Redis CAS Atomic Mutex Acquisition\nconst lockAcquired = await redis.set(\n  `idempotency:lock:${paymentId}`,\n  traceId,\n  'NX', 'EX', 300\n);\nif (!lockAcquired) throw new DuplicateExecutionError();",
+        metrics: "0 Double-Debits · 10k Req/sec Scale",
+        workspaceTab: "overview"
+      },
+      card_tokens: {
+        title: "Card Token Lifecycle & Network COF Tokens",
+        subsystem: "Card-on-File Cryptographic Refresh",
+        sla: "1.4ms Token Health Assessment",
+        badge: "PCI-DSS Invariant",
+        description: "Monitors RBI-mandated network token lifecycles (Visa, Mastercard, RuPay) and automatically triggers fresh cryptograms prior to recurring mandate execution to prevent recurring subscription drops.",
+        handledCodes: ["COF_CRYPT_EXPIRED", "TOKEN_DEACTIVATED", "CARD_SUSPENDED", "MANDATE_FAIL_RB03"],
+        codeSnippet: "// Network Token Cryptogram Validator\nconst tokenStatus = await cardTokenEngine.evaluateLifecycle({\n  tokenRef: 'tok_visa_98124912',\n  expiryCheck: true,\n  autoRefreshCryptogram: true\n});",
+        metrics: "99.4% Token Readiness · Visa/Mastercard/RuPay",
+        workspaceTab: "card_tokens"
+      },
+      merkle_ledger: {
+        title: "Immutable SHA-256 Merkle Audit Ledger",
+        subsystem: "Cryptographic Evidence Trail",
+        sla: "Sequential Block Sealing",
+        badge: "Cryptographic Invariant",
+        description: "Every webhook diagnosis, policy evaluation, discount mutation, and recovery execution is cryptographically hashed into a tamper-proof sequential Merkle chain for auditors and CFOs.",
+        handledCodes: ["AUDIT_PROOF_GEN", "CHAIN_INTEGRITY_CHECK", "REGULATORY_EXPORT", "TAMPER_DETECT"],
+        codeSnippet: "// Sequential Merkle Audit Block Sealing\nconst block = merkleLedger.sealBlock({\n  traceId: 'tr_9a12bc34',\n  policyVerdict: 'ALLOWED',\n  prevBlockHash: '0000a4b9812e...',\n  timestamp: Date.now()\n});",
+        metrics: "100% Tamper Proof · Zero Unaudited Decisions",
+        workspaceTab: "audit_ledger"
+      },
+      cfo_approval: {
+        title: "CFO Executive Dual-Key Governance",
+        subsystem: "High-Value Tax & Mutation Gate",
+        sla: "Asynchronous Webhook & SMS Approval",
+        badge: "Financial Governance",
+        description: "Automatic circuit breaker for tax ledger mutations and discount waivers exceeding ₹50,000 INR, requiring dual-key cryptographic sign-off before financial commitment.",
+        handledCodes: ["HIGH_VALUE_GATE", "CFO_APPROVAL_REQUIRED", "TAX_MUTATION_HOLD", "DISCOUNT_OVERRIDE"],
+        codeSnippet: "// CFO Executive Dual-Key Gatekeeper\nif (invoiceValue > 50000) {\n  await financialGovernance.requireDualKeySignOff({\n    invoiceId: 'inv_enterprise_998',\n    cfoKey: 'cfo_sig_77a912b',\n    auditLogged: true\n  });\n}",
+        metrics: "₹50k+ Circuit Breaker · Dual-Key Signed",
+        workspaceTab: "overview"
+      }
+    };
+
+    function selectLandingScenario(key) {
+      if (window.landingGateway && typeof window.landingGateway.selectLandingScenario === 'function') {
+        return window.landingGateway.selectLandingScenario(key);
+      }
+      const data = LANDING_SCENARIOS[key];
+      if (!data) return;
+
+      const amtEl = document.getElementById("landing-sb-amount");
+      const custEl = document.getElementById("landing-sb-customer");
+      const payEl = document.getElementById("landing-sb-payid");
+      const errEl = document.getElementById("landing-sb-error");
+      const confEl = document.getElementById("landing-sb-conf");
+      const decEl = document.getElementById("landing-sb-decision");
+      const winEl = document.getElementById("landing-sb-window");
+      const polEl = document.getElementById("landing-sb-policy");
+
+      if (amtEl) amtEl.textContent = data.amount;
+      if (custEl) custEl.textContent = data.customer;
+      if (payEl) payEl.textContent = data.paymentId;
+      if (errEl) errEl.textContent = data.error;
+      if (confEl) confEl.textContent = data.confidence;
+      if (decEl) decEl.textContent = data.decision;
+      if (winEl) winEl.textContent = data.window;
+      if (polEl) polEl.textContent = data.policy;
+
+      document.querySelectorAll("[id^='sb-chip-']").forEach(btn => {
+        if (btn.id === `sb-chip-${key}`) {
+          btn.classList.add("active");
+          btn.setAttribute("aria-selected", "true");
+        } else {
+          btn.classList.remove("active");
+          btn.setAttribute("aria-selected", "false");
+        }
+      });
+
+      resetPipelineStages();
+
+      const term = document.getElementById("landing-sandbox-terminal");
+      if (term) {
+        term.innerHTML = `<span class="text-slate-500">> Ready to simulate: ${data.title}</span>\n<span class="text-sky-400">> Click '⚡ Run Instant AI Recovery Simulation' to trigger live orchestration pipeline...</span>`;
+      }
+    }
+
+    function resetPipelineStages() {
+      const stageTitles = ["1. Ingested", "2. Mutex Lock", "3. Weibull Math", "4. Cedar Policy", "5. Dispatched"];
+      document.querySelectorAll(".landing-sb-step").forEach((step, idx) => {
+        step.className = "landing-sb-step p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col items-center justify-center gap-0.5";
+        const titleSpan = step.querySelector(".stage-title");
+        if (titleSpan) titleSpan.textContent = stageTitles[idx] || step.textContent.trim();
+      });
+    }
+
+    function inspectPipelineStage(idx) {
+      if (window.landingGateway && typeof window.landingGateway.inspectPipelineStage === 'function') {
+        return window.landingGateway.inspectPipelineStage(idx);
+      }
+      const stageDetails = [
+        "> [STAGE 1 INGESTION]: Razorpay webhook HMAC-SHA256 signature verified with constant-time compare in 0.04ms.",
+        "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired (0.23ms). 0 race condition collisions across 10,000 req/sec.",
+        "> [STAGE 3 WEIBULL MATH]: Continuous Poisson-Weibull temporal decay computed peak recovery inflection at T+45m.",
+        "> [STAGE 4 CEDAR POLICY]: AWS Cedar evaluated 8 regulatory rules: Daytime window valid, discount <=10%, attempts 1 <= 3. Verdict: ALLOWED.",
+        "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed in 18.4ms. Cryptographic Merkle Block sealed to SHA-256 Ledger."
+      ];
+      const term = document.getElementById("landing-sandbox-terminal");
+      if (term && stageDetails[idx]) {
+        term.innerHTML += `<span class="text-emerald-400 font-bold">${stageDetails[idx]}</span>\n`;
+        term.scrollTop = term.scrollHeight;
+      }
+      const steps = document.querySelectorAll(".landing-sb-step");
+      if (steps[idx]) {
+        steps[idx].classList.add("ring-2", "ring-sky-400", "scale-105");
+        setTimeout(() => steps[idx].classList.remove("ring-2", "ring-sky-400", "scale-105"), 1200);
+      }
+    }
+
+    function runLandingSandboxSimulation() {
+      if (window.landingGateway && typeof window.landingGateway.runLandingSandboxSimulation === 'function') {
+        return window.landingGateway.runLandingSandboxSimulation();
+      }
+      const term = document.getElementById("landing-sandbox-terminal");
+      const progressSteps = document.querySelectorAll(".landing-sb-step");
+      if (!term) return;
+
+      resetPipelineStages();
+      term.innerHTML = `<span class="text-emerald-400 font-bold">> [${new Date().toLocaleTimeString()}] INGESTION: Razorpay webhook payload received (HMAC SHA-256 VALIDATED)...</span>\n`;
+
+      const stageLabels = ["⚡ 1. Ingested ✓", "🔒 2. Mutex Lock ✓", "📈 3. Weibull Math ✓", "⚖️ 4. Cedar Policy ✓", "🚀 5. Dispatched ✓"];
+
+      const logs = [
+        { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
+        { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
+        { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
+        { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
+        { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! 🚀`, delay: 1650, step: 4 }
+      ];
+
+      logs.forEach(log => {
+        setTimeout(() => {
+          term.innerHTML += `<span class="text-sky-300">${log.text}</span>\n`;
+          term.scrollTop = term.scrollHeight;
+          if (progressSteps[log.step]) {
+            progressSteps[log.step].className = "landing-sb-step step-active p-2.5 rounded-xl border-2 scale-105 transition-all duration-300 flex flex-col items-center justify-center gap-0.5";
+            const titleSpan = progressSteps[log.step].querySelector(".stage-title");
+            if (titleSpan) titleSpan.textContent = stageLabels[log.step];
+          }
+          if (log.step === 4) {
+            if (typeof window.confetti === "function") {
+              window.confetti({ particleCount: 40, spread: 70, origin: { y: 0.8 } });
+            }
+          }
+        }, log.delay);
+      });
+    }
+
+    let _landingVoiceAudio = null;
+    let _activeLandingLang = 'telugu';
+
+    function playLandingVoiceDemo(lang) {
+      if (window.landingGateway && typeof window.landingGateway.playLandingVoiceDemo === 'function') {
+        return window.landingGateway.playLandingVoiceDemo(lang);
+      }
+      _activeLandingLang = lang || 'telugu';
+      const transcripts = {
+        telugu: {
+          text: '"నమస్కారం అండి, మీ ₹85,000 ఇన్‌వాయిస్ చెల్లింపులో GSTIN సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్‌ను వాట్సాప్ లింక్ ద్వారా పంపించాము..."',
+          rawText: 'నమస్కారం అండి, మీ ఎనభై ఐదు వేల రూపాయల ఇన్‌వాయిస్ చెల్లింపులో జీఎస్టీ నంబర్ సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్ లింక్ వాట్సాప్ ద్వారా పంపించాము.',
+          intent: "GSTIN Error Disputed & PTP Booked (19 Sept 11:00 AM)",
+          audioWave: "Active Voice Synthesis (Telugu / te-IN)",
+          voice: "te-IN-ShrutiNeural",
+          langCode: "te-IN"
+        },
+        hindi: {
+          text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने 0.23ms में वैकल्पिक UPI रेल तैयार की है..."',
+          rawText: 'नमस्ते, आपके बयालीस हजार पांच सौ रुपये के भुगतान में एचडीएफसी स्विच टाइमआउट हुआ था। हमारी एआई प्रणाली ने वैकल्पिक यूपीआई रेल तैयार की है।',
+          intent: "Switch Timeout Fallback -> UPI Dynamic QR Auto-Dispatched",
+          audioWave: "Active Voice Synthesis (Hindi / hi-IN)",
+          voice: "hi-IN-SwaraNeural",
+          langCode: "hi-IN"
+        },
+        english: {
+          text: '"Hi OmniRevive, we are updating our ERP vendor registration. Please re-route the payment link via Dynamic UPI."',
+          rawText: 'Hello finance team, we have identified a soft decline on your mandate. Re-routing recovery link via dynamic UPI.',
+          intent: "Dynamic UPI Link Re-routed & Immediate Settlement",
+          audioWave: "Active Voice Synthesis (Indian English / en-IN)",
+          voice: "en-IN-NeerjaExpressiveNeural",
+          langCode: "en-IN"
+        }
+      };
+
+      const data = transcripts[_activeLandingLang] || transcripts.telugu;
+      const transcriptEl = document.getElementById("landing-voice-transcript");
+      const intentEl = document.getElementById("landing-voice-intent");
+      const statusEl = document.getElementById("landing-voice-status");
+
+      if (transcriptEl) transcriptEl.textContent = data.text;
+      if (intentEl) intentEl.textContent = data.intent;
+      if (statusEl) statusEl.textContent = data.audioWave;
+
+      ["telugu", "hindi", "english"].forEach(l => {
+        const btn = document.getElementById(`voice-lang-btn-${l}`);
+        if (btn) {
+          if (l === _activeLandingLang) {
+            btn.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-600 text-white border border-purple-400 shadow-lg shadow-purple-500/30 transition cursor-pointer ring-2 ring-purple-400/40";
+          } else {
+            btn.className = "px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:text-white transition cursor-pointer";
+          }
+        }
+      });
+
+      // Animate waveform bars
+      const bars = document.querySelectorAll('.voice-wave-bar-1, .voice-wave-bar-2, .voice-wave-bar-3, .voice-wave-bar-4, .voice-wave-bar-5');
+      bars.forEach(b => {
+        b.classList.add('animate-pulse');
+        b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`;
+      });
+
+      const stopBars = () => {
+        bars.forEach(b => {
+          b.classList.remove('animate-pulse');
+          b.style.height = '';
+        });
+      };
+
+      if (_landingVoiceAudio) {
+        try { _landingVoiceAudio.pause(); _landingVoiceAudio.currentTime = 0; } catch (e) {}
+        _landingVoiceAudio = null;
+      }
+
+      let played = false;
+      if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(data.rawText || data.text);
+          utterance.lang = data.langCode;
+          utterance.rate = 1.0;
+          utterance.pitch = 1.05;
+          const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+          if (voices && voices.length > 0) {
+            const matchVoice = voices.find(v => v.lang === data.langCode || v.lang.replace('_', '-').startsWith(data.langCode.split('-')[0]));
+            if (matchVoice) utterance.voice = matchVoice;
+          }
+          utterance.onend = stopBars;
+          utterance.onerror = () => {
+            stopBars();
+            playAudioFileFallback();
+          };
+          window.speechSynthesis.speak(utterance);
+          played = true;
+        } catch (e) {
+          played = false;
+        }
+      }
+
+      const playAudioFileFallback = () => {
+        try {
+          const audioSrc = `/assets/voice_${_activeLandingLang}.mp3`;
+          const audio = new Audio(audioSrc);
+          _landingVoiceAudio = audio;
+          bars.forEach(b => {
+            b.classList.add('animate-pulse');
+            b.style.height = `${Math.floor(Math.random() * 16 + 12)}px`;
+          });
+          audio.onended = stopBars;
+          audio.onerror = stopBars;
+          audio.play().catch(() => stopBars());
+        } catch (e) {
+          stopBars();
+        }
+      };
+
+      if (!played) {
+        playAudioFileFallback();
+      }
+    }
+
+    function openNodeDeepDive(nodeKey) {
+      if (window.landingGateway && typeof window.landingGateway.openNodeDeepDive === 'function') {
+        return window.landingGateway.openNodeDeepDive(nodeKey);
+      }
+      const data = ARCHITECTURE_NODES[nodeKey];
+      if (!data) return;
+
+      const modal = document.getElementById("architecture-node-modal");
+      if (!modal) return;
+
+      const titleEl = document.getElementById("modal-node-title");
+      const subEl = document.getElementById("modal-node-subsystem");
+      const slaEl = document.getElementById("modal-node-sla");
+      const badgeEl = document.getElementById("modal-node-badge");
+      const descEl = document.getElementById("modal-node-desc");
+      const metricsEl = document.getElementById("modal-node-metrics");
+      const codeEl = document.getElementById("modal-node-code");
+      const codesContainer = document.getElementById("modal-node-codes");
+      const launchBtn = document.getElementById("modal-node-launch-btn");
+
+      if (titleEl) titleEl.textContent = data.title;
+      if (subEl) subEl.textContent = data.subsystem;
+      if (slaEl) slaEl.textContent = data.sla;
+      if (badgeEl) badgeEl.textContent = data.badge;
+      if (descEl) descEl.textContent = data.description;
+      if (metricsEl) metricsEl.textContent = data.metrics;
+      if (codeEl) codeEl.textContent = data.codeSnippet;
+
+      if (codesContainer && data.handledCodes) {
+        codesContainer.innerHTML = data.handledCodes
+          .map(c => `<span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-500/15 text-sky-400 border border-sky-500/30">${c}</span>`)
+          .join("");
+      }
+
+      if (launchBtn) {
+        launchBtn.onclick = () => {
+          closeNodeDeepDive();
+          launchControlPlane(data.workspaceTab || 'overview');
+        };
+      }
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeNodeDeepDive() {
+      const modal = document.getElementById("architecture-node-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function openApkDownloadModal() {
+      const modal = document.getElementById("apk-download-modal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeApkDownloadModal() {
+      const modal = document.getElementById("apk-download-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function openAiEvalModal() {
+      const modal = document.getElementById("ai-eval-modal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeAiEvalModal() {
+      const modal = document.getElementById("ai-eval-modal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function updateLandingRoiCalculator() {
+      const slider = document.getElementById("landing-roi-slider");
+      if (!slider) return;
+      const gmvCrores = parseFloat(slider.value) || 25;
+      const sliderVal = document.getElementById("landing-slider-val");
+      if (sliderVal) sliderVal.textContent = "₹" + gmvCrores + " Cr";
+
+      const gmvInr = gmvCrores * 10000000;
+      const lostGmv = gmvInr * 0.001; // 0.1% baseline
+      const recoveredGmv = lostGmv * 0.784; // 78.4% recovery
+      const netYield = recoveredGmv * 0.95; // 95% yield
+
+      const recEl = document.getElementById("landing-roi-recovered");
+      const netEl = document.getElementById("landing-roi-net");
+      if (recEl) recEl.textContent = "₹" + (recoveredGmv / 100000).toFixed(2) + " Lakhs";
+      if (netEl) netEl.textContent = "₹" + (netYield / 100000).toFixed(2) + " Lakhs";
+    }
+
+    function selectWorkspaceMockupTab(tabKey) {
+      ["detect", "connect", "investigate", "decide"].forEach(t => {
+        const btn = document.getElementById(`ws-mockup-tab-${t}`);
+        if (btn) {
+          if (t === tabKey) {
+            btn.className = "px-4 py-2 border-b-2 border-blue-500 text-blue-400 font-bold transition";
+          } else {
+            btn.className = "px-4 py-2 text-slate-400 hover:text-white font-medium transition";
+          }
+        }
+      });
+    }
+
+    function selectShowcaseTab(tabKey) {
+      ["monitoring", "voice", "policy", "ledger"].forEach(t => {
+        const btn = document.getElementById(`showcase-tab-${t}`);
+        const panel = document.getElementById(`showcase-panel-${t}`);
+        if (btn) {
+          if (t === tabKey) {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40 transition cursor-pointer flex items-center gap-2 shadow-sm";
+          } else {
+            btn.className = "px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition cursor-pointer flex items-center gap-2";
+          }
+        }
+        if (panel) {
+          if (t === tabKey) panel.classList.remove("hidden");
+          else panel.classList.add("hidden");
+        }
+      });
+    }
+
+    function selectDecisionTrailStep(stepIndex) {
+      for (let i = 0; i < 4; i++) {
+        const stepItem = document.getElementById(`landing-trail-step-${i}`);
+        const stepDot = document.getElementById(`landing-trail-dot-${i}`);
+        if (stepItem) {
+          if (i === stepIndex) {
+            stepItem.classList.add("border-sky-500", "bg-sky-500/10", "scale-[1.01]");
+            stepItem.classList.remove("border-slate-200", "dark:border-[#142442]", "bg-transparent");
+          } else {
+            stepItem.classList.remove("border-sky-500", "bg-sky-500/10", "scale-[1.01]");
+            stepItem.classList.add("border-slate-200", "dark:border-[#142442]", "bg-transparent");
+          }
+        }
+        if (stepDot) {
+          if (i === stepIndex) {
+            stepDot.classList.add("bg-sky-400", "ring-4", "ring-sky-400/20");
+            stepDot.classList.remove("bg-slate-400");
+          } else {
+            stepDot.classList.remove("bg-sky-400", "ring-4", "ring-sky-400/20");
+            stepDot.classList.add("bg-slate-400");
+          }
+        }
+      }
+    }
+
+    function downloadMerkleCertificate(recordId) {
+      const certData = {
+        record_id: recordId || "AUDIT-LEDGER-2026",
+        timestamp: new Date().toISOString(),
+        governance_mode: "ZERO_TRUST_AWS_CEDAR",
+        hash_algorithm: "SHA-256",
+        previous_block: "0000a4b9812e11d7f45a987c65d4e321",
+        merkle_root: "9f82d3e1a3b4c5d6e7f8g9h0i1j2k3l4m5n6o7p8q9r0s1t2u3v4w5x6y7z8a9b0",
+        policy_verdict: "ALLOWED",
+        authorized_by: "OmniRevive-OS Control Plane",
+        digital_signature: "SIG_0x" + Math.random().toString(16).substr(2, 16).toUpperCase()
+      };
+      const blob = new Blob([JSON.stringify(certData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${recordId || 'AUDIT'}_Merkle_Audit_Proof.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
 
     // Navigation Tab Switcher with Dedicated View Isolation
     function switchNavTab(tabName) {
@@ -8177,9 +8893,469 @@ forbid (
     // Floating AI Copilot & SRE Assistant Drawer Controller
     function toggleAiCopilotDrawer() {
       const drawer = document.getElementById("ai-copilot-drawer");
+      const trigger = document.getElementById("ai-copilot-trigger-container");
       if (drawer) {
-        drawer.classList.toggle("hidden");
+        const isHidden = drawer.classList.contains("hidden");
+        if (isHidden) {
+          drawer.classList.remove("hidden");
+          if (trigger) trigger.classList.add("hidden");
+          updateCopilotCurrentPage();
+          if (typeof resetCopilotHeroCard === 'function') resetCopilotHeroCard();
+          const input = document.getElementById("copilot-user-input");
+          if (input) setTimeout(() => input.focus(), 150);
+        } else {
+          drawer.classList.add("hidden");
+          if (trigger) trigger.classList.remove("hidden");
+        }
       }
+    }
+
+    function minimizeCopilotDrawer() {
+      const drawer = document.getElementById("ai-copilot-drawer");
+      const trigger = document.getElementById("ai-copilot-trigger-container");
+      if (drawer) {
+        drawer.classList.add("hidden");
+        if (trigger) trigger.classList.remove("hidden");
+        if (typeof showToast === 'function') showToast("Copilot minimized. Click floating pill anytime.", "info");
+      }
+    }
+
+    let currentCopilotMode = "Ask";
+
+    const COPILOT_MODES_DATA = {
+      Ask: {
+        heroHtml: `
+          <div>Hey Sanmudh! 👋</div>
+          <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+          <div class="text-slate-300 font-medium pt-0.5">What would you like to do today?</div>
+        `,
+        badge: "SRE Intelligence",
+        suggestedTitle: "Suggested for this page",
+        suggestedIcon: "🎯",
+        cards: [
+          { id: "whats_happening_today", icon: "📊", iconColor: "text-teal-400", title: "What's happening today?" },
+          { id: "find_failed_payments", icon: "🔍", iconColor: "text-sky-400", title: "Find failed payments" },
+          { id: "show_revenue_at_risk", icon: "⚠️", iconColor: "text-amber-400", title: "Show revenue at risk" },
+          { id: "analyze_recovery_rate", icon: "📈", iconColor: "text-cyan-400", title: "Analyze recovery rate" },
+          { id: "explain_this_metric", icon: "💡", iconColor: "text-yellow-400", title: "Explain this metric" },
+          { id: "start_guided_tour", icon: "▶️", iconColor: "text-blue-400", title: "Start guided tour" }
+        ]
+      },
+      Investigate: {
+        heroHtml: `
+          <div class="font-bold text-sky-400 flex items-center gap-1.5 pb-0.5">
+            <span>🔍</span> <span>Autonomous SRE Investigation Desk</span>
+          </div>
+          <div class="text-slate-300 leading-relaxed">
+            Live telemetry scan across <strong>HDFC, SBI, Axis, PhonePe & Juspay</strong> rails:
+          </div>
+          <div class="space-y-1 pl-1 text-[11px] pt-1">
+            <div>• <strong class="text-rose-400">HDFC 504 Timeout Anomaly</strong>: Error rate 14.8% due to CBS queue saturation.</div>
+            <div>• <strong class="text-emerald-400">Weibull Adaptive Shift</strong>: Fast-Loop retries shifted to <span class="font-mono text-cyan-300">T+45m</span> peak.</div>
+            <div>• <strong class="text-amber-400">B2B Voice Pipeline</strong>: 2 high-ticket corporate invoices transitioned to PTP negotiation.</div>
+          </div>
+          <div class="text-slate-400 text-[10.5px] italic pt-1">Select a diagnostic target below or enter a Payment ID in the search bar:</div>
+        `,
+        badge: "Investigation Desk",
+        suggestedTitle: "SRE Diagnostic Actions",
+        suggestedIcon: "🔍",
+        cards: [
+          { id: "find_failed_payments", icon: "⚡", iconColor: "text-rose-400", title: "Diagnose HDFC 504 Outage" },
+          { id: "trace_pay_hdfc", icon: "🔍", iconColor: "text-sky-400", title: "Trace pay_hdfc_99812" },
+          { id: "inspect_cas_mutex", icon: "🛡️", iconColor: "text-emerald-400", title: "Inspect CAS Mutex Locks" },
+          { id: "whats_happening_today", icon: "📊", iconColor: "text-teal-400", title: "Bank Switch Latency Radar" },
+          { id: "cfo_dispute_queue", icon: "📑", iconColor: "text-amber-400", title: "B2B CFO Dispute Queue" },
+          { id: "storm_50_threads", icon: "🔄", iconColor: "text-purple-400", title: "Run 50-Thread Storm Test" }
+        ]
+      },
+      Explain: {
+        heroHtml: `
+          <div class="font-bold text-yellow-400 flex items-center gap-1.5 pb-0.5">
+            <span>💡</span> <span>SRE Metric & Architectural Deep Dive</span>
+          </div>
+          <div class="text-slate-300 leading-relaxed">
+            Select any mathematical derivation or control plane layer to inspect its live operation:
+          </div>
+          <div class="space-y-1 pl-1 text-[11px] pt-1">
+            <div>• <strong class="text-cyan-300">Weibull Hazard ($h(t)$)</strong>: Continuous parametric recovery curve vs. bank half-life.</div>
+            <div>• <strong class="text-emerald-400">CAS Mutex Idempotency</strong>: Atomic compare-and-swap preventing duplicate charges.</div>
+            <div>• <strong class="text-amber-300">Deterministic Clamping</strong>: Hard statutory caps: discount &le; min(10%, ₹500).</div>
+          </div>
+          <div class="text-slate-400 text-[10.5px] italic pt-1">Click any metric below for an in-depth architectural breakdown:</div>
+        `,
+        badge: "Metric Deep Dive",
+        suggestedTitle: "Metric & Architecture Deep Dives",
+        suggestedIcon: "💡",
+        cards: [
+          { id: "explain_this_metric", icon: "📐", iconColor: "text-yellow-400", title: "Weibull Hazard Formula" },
+          { id: "inspect_cas_mutex", icon: "🛡️", iconColor: "text-emerald-400", title: "Atomic CAS Mutex Logic" },
+          { id: "explain_3tier", icon: "🏛️", iconColor: "text-sky-400", title: "3-Tier Isolation Boundary" },
+          { id: "explain_merkle", icon: "📜", iconColor: "text-teal-400", title: "SHA-256 Merkle Ledger" },
+          { id: "explain_trai", icon: "⚖️", iconColor: "text-amber-400", title: "TRAI & DPDP Guardrails" },
+          { id: "explain_competitors", icon: "🏆", iconColor: "text-cyan-400", title: "vs. Stripe / Netflix" }
+        ]
+      },
+      Explore: {
+        heroHtml: `
+          <div class="font-bold text-blue-400 flex items-center gap-1.5 pb-0.5">
+            <span>🧭</span> <span>Interactive Platform Exploration</span>
+          </div>
+          <div class="text-slate-300 leading-relaxed">
+            Welcome to OmniRevive-OS! Direct access to all live test environments:
+          </div>
+          <div class="space-y-1 pl-1 text-[11px] pt-1">
+            <div>• <strong class="text-sky-300">Live Chaos Sandbox</strong>: Real-time bank switch collapses & 5-stage recovery.</div>
+            <div>• <strong class="text-purple-300">Voice AI Studio</strong>: Trilingual Hinglish, Telugu & English acoustic negotiation.</div>
+            <div>• <strong class="text-emerald-300">Decision Trail</strong>: Cryptographic SHA-256 Merkle audit certificates.</div>
+          </div>
+          <div class="text-slate-400 text-[10.5px] italic pt-1">Click any mission module below to jump directly to it:</div>
+        `,
+        badge: "Platform Tour",
+        suggestedTitle: "Quick Platform Navigation",
+        suggestedIcon: "🧭",
+        cards: [
+          { id: "start_guided_tour", icon: "⚡", iconColor: "text-sky-400", title: "Live Chaos Failure Sandbox" },
+          { id: "explore_voice", icon: "🎙️", iconColor: "text-purple-400", title: "Deep Loop Voice AI Studio" },
+          { id: "explore_trail", icon: "📜", iconColor: "text-emerald-400", title: "SHA-256 Decision Trail" },
+          { id: "explore_roi", icon: "📊", iconColor: "text-teal-400", title: "Live ROI Calculator" },
+          { id: "explore_multirail", icon: "💳", iconColor: "text-cyan-400", title: "Multi-Rail Gateway Matrix" },
+          { id: "explore_mobile", icon: "📱", iconColor: "text-blue-400", title: "Mobile Flutter Suite" }
+        ]
+      }
+    };
+
+    function setCopilotMode(mode) {
+      currentCopilotMode = mode;
+      const modes = ["Ask", "Investigate", "Explain", "Explore"];
+      modes.forEach(m => {
+        const btn = document.getElementById(`copilot-mode-${m.toLowerCase()}`);
+        if (btn) {
+          if (m === mode) {
+            btn.className = "copilot-mode-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0c66ee] text-white shadow-md shadow-blue-500/30 transition-all cursor-pointer";
+          } else {
+            btn.className = "copilot-mode-btn px-2.5 py-1 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1";
+          }
+        }
+      });
+
+      const modeLabel = document.getElementById("copilot-mode-label");
+      if (modeLabel) modeLabel.innerText = mode;
+
+      renderCopilotHeroCard(mode);
+      renderCopilotSuggestions(mode);
+
+      if (typeof showToast === 'function') showToast(`Copilot Mode: ${mode}`, "info");
+    }
+
+    function resetCopilotHeroCard() {
+      renderCopilotHeroCard(currentCopilotMode);
+      renderCopilotSuggestions(currentCopilotMode);
+    }
+
+    function renderCopilotHeroCard(mode) {
+      const container = document.getElementById("copilot-chat-history");
+      if (!container) return;
+
+      const data = COPILOT_MODES_DATA[mode] || COPILOT_MODES_DATA.Ask;
+
+      container.innerHTML = `
+        <div class="flex gap-2.5 items-start">
+          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[#08152b]"></span>
+          </div>
+          <div class="flex-1 bg-[#0d2142] p-3.5 rounded-2xl rounded-tl-sm border border-sky-900/40 shadow-sm space-y-2 text-slate-200">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 border-b border-sky-900/30 pb-1">
+              <span class="font-bold text-sky-400 flex items-center gap-1">
+                <span>Razor SRE Copilot</span>
+                <span class="px-1.5 py-0.2 rounded text-[8.5px] bg-[#07152b] text-sky-300 font-mono">${data.badge}</span>
+              </span>
+              <button onclick="speakLastCopilotMessage(this)" class="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-semibold cursor-pointer">
+                🔊 Speak
+              </button>
+            </div>
+            <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1.5">
+              ${data.heroHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCopilotSuggestions(mode) {
+      const data = COPILOT_MODES_DATA[mode] || COPILOT_MODES_DATA.Ask;
+      const titleEl = document.getElementById("copilot-suggested-title");
+      const iconEl = document.getElementById("copilot-suggested-icon");
+      const gridEl = document.getElementById("copilot-suggestions-grid");
+
+      if (titleEl) titleEl.innerText = data.suggestedTitle;
+      if (iconEl) iconEl.innerText = data.suggestedIcon;
+
+      if (gridEl && Array.isArray(data.cards)) {
+        gridEl.innerHTML = data.cards.map(card => `
+          <button onclick="triggerCopilotSuggestion('${card.id}')" class="w-full px-3 py-2.5 rounded-xl bg-[#0d2244]/80 hover:bg-[#122b56] border border-sky-900/50 hover:border-sky-500/50 text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-base ${card.iconColor} group-hover:scale-110 transition-transform">${card.icon}</span>
+              <span class="text-[11px] font-semibold text-slate-200 group-hover:text-white">${card.title}</span>
+            </div>
+            <span class="text-slate-400 group-hover:text-sky-300 group-hover:translate-x-0.5 transition-all text-sm font-bold">›</span>
+          </button>
+        `).join("");
+      }
+    }
+
+    function renderFocusedHeroCard(title, bodyHtml) {
+      const container = document.getElementById("copilot-chat-history");
+      if (!container) return;
+
+      container.innerHTML = `
+        <div class="flex gap-2.5 items-start">
+          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[#08152b]"></span>
+          </div>
+          <div class="flex-1 bg-[#0d2142] p-3.5 rounded-2xl rounded-tl-sm border border-sky-900/40 shadow-sm space-y-2.5 text-slate-200">
+            <div class="flex items-center justify-between text-[10px] text-slate-400 border-b border-sky-900/40 pb-1.5">
+              <span class="font-bold text-sky-400 flex items-center gap-1 truncate max-w-[240px]">
+                ${title}
+              </span>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="speakLastCopilotMessage(this)" class="text-sky-400 hover:text-sky-300 font-semibold cursor-pointer">
+                  🔊 Speak
+                </button>
+                <button onclick="resetCopilotHeroCard()" class="px-2 py-0.5 rounded-md bg-[#091830] hover:bg-[#12284d] text-slate-300 hover:text-white border border-sky-900/60 font-semibold transition cursor-pointer">
+                  ↩ Back
+                </button>
+              </div>
+            </div>
+            <div class="copilot-msg-content leading-relaxed text-[11.5px]">
+              ${bodyHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateCopilotCurrentPage() {
+      const pageLabel = document.getElementById("copilot-page-label");
+      if (!pageLabel) return;
+      const hash = window.location.hash || "";
+      let pageName = "Overview";
+      if (hash.includes("showcase-sandbox") || hash.includes("sandbox")) pageName = "Chaos Sandbox";
+      else if (hash.includes("showcase-voice-studio") || hash.includes("voice")) pageName = "Voice AI Studio";
+      else if (hash.includes("showcase-workspace") || hash.includes("workspace") || hash.includes("roi")) pageName = "ROI Calculator";
+      else if (hash.includes("showcase-decision-trail") || hash.includes("decision")) pageName = "Decision Trail";
+      else if (hash.includes("fast-loop")) pageName = "Fast Loop Retries";
+      else if (hash.includes("b2b")) pageName = "B2B Invoices & PTP";
+      pageLabel.innerText = pageName;
+    }
+
+    function copilotAttachFilePrompt() {
+      if (typeof showToast === 'function') showToast("📎 Active Transaction & Trace Context attached to query.", "info");
+      const input = document.getElementById("copilot-user-input");
+      if (input) input.placeholder = "Query with context (e.g. 'Audit trace pay_hdfc_99812')...";
+    }
+
+    function triggerCopilotSuggestion(actionKey) {
+      let queryTitle = "";
+      let answerHtml = "";
+
+      switch (actionKey) {
+        case "whats_happening_today":
+          queryTitle = "📊 Telemetry: What's happening today?";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-teal-400 font-bold">Real-Time Control Plane Status (Today's Telemetry)</div>
+              <div>• <strong>Total Volume Processed</strong>: <span class="text-white font-semibold">₹48,20,000</span> across 1,928 transactions.</div>
+              <div>• <strong>Failures Intercepted</strong>: <span class="text-rose-300 font-semibold">142</span> (down from 260 unmanaged baseline).</div>
+              <div>• <strong>Autonomously Recovered</strong>: <span class="text-emerald-400 font-bold">111 transactions (78.17% Yield)</span>.</div>
+              <div>• <strong>Net Recovered GMV</strong>: <span class="text-white font-bold">₹4,25,600</span> rescued from terminal drop.</div>
+              <div>• <strong>Active Rail States</strong>: HDFC (<span class="text-amber-400">Degraded 504</span>), SBI (<span class="text-emerald-400">Operational</span>), Axis (<span class="text-emerald-400">Operational</span>), PhonePe (<span class="text-emerald-400">Operational</span>).</div>
+              <div>• <strong>Idempotency Collisions</strong>: <span class="text-emerald-400 font-bold">0 double-debits</span> across 50 concurrent retry threads.</div>
+            </div>
+          `;
+          break;
+
+        case "find_failed_payments":
+          queryTitle = "🔍 Diagnostic: Intercepted Payment Failures";
+          answerHtml = `
+            <div class="space-y-2">
+              <div class="text-sky-400 font-bold">Recent Intercepted Payment Failures</div>
+              <div class="p-2 rounded-xl bg-[#08152b] border border-sky-900/40 space-y-0.5">
+                <div class="flex justify-between items-center"><strong class="text-white">pay_hdfc_99812</strong> <span class="text-emerald-400 font-bold">₹85,000</span></div>
+                <div class="text-[10.5px] text-slate-300">Failure: <code class="text-rose-400 font-mono">504 Gateway Timeout</code> (HDFC CBS)</div>
+                <div class="text-[10px] text-cyan-300">Action: Fast-Loop shifted to Weibull peak (+45m). B2B Voice agent dispatched.</div>
+              </div>
+              <div class="p-2 rounded-xl bg-[#08152b] border border-sky-900/40 space-y-0.5">
+                <div class="flex justify-between items-center"><strong class="text-white">pay_sbi_44109</strong> <span class="text-emerald-400 font-bold">₹3,499</span></div>
+                <div class="text-[10.5px] text-slate-300">Failure: <code class="text-amber-400 font-mono">SOFT_DECLINE_INSUFFICIENT_FUNDS</code></div>
+                <div class="text-[10px] text-cyan-300">Action: 1-Click WhatsApp dynamic UPI QR link dispatched.</div>
+              </div>
+            </div>
+          `;
+          break;
+
+        case "show_revenue_at_risk":
+          queryTitle = "⚠️ Financial Risk: Current Volume at Risk";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-amber-400 font-bold">Revenue at Risk Assessment (Current Cohort)</div>
+              <div>• <strong>Total Volume at Risk</strong>: <span class="text-rose-400 font-bold">₹12,40,000</span> (12.5% merchant failure rate).</div>
+              <div>• <strong>High-Ticket B2B Invoices (&gt;₹50,000)</strong>: <span class="text-white font-semibold">₹8,15,000</span> (65.7% of risk).</div>
+              <div>• <strong>Consumer Soft Declines (&lt;₹10,000)</strong>: <span class="text-white font-semibold">₹4,25,000</span> (34.3% of risk).</div>
+              <div>• <strong>Projected Salvageable GMV</strong>: <span class="text-emerald-400 font-bold">₹9,72,000</span> using OmniRevive Multi-Rail.</div>
+              <div>• <strong>Merchant Margin Protected</strong>: <span class="text-white font-semibold">₹1,94,400</span> (at 200 bps standard take rate).</div>
+            </div>
+          `;
+          break;
+
+        case "analyze_recovery_rate":
+          queryTitle = "📈 Benchmark: Net Recovery Yield Analysis";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-cyan-400 font-bold">Cohort Recovery Rate Empirical Analysis</div>
+              <div>• <strong>OmniRevive-OS Yield</strong>: <span class="text-emerald-400 font-extrabold text-sm">78.39%</span></div>
+              <div>• <strong>Industry Static Retry Baseline</strong>: <span class="text-slate-400 font-semibold">42.24%</span></div>
+              <div>• <strong>Net Recovery Lift</strong>: <span class="text-cyan-300 font-bold">+36.15% Absolute Gain</span></div>
+              <div class="pt-1 text-[11px] text-slate-300 leading-relaxed">
+                <strong>Key Insight</strong>: Instant retries fail at 82% during switch outages. Shifting to Weibull hazard density peak (+45m) avoids queue lock contention and allows bank CBS buffers to drain.
+              </div>
+            </div>
+          `;
+          break;
+
+        case "explain_this_metric":
+        case "explain_weibull":
+          queryTitle = "💡 Deep Dive: Weibull Hazard Survival Model";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-yellow-400 font-bold">Weibull Hazard Function h(t)</div>
+              <div class="font-mono text-cyan-300 text-[11px] bg-[#071328] p-2 rounded-lg border border-sky-900/50">
+                h(t) = (k / λ) * (t / λ)^(k - 1)
+              </div>
+              <div>• <strong>Shape Parameter (k = 2.14)</strong>: Models wear-in / switch recovery acceleration after bank queue drain.</div>
+              <div>• <strong>Scale Parameter (λ = 45m)</strong>: Empirical half-life peak of Indian banking CBS gateway timeouts.</div>
+              <div>• <strong>Impact</strong>: Boosts cohort yield from 42.24% to 78.39% without rate-limit triggers.</div>
+            </div>
+          `;
+          break;
+
+        case "start_guided_tour":
+        case "explore_sandbox":
+          queryTitle = "▶️ Tour: Live Chaos Failure Sandbox";
+          answerHtml = `
+            <div class="space-y-2">
+              <div class="text-blue-400 font-bold">Live Chaos Failure Sandbox</div>
+              <div class="text-slate-200 leading-relaxed">
+                Simulates real-time bank switch collapses (HDFC 504 timeouts, SBI rate limits) and demonstrates the 5-stage automated recovery:
+              </div>
+              <div class="text-[11px] text-slate-300">
+                1. Ingestion → 2. Weibull Delay (+45m) → 3. Mutex Lock → 4. Dynamic UPI Fallback → 5. SHA-256 Audit Seal.
+              </div>
+              <div class="pt-1">
+                <a href="#showcase-sandbox" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0c66ee] hover:bg-[#0952c2] text-white font-bold text-xs shadow-md transition-all">
+                  <span>⚡ Jump to Live Chaos Sandbox →</span>
+                </a>
+              </div>
+            </div>
+          `;
+          break;
+
+        case "explore_voice":
+          queryTitle = "🎙️ Tour: Deep Loop Voice AI Studio";
+          answerHtml = `
+            <div class="space-y-2">
+              <div class="text-purple-400 font-bold">Deep Loop Voice AI Studio</div>
+              <div class="text-slate-200 leading-relaxed">
+                Test acoustic negotiation with native voices across Indian languages:
+              </div>
+              <div class="flex flex-wrap gap-1.5 text-[10.5px]">
+                <span class="px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-500/40">Telugu (te-IN)</span>
+                <span class="px-2 py-0.5 rounded bg-amber-950/60 text-amber-300 border border-amber-500/40">Hindi (hi-IN)</span>
+                <span class="px-2 py-0.5 rounded bg-blue-950/60 text-blue-300 border border-blue-500/40">English (en-IN)</span>
+              </div>
+              <div class="pt-1">
+                <a href="#showcase-voice-studio" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all">
+                  <span>🎙️ Open Voice AI Studio →</span>
+                </a>
+              </div>
+            </div>
+          `;
+          break;
+
+        case "explore_trail":
+        case "explain_merkle":
+          queryTitle = "📜 Tour: Cryptographic Decision Trail";
+          answerHtml = `
+            <div class="space-y-2">
+              <div class="text-emerald-400 font-bold">SHA-256 Merkle Decision Trail</div>
+              <div class="text-slate-200 leading-relaxed">
+                Every recovery action is committed to an immutable hash chain:
+              </div>
+              <div class="font-mono text-[10px] text-cyan-300 bg-[#071328] p-2 rounded-lg border border-sky-900/50">
+                Hash_n = SHA-256(Hash_{n-1} + EventData)
+              </div>
+              <div class="pt-1">
+                <a href="#showcase-decision-trail" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all">
+                  <span>📜 Inspect SHA-256 Audit Trail →</span>
+                </a>
+              </div>
+            </div>
+          `;
+          break;
+
+        case "explore_roi":
+          queryTitle = "📊 Tour: Revenue Recovery Calculator";
+          answerHtml = `
+            <div class="space-y-2">
+              <div class="text-teal-400 font-bold">Revenue Recovery Calculator</div>
+              <div class="text-slate-200 leading-relaxed">
+                Drag the interactive GMV slider to project net recovered capital and margin protection for your enterprise volume.
+              </div>
+              <div class="pt-1">
+                <a href="#showcase-workspace" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md transition-all">
+                  <span>📊 Open ROI Calculator →</span>
+                </a>
+              </div>
+            </div>
+          `;
+          break;
+
+        case "inspect_cas_mutex":
+          queryTitle = "🛡️ Safety: Distributed Atomic CAS Mutex";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-emerald-400 font-bold">Zero Double-Debit Concurrency Protection</div>
+              <div>• <strong>Compare-And-Swap (CAS)</strong>: Acquired in <span class="font-mono text-cyan-300">0.23ms</span> on <code>merchant_id:payment_id</code>.</div>
+              <div>• <strong>Webhook Storm Resilience</strong>: Tested under 50 simultaneous retry threads; secondary threads rejected with <code>HTTP 409 Conflict</code>.</div>
+              <div>• <strong>Result</strong>: Exactly <span class="text-emerald-400 font-bold">0 double debits</span> and 0 idempotency violations.</div>
+            </div>
+          `;
+          break;
+
+        case "trace_pay_hdfc":
+          queryTitle = "🔍 Trace Audit: pay_hdfc_99812";
+          answerHtml = `
+            <div class="space-y-1.5">
+              <div class="text-sky-400 font-bold">Transaction Trace: pay_hdfc_99812 (₹85,000)</div>
+              <div>• <strong>Merchant</strong>: Acme Enterprise Solutions</div>
+              <div>• <strong>Original Error</strong>: <code>504 Gateway Timeout (CBS contention)</code></div>
+              <div>• <strong>Weibull Shift</strong>: Scheduled for <strong>T+45m</strong> peak window.</div>
+              <div>• <strong>Status</strong>: <span class="px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-400 font-bold border border-emerald-500/40">MUTEX_LOCKED</span></div>
+            </div>
+          `;
+          break;
+
+        default:
+          queryTitle = "💡 Diagnostic Intelligence";
+          answerHtml = `
+            <div class="text-slate-200">
+              OmniRevive-OS is actively maintaining 3-tier financial isolation with Weibull retries and trilingual voice negotiation.
+            </div>
+          `;
+      }
+
+      renderFocusedHeroCard(queryTitle, answerHtml);
     }
 
     function sendQuickPrompt(promptText) {
@@ -8211,34 +9387,18 @@ forbid (
 
       input.value = "";
 
-      // 1. Append User Message Bubble (Right Side)
-      const userBubble = document.createElement("div");
-      userBubble.className = "flex justify-end";
-      userBubble.innerHTML = `
-        <div class="max-w-[85%] bg-gradient-to-r from-[#0c55ea] to-[#0284c7] text-white p-2.5 px-3.5 rounded-2xl rounded-tr-sm text-[11.5px] leading-relaxed shadow-md space-y-0.5">
-          <div class="font-medium">${q}</div>
-          <div class="text-[9px] text-blue-100 text-right opacity-80">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+      // 1. Show In-Place Reasoning Card
+      history.innerHTML = `
+        <div class="flex gap-2.5 items-start">
+          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+          </div>
+          <div class="bg-[#0d2142] p-3 px-4 rounded-2xl rounded-tl-sm border border-sky-900/40 text-[11px] text-sky-400 font-medium animate-pulse flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+            <span>Razor Copilot is analyzing: "<em>${q}</em>"...</span>
+          </div>
         </div>
       `;
-      history.appendChild(userBubble);
-      history.scrollTop = history.scrollHeight;
-
-      // 2. Append Live Animated Reasoning Bubble
-      const typingId = "typing-" + Date.now();
-      const typingBubble = document.createElement("div");
-      typingBubble.id = typingId;
-      typingBubble.className = "flex gap-2.5 items-start";
-      typingBubble.innerHTML = `
-        <div class="w-7 h-7 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm">
-          <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
-        </div>
-        <div class="bg-white dark:bg-[#0c1b33] p-2.5 px-3 rounded-2xl rounded-tl-sm border border-slate-200 dark:border-[#192f54] text-[11px] text-sky-500 font-medium animate-pulse flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
-          <span>Razor Copilot is reasoning...</span>
-        </div>
-      `;
-      history.appendChild(typingBubble);
-      history.scrollTop = history.scrollHeight;
 
       // Function to generate rich intelligent in-browser response for any query
       function getClientSideCopilotResponse(queryText) {
@@ -8296,12 +9456,11 @@ forbid (
                  "• **Mean Orchestration Latency**: **18.4ms** per transaction.\n" +
                  "• **Compliance Violations**: Exactly **0** breaches of TRAI or DPDP guardrails.";
         } else {
-          return `🤖 **Razor Copilot Architectural Intelligence** (Query: *"${queryText}"*):\n\n` +
+          return `🤖 **Razor Copilot Architectural Intelligence**:\n\n` +
                  "RazorRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
                  "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
                  "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
-                 "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.\n\n" +
-                 "💡 *Tip: Ask me about '3-Tier Architecture', 'B2B Voice & PTP', 'Weibull hazard formula', 'CAS Mutex concurrency', 'TRAI quiet hours', or 'vs Stripe'!*";
+                 "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.";
         }
       }
 
@@ -8317,76 +9476,14 @@ forbid (
       try {
         const data = await safeApiCall("/api/v1/copilot/chat", "POST", { query: q });
         let answer = data?.response || getClientSideCopilotResponse(q);
-        const badge = data?.source === "ollama_local" ? "🦙 Ollama Local LLM" : "⚡ Neural SRE Index";
-
-        const typingEl = document.getElementById(typingId);
-        if (typingEl) typingEl.remove();
-
-        const actionBtnHtml = data?.dispatch_id ? `
-          <div class="pt-1.5 flex flex-wrap gap-2">
-            <button onclick="openDispatchedEmailModal('${data.dispatch_id}')" class="px-2.5 py-1 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold rounded-lg text-[10.5px] flex items-center gap-1.5 shadow cursor-pointer">
-              <span>📧</span> <span>View Dispatched Tax Invoice (${data.dispatched_email_recipient || 'Delivered'})</span>
-            </button>
-          </div>
-        ` : '';
-
-        const copilotBubble = document.createElement("div");
-        copilotBubble.className = "flex gap-2.5 items-start";
-        copilotBubble.innerHTML = `
-          <div class="w-7 h-7 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
-          </div>
-          <div class="flex-1 bg-white dark:bg-[#0c1b33] p-3 rounded-2xl rounded-tl-sm border border-slate-200 dark:border-[#192f54] shadow-sm space-y-2 text-slate-800 dark:text-slate-200">
-            <div class="flex items-center justify-between text-[9.5px] text-slate-400 border-b border-slate-100 dark:border-slate-800/80 pb-1">
-              <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                <span>Razor Copilot</span>
-                <span class="px-1.5 py-0.2 rounded text-[8.5px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 mono">${badge}</span>
-              </span>
-              <button onclick="speakLastCopilotMessage(this)" class="text-sky-500 hover:text-sky-400 flex items-center gap-1 font-semibold cursor-pointer">
-                🔊 Speak
-              </button>
-            </div>
-            <div class="copilot-msg-content leading-relaxed text-[11.5px]">
-              ${formatMarkdownHtml(answer)}
-              ${actionBtnHtml}
-            </div>
-          </div>
-        `;
-        history.appendChild(copilotBubble);
-        history.scrollTop = history.scrollHeight;
+        renderFocusedHeroCard(`Query: "${q}"`, formatMarkdownHtml(answer));
 
         if (data?.action_executed) {
           refreshAuditLedger();
         }
-
       } catch (err) {
-        const typingEl = document.getElementById(typingId);
-        if (typingEl) typingEl.remove();
-
         const answer = getClientSideCopilotResponse(q);
-        const errorBubble = document.createElement("div");
-        errorBubble.className = "flex gap-2.5 items-start";
-        errorBubble.innerHTML = `
-          <div class="w-7 h-7 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
-          </div>
-          <div class="flex-1 bg-white dark:bg-[#0c1b33] p-3 rounded-2xl rounded-tl-sm border border-slate-200 dark:border-[#192f54] shadow-sm space-y-2 text-slate-800 dark:text-slate-200">
-            <div class="flex items-center justify-between text-[9.5px] text-slate-400 border-b border-slate-100 dark:border-slate-800/80 pb-1">
-              <span class="font-bold text-sky-400 flex items-center gap-1">
-                <span>Razor Copilot</span>
-                <span class="px-1.5 py-0.2 rounded text-[8.5px] bg-sky-950/60 text-sky-400 mono">⚡ Neural SRE Engine</span>
-              </span>
-              <button onclick="speakLastCopilotMessage(this)" class="text-sky-500 hover:text-sky-400 flex items-center gap-1 font-semibold cursor-pointer">
-                🔊 Speak
-              </button>
-            </div>
-            <div class="copilot-msg-content text-[11.5px] leading-relaxed">
-              ${formatMarkdownHtml(answer)}
-            </div>
-          </div>
-        `;
-        history.appendChild(errorBubble);
-        history.scrollTop = history.scrollHeight;
+        renderFocusedHeroCard(`Query: "${q}"`, formatMarkdownHtml(answer));
       }
     }
 
