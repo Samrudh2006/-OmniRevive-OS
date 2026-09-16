@@ -82,6 +82,11 @@ import {
 } from "./components/cedarModal.js?v=2.1.0";
 
 import {
+  openFeatureDetailModal,
+  closeFeatureDetailModal
+} from "./components/featureDetailModal.js?v=2.1.0";
+
+import {
   BANK_SWITCH_STATES,
   TOUR_STEPS,
   CMDK_COMMANDS,
@@ -1566,3 +1571,5 @@ window.sendQuickPrompt = sendQuickPrompt;
 window.speakLastCopilotMessage = speakLastCopilotMessage;
 window.speakCopilotResponse = speakCopilotResponse;
 window.handleCopilotCustomQuery = handleCopilotCustomQuery;
+window.openFeatureDetailModal = openFeatureDetailModal;
+window.closeFeatureDetailModal = closeFeatureDetailModal;
