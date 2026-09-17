@@ -51,6 +51,7 @@ from backend.app.routes.cfo import router as cfo_router
 from backend.app.routes.memory import router as memory_router
 from backend.app.routes.gateways import router as gateways_router
 from backend.app.routes.evaluation import router as evaluation_router
+from backend.app.routes.live_stream import router as live_stream_router
 
 TAGS_METADATA = [
     {
@@ -272,3 +273,4 @@ app.include_router(cfo_router)
 app.include_router(memory_router)
 app.include_router(gateways_router)
 app.include_router(evaluation_router)
+app.include_router(live_stream_router)

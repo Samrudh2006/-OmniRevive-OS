@@ -122,29 +122,61 @@ const COPILOT_MODES_DATA = {
 export function toggleAiCopilotDrawer() {
   const drawer = document.getElementById("ai-copilot-drawer");
   const trigger = document.getElementById("ai-copilot-trigger-container");
-  if (drawer) {
-    const isHidden = drawer.classList.contains("hidden");
-    if (isHidden) {
-      drawer.classList.remove("hidden");
-      if (trigger) trigger.classList.add("hidden");
+  if (!drawer) return;
+
+  const isClosed = drawer.classList.contains("hidden") || drawer.dataset.state === "closed";
+  if (isClosed) {
+    openCopilotDrawerSmoothly(drawer, trigger);
+  } else {
+    closeCopilotDrawerSmoothly(drawer, trigger);
+  }
+}
+
+function openCopilotDrawerSmoothly(drawer, trigger) {
+  drawer.dataset.state = "open";
+  drawer.classList.remove("hidden");
+  if (trigger) trigger.classList.add("hidden");
+  
+  // Emil Kowalski Vaul-inspired Drawer Kinematics: scale 0.98, translateX 28px -> 0
+  drawer.style.transformOrigin = "bottom right";
+  drawer.style.transition = "transform 260ms cubic-bezier(0.32, 0.72, 0, 1), opacity 200ms cubic-bezier(0.23, 1, 0.32, 1)";
+  drawer.style.transform = "translateX(28px) scale(0.98)";
+  drawer.style.opacity = "0";
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      drawer.style.transform = "translateX(0) scale(1)";
+      drawer.style.opacity = "1";
       updateCopilotCurrentPage();
       resetCopilotHeroCard();
       const input = document.getElementById("copilot-user-input");
-      if (input) setTimeout(() => input.focus(), 150);
-    } else {
+      if (input) setTimeout(() => input.focus(), 120);
+    });
+  });
+}
+
+function closeCopilotDrawerSmoothly(drawer, trigger, onFinish = null) {
+  drawer.dataset.state = "closed";
+  drawer.style.transition = "transform 200ms cubic-bezier(0.23, 1, 0.32, 1), opacity 180ms cubic-bezier(0.23, 1, 0.32, 1)";
+  drawer.style.transform = "translateX(28px) scale(0.98)";
+  drawer.style.opacity = "0";
+
+  setTimeout(() => {
+    if (drawer.dataset.state === "closed") {
       drawer.classList.add("hidden");
       if (trigger) trigger.classList.remove("hidden");
+      if (onFinish) onFinish();
     }
-  }
+  }, 210);
 }
 
 export function minimizeCopilotDrawer() {
   const drawer = document.getElementById("ai-copilot-drawer");
   const trigger = document.getElementById("ai-copilot-trigger-container");
   if (drawer) {
-    drawer.classList.add("hidden");
-    if (trigger) trigger.classList.remove("hidden");
-    showToast("Copilot minimized. Click floating pill anytime.", "info");
+    closeCopilotDrawerSmoothly(drawer, trigger, () => {
+      showToast("Copilot minimized. Click floating pill anytime.", "info");
+    });
   }
 }
 
@@ -191,7 +223,7 @@ export function renderCopilotHeroCard(mode) {
   const data = COPILOT_MODES_DATA[mode] || COPILOT_MODES_DATA.Ask;
 
   container.innerHTML = `
-    <div class="flex gap-2.5 items-start">
+    <div class="flex gap-2.5 items-start copilot-mode-view">
       <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
         <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
@@ -202,8 +234,14 @@ export function renderCopilotHeroCard(mode) {
             <span>Razor SRE Copilot</span>
             <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">${data.badge}</span>
           </span>
-          <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 flex items-center gap-1 font-semibold cursor-pointer">
-            🔊 Speak
+          <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 flex items-center gap-1.5 font-semibold cursor-pointer active:scale-95 transition-transform" aria-label="Speak Copilot Response">
+            <span class="inline-flex items-center gap-0.5 text-sky-500 mr-0.5">
+              <span class="copilot-wave-bar" style="height: 5px;"></span>
+              <span class="copilot-wave-bar" style="height: 9px;"></span>
+              <span class="copilot-wave-bar" style="height: 12px;"></span>
+              <span class="copilot-wave-bar" style="height: 7px;"></span>
+            </span>
+            <span>Speak</span>
           </button>
         </div>
         <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1.5">
@@ -225,13 +263,13 @@ export function renderCopilotSuggestions(mode) {
   if (iconEl) iconEl.innerText = data.suggestedIcon;
 
   if (gridEl && Array.isArray(data.cards)) {
-    gridEl.innerHTML = data.cards.map(card => `
-      <button onclick="triggerCopilotSuggestion('${card.id}')" class="copilot-suggest-card w-full px-3 py-2.5 rounded-xl text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+    gridEl.innerHTML = data.cards.map((card, idx) => `
+      <button onclick="triggerCopilotSuggestion('${card.id}')" class="copilot-suggest-card copilot-card-stagger w-full px-3 py-2.5 rounded-xl text-left transition-colors duration-150 cursor-pointer flex items-center justify-between group shadow-sm" style="animation-delay: ${idx * 40}ms;">
         <div class="flex items-center gap-2 truncate">
           <span class="text-base ${card.iconColor} group-hover:scale-110 transition-transform shrink-0">${card.icon}</span>
           <span class="copilot-card-title text-[11px] font-semibold truncate">${card.title}</span>
         </div>
-        <span class="copilot-card-arrow transition-all text-sm font-bold shrink-0">›</span>
+        <span class="copilot-card-arrow transition-transform duration-150 group-hover:translate-x-0.5 text-sm font-bold shrink-0">›</span>
       </button>
     `).join("");
   }
@@ -472,7 +510,7 @@ export function renderFocusedHeroCard(title, bodyHtml) {
   if (!container) return;
 
   container.innerHTML = `
-    <div class="flex gap-2.5 items-start">
+    <div class="flex gap-2.5 items-start copilot-msg-enter">
       <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
         <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[var(--assistant-background)]"></span>

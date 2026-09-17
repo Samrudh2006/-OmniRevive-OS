@@ -7,28 +7,10 @@
  * - Hermetic Zero-Crash Client Simulator fallback
  */
 
-export function showToast(msg, type = "info") {
-  const container = document.getElementById("toast-container") || createToastContainer();
-  const toast = document.createElement("div");
-  const bg = type === "success" ? "bg-emerald-600" : (type === "error" ? "bg-rose-600" : "bg-sky-600");
-  toast.className = `${bg} text-white text-xs font-semibold px-4 py-2.5 rounded-lg shadow-xl flex items-center gap-2 transform transition-all duration-300 translate-y-2 opacity-0 z-50`;
-  toast.innerText = msg;
-  container.appendChild(toast);
-  requestAnimationFrame(() => {
-    toast.classList.remove("translate-y-2", "opacity-0");
-  });
-  setTimeout(() => {
-    toast.classList.add("opacity-0", "translate-y-2");
-    setTimeout(() => toast.remove(), 300);
-  }, 4000);
-}
+import { showToast as sonnerShowToast } from "../utils/toast.js";
 
-function createToastContainer() {
-  const c = document.createElement("div");
-  c.id = "toast-container";
-  c.className = "fixed bottom-5 right-5 flex flex-col gap-2 z-50 pointer-events-none";
-  document.body.appendChild(c);
-  return c;
+export function showToast(msg, type = "info") {
+  return sonnerShowToast(msg, type);
 }
 
 export async function safeApiCall(url, method = "GET", body = null, headers = {}) {

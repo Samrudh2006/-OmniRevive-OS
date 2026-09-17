@@ -10,6 +10,28 @@ export async function openAwsCedarModal() {
     modal.classList.remove("hidden");
     modal.classList.add("flex");
     document.body.style.overflow = "hidden";
+
+    // Emil Kowalski Modal Kinematics: Scale 0.96 -> 1, opacity 0 -> 1 with --ease-out
+    modal.style.transition = "opacity 220ms cubic-bezier(0.23, 1, 0.32, 1)";
+    modal.style.opacity = "0";
+
+    const dialogBox = modal.querySelector("div");
+    if (dialogBox) {
+      dialogBox.style.transformOrigin = "center center";
+      dialogBox.style.transition = "transform 240ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms cubic-bezier(0.23, 1, 0.32, 1)";
+      dialogBox.style.transform = "scale(0.96)";
+      dialogBox.style.opacity = "0";
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        modal.style.opacity = "1";
+        if (dialogBox) {
+          dialogBox.style.transform = "scale(1)";
+          dialogBox.style.opacity = "1";
+        }
+      });
+    });
   }
 
   // Fetch live Bedrock status
@@ -40,9 +62,20 @@ export async function openAwsCedarModal() {
 export function closeAwsCedarModal() {
   const modal = document.getElementById("aws-cedar-modal");
   if (modal) {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-    document.body.style.overflow = "auto";
+    const dialogBox = modal.querySelector("div");
+    modal.style.transition = "opacity 180ms cubic-bezier(0.23, 1, 0.32, 1)";
+    modal.style.opacity = "0";
+    if (dialogBox) {
+      dialogBox.style.transition = "transform 180ms cubic-bezier(0.23, 1, 0.32, 1), opacity 160ms cubic-bezier(0.23, 1, 0.32, 1)";
+      dialogBox.style.transform = "scale(0.97)";
+      dialogBox.style.opacity = "0";
+    }
+
+    setTimeout(() => {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "auto";
+    }, 190);
   }
 }
 
@@ -86,7 +119,7 @@ export async function runCedarTestEvaluation() {
   const details = document.getElementById("cedar-result-details");
   if (badge) {
     badge.innerText = "EVALUATING...";
-    badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-600 animate-pulse";
+    badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-amber-500/20 text-amber-500 border border-amber-500/40 animate-pulse";
   }
 
   try {
@@ -102,10 +135,10 @@ export async function runCedarTestEvaluation() {
       if (badge) {
         if (d.decision === "ALLOW") {
           badge.innerText = "ALLOW";
-          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-allow shadow-sm";
         } else {
           badge.innerText = "DENY";
-          badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-deny shadow-sm";
         }
       }
       if (details) {
@@ -115,7 +148,7 @@ export async function runCedarTestEvaluation() {
   } catch (err) {
     if (badge) {
       badge.innerText = "ERROR";
-      badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-600";
+      badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-deny shadow-sm";
     }
     if (details) details.innerText = "Evaluation call failed: " + err.message;
   }

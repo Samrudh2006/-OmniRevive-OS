@@ -40,6 +40,13 @@ import {
 } from "./services/auditService.js?v=2.1.0";
 
 import {
+  initLiveTelemetryStream,
+  toggleCommandPalette,
+  closeCommandPalette,
+  executePaletteAction
+} from "./services/liveStreamClient.js?v=2.1.0";
+
+import {
   fetchCFOQueue,
   approveCFOItem,
   rejectCFOItem
@@ -1513,6 +1520,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateLiveRoiCalculator();
   animateAllKpis();
   refreshCfoQueueUI();
+  try { initLiveTelemetryStream(); } catch(e) { console.warn("Live telemetry init error:", e); }
 
   setInterval(refreshAuditLedger, 5000);
   setInterval(refreshFullNPCISwitchView, 10000);
@@ -1534,6 +1542,7 @@ if (document.readyState === "complete" || document.readyState === "interactive")
   updateLiveRoiCalculator();
   animateAllKpis();
   refreshCfoQueueUI();
+  try { initLiveTelemetryStream(); } catch(e) { console.warn("Live telemetry init error:", e); }
 }
 
 window.toggleThemePaletteMenu = toggleThemePaletteMenu;
@@ -1573,3 +1582,10 @@ window.speakCopilotResponse = speakCopilotResponse;
 window.handleCopilotCustomQuery = handleCopilotCustomQuery;
 window.openFeatureDetailModal = openFeatureDetailModal;
 window.closeFeatureDetailModal = closeFeatureDetailModal;
+window.toggleCommandPalette = toggleCommandPalette;
+window.closeCommandPalette = closeCommandPalette;
+window.executePaletteAction = executePaletteAction;
+
+// Initialize Live Real Telemetry and Forex Stream
+initLiveTelemetryStream();
+

@@ -228,18 +228,39 @@ if (invoiceValue > 50000) {
    * Launch the full OmniRevive-OS Control Plane with a 1.2s SRE HUD Boot Sequence
    */
   launchControlPlane(targetTab = 'overview') {
+    if (typeof window.closeAwsCedarModal === "function") {
+      window.closeAwsCedarModal();
+    }
+    const cedarModal = document.getElementById("aws-cedar-modal");
+    if (cedarModal) {
+      cedarModal.classList.add("hidden");
+      cedarModal.classList.remove("flex");
+    }
+
     const landing = document.getElementById("landing-gateway-container");
     const appShell = document.getElementById("app-workspace-shell");
     const hud = document.getElementById("sre-hud-boot-overlay");
 
     this.closeNodeDeepDive();
 
-    if (!hud) {
-      if (landing) landing.classList.add("hidden");
-      if (appShell) appShell.classList.remove("hidden");
-      if (typeof window.switchNavTab === "function") window.switchNavTab(targetTab);
-      return;
+    if (hud) {
+      hud.classList.add("hidden");
+      hud.classList.remove("flex");
     }
+
+    if (landing) landing.classList.add("hidden");
+    if (appShell) appShell.classList.remove("hidden");
+
+    const showcaseBtn = document.getElementById("header-showcase-btn");
+    if (showcaseBtn) showcaseBtn.classList.remove("hidden");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (typeof window.switchNavTab === "function") {
+      window.switchNavTab('overview');
+    }
+    return;
+  },
 
     if (typeof window.playFintechAudio === "function") {
       window.playFintechAudio("success");
@@ -287,7 +308,7 @@ if (invoiceValue > 50000) {
         window.scrollTo({ top: 0, behavior: "smooth" });
 
         if (typeof window.switchNavTab === "function") {
-          window.switchNavTab(targetTab);
+          window.switchNavTab('overview');
         }
 
         if (typeof window.renderWeibullCurve === "function") {

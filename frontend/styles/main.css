@@ -89,6 +89,19 @@
   --font-size-base: clamp(0.9rem, 0.85rem + 0.35vw, 1.0rem);
   --font-size-lg: clamp(1.1rem, 1.0rem + 0.5vw, 1.25rem);
   --font-size-xl: clamp(1.3rem, 1.15rem + 0.75vw, 1.5rem);
+
+  /* ==============================================================================
+     Emil Kowalski Design Engineering Tokens (animations.dev standards)
+     ============================================================================== */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);        /* strong ease-out for responsive UI */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* strong ease-in-out for travel & morphing */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* iOS-like drawer sheet curve (Vaul) */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);      /* smooth spring-like ease */
+  
+  --duration-instant: 100ms;                         /* button press feedback */
+  --duration-fast: 160ms;                            /* tooltips, quick chips */
+  --duration-normal: 220ms;                          /* dropdowns, selects, popovers */
+  --duration-modal: 260ms;                           /* modals, drawers */
 }
 
 html.dark {
@@ -275,12 +288,118 @@ html.dark {
 }
 
 
+/* ==============================================================================
+   Emil Kowalski Mobile-Native Baseline & Global Physics (mobile-native / apple-design)
+   ============================================================================== */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+/* 16px minimum font size on touch devices to eliminate iOS Safari viewport auto-zoom */
+@media (pointer: coarse) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Fast taps & control protection without blocking selection on content */
+button, a, [role="button"], .tab, .chip, .drag-handle, .tappable {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Tactile press feedback on interactive controls (100ms var(--ease-out)) */
+button:active, 
+a.button:active, 
+[role="button"]:active, 
+.interactive-chip:active, 
+.sb-scenario-chip:active {
+  transform: scale(0.97) !important;
+  transition: transform var(--duration-instant) var(--ease-out) !important;
+}
+
+/* Modal & Drawer Kinematics (Emil Kowalski / Vaul standards) */
+.emil-modal-enter {
+  animation: emilModalScaleIn var(--duration-modal) var(--ease-out) forwards;
+  transform-origin: center center;
+}
+
+@keyframes emilModalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.emil-backdrop-enter {
+  animation: emilFadeIn var(--duration-modal) var(--ease-out) forwards;
+}
+
+@keyframes emilFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.emil-drawer-enter {
+  animation: emilDrawerSlideIn var(--duration-modal) var(--ease-drawer) forwards;
+}
+
+@keyframes emilDrawerSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0.7;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Accessibility: respect prefers-reduced-motion without breaking comprehension */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==============================================================================
+   UI Skills (ui-skills.com / ibelick) Standards: Accessibility, Focus & Tabular Data
+   ============================================================================== */
+/* High-contrast visible keyboard focus indicator */
+:focus-visible {
+  outline: 2px solid var(--color-brand) !important;
+  outline-offset: 2px !important;
+}
+
+/* Tabular numbers for financial metrics, tables, currencies, and timestamps */
+.mono, .tabular-nums, [data-metric], .metric-val, table td, .fintech-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Off-screen paint and layout optimization */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
 body {
   background-color: var(--bg-page);
   color: var(--text-title);
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overscroll-behavior: none;
+  transition: background-color 0.22s var(--ease-out), color 0.22s var(--ease-out);
 }
 
 .mono {
@@ -322,7 +441,7 @@ html.light body {
    PIPELINE STAGE PILLS (HIGH-CONTRAST LIGHT & DARK ENGINE)
    ========================================================================= */
 .landing-sb-step {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: background-color 0.22s var(--ease-out), border-color 0.22s var(--ease-out), color 0.22s var(--ease-out), transform 0.22s var(--ease-out) !important;
   opacity: 1 !important;
   /* Dark theme default (matches original dark bg) */
   background-color: rgba(30, 41, 59, 0.8) !important;
@@ -810,6 +929,190 @@ html.dark #feature-detail-modal .modal-scroll-body::-webkit-scrollbar-thumb {
 html.dark #feature-detail-modal .modal-scroll-body::-webkit-scrollbar-thumb:hover {
   background: rgba(56, 189, 248, 0.5);
 }
+
+/* ==============================================================================
+   animations.dev (Emil Kowalski) Dynamic Island & Chat Motion Patterns
+   ============================================================================== */
+@keyframes emilMessageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.copilot-msg-enter {
+  animation: emilMessageEnter 240ms var(--ease-out) forwards;
+}
+
+@keyframes emilCardStagger {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.copilot-card-stagger {
+  opacity: 0;
+  animation: emilCardStagger 200ms var(--ease-out) forwards;
+}
+
+/* Dynamic Island Floating Capsule Physics (animations.dev standard) */
+#ai-copilot-trigger {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 32px -4px rgba(12, 108, 242, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transition: transform 220ms var(--ease-spring), box-shadow 220ms var(--ease-spring);
+  will-change: transform;
+}
+
+#ai-copilot-trigger::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: emilCapsuleShimmer 5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes emilCapsuleShimmer {
+  0%, 70% {
+    transform: translateX(0) rotate(25deg);
+  }
+  100% {
+    transform: translateX(450%) rotate(25deg);
+  }
+}
+
+#ai-copilot-trigger:hover {
+  transform: translateY(-2px) scale(1.035);
+  box-shadow: 0 18px 40px -4px rgba(12, 108, 242, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+}
+
+#ai-copilot-trigger:active {
+  transform: translateY(0) scale(0.96) !important;
+  transition: transform 90ms var(--ease-out) !important;
+}
+
+/* animations.dev Mode Switch Crossfade & Stagger Kinematics */
+@keyframes emilModeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.copilot-mode-view {
+  animation: emilModeSlideIn 220ms var(--ease-out) forwards;
+  will-change: transform, opacity;
+}
+
+/* animations.dev Dynamic Island Voice Waveform Indicator */
+.copilot-wave-bar {
+  display: inline-block;
+  width: 2.5px;
+  border-radius: 9999px;
+  background-color: currentColor;
+  animation: emilWaveBar 1.2s ease-in-out infinite alternate;
+}
+.copilot-wave-bar:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+.copilot-wave-bar:nth-child(2) { height: 11px; animation-delay: 0.25s; }
+.copilot-wave-bar:nth-child(3) { height: 16px; animation-delay: 0.15s; }
+.copilot-wave-bar:nth-child(4) { height: 9px; animation-delay: 0.35s; }
+
+@keyframes emilWaveBar {
+  0% {
+    transform: scaleY(0.4);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scaleY(1.1);
+    opacity: 1;
+  }
+}
+
+/* ==============================================================================
+   macOS HIG & Apple-Grade Translucent Craft (apple-hig & glassmorphism)
+   ============================================================================== */
+.mac-traffic-lights button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 120ms var(--ease-spring), opacity 120ms ease;
+}
+
+.mac-traffic-lights button:hover {
+  transform: scale(1.1);
+}
+
+.mac-traffic-lights button:active {
+  transform: scale(0.92) !important;
+}
+
+.mac-glass-hud {
+  background: rgba(11, 19, 36, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 
+    0 24px 60px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+html.light .mac-glass-hud {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 
+    0 20px 40px -8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.mac-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+html.light .mac-kbd {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #475569;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06), inset 0 1px 0 #ffffff;
+}
+
+
 
 /* ==============================================================================
    RAZOR HUMANOID AI COPILOT DRAWER THEME ENGINE
@@ -1350,7 +1653,7 @@ html.light #app-sidebar .nav-btn-inactive {
   font-weight: 500 !important;
   border-radius: 0.5rem !important;
   border: 1px solid transparent !important;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: background-color 0.16s var(--ease-out), color 0.16s var(--ease-out), border-color 0.16s var(--ease-out), transform 0.16s var(--ease-out) !important;
 }
 html.light #app-sidebar .nav-btn-inactive:hover {
   background-color: #f0f7ff !important;
@@ -1783,7 +2086,7 @@ select:focus-visible {
 
 .landing-glow-card {
   position: relative;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.22s var(--ease-out), border-color 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
 }
 
 .landing-glow-card:hover {
@@ -2146,7 +2449,7 @@ html.light .glassmorphic-card {
     inset 0 2px 3px rgba(255, 255, 255, 0.25),
     inset 0 -2px 3px rgba(0, 0, 0, 0.2),
     0 4px 12px rgba(12, 85, 234, 0.25);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
 }
 
 .claymorphic-pill:hover {
@@ -2248,7 +2551,7 @@ html.light #app-sidebar button {
   color: #1e3a6a !important;
   font-weight: 500 !important;
   border-radius: 0.625rem !important;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: background-color 0.16s var(--ease-out), color 0.16s var(--ease-out), transform 0.16s var(--ease-out) !important;
 }
 
 html.light #app-sidebar button:hover {
@@ -2536,7 +2839,7 @@ html.light .signature-enterprise-footer .footer-vault-bar {
   background-repeat: no-repeat;
   z-index: -1;
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: opacity 0.25s var(--ease-out), filter 0.25s var(--ease-out);
 }
 
 html.light .hero-scenic-bg::before {
@@ -2595,7 +2898,7 @@ html.light .aurora-mesh-orb-2 {
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 4px 14px 0 rgba(12, 108, 242, 0.35) !important;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: transform 0.16s var(--ease-out), box-shadow 0.16s var(--ease-out), filter 0.16s var(--ease-out) !important;
 }
 
 .rzp-btn-primary:hover {
@@ -2655,7 +2958,7 @@ html.light .constellation-orbit-ring {
 }
 
 .orbital-node-card {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.22s var(--ease-out), border-color 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
   cursor: pointer;
 }
 
@@ -2731,7 +3034,7 @@ html.light .constellation-orbit-ring {
   background-color: #ffffff;
   color: #0c2340;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.16s var(--ease-out), color 0.16s var(--ease-out), background-color 0.16s var(--ease-out), transform 0.16s var(--ease-out);
 }
 
 html.dark .sb-scenario-chip {
@@ -2863,6 +3166,315 @@ html.light #ai-eval-modal .text-slate-400 {
     padding-right: 1rem !important;
   }
 }
+
+/* ==============================================================================
+   AWS CEDAR ZERO-TRUST POLICY ENGINE & SECURITY RADAR MODAL
+   WCAG 2.2 AA Compliant Contrast & High-Legibility Styling (Light & Dark)
+   ============================================================================== */
+
+/* Base Modal Container */
+#aws-cedar-modal {
+  transition: opacity 220ms var(--ease-out), visibility 220ms var(--ease-out);
+}
+
+#aws-cedar-modal .mac-glass-hud {
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* 1. LIGHT THEME HIGH-CONTRAST OVERRIDES */
+html.light #aws-cedar-modal,
+body:not(.dark) #aws-cedar-modal {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(14px) !important;
+}
+
+html.light #aws-cedar-modal .mac-glass-hud,
+body:not(.dark) #aws-cedar-modal .mac-glass-hud {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Light Theme Header */
+html.light #aws-cedar-modal .border-b,
+body:not(.dark) #aws-cedar-modal .border-b {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light #aws-cedar-modal h3,
+body:not(.dark) #aws-cedar-modal h3 {
+  color: #0f172a !important;
+}
+
+html.light #aws-cedar-modal p,
+body:not(.dark) #aws-cedar-modal p {
+  color: #475569 !important;
+}
+
+html.light #aws-cedar-modal .mac-kbd,
+body:not(.dark) #aws-cedar-modal .mac-kbd {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+/* Light Theme Badges */
+html.light #aws-cedar-modal span.bg-indigo-950\/80,
+body:not(.dark) #aws-cedar-modal span.bg-indigo-950\/80 {
+  background: #eef2ff !important;
+  color: #4338ca !important;
+  border-color: #c7d2fe !important;
+}
+
+html.light #aws-cedar-modal span.bg-emerald-950\/80,
+body:not(.dark) #aws-cedar-modal span.bg-emerald-950\/80 {
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  border-color: #a7f3d0 !important;
+}
+
+/* Light Theme Metric Cards */
+html.light #aws-cedar-modal .grid.grid-cols-1.sm\:grid-cols-3 > div,
+body:not(.dark) #aws-cedar-modal .grid.grid-cols-1.sm\:grid-cols-3 > div {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light #aws-cedar-modal .grid.grid-cols-1.sm\:grid-cols-3 .text-\[10\.5px\],
+body:not(.dark) #aws-cedar-modal .grid.grid-cols-1.sm\:grid-cols-3 .text-\[10\.5px\] {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+html.light #aws-cedar-modal #aws-modal-model,
+body:not(.dark) #aws-cedar-modal #aws-modal-model {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light #aws-cedar-modal .text-indigo-300,
+body:not(.dark) #aws-cedar-modal .text-indigo-300 {
+  color: #4338ca !important;
+  font-weight: 700 !important;
+}
+
+html.light #aws-cedar-modal .text-rose-300,
+body:not(.dark) #aws-cedar-modal .text-rose-300 {
+  color: #be123c !important;
+  font-weight: 700 !important;
+}
+
+html.light #aws-cedar-modal #aws-modal-hash,
+body:not(.dark) #aws-cedar-modal #aws-modal-hash {
+  color: #64748b !important;
+}
+
+/* Light Theme Code Container & Playground Box */
+html.light #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 > div,
+body:not(.dark) #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 > div {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+html.light #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 .text-slate-200,
+body:not(.dark) #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 .text-slate-200 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 .bg-indigo-950,
+body:not(.dark) #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 .bg-indigo-950 {
+  background: #eef2ff !important;
+  color: #4338ca !important;
+  border-color: #c7d2fe !important;
+}
+
+/* Active Code Editor in Modal (GitHub Dark Theme for highest contrast and readable syntax) */
+#aws-cedar-modal #aws-modal-policy-text {
+  background: #0d1117 !important;
+  color: #e6edf3 !important;
+  border: 1px solid #30363d !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  line-height: 1.65 !important;
+  font-size: 11.5px !important;
+  padding: 12px 14px !important;
+  border-radius: 8px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Light Theme Form Controls */
+html.light #aws-cedar-modal label,
+body:not(.dark) #aws-cedar-modal label {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+html.light #aws-cedar-modal select,
+html.light #aws-cedar-modal input,
+body:not(.dark) #aws-cedar-modal select,
+body:not(.dark) #aws-cedar-modal input {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light #aws-cedar-modal select:focus,
+html.light #aws-cedar-modal input:focus,
+body:not(.dark) #aws-cedar-modal select:focus,
+body:not(.dark) #aws-cedar-modal input:focus {
+  border-color: #0c6cf2 !important;
+  outline: 2px solid rgba(12, 108, 242, 0.2) !important;
+}
+
+/* Light Theme Result Box */
+html.light #aws-cedar-modal #cedar-test-result-box,
+body:not(.dark) #aws-cedar-modal #cedar-test-result-box {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light #aws-cedar-modal #cedar-result-details,
+body:not(.dark) #aws-cedar-modal #cedar-result-details {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+/* Light Theme Footer */
+html.light #aws-cedar-modal .border-t,
+body:not(.dark) #aws-cedar-modal .border-t {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html.light #aws-cedar-modal .border-t button,
+body:not(.dark) #aws-cedar-modal .border-t button {
+  background: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+html.light #aws-cedar-modal .border-t button:hover,
+body:not(.dark) #aws-cedar-modal .border-t button:hover {
+  background: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* Badge States */
+.cedar-badge-allow {
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+  border: 1px solid #10b981 !important;
+}
+html.dark .cedar-badge-allow {
+  background: rgba(6, 95, 70, 0.5) !important;
+  color: #34d399 !important;
+  border: 1px solid #059669 !important;
+}
+
+.cedar-badge-deny {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border: 1px solid #ef4444 !important;
+}
+html.dark .cedar-badge-deny {
+  background: rgba(153, 27, 27, 0.5) !important;
+  color: #f87171 !important;
+  border: 1px solid #dc2626 !important;
+}
+
+/* 2. DARK THEME HIGH-CONTRAST REFINEMENTS */
+html.dark #aws-cedar-modal .mac-glass-hud {
+  background: #091224 !important;
+  border: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark #aws-cedar-modal .border-b {
+  background: #060d1d !important;
+  border-color: #1e293b !important;
+}
+
+html.dark #aws-cedar-modal .grid.grid-cols-1.sm\:grid-cols-3 > div {
+  background: #0e172a !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.dark #aws-cedar-modal .grid.grid-cols-1.lg\:grid-cols-2 > div {
+  background: #0a1426 !important;
+  border: 1px solid #1e293b !important;
+}
+
+html.dark #aws-cedar-modal select,
+html.dark #aws-cedar-modal input {
+  background: #030712 !important;
+  border: 1px solid #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark #aws-cedar-modal #cedar-test-result-box {
+  background: #030712 !important;
+  border: 1px solid #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark #aws-cedar-modal .border-t {
+  background: #060d1d !important;
+  border-color: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+/* ==============================================================================
+   HIGH-CONTRAST TOAST NOTIFICATION ENGINE (WCAG 2.2 AA)
+   ============================================================================== */
+#rr-toast-container > div {
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 200ms cubic-bezier(0.23, 1, 0.32, 1) !important;
+}
+
+html.light #rr-toast-container > div,
+html:not(.dark) #rr-toast-container > div,
+body:not(.dark) #rr-toast-container > div {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-width: 1.5px !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light #rr-toast-container > div span,
+html:not(.dark) #rr-toast-container > div span,
+body:not(.dark) #rr-toast-container > div span {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light #rr-toast-container > div span:first-child,
+html:not(.dark) #rr-toast-container > div span:first-child,
+body:not(.dark) #rr-toast-container > div span:first-child {
+  color: #ffffff !important;
+}
+
+html.dark #rr-toast-container > div {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-width: 1.5px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark #rr-toast-container > div span {
+  color: #f8fafc !important;
+  font-weight: 600 !important;
+}
+
+html.dark #rr-toast-container > div span:first-child {
+  color: #ffffff !important;
+}
+
 
 
 

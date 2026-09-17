@@ -357,40 +357,40 @@ export function openFeatureDetailModal(featureKey) {
 
   container.innerHTML = `
     <!-- Separate Backdrop Layer (Never propagates opacity to modal box) -->
-    <div id="feature-detail-modal-backdrop" class="fixed inset-0 transition-opacity duration-300 cursor-pointer" onclick="closeFeatureDetailModal()"></div>
+    <div id="feature-detail-modal-backdrop" class="fixed inset-0 cursor-pointer" onclick="closeFeatureDetailModal()"></div>
 
     <!-- Modal Box Shell (Uses semantic active theme tokens) -->
     <div id="feature-detail-modal-box" class="relative z-10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
       
       <!-- Background Glowing Orbs -->
-      <div class="absolute -top-24 -right-24 w-60 h-60 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"></div>
 
-      <!-- Header Section -->
-      <div class="modal-header-region flex items-start justify-between gap-4 pb-5 shrink-0">
-        <div class="space-y-1.5">
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 uppercase mono tracking-wider">
-              ${data.category}
-            </span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 mono">
-              ${data.badge}
-            </span>
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between gap-4 border-b border-border/40 pb-5 modal-header-region">
+        <div class="flex items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-2xl shadow-inner shrink-0">
+            ${data.icon}
           </div>
-          <h2 class="modal-title-text text-xl sm:text-2xl font-black flex items-center gap-2.5 tracking-tight">
-            <span class="text-2xl">${data.icon}</span>
-            <span>${data.title}</span>
-          </h2>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-black tracking-widest uppercase text-blue-500">${data.category}</span>
+              <span class="text-[10px] text-muted-foreground">·</span>
+              <span class="text-[10px] font-bold text-emerald-500 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">${data.badge}</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-foreground tracking-tight modal-title-text mt-0.5">${data.title}</h2>
+          </div>
         </div>
-        <button onclick="closeFeatureDetailModal()" class="modal-close-button w-9 h-9 rounded-full flex items-center justify-center text-lg transition shrink-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50" aria-label="Close modal">
+        
+        <button onclick="closeFeatureDetailModal()" class="w-9 h-9 rounded-full bg-surface-secondary border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface-hover transition-colors duration-150 cursor-pointer modal-close-button shrink-0" aria-label="Close dialog">
           ✕
         </button>
       </div>
 
-      <!-- Scrollable Content Body -->
-      <div class="modal-scroll-body space-y-6 overflow-y-auto pr-1 flex-1">
+      <!-- Modal Scrollable Body -->
+      <div class="space-y-6 overflow-y-auto pr-1 flex-1 modal-scroll-body">
         
-        <!-- 4 Key Metrics Cards -->
+        <!-- Key Metrics Strip -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
           ${data.metrics.map(m => `
             <div class="modal-metric-card p-3 rounded-2xl space-y-1">
@@ -470,6 +470,30 @@ export function openFeatureDetailModal(featureKey) {
   container.classList.add("flex");
   document.body.style.overflow = "hidden";
 
+  // Emil Kowalski Modal Kinematics: scale(0.96) -> scale(1) with cubic-bezier(0.23, 1, 0.32, 1)
+  const box = document.getElementById("feature-detail-modal-box");
+  const backdrop = document.getElementById("feature-detail-modal-backdrop");
+  if (backdrop) {
+    backdrop.style.opacity = "0";
+    backdrop.style.transition = "opacity 220ms cubic-bezier(0.23, 1, 0.32, 1)";
+  }
+  if (box) {
+    box.style.transformOrigin = "center center";
+    box.style.transform = "scale(0.96)";
+    box.style.opacity = "0";
+    box.style.transition = "transform 240ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms cubic-bezier(0.23, 1, 0.32, 1)";
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (backdrop) backdrop.style.opacity = "1";
+      if (box) {
+        box.style.transform = "scale(1)";
+        box.style.opacity = "1";
+      }
+    });
+  });
+
   // Bind escape key listener
   const onEscPress = (e) => {
     if (e.key === "Escape") {
@@ -483,9 +507,22 @@ export function openFeatureDetailModal(featureKey) {
 export function closeFeatureDetailModal() {
   const container = document.getElementById("feature-detail-modal");
   if (container) {
-    container.classList.add("hidden");
-    container.classList.remove("flex");
-    document.body.style.overflow = "auto";
+    const box = document.getElementById("feature-detail-modal-box");
+    const backdrop = document.getElementById("feature-detail-modal-backdrop");
+    if (backdrop) {
+      backdrop.style.opacity = "0";
+      backdrop.style.transition = "opacity 180ms cubic-bezier(0.23, 1, 0.32, 1)";
+    }
+    if (box) {
+      box.style.transform = "scale(0.97)";
+      box.style.opacity = "0";
+      box.style.transition = "transform 180ms cubic-bezier(0.23, 1, 0.32, 1), opacity 160ms cubic-bezier(0.23, 1, 0.32, 1)";
+    }
+    setTimeout(() => {
+      container.classList.add("hidden");
+      container.classList.remove("flex");
+      document.body.style.overflow = "auto";
+    }, 190);
   }
 }
 

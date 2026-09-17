@@ -5422,16 +5422,21 @@
         document.body.appendChild(toastContainer);
       }
 
+      const isDark = document.documentElement.classList.contains("dark");
       const toast = document.createElement("div");
-      toast.className = `p-3.5 rounded-xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-auto select-none ${
-        type === "success" 
-          ? "bg-[#062c1d] border-emerald-500/60 text-emerald-200" 
-          : type === "warning" 
-            ? "bg-[#2d1b06] border-amber-500/60 text-amber-200" 
-            : type === "error" 
-              ? "bg-[#2d0a0f] border-rose-500/60 text-rose-200" 
-              : "bg-[#081b36] border-sky-500/60 text-sky-200"
-      }`;
+      toast.className = `p-3.5 rounded-xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-auto select-none`;
+      
+      if (!isDark) {
+        toast.style.background = "#ffffff";
+        toast.style.color = "#0f172a";
+        toast.style.borderColor = type === "success" ? "#10b981" : type === "warning" ? "#f59e0b" : type === "error" ? "#f43f5e" : "#0ea5e9";
+        toast.style.borderWidth = "1.5px";
+      } else {
+        toast.style.background = "#0f172a";
+        toast.style.color = "#f8fafc";
+        toast.style.borderColor = type === "success" ? "rgba(16, 185, 129, 0.5)" : type === "warning" ? "rgba(245, 158, 11, 0.5)" : type === "error" ? "rgba(244, 63, 94, 0.5)" : "rgba(14, 165, 233, 0.5)";
+        toast.style.borderWidth = "1.5px";
+      }
 
       const icon = type === "success" 
         ? "✓" 

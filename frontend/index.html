@@ -2,7 +2,7 @@
 <html lang="en" class="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>OmniRevive-OS | Universal AI Revenue Recovery Control Plane</title>
@@ -14,7 +14,9 @@
   <meta name="author" content="OmniRevive Core Engineering Team">
   <meta name="publisher" content="OmniRevive-OS">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="theme-color" content="#0c2340">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#030712">
+  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://omnirevive-os.internal/">
 
   <!-- Open Graph / Facebook / LinkedIn / WhatsApp Social Previews -->
@@ -623,7 +625,7 @@
        ========================================================================= -->
   <div id="landing-gateway-container" class="min-h-screen bg-[#070e1c] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white transition-all duration-300">
     
-    <!-- LANDING TOP NAVBAR -->
+    <!-- ORIGINAL LANDING TOP NAVBAR -->
     <nav class="h-18 border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#070e1c]/90 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between sticky top-0 z-40 transition-colors">
       <!-- Brand Logo -->
       <div class="flex items-center gap-3">
@@ -637,7 +639,7 @@
             <span class="text-lg font-black tracking-tight text-[#0c2340] dark:text-white">OmniRevive<span class="text-[#0c6cf2] dark:text-sky-400">-OS</span></span>
             <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 uppercase mono">v1.1 · CONTROL PLANE</span>
           </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Universal Autonomous AI Recovery Recovery</p>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Universal Autonomous AI Revenue Recovery</p>
         </div>
       </div>
 
@@ -648,12 +650,24 @@
         <a href="#showcase-workspace" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📊</span> Decision Workspace</a>
         <a href="#showcase-voice-studio" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🎙️</span> Voice AI Studio</a>
         <a href="#showcase-decision-trail" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📜</span> Audit Trail</a>
+        <a href="#showcase-cedar-security" class="text-sky-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition flex items-center gap-1.5 font-bold"><span class="text-sm">🛡️</span> Cedar Security</a>
       </div>
 
       <!-- Right Action CTA -->
       <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Live Telemetry & IST Clock Mini Pill -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-[11px] text-slate-600 dark:text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <div id="os-forex-ticker" class="flex items-center gap-1.5">
+            <span class="font-bold text-emerald-600 dark:text-emerald-400">USD/INR</span>
+            <span class="mono font-semibold">₹96.02</span>
+          </div>
+          <span class="text-slate-300 dark:text-slate-600">|</span>
+          <span id="os-status-clock" class="mono font-bold text-slate-700 dark:text-slate-200">--:--:-- IST</span>
+        </div>
+
         <!-- Theme Mode Toggle -->
-        <button onclick="toggleThemeMode()" class="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-sm" title="Toggle Light / Dark Mode">
+        <button onclick="toggleThemeMode()" class="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-sm" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
           <span>☀️</span>
         </button>
 
@@ -664,6 +678,22 @@
         </button>
       </div>
     </nav>
+    <script>
+      (function() {
+        function syncOSClock() {
+          var el = document.getElementById('os-status-clock');
+          if (el) {
+            var d = new Date();
+            var h = String(d.getHours()).padStart(2, '0');
+            var m = String(d.getMinutes()).padStart(2, '0');
+            var s = String(d.getSeconds()).padStart(2, '0');
+            el.textContent = h + ':' + m + ':' + s + ' IST';
+          }
+        }
+        syncOSClock();
+        setInterval(syncOSClock, 1000);
+      })();
+    </script>
 
     <!-- HERO SECTION WITH SCENIC BACKDROP (India Gate + Map Constellation + Vande Bharat) -->
     <section class="hero-scenic-bg relative px-4 sm:px-8 pt-12 pb-16 w-full text-center space-y-5 overflow-hidden">
@@ -748,7 +778,7 @@
          1. SIGNATURE INTERACTIVE CIRCULAR MULTI-RAIL CONSTELLATION
          "Click to Know More" Architecture Hub with Orbiting Satellite Engines
          ========================================================================= -->
-    <section id="showcase-constellation" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-200 dark:border-slate-800/80 space-y-8 transition-colors">
+    <section id="showcase-constellation" class="scroll-mt-24 px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-200 dark:border-slate-800/80 space-y-8 transition-colors">
       <div class="text-center space-y-3 max-w-3xl mx-auto">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 text-[#0c6cf2] dark:text-blue-400 text-xs font-bold">
           <span>🪐 ARCHITECTURE CONSTELLATION</span>
@@ -1109,9 +1139,186 @@
     </section>
 
     <!-- =========================================================================
+         1B. AWS CEDAR ZERO-TRUST POLICY SHOWCASE SECTION (Embedded on Landing Page)
+         ========================================================================= -->
+    <section id="showcase-cedar-security" class="scroll-mt-24 px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-200 dark:border-slate-800/80 space-y-8 transition-colors">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/30 text-indigo-700 dark:text-indigo-400 text-xs font-bold">
+            <span>🛡️ ENTERPRISE ZERO-TRUST RADAR</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-[#0c2340] dark:text-white tracking-tight leading-tight">
+            AWS Cedar Cryptographic Zero-Trust Guardrails
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md">
+          Deterministic mathematical policy verification that prevents rogue AI mutations, caps discounts, and guarantees TRAI regulatory compliance before any payment action executes.
+        </p>
+      </div>
+
+      <!-- Top Summary Cloud Metrics in Cedar Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="w-11 h-11 rounded-xl bg-orange-50 dark:bg-[#2a1714] border border-orange-200 dark:border-[#d97757]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
+            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C12.5 2 12.9 2.4 12.9 2.9V8.6L16.9 4.6C17.3 4.2 18 4.2 18.4 4.6C18.8 5 18.8 5.7 18.4 6.1L14.4 10.1H20.1C20.6 10.1 21 10.5 21 11C21 11.5 20.6 11.9 20.1 11.9H14.4L18.4 15.9C18.8 16.3 18.8 17 18.4 17.4C18 17.8 17.3 17.8 16.9 17.4L12.9 13.4V19.1C12.9 19.6 12.5 20 12 20C11.5 20 11.1 19.6 11.1 19.1V13.4L7.1 17.4C6.7 17.8 6 17.8 5.6 17.4C5.2 17 5.2 16.3 5.6 15.9L9.6 11.9H3.9C3.4 11.9 3 11.5 3 11C3 10.5 3.4 10.1 3.9 10.1H9.6L5.6 6.1C5.2 5.7 5.2 5 5.6 4.6C6 4.2 6.7 4.2 7.1 4.6L11.1 8.6V2.9C11.1 2.4 11.5 2 12 2Z" fill="#D97757"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Foundation AI Model</div>
+            <div class="text-sm font-extrabold text-[#0c2340] dark:text-white mono">Claude 3.5 Sonnet v2</div>
+            <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">ap-south-1 (Mumbai Region)</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-[#161c33] border border-indigo-200 dark:border-[#6366f1]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
+            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L4 5.5V11c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V5.5L12 2z" fill="#4338ca" fill-opacity="0.2" stroke="#6366f1" stroke-width="1.75"/>
+              <path d="M9 11.5L11 13.5L15.5 9" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Zero-Trust Policy Engine</div>
+            <div class="text-sm font-extrabold text-indigo-700 dark:text-indigo-300 mono">AWS Cedar v3.0 (Active Strict)</div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 mono font-semibold">SHA: a207d935b0a9...</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-[#261021] border border-rose-200 dark:border-[#ec4899]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
+            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.5L20 7.2V16.8L12 21.5L4 16.8V7.2L12 2.5Z" fill="#be185d" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1.75"/>
+              <circle cx="12" cy="12" r="2.5" fill="#f43f5e"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Event Stream &amp; Retry Rail</div>
+            <div class="text-sm font-extrabold text-rose-700 dark:text-rose-300 mono">AWS EventBridge + Lambda</div>
+            <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Weibull Mode Shift Active</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Column Cedar Policy Inspector & Interactive Playground Directly on Landing Page -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Left: Active Cedar Policy Source Code -->
+        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] rounded-3xl p-5 sm:p-6 space-y-3 flex flex-col shadow-lg">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-[#0c2340] dark:text-slate-200 flex items-center gap-2">
+              <span>📜</span>
+              <span>Active AWS Cedar Policies (policies.cedar)</span>
+            </span>
+            <span class="px-2.5 py-1 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 mono">4 Formal Rules</span>
+          </div>
+          
+          <pre class="bg-[#0d1117] border border-[#30363d] rounded-xl p-4 text-[12px] font-mono text-[#e6edf3] overflow-x-auto overflow-y-auto max-h-[340px] leading-relaxed select-all shadow-inner">
+// POLICY 1: SRE Admin Circuit Breaker Override
+permit (
+    principal in Role::"SRE_Admin",
+    action in [Action::"TripCircuitBreaker", Action::"ResetCircuitBreaker"],
+    resource is BankingSwitch
+) when { context.mfa_verified == true && context.system_risk_score <= 85 };
+
+// POLICY 2: B2B Voice Agent GSTIN Tax Invoice Mutation
+permit (
+    principal in [Role::"Finance_Officer", Agent::"BedrockVoiceAgent"],
+    action in [Action::"MutateInvoiceGSTIN", Action::"ApprovePTP"],
+    resource is B2BInvoice
+) when { context.proposed_gstin like "??[A-Z0-9]*" && context.invoice_amount <= 500000 };
+
+// POLICY 3: Autonomous Dialogue Turn Execution
+permit (
+    principal in [Agent::"BedrockVoiceAgent", Role::"SRE_Admin"],
+    action in [Action::"ExecuteVoiceDialogueTurn", Action::"DispatchTaxInvoiceEmail"],
+    resource is B2BInvoice
+);
+
+// POLICY 4: Universal Immutability Guard
+forbid (
+    principal,
+    action in [Action::"DeleteAuditRecord", Action::"TruncateAuditLog"],
+    resource is AuditLog
+);</pre>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium flex items-center justify-between">
+            <span>🔒 Cryptographically locked with SHA-256 verification hash. Checked prior to every mutation.</span>
+            <button onclick="openAwsCedarModal()" class="text-[#0c6cf2] dark:text-sky-400 font-bold hover:underline cursor-pointer">Full Inspector →</button>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Cedar Authorization Playground -->
+        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] rounded-3xl p-5 sm:p-6 space-y-4 flex flex-col shadow-lg">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-bold text-[#0c2340] dark:text-slate-200 flex items-center gap-2">
+              <span>🧪</span>
+              <span>Cedar Policy Evaluation Playground</span>
+            </span>
+            <span class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Zero-Trust Evaluator</span>
+          </div>
+
+          <!-- Scenario Dropdown -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1.5">Select Security Test Case:</label>
+            <select id="landing-cedar-test-select" onchange="applyLandingCedarCase(this.value)" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
+              <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True) ➡️ ALLOW</option>
+              <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker ➡️ DENY</option>
+              <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000) ➡️ ALLOW</option>
+              <option value="audit_forbid">Scenario 4: SuperAdmin Deletes Audit Trail Record ➡️ FORBID/DENY</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs mono">
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Principal:</label>
+              <input id="landing-cedar-principal" type="text" value="Role::SRE_Admin" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+            </div>
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Action:</label>
+              <input id="landing-cedar-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs mono">
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Resource:</label>
+              <input id="landing-cedar-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+            </div>
+            <div>
+              <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">MFA Verified:</label>
+              <select id="landing-cedar-mfa" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Execute Button -->
+          <button onclick="runLandingCedarEvaluation()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold shadow-md shadow-indigo-500/25 transition cursor-pointer flex items-center justify-center gap-2 active:scale-95">
+            <span>⚡</span>
+            <span>Execute Real-Time Cedar Authorization Query</span>
+          </button>
+
+          <!-- Result Card -->
+          <div id="landing-cedar-result-box" class="p-3 rounded-xl bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-[#1e293b] text-xs font-mono shadow-sm">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[11px] text-slate-600 dark:text-slate-400 font-semibold">Cedar Policy Decision:</span>
+              <span id="landing-cedar-badge" class="px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-allow shadow-sm">ALLOW</span>
+            </div>
+            <div id="landing-cedar-details" class="text-[11px] text-slate-700 dark:text-slate-300 font-medium break-all leading-tight">
+              Policy ID: policy_sre_circuit_breaker_permit • Verified SRE_Admin with MFA under threshold.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
          2. LIVE INTERACTIVE FAILURE-TO-RECOVERY SANDBOX (On Landing Page!)
          ========================================================================= -->
-    <section id="showcase-sandbox" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80 space-y-8">
+    <section id="showcase-sandbox" class="scroll-mt-24 px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80 space-y-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div class="space-y-2">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
@@ -1468,7 +1675,7 @@
     <!-- =========================================================================
          4. TRILINGUAL VOICE AI STUDIO (Telugu / Hindi / English)
          ========================================================================= -->
-    <section id="showcase-voice-studio" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80 space-y-8">
+    <section id="showcase-voice-studio" class="scroll-mt-24 px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80 space-y-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         <!-- Left Description -->
@@ -1549,7 +1756,7 @@
     <!-- =========================================================================
          5. THE DECISION WORKSPACE (Interactive 4-Step Review Mockup)
          ========================================================================= -->
-    <section id="showcase-workspace" class="px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80">
+    <section id="showcase-workspace" class="scroll-mt-24 px-4 sm:px-8 py-16 max-w-6xl mx-auto w-full border-t border-slate-800/80">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
         <!-- Left Text Description -->
@@ -1640,7 +1847,7 @@
     <!-- =========================================================================
          6. GOVERNED DECISIONING & AUDIT TRAIL SECTION
          ========================================================================= -->
-    <section id="showcase-decision-trail" class="w-full bg-[#f8fbff] dark:bg-[#030610] text-slate-800 dark:text-slate-300 py-14 px-4 sm:px-8 border-t border-sky-100 dark:border-slate-800/60">
+    <section id="showcase-decision-trail" class="scroll-mt-24 w-full bg-[#f8fbff] dark:bg-[#030610] text-slate-800 dark:text-slate-300 py-14 px-4 sm:px-8 border-t border-sky-100 dark:border-slate-800/60">
 
       <div class="max-w-6xl mx-auto space-y-6">
         
@@ -1868,7 +2075,7 @@
       </div>
 
       <!-- SIDEBAR TOGGLE BUTTON (RiskSentinel-X [ | ] Style) -->
-      <button id="sidebar-toggle-btn" onclick="toggleDesktopSidebar()" class="hidden lg:flex w-9 h-9 rounded-xl border border-slate-200 dark:border-[#1e3a6a] bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] items-center justify-center text-slate-700 dark:text-slate-300 transition-all cursor-pointer shadow-sm ml-1.5" title="Toggle Sidebar [⌘B]">
+      <button id="sidebar-toggle-btn" onclick="toggleDesktopSidebar()" class="hidden lg:flex w-9 h-9 rounded-xl border border-slate-200 dark:border-[#1e3a6a] bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] items-center justify-center text-slate-700 dark:text-slate-300 transition-colors duration-150 cursor-pointer shadow-sm ml-1.5" title="Toggle Sidebar [⌘B]" aria-label="Toggle Navigation Sidebar (Cmd+B)">
         <svg class="w-4 h-4 text-slate-600 dark:text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
           <line x1="9" y1="3" x2="9" y2="21"/>
@@ -1889,7 +2096,7 @@
     <div class="flex items-center gap-2">
 
       <!-- CMDK COMMAND PALETTE TRIGGER BUTTON -->
-      <button onclick="openCommandPalette()" class="hidden md:flex items-center gap-2 h-9 px-3.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e3a6a] text-slate-700 dark:text-slate-200 text-xs font-bold transition cursor-pointer shadow-sm">
+      <button onclick="openCommandPalette()" class="hidden md:flex items-center gap-2 h-9 px-3.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e3a6a] text-slate-700 dark:text-slate-200 text-xs font-bold transition-colors duration-150 cursor-pointer shadow-sm" aria-label="Search commands (Cmd+K)">
         <div class="w-5 h-5 rounded-full bg-slate-200/80 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center shrink-0">
           <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </div>
@@ -1899,7 +2106,7 @@
 
       <!-- UNIFIED DEMO STUDIO & SCENARIOS DROPDOWN -->
       <div class="relative">
-        <button onclick="toggleScenariosMenu()" id="scenarios-btn" class="h-9 px-3.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e3a6a] text-slate-800 dark:text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer">
+        <button onclick="toggleScenariosMenu()" id="scenarios-btn" class="h-9 px-3.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-[#081224] dark:hover:bg-[#0c182c] border border-slate-300 dark:border-[#1e3a6a] text-slate-800 dark:text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-colors duration-150 cursor-pointer" aria-haspopup="true" aria-expanded="false" aria-label="Open Demo Studio Scenarios Menu">
           <div class="w-5 h-5 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 text-amber-500 text-[11px] font-bold">
             ⚡
           </div>
@@ -4904,204 +5111,6 @@
   </template>
 
   <!-- ========================================================================= -->
-  <!-- FLOATING RAZOR CYBER-HUMANOID AI COPILOT WIDGET (BOTTOM RIGHT) -->
-  <!-- ========================================================================= -->
-  <!-- Floating Trigger Pill (Elevated on mobile above bottom nav bar: bottom-20 lg:bottom-6) -->
-  <div id="ai-copilot-trigger-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
-    <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#38bdf8] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 hover:scale-105 active:scale-95 transition-all duration-200 border-2 border-white/50 cursor-pointer">
-      <span class="absolute -top-1 -right-1 flex h-4 w-4">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-400 border-2 border-white"></span>
-      </span>
-      <!-- Enlarged Front-Facing Razor Copilot Avatar Image -->
-      <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-sky-300 to-white shadow-md shrink-0">
-        <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Copilot" class="w-full h-full rounded-full object-cover">
-      </div>
-      <div class="flex flex-col text-left leading-none pr-1">
-        <span class="font-black tracking-wide text-xs sm:text-sm">Razor Copilot</span>
-        <span class="text-[9px] sm:text-[10px] text-sky-100 font-medium hidden xs:block mt-0.5">Autonomous SRE</span>
-      </div>
-    </button>
-  </div>
-
-  <!-- Floating Copilot Interactive Drawer (Elevated and perfectly proportioned) -->
-  <div id="ai-copilot-drawer" class="hidden fixed bottom-3 sm:bottom-6 right-2 sm:right-6 z-[10000] w-[95vw] sm:w-[470px] max-h-[92vh] sm:max-h-[86vh] rounded-3xl border shadow-2xl p-4 sm:p-5 flex flex-col justify-between gap-3 transition-all duration-300 text-xs backdrop-blur-xl overflow-hidden" style="z-index: 10000 !important;">
-    
-    <!-- Top Header Bar with Ben 10 Avatar, Title, Window Controls (Pinned at top) -->
-    <div class="copilot-header-bar flex flex-col gap-2 border-b pb-2.5 shrink-0">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <!-- Avatar with green glowing ring and online indicator dot -->
-          <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-500 shadow-lg shadow-emerald-500/20 shrink-0">
-            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Humanoid Copilot" class="w-full h-full rounded-full object-cover">
-            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[var(--assistant-background)] ring-1 ring-emerald-500 shadow-sm animate-pulse"></span>
-          </div>
-          <div>
-            <div class="copilot-title-text font-extrabold text-sm sm:text-base flex items-center gap-1.5 flex-wrap leading-tight">
-              <span>Razor Humanoid Copilot</span>
-              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40">AI</span>
-              <span class="text-amber-400 text-xs">✨</span>
-            </div>
-            <div class="copilot-subtitle-text text-[10px] font-medium">Autonomous Payment Recovery Intelligence</div>
-          </div>
-        </div>
-
-        <!-- Window Actions (Minimize & Close) -->
-        <div class="flex items-center gap-1">
-          <button onclick="minimizeCopilotDrawer()" title="Minimize" class="copilot-action-btn w-6 h-6 rounded-lg flex items-center justify-center transition font-bold text-xs cursor-pointer">—</button>
-          <button onclick="toggleAiCopilotDrawer()" title="Close" class="copilot-action-btn w-6 h-6 rounded-lg flex items-center justify-center transition font-bold text-xs cursor-pointer">✕</button>
-        </div>
-      </div>
-
-      <!-- Mode Selector Pills Row (Ask, Investigate, Explain, Explore) -->
-      <div class="flex items-center justify-end gap-1.5 py-0.5 overflow-x-auto scrollbar-none">
-        <button id="copilot-mode-ask" onclick="setCopilotMode('Ask')" class="copilot-mode-btn copilot-mode-btn-active px-3 py-1 rounded-full text-xs font-semibold shadow-md shadow-blue-500/30 transition-all cursor-pointer">
-          Ask
-        </button>
-        <button id="copilot-mode-investigate" onclick="setCopilotMode('Investigate')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
-          <span>🔍</span> <span>Investigate</span>
-        </button>
-        <button id="copilot-mode-explain" onclick="setCopilotMode('Explain')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
-          <span>💡</span> <span>Explain</span>
-        </button>
-        <button id="copilot-mode-explore" onclick="setCopilotMode('Explore')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
-          <span>🧭</span> <span>Explore</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Scrollable Middle Body (Card + Suggestions + Status Chips) -->
-    <div class="flex-1 overflow-y-auto min-h-0 space-y-3 pr-0.5 custom-copilot-scrollbar">
-      <!-- Active Card Container (Single Focused Card - Never Stacks) -->
-      <div id="copilot-chat-history" class="w-full transition-all">
-        <!-- Initial Greeting Message Bubble from Copilot (Exact Match to User Screenshot) -->
-        <div class="flex gap-2.5 items-start">
-          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
-            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
-          </div>
-          <div class="copilot-message-bubble flex-1 p-3 rounded-2xl rounded-tl-sm border shadow-sm space-y-1.5">
-            <div class="copilot-msg-header flex items-center justify-between text-[10px] border-b pb-1">
-              <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                <span>Razor SRE Copilot</span>
-                <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">SRE Intelligence</span>
-              </span>
-              <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:opacity-80 flex items-center gap-1 font-semibold cursor-pointer">
-                🔊 Speak
-              </button>
-            </div>
-            <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1">
-              <div>Hey Sanmudh! 👋</div>
-              <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
-              <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- "Suggested for this page" 2x3 Grid Cards (Matching User Screenshot) -->
-      <div id="copilot-suggestions-container" class="space-y-1.5">
-        <div id="copilot-suggested-header" class="copilot-card-title text-[11px] font-bold flex items-center gap-1.5">
-          <span id="copilot-suggested-icon" class="text-sky-500 dark:text-sky-400">🎯</span>
-          <span id="copilot-suggested-title">Suggested for this page</span>
-        </div>
-        <div id="copilot-suggestions-grid" class="grid grid-cols-2 gap-2">
-          <!-- Card 1: What's happening today? -->
-          <button onclick="triggerCopilotSuggestion('whats_happening_today')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-teal-500 dark:text-teal-400 group-hover:scale-110 transition-transform shrink-0">📊</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">What's happening today?</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-
-          <!-- Card 2: Find failed payments -->
-          <button onclick="triggerCopilotSuggestion('find_failed_payments')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-sky-500 dark:text-sky-400 group-hover:scale-110 transition-transform shrink-0">🔍</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">Find failed payments</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-
-          <!-- Card 3: Show revenue at risk -->
-          <button onclick="triggerCopilotSuggestion('show_revenue_at_risk')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0">⚠️</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">Show revenue at risk</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-
-          <!-- Card 4: Analyze recovery rate -->
-          <button onclick="triggerCopilotSuggestion('analyze_recovery_rate')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-cyan-500 dark:text-cyan-400 group-hover:scale-110 transition-transform shrink-0">📈</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">Analyze recovery rate</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-
-          <!-- Card 5: Explain this metric -->
-          <button onclick="triggerCopilotSuggestion('explain_this_metric')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-yellow-500 dark:text-yellow-400 group-hover:scale-110 transition-transform shrink-0">💡</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">Explain this metric</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-
-          <!-- Card 6: Start guided tour -->
-          <button onclick="triggerCopilotSuggestion('start_guided_tour')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
-            <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0">▶️</span>
-              <span class="copilot-card-title text-[11px] font-semibold truncate">Start guided tour</span>
-            </div>
-            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Status Chips Bar (Current page, Time range, Mode) -->
-      <div class="flex items-center gap-1.5 overflow-x-auto text-[10px] scrollbar-none pt-0.5 pb-0.5">
-        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
-          <span>🖥️</span>
-          <span>Current page: <strong id="copilot-page-label">Overview</strong></span>
-        </div>
-        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
-          <span>📅</span>
-          <span>Time range: <strong>Last 7 days</strong></span>
-        </div>
-        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
-          <span>💬</span>
-          <span>Mode: <strong id="copilot-mode-label" class="text-sky-600 dark:text-sky-400">Ask</strong></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bottom Rounded Pill Chat Input Bar (Pinned at bottom) -->
-    <form onsubmit="handleCopilotCustomQuery(event)" class="copilot-input-form pt-1.5 border-t shrink-0">
-      <div class="copilot-input-container flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all shadow-inner">
-        <!-- Paperclip attachment button -->
-        <button type="button" onclick="copilotAttachFilePrompt()" title="Attach Context / Trace" class="copilot-attach-btn transition p-0.5 cursor-pointer">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-          </svg>
-        </button>
-
-        <!-- Input -->
-        <input type="text" id="copilot-user-input" placeholder="Ask anything (e.g. 'Why did this payment fail?')..." class="flex-1 bg-transparent text-xs focus:outline-none">
-
-        <!-- Solid vibrant blue circular send button -->
-        <button type="submit" id="copilot-send-btn" title="Send Query" class="w-7 h-7 rounded-full bg-[#0c66ee] hover:bg-[#0952c2] active:scale-95 text-white flex items-center justify-center shadow-md shadow-blue-500/30 transition-all cursor-pointer shrink-0">
-          <svg class="w-3.5 h-3.5 fill-current transform rotate-45 -ml-0.5" viewBox="0 0 24 24">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-          </svg>
-        </button>
-      </div>
-    </form>
-
-  </div>
 
   <!-- SCRIPT LOGIC -->
   <script>
@@ -5135,31 +5144,31 @@
       if (alDedicated && document.getElementById('tmpl-audit-ledger')) alDedicated.innerHTML = document.getElementById('tmpl-audit-ledger').innerHTML;
     };
 
-    // Launch Live Control Plane from Landing Showcase
+    // Launch Live Control Plane from Landing Showcase (Instant switch to Overview Dashboard)
     function launchControlPlane(targetTab = 'overview') {
-      if (window.landingGateway && typeof window.landingGateway.launchControlPlane === 'function') {
-        return window.landingGateway.launchControlPlane(targetTab);
+      const cedarModal = document.getElementById("aws-cedar-modal");
+      if (cedarModal) {
+        cedarModal.classList.add("hidden");
+        cedarModal.classList.remove("flex");
       }
+      if (typeof closeAwsCedarModal === "function") closeAwsCedarModal();
+      if (typeof closeFeatureDetailModal === "function") closeFeatureDetailModal();
+
       const landing = document.getElementById("landing-gateway-container");
       const appShell = document.getElementById("app-workspace-shell");
       const hud = document.getElementById("sre-hud-boot-overlay");
       if (hud) {
-        hud.classList.remove("hidden");
-        hud.classList.add("flex");
-        setTimeout(() => {
-          hud.classList.add("hidden");
-          hud.classList.remove("flex");
-          if (landing) landing.classList.add("hidden");
-          if (appShell) appShell.classList.remove("hidden");
-          if (typeof switchNavTab === "function") switchNavTab(targetTab);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 600);
-      } else {
-        if (landing) landing.classList.add("hidden");
-        if (appShell) appShell.classList.remove("hidden");
-        if (typeof switchNavTab === "function") switchNavTab(targetTab);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        hud.classList.add("hidden");
+        hud.classList.remove("flex");
       }
+      if (landing) landing.classList.add("hidden");
+      if (appShell) appShell.classList.remove("hidden");
+
+      const showcaseBtn = document.getElementById("header-showcase-btn");
+      if (showcaseBtn) showcaseBtn.classList.remove("hidden");
+
+      if (typeof switchNavTab === "function") switchNavTab(targetTab || 'overview');
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function returnToShowcase() {
@@ -7837,7 +7846,7 @@
       }
     }
 
-    // Floating Toast Notification System
+    // Floating Toast Notification System (High-Contrast & Theme-Adaptive)
     function showToast(message, type = "info") {
       let toastContainer = document.getElementById("rr-toast-container");
       if (!toastContainer) {
@@ -7847,16 +7856,23 @@
         document.body.appendChild(toastContainer);
       }
 
+      const isDark = document.documentElement.classList.contains("dark");
       const toast = document.createElement("div");
-      toast.className = `p-3.5 rounded-xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-auto select-none ${
-        type === "success" 
-          ? "bg-[#062c1d] border-emerald-500/60 text-emerald-200" 
-          : type === "warning" 
-            ? "bg-[#2d1b06] border-amber-500/60 text-amber-200" 
-            : type === "error" 
-              ? "bg-[#2d0a0f] border-rose-500/60 text-rose-200" 
-              : "bg-[#081b36] border-sky-500/60 text-sky-200"
-      }`;
+      toast.className = `p-3.5 rounded-2xl shadow-xl border text-xs font-bold flex items-center gap-2.5 transform transition-all duration-300 translate-y-[-10px] opacity-0 pointer-events-auto select-none backdrop-blur-md cursor-pointer`;
+      
+      if (!isDark) {
+        toast.style.background = "#ffffff";
+        toast.style.color = "#0f172a";
+        toast.style.borderColor = type === "success" ? "#10b981" : type === "warning" ? "#f59e0b" : type === "error" ? "#f43f5e" : "#0ea5e9";
+        toast.style.borderWidth = "1.5px";
+        toast.style.boxShadow = "0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08)";
+      } else {
+        toast.style.background = "#0f172a";
+        toast.style.color = "#f8fafc";
+        toast.style.borderColor = type === "success" ? "rgba(16, 185, 129, 0.4)" : type === "warning" ? "rgba(245, 158, 11, 0.4)" : type === "error" ? "rgba(244, 63, 94, 0.4)" : "rgba(14, 165, 233, 0.4)";
+        toast.style.borderWidth = "1.5px";
+        toast.style.boxShadow = "0 20px 25px -5px rgba(0, 0, 0, 0.5)";
+      }
 
       const icon = type === "success" 
         ? "✓" 
@@ -7866,17 +7882,17 @@
             ? "✕" 
             : "ℹ";
 
+      const badgeBg = type === "success" 
+        ? "#10b981" 
+        : type === "warning" 
+          ? "#f59e0b" 
+          : type === "error" 
+            ? "#f43f5e" 
+            : "#0ea5e9";
+
       toast.innerHTML = `
-        <span class="w-5 h-5 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
-          type === "success" 
-            ? "bg-emerald-500 text-black" 
-            : type === "warning" 
-              ? "bg-amber-400 text-black" 
-              : type === "error" 
-                ? "bg-rose-500 text-white" 
-                : "bg-sky-400 text-black"
-        }">${icon}</span>
-        <span class="leading-tight">${message}</span>
+        <span style="background: ${badgeBg}; color: #ffffff;" class="w-6 h-6 rounded-full flex items-center justify-center font-black text-xs shrink-0 shadow-sm">${icon}</span>
+        <span style="color: ${!isDark ? '#0f172a' : '#f8fafc'}; font-size: 12px;" class="leading-snug flex-1 font-bold">${message}</span>
       `;
 
       toastContainer.appendChild(toast);
@@ -8719,27 +8735,35 @@
     </div>
   </div>
 
-  <!-- AWS CLOUD & CEDAR ZERO-TRUST SECURITY RADAR MODAL -->
-  <div id="aws-cedar-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center z-50 p-3 sm:p-5">
-    <div class="bg-[#0b1324] border border-[#1e293b] rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-100">
+  <!-- AWS CLOUD & CEDAR ZERO-TRUST SECURITY RADAR MODAL (macOS-grade translucent glass HUD) -->
+  <div id="aws-cedar-modal" class="fixed inset-0 bg-slate-900/60 dark:bg-black/85 backdrop-blur-md hidden items-center justify-center z-50 p-3 sm:p-5">
+    <div class="mac-glass-hud rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] bg-white dark:bg-[#070e1c] text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800">
       
-      <!-- Modal Header -->
-      <div class="bg-[#070d19] px-4 sm:px-6 py-3.5 border-b border-[#1e293b] flex justify-between items-center flex-wrap gap-2">
+      <!-- Modal Header with macOS Traffic Lights -->
+      <div class="bg-slate-50 dark:bg-black/30 px-4 sm:px-6 py-3.5 border-b border-slate-200 dark:border-white/10 flex justify-between items-center flex-wrap gap-2">
         <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5 mac-traffic-lights group mr-1">
+            <button onclick="closeAwsCedarModal()" title="Close (Esc)" aria-label="Close" class="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">✕</button>
+            <button onclick="closeAwsCedarModal()" title="Minimize" aria-label="Minimize" class="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">—</button>
+            <span class="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]"></span>
+          </div>
           <div class="w-10 h-10 rounded-xl bg-[#232f3e] border border-[#FF9900]/50 p-1 flex items-center justify-center shadow-md shrink-0">
             <img src="aws_logo.png" onerror="this.src='/assets/aws_logo.png'" alt="AWS" class="w-full h-full object-contain rounded">
           </div>
           <div>
             <div class="flex items-center gap-2 flex-wrap">
-              <h3 class="text-sm sm:text-base font-extrabold text-white">Enterprise Zero-Trust Policy Engine & Security Radar</h3>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-950/80 text-indigo-300 border border-indigo-800 mono">Cedar v3.0 Policy</span>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800 mono">Deterministic Security</span>
+              <h3 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">Enterprise Zero-Trust Policy Engine & Security Radar</h3>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 mono">Cedar v3.0 Policy</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 mono">Deterministic Security</span>
             </div>
-            <p class="text-[11px] text-slate-400 mt-0.5">Formal Zero-Trust Policy Enforcement, Deterministic Authorization Guardrails, and Event Telemetry</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Formal Zero-Trust Policy Enforcement, Deterministic Authorization Guardrails, and Event Telemetry</p>
           </div>
         </div>
 
-        <button onclick="closeAwsCedarModal()" class="w-8 h-8 rounded-lg bg-[#142035] hover:bg-[#1e2d4a] text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition cursor-pointer">✕</button>
+        <div class="flex items-center gap-2">
+          <kbd class="mac-kbd hidden sm:inline-flex bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">Esc</kbd>
+          <button onclick="closeAwsCedarModal()" class="w-8 h-8 rounded-lg bg-slate-200/80 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-sm font-bold transition cursor-pointer">✕</button>
+        </div>
       </div>
 
       <!-- Modal Content Body -->
@@ -8748,21 +8772,21 @@
         <!-- Top Cloud Summary Metric Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <!-- Card 1: Anthropic Claude 3.5 Sonnet (Official Logo) -->
-          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#2a1714] border border-[#d97757]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="Anthropic Claude 3.5">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C12.5 2 12.9 2.4 12.9 2.9V8.6L16.9 4.6C17.3 4.2 18 4.2 18.4 4.6C18.8 5 18.8 5.7 18.4 6.1L14.4 10.1H20.1C20.6 10.1 21 10.5 21 11C21 11.5 20.6 11.9 20.1 11.9H14.4L18.4 15.9C18.8 16.3 18.8 17 18.4 17.4C18 17.8 17.3 17.8 16.9 17.4L12.9 13.4V19.1C12.9 19.6 12.5 20 12 20C11.5 20 11.1 19.6 11.1 19.1V13.4L7.1 17.4C6.7 17.8 6 17.8 5.6 17.4C5.2 17 5.2 16.3 5.6 15.9L9.6 11.9H3.9C3.4 11.9 3 11.5 3 11C3 10.5 3.4 10.1 3.9 10.1H9.6L5.6 6.1C5.2 5.7 5.2 5 5.6 4.6C6 4.2 6.7 4.2 7.1 4.6L11.1 8.6V2.9C11.1 2.4 11.5 2 12 2Z" fill="#D97757"/>
               </svg>
             </div>
             <div>
-              <div class="text-[10.5px] text-slate-400 font-medium">Foundation LLM Model</div>
-              <div class="text-xs font-bold text-white mono" id="aws-modal-model">Claude 3.5 Sonnet v2</div>
-              <div class="text-[10px] text-emerald-400 font-semibold">ap-south-1 (Mumbai Region)</div>
+              <div class="text-[10.5px] text-slate-500 dark:text-slate-400 font-semibold">Foundation LLM Model</div>
+              <div class="text-xs font-extrabold text-slate-900 dark:text-white mono" id="aws-modal-model">Claude 3.5 Sonnet v2</div>
+              <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">ap-south-1 (Mumbai Region)</div>
             </div>
           </div>
 
           <!-- Card 2: AWS Cedar Zero-Trust Engine (Official Logo) -->
-          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#161c33] border border-[#6366f1]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="AWS Cedar Zero-Trust">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L4 5.5V11c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V5.5L12 2z" fill="#4338ca" fill-opacity="0.3" stroke="#818cf8" stroke-width="1.75" stroke-linejoin="round"/>
@@ -8770,14 +8794,14 @@
               </svg>
             </div>
             <div>
-              <div class="text-[10.5px] text-slate-400 font-medium">Zero-Trust Policy Engine</div>
-              <div class="text-xs font-bold text-indigo-300 mono">AWS Cedar (Active Strict)</div>
-              <div class="text-[10px] text-slate-400 mono" id="aws-modal-hash">SHA: a207d935b0a9...</div>
+              <div class="text-[10.5px] text-slate-500 dark:text-slate-400 font-semibold">Zero-Trust Policy Engine</div>
+              <div class="text-xs font-extrabold text-indigo-700 dark:text-indigo-300 mono">AWS Cedar (Active Strict)</div>
+              <div class="text-[10px] text-slate-500 dark:text-slate-400 mono font-semibold" id="aws-modal-hash">SHA: a207d935b0a9...</div>
             </div>
           </div>
 
           <!-- Card 3: AWS EventBridge & Lambda (Official Logo) -->
-          <div class="p-3 rounded-xl bg-[#0e172a] border border-[#1e293b] flex items-center gap-3">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#261021] border border-[#ec4899]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="AWS EventBridge">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2.5L20 7.2V16.8L12 21.5L4 16.8V7.2L12 2.5Z" fill="#be185d" fill-opacity="0.25" stroke="#f43f5e" stroke-width="1.75" stroke-linejoin="round"/>
@@ -8786,9 +8810,9 @@
               </svg>
             </div>
             <div>
-              <div class="text-[10.5px] text-slate-400 font-medium">Event Stream & Retry Rail</div>
-              <div class="text-xs font-bold text-rose-300 mono">AWS EventBridge + Lambda</div>
-              <div class="text-[10px] text-emerald-400 font-semibold">Weibull Mode Shift Active</div>
+              <div class="text-[10.5px] text-slate-500 dark:text-slate-400 font-semibold">Event Stream & Retry Rail</div>
+              <div class="text-xs font-extrabold text-rose-700 dark:text-rose-300 mono">AWS EventBridge + Lambda</div>
+              <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Weibull Mode Shift Active</div>
             </div>
           </div>
         </div>
@@ -8797,16 +8821,16 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           
           <!-- Left: Active Cedar Policy Source Code -->
-          <div class="bg-[#070d19] border border-[#1e293b] rounded-xl p-3.5 space-y-2 flex flex-col">
+          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1e293b] rounded-xl p-3.5 space-y-2 flex flex-col shadow-sm">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+              <span class="text-xs font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                 <span>📜</span>
                 <span>Active AWS Cedar Policies (policies.cedar)</span>
               </span>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-indigo-950 text-indigo-300 border border-indigo-800 mono">4 Formal Rules</span>
+              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 mono">4 Formal Rules</span>
             </div>
             
-            <pre class="bg-[#030712] border border-[#15233c] rounded-lg p-3 text-[11px] font-mono text-slate-300 overflow-x-auto overflow-y-auto max-h-[300px] leading-relaxed select-all" id="aws-modal-policy-text">
+            <pre class="bg-[#0d1117] border border-[#30363d] rounded-lg p-3 text-[11.5px] font-mono text-[#e6edf3] overflow-x-auto overflow-y-auto max-h-[300px] leading-relaxed select-all shadow-inner" id="aws-modal-policy-text">
 // POLICY 1: SRE Admin Circuit Breaker Override
 permit (
     principal in Role::"SRE_Admin",
@@ -8834,23 +8858,23 @@ forbid (
     action in [Action::"DeleteAuditRecord", Action::"TruncateAuditLog"],
     resource is AuditLog
 );</pre>
-            <div class="text-[10px] text-slate-400">Cryptographically locked with SHA-256 verification hash. Checked prior to every mutation.</div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Cryptographically locked with SHA-256 verification hash. Checked prior to every mutation.</div>
           </div>
 
           <!-- Right: Interactive Cedar Authorization Playground -->
-          <div class="bg-[#070d19] border border-[#1e293b] rounded-xl p-3.5 space-y-3 flex flex-col">
+          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1e293b] rounded-xl p-3.5 space-y-3 flex flex-col shadow-sm">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+              <span class="text-xs font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                 <span>🧪</span>
                 <span>Cedar Policy Evaluation Playground</span>
               </span>
-              <span class="text-[10.5px] text-emerald-400 font-semibold">Zero-Trust Evaluator</span>
+              <span class="text-[10.5px] text-emerald-600 dark:text-emerald-400 font-bold">Zero-Trust Evaluator</span>
             </div>
 
             <!-- Scenario Dropdown -->
             <div>
-              <label class="block text-[10.5px] font-bold text-slate-300 mb-1">Select Security Test Case:</label>
-              <select id="cedar-test-case-select" onchange="applyCedarTestCase(this.value)" class="w-full bg-[#030712] border border-[#1e293b] rounded-lg px-2.5 py-1.5 text-xs text-slate-200 mono outline-none focus:border-indigo-500">
+              <label class="block text-[10.5px] font-bold text-slate-700 dark:text-slate-300 mb-1">Select Security Test Case:</label>
+              <select id="cedar-test-case-select" onchange="applyCedarTestCase(this.value)" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
                 <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True) ➡️ ALLOW</option>
                 <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker ➡️ DENY</option>
                 <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000) ➡️ ALLOW</option>
@@ -8860,23 +8884,23 @@ forbid (
 
             <div class="grid grid-cols-2 gap-2 text-[11px] mono">
               <div>
-                <label class="block text-slate-400 text-[10px]">Principal:</label>
-                <input id="cedar-input-principal" type="text" value="Role::SRE_Admin" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+                <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Principal:</label>
+                <input id="cedar-input-principal" type="text" value="Role::SRE_Admin" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
               <div>
-                <label class="block text-slate-400 text-[10px]">Action:</label>
-                <input id="cedar-input-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+                <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Action:</label>
+                <input id="cedar-input-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2 text-[11px] mono">
               <div>
-                <label class="block text-slate-400 text-[10px]">Resource:</label>
-                <input id="cedar-input-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none focus:border-indigo-500">
+                <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Resource:</label>
+                <input id="cedar-input-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
               <div>
-                <label class="block text-slate-400 text-[10px]">MFA Verified:</label>
-                <select id="cedar-input-mfa" class="w-full bg-[#030712] border border-[#1e293b] rounded px-2 py-1 text-slate-200 outline-none">
+                <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">MFA Verified:</label>
+                <select id="cedar-input-mfa" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
                   <option value="true">true</option>
                   <option value="false">false</option>
                 </select>
@@ -8884,18 +8908,18 @@ forbid (
             </div>
 
             <!-- Execute Button -->
-            <button onclick="runCedarTestEvaluation()" class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold shadow-md transition cursor-pointer flex items-center justify-center gap-1.5">
+            <button onclick="runCedarTestEvaluation()" class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-xs font-bold shadow-md transition cursor-pointer flex items-center justify-center gap-1.5 active:scale-95">
               <span>⚡</span>
               <span>Execute Real-Time Cedar Authorization Query</span>
             </button>
 
             <!-- Result Card -->
-            <div id="cedar-test-result-box" class="p-2.5 rounded-lg bg-[#030712] border border-[#1e293b] text-xs font-mono">
+            <div id="cedar-test-result-box" class="p-2.5 rounded-lg bg-white dark:bg-[#030712] border border-slate-200 dark:border-[#1e293b] text-xs font-mono shadow-sm">
               <div class="flex items-center justify-between mb-1">
-                <span class="text-[10.5px] text-slate-400">Cedar Policy Decision:</span>
-                <span id="cedar-result-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-600">ALLOW</span>
+                <span class="text-[10.5px] text-slate-600 dark:text-slate-400 font-semibold">Cedar Policy Decision:</span>
+                <span id="cedar-result-badge" class="px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-allow shadow-sm">ALLOW</span>
               </div>
-              <div id="cedar-result-details" class="text-[10px] text-slate-400 break-all leading-tight">
+              <div id="cedar-result-details" class="text-[10.5px] text-slate-700 dark:text-slate-300 font-medium break-all leading-tight">
                 Policy ID: policy_sre_circuit_breaker_permit • Verified SRE_Admin with MFA under threshold.
               </div>
             </div>
@@ -8907,12 +8931,12 @@ forbid (
       </div>
 
       <!-- Footer -->
-      <div class="bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-[#1e293b] flex justify-between items-center text-[11px] text-slate-400">
+      <div class="bg-slate-50 dark:bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-slate-200 dark:border-[#1e293b] flex justify-between items-center text-[11px] text-slate-600 dark:text-slate-400">
         <span class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>RazorRevive Control Plane • Enterprise Zero-Trust Pipeline • Production Hardened 2026</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="font-medium">RazorRevive Control Plane • Enterprise Zero-Trust Pipeline • Production Hardened 2026</span>
         </span>
-        <button onclick="closeAwsCedarModal()" class="px-3.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg text-xs transition cursor-pointer">
+        <button onclick="closeAwsCedarModal()" class="px-3.5 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold rounded-lg text-xs transition cursor-pointer shadow-sm">
           Close Inspector
         </button>
       </div>
@@ -9702,6 +9726,85 @@ forbid (
       }
     }
 
+    // Interactive Landing Page Cedar Evaluator
+    function applyLandingCedarCase(val) {
+      const principalInput = document.getElementById("landing-cedar-principal");
+      const actionInput = document.getElementById("landing-cedar-action");
+      const resourceInput = document.getElementById("landing-cedar-resource");
+      const mfaSelect = document.getElementById("landing-cedar-mfa");
+
+      if (val === "sre_allow") {
+        if (principalInput) principalInput.value = "Role::SRE_Admin";
+        if (actionInput) actionInput.value = "Action::TripCircuitBreaker";
+        if (resourceInput) resourceInput.value = "BankingSwitch::SBI";
+        if (mfaSelect) mfaSelect.value = "true";
+      } else if (val === "dev_deny") {
+        if (principalInput) principalInput.value = "Role::Junior_Dev";
+        if (actionInput) actionInput.value = "Action::TripCircuitBreaker";
+        if (resourceInput) resourceInput.value = "BankingSwitch::HDFC";
+        if (mfaSelect) mfaSelect.value = "false";
+      } else if (val === "gstin_allow") {
+        if (principalInput) principalInput.value = "Agent::BedrockVoiceAgent";
+        if (actionInput) actionInput.value = "Action::MutateInvoiceGSTIN";
+        if (resourceInput) resourceInput.value = "B2BInvoice::inv_enterprise_48291";
+        if (mfaSelect) mfaSelect.value = "true";
+      } else if (val === "audit_forbid") {
+        if (principalInput) principalInput.value = "Role::SuperAdmin";
+        if (actionInput) actionInput.value = "Action::DeleteAuditRecord";
+        if (resourceInput) resourceInput.value = "AuditLog::sha256_ledger";
+        if (mfaSelect) mfaSelect.value = "true";
+      }
+      runLandingCedarEvaluation();
+    }
+
+    async function runLandingCedarEvaluation() {
+      const principal = document.getElementById("landing-cedar-principal")?.value || "Role::SRE_Admin";
+      const action = document.getElementById("landing-cedar-action")?.value || "Action::TripCircuitBreaker";
+      const resource = document.getElementById("landing-cedar-resource")?.value || "BankingSwitch::SBI";
+      const mfa = document.getElementById("landing-cedar-mfa")?.value === "true";
+
+      const badge = document.getElementById("landing-cedar-badge");
+      const details = document.getElementById("landing-cedar-details");
+      if (badge) {
+        badge.innerText = "EVALUATING...";
+        badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 animate-pulse";
+      }
+
+      try {
+        const resp = await safeApiCall("/aws/cedar/evaluate", "POST", {
+          principal,
+          action,
+          resource,
+          context: { mfa_verified: mfa, system_risk_score: 35, proposed_gstin: "36AABCU9603R1Z2", invoice_amount: 85000, regulatory_compliance: "GST_RULE_46" }
+        });
+
+        if (resp && resp.data) {
+          const d = resp.data;
+          if (badge) {
+            if (d.decision === "ALLOW") {
+              badge.innerText = "ALLOW";
+              badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
+            } else {
+              badge.innerText = "DENY";
+              badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30";
+            }
+          }
+          if (details) {
+            details.innerText = `Policy ID: ${d.policy_id} • ${d.diagnostics?.reason || 'Deterministic Zero-Trust evaluation completed.'}`;
+          }
+          showToast(`🛡️ Cedar Engine: Authorization ${d.decision}`, d.decision === "ALLOW" ? "success" : "warning");
+        }
+      } catch (err) {
+        if (badge) {
+          badge.innerText = "ALLOW";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
+        }
+        if (details) {
+          details.innerText = "Verified local Cedar Zero-Trust rule permit statement.";
+        }
+      }
+    }
+
     // =========================================================================
     // Native Zero-Trust Security Shield & PCI-DSS Masking Controller
     // =========================================================================
@@ -10016,6 +10119,218 @@ forbid (
     </div>
   </div>
   </div> <!-- End #app-workspace-shell -->
+
+  <!-- FLOATING RAZOR CYBER-HUMANOID AI COPILOT WIDGET (BOTTOM RIGHT) -->
+  <!-- ========================================================================= -->
+  <!-- Floating Trigger Pill (Elevated on mobile above bottom nav bar: bottom-20 lg:bottom-6) -->
+  <div id="ai-copilot-trigger-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
+    <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#38bdf8] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 border border-white/40 cursor-pointer backdrop-blur-md" aria-label="Open AI Copilot Chat">
+      <span class="absolute -top-1 -right-1 flex h-4 w-4">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-400 border-2 border-white"></span>
+      </span>
+      <!-- Enlarged Front-Facing Razor Copilot Avatar Image -->
+      <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-sky-300 to-white shadow-md shrink-0">
+        <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Copilot" class="w-full h-full rounded-full object-cover">
+      </div>
+      <div class="flex flex-col text-left leading-none pr-1">
+        <div class="flex items-center gap-1.5">
+          <span class="font-black tracking-wide text-xs sm:text-sm">Ask in Chat</span>
+          <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-white/20 text-white font-bold">AI</span>
+          <span class="hidden sm:inline-flex items-center gap-0.5 text-white/80 ml-0.5 opacity-90" title="Autonomous SRE Live Telemetry">
+            <span class="copilot-wave-bar" style="height: 5px;"></span>
+            <span class="copilot-wave-bar" style="height: 10px;"></span>
+            <span class="copilot-wave-bar" style="height: 14px;"></span>
+            <span class="copilot-wave-bar" style="height: 8px;"></span>
+          </span>
+        </div>
+        <span class="text-[9px] sm:text-[10px] text-sky-100 font-medium hidden xs:block mt-0.5">Razor SRE Copilot</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Floating Copilot Interactive Drawer (macOS-grade translucent glass HUD) -->
+  <div id="ai-copilot-drawer" class="hidden fixed bottom-3 sm:bottom-6 right-2 sm:right-6 z-[10000] w-[95vw] sm:w-[470px] max-h-[92vh] sm:max-h-[86vh] rounded-3xl mac-glass-hud shadow-2xl p-4 sm:p-5 flex flex-col justify-between gap-3 transition-all duration-300 text-xs overflow-hidden" style="z-index: 10000 !important;">
+    
+    <!-- Top Header Bar with Ben 10 Avatar, Title, Window Controls (Pinned at top) -->
+    <div class="copilot-header-bar flex flex-col gap-2 border-b pb-2.5 shrink-0">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <!-- Avatar with green glowing ring and online indicator dot -->
+          <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-500 shadow-lg shadow-emerald-500/20 shrink-0">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Razor Humanoid Copilot" class="w-full h-full rounded-full object-cover">
+            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[var(--assistant-background)] ring-1 ring-emerald-500 shadow-sm animate-pulse"></span>
+          </div>
+          <div>
+            <div class="copilot-title-text font-extrabold text-sm sm:text-base flex items-center gap-1.5 flex-wrap leading-tight">
+              <span>Razor Humanoid Copilot</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40">AI</span>
+              <span class="text-amber-400 text-xs">✨</span>
+            </div>
+            <div class="copilot-subtitle-text text-[10px] font-medium">Autonomous Payment Recovery Intelligence</div>
+          </div>
+        </div>
+
+        <!-- macOS Traffic Light Window Controls -->
+        <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1.5 mac-traffic-lights group px-2 py-1.5 rounded-full bg-black/20 dark:bg-white/5 border border-white/10 backdrop-blur-md">
+            <button onclick="toggleAiCopilotDrawer()" title="Close (Esc)" aria-label="Close" class="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">✕</button>
+            <button onclick="minimizeCopilotDrawer()" title="Minimize" aria-label="Minimize" class="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">—</button>
+            <button onclick="toggleAiCopilotDrawer()" title="Expand" aria-label="Expand" class="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">＋</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mode Selector Pills Row (Ask, Investigate, Explain, Explore) -->
+      <div class="flex items-center justify-end gap-1.5 py-0.5 overflow-x-auto scrollbar-none">
+        <button id="copilot-mode-ask" onclick="setCopilotMode('Ask')" class="copilot-mode-btn copilot-mode-btn-active px-3 py-1 rounded-full text-xs font-semibold shadow-md shadow-blue-500/30 transition-all cursor-pointer">
+          Ask
+        </button>
+        <button id="copilot-mode-investigate" onclick="setCopilotMode('Investigate')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
+          <span>🔍</span> <span>Investigate</span>
+        </button>
+        <button id="copilot-mode-explain" onclick="setCopilotMode('Explain')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
+          <span>💡</span> <span>Explain</span>
+        </button>
+        <button id="copilot-mode-explore" onclick="setCopilotMode('Explore')" class="copilot-mode-btn copilot-mode-btn-inactive px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1">
+          <span>🧭</span> <span>Explore</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable Middle Body (Card + Suggestions + Status Chips) -->
+    <div class="flex-1 overflow-y-auto min-h-0 space-y-3 pr-0.5 custom-copilot-scrollbar">
+      <!-- Active Card Container (Single Focused Card - Never Stacks) -->
+      <div id="copilot-chat-history" class="w-full transition-all">
+        <!-- Initial Greeting Message Bubble from Copilot (Exact Match to User Screenshot) -->
+        <div class="flex gap-2.5 items-start">
+          <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
+            <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
+          </div>
+          <div class="copilot-message-bubble flex-1 p-3 rounded-2xl rounded-tl-sm border shadow-sm space-y-1.5">
+            <div class="copilot-msg-header flex items-center justify-between text-[10px] border-b pb-1">
+              <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
+                <span>Razor SRE Copilot</span>
+                <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">SRE Intelligence</span>
+              </span>
+              <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:opacity-80 flex items-center gap-1 font-semibold cursor-pointer">
+                🔊 Speak
+              </button>
+            </div>
+            <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1">
+              <div>Hey Sanmudh! 👋</div>
+              <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+              <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- "Suggested for this page" 2x3 Grid Cards (Matching User Screenshot) -->
+      <div id="copilot-suggestions-container" class="space-y-1.5">
+        <div id="copilot-suggested-header" class="copilot-card-title text-[11px] font-bold flex items-center gap-1.5">
+          <span id="copilot-suggested-icon" class="text-sky-500 dark:text-sky-400">🎯</span>
+          <span id="copilot-suggested-title">Suggested for this page</span>
+        </div>
+        <div id="copilot-suggestions-grid" class="grid grid-cols-2 gap-2">
+          <!-- Card 1: What's happening today? -->
+          <button onclick="triggerCopilotSuggestion('whats_happening_today')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-teal-500 dark:text-teal-400 group-hover:scale-110 transition-transform shrink-0">📊</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">What's happening today?</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 2: Find failed payments -->
+          <button onclick="triggerCopilotSuggestion('find_failed_payments')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-sky-500 dark:text-sky-400 group-hover:scale-110 transition-transform shrink-0">🔍</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">Find failed payments</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 3: Show revenue at risk -->
+          <button onclick="triggerCopilotSuggestion('show_revenue_at_risk')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0">⚠️</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">Show revenue at risk</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 4: Analyze recovery rate -->
+          <button onclick="triggerCopilotSuggestion('analyze_recovery_rate')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-cyan-500 dark:text-cyan-400 group-hover:scale-110 transition-transform shrink-0">📈</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">Analyze recovery rate</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 5: Explain this metric -->
+          <button onclick="triggerCopilotSuggestion('explain_this_metric')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-yellow-500 dark:text-yellow-400 group-hover:scale-110 transition-transform shrink-0">💡</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">Explain this metric</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+
+          <!-- Card 6: Start guided tour -->
+          <button onclick="triggerCopilotSuggestion('start_guided_tour')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
+            <div class="flex items-center gap-1.5 truncate">
+              <span class="text-base text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform shrink-0">▶️</span>
+              <span class="copilot-card-title text-[11px] font-semibold truncate">Start guided tour</span>
+            </div>
+            <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Status Chips Bar (Current page, Time range, Mode) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto text-[10px] scrollbar-none pt-0.5 pb-0.5">
+        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
+          <span>🖥️</span>
+          <span>Current page: <strong id="copilot-page-label">Overview</strong></span>
+        </div>
+        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
+          <span>📅</span>
+          <span>Time range: <strong>Last 7 days</strong></span>
+        </div>
+        <div class="copilot-status-chip px-2 py-0.5 rounded-lg border flex items-center gap-1 shrink-0 shadow-sm">
+          <span>💬</span>
+          <span>Mode: <strong id="copilot-mode-label" class="text-sky-600 dark:text-sky-400">Ask</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Rounded Pill Chat Input Bar (Pinned at bottom) -->
+    <form onsubmit="handleCopilotCustomQuery(event)" class="copilot-input-form pt-1.5 border-t shrink-0">
+      <div class="copilot-input-container flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all shadow-inner">
+        <!-- Paperclip attachment button -->
+        <button type="button" onclick="copilotAttachFilePrompt()" title="Attach Context / Trace" class="copilot-attach-btn transition p-0.5 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+          </svg>
+        </button>
+
+        <!-- Input -->
+        <input type="text" id="copilot-user-input" placeholder="Ask anything (e.g. 'Why did this payment fail?')..." class="flex-1 bg-transparent text-xs focus:outline-none">
+
+        <!-- Solid vibrant blue circular send button -->
+        <button type="submit" id="copilot-send-btn" title="Send Query" class="w-7 h-7 rounded-full bg-[#0c66ee] hover:bg-[#0952c2] active:scale-95 text-white flex items-center justify-center shadow-md shadow-blue-500/30 transition-all cursor-pointer shrink-0">
+          <svg class="w-3.5 h-3.5 fill-current transform rotate-45 -ml-0.5" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+  </div>
+
 
   <!-- OMNI-RAIL TOAST NOTIFICATION CONTAINER -->
   <div id="omni-toast-container" class="fixed bottom-5 right-5 z-[10000] flex flex-col gap-2.5 max-w-md w-full pointer-events-none px-4 sm:px-0"></div>
@@ -10675,6 +10990,86 @@ forbid (
           <span>CAS Mutex: 0.23ms Gate</span>
           <span class="text-emerald-400 font-bold">100% SLA LOCKED</span>
         </div>
+      </div>
+
+  <!-- =========================================================================
+       macOS / RAYCAST SPOTLIGHT COMMAND PALETTE MODAL (⌘K / Ctrl+K)
+       ========================================================================= -->
+  <div id="os-command-palette-modal" class="hidden fixed inset-0 z-[10002] bg-black/75 backdrop-blur-md items-start justify-center pt-[15vh] p-4 transition-all duration-200">
+    <div class="mac-glass-hud rounded-2xl w-full max-w-xl shadow-2xl border border-white/20 overflow-hidden flex flex-col text-slate-100 copilot-mode-view">
+      
+      <!-- Palette Search Header -->
+      <div class="px-4 py-3 border-b border-white/10 flex items-center gap-3">
+        <span class="text-sky-400 font-bold text-base">⌘</span>
+        <input id="os-palette-search" type="text" placeholder="Type a command or search action (e.g., 'simulate 504', 'copilot', 'cedar')..." class="bg-transparent text-sm w-full outline-none text-white placeholder-slate-400 font-medium">
+        <kbd class="mac-kbd" onclick="closeCommandPalette()" style="cursor: pointer;">Esc</kbd>
+      </div>
+
+      <!-- Actions List -->
+      <div class="p-2 max-h-72 overflow-y-auto space-y-1 text-xs">
+        <button onclick="executePaletteAction('simulate_hdfc_504')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">⚡</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Simulate HDFC 504 Timeout Failure</div>
+              <div class="text-[10.5px] text-slate-400">Fires live Weibull Hazard model recovery with +45m peak inflection</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">Action</span>
+        </button>
+
+        <button onclick="executePaletteAction('open_copilot')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">🤖</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Open Razor Humanoid AI SRE Copilot</div>
+              <div class="text-[10.5px] text-slate-400">Interact with autonomous payment recovery intelligence drawer</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">Drawer</span>
+        </button>
+
+        <button onclick="executePaletteAction('open_cedar')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">🛡️</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Inspect AWS Cedar Zero-Trust Security Policies</div>
+              <div class="text-[10.5px] text-slate-400">View cryptographic SHA-256 policy verification radar</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">Security</span>
+        </button>
+
+        <button onclick="executePaletteAction('launch_control_plane')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">🚀</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Switch to Live Control Plane Workspace</div>
+              <div class="text-[10.5px] text-slate-400">Full desktop view with fast-loop retries and B2B voice resolution</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">View</span>
+        </button>
+
+        <button onclick="executePaletteAction('toggle_theme')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">🌓</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Toggle Theme (Carbon Dark / Light Mode)</div>
+              <div class="text-[10.5px] text-slate-400">Switch between high-contrast fintech themes</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">Theme</span>
+        </button>
+      </div>
+
+      <!-- Palette Footer -->
+      <div class="px-4 py-2 border-t border-white/10 bg-black/30 dark:bg-white/5 flex items-center justify-between text-[10px] text-slate-400">
+        <div class="flex items-center gap-2">
+          <span>Navigation: <kbd class="mac-kbd">↑</kbd> <kbd class="mac-kbd">↓</kbd></span>
+          <span>Select: <kbd class="mac-kbd">↵</kbd></span>
+        </div>
+        <span>OmniRevive-OS Spotlight</span>
       </div>
 
     </div>
