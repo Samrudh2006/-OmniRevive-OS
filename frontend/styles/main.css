@@ -419,8 +419,6 @@ body {
 }
 
 .custom-card {
-  background: linear-gradient(180deg, rgba(12, 27, 51, 0.75) 0%, rgba(7, 16, 31, 0.9) 100%) !important;
-  border: 1px solid rgba(56, 189, 248, 0.12) !important;
   border-radius: 0.875rem;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.25);
   color: var(--text-title);
@@ -429,24 +427,56 @@ body {
   transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.custom-card:hover {
+html.dark .custom-card,
+html:not(.light) .custom-card {
+  background: linear-gradient(180deg, rgba(12, 27, 51, 0.75) 0%, rgba(7, 16, 31, 0.9) 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.12) !important;
+}
+
+html.dark .custom-card:hover,
+html:not(.light) .custom-card:hover {
   border-color: rgba(56, 189, 248, 0.22) !important;
   box-shadow: 0 8px 25px -4px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.08);
 }
 
 /* =========================================================================
-   COMPREHENSIVE LIGHT THEME CONTRAST & LEGIBILITY ENGINE (2026 ULTRA-CRISP)
+   COMPREHENSIVE LIGHT THEME: REFRESHING LIGHT BLUE WORKSPACE & CRISP CARDS
    ========================================================================= */
-html.light body {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
+html.light,
+html.light body,
+html.light #app-workspace-shell,
+html.light main,
+html.light #main-content-view,
+html.light #view-overview,
+html.light #view-fast_loop,
+html.light #view-deep_loop,
+html.light #view-benchmark,
+html.light #view-decision_trace,
+html.light #view-audit_ledger {
+  background: #eaf3fe !important;
+  background-color: #eaf3fe !important;
+  color: #0c2340 !important;
 }
 
-/* Main view backgrounds & Cards in Light Mode */
-html.light,
-html.light body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+html.light .custom-card,
+html.light main .custom-card,
+html.light #app-workspace-shell .custom-card,
+html.light #fast-loop-panel,
+html.light #deep-loop-panel,
+html.light .spotlight-card,
+html.light .landing-glow-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #cbe2fa !important;
+  box-shadow: 0 4px 18px -2px rgba(12, 108, 242, 0.08), 0 1px 4px -1px rgba(12, 108, 242, 0.04) !important;
+  color: #0c2340 !important;
+}
+
+html.light .custom-card:hover,
+html.light main .custom-card:hover {
+  border-color: #0c6cf2 !important;
+  box-shadow: 0 10px 26px -4px rgba(12, 108, 242, 0.16) !important;
 }
 
 /* =========================================================================
@@ -588,10 +618,12 @@ html.light .bg-slate-900,
 html.light .bg-slate-950,
 html.light .bg-slate-800,
 html.light .custom-card {
+  background: #ffffff !important;
   background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
-  box-shadow: 0 1px 4px 0 rgba(15, 23, 42, 0.08) !important;
-  color: #0f172a !important;
+  background-image: none !important;
+  border-color: #cbe2fa !important;
+  box-shadow: 0 4px 18px -2px rgba(12, 108, 242, 0.08), 0 1px 4px -1px rgba(12, 108, 242, 0.04) !important;
+  color: #0c2340 !important;
 }
 
 /* Inner containers, nested panels, code wells, & stat pods */
@@ -604,9 +636,11 @@ html.light .bg-\[\#070e1c\],
 html.light .bg-\[\#03060c\],
 html.light .bg-\[\#081220\],
 html.light .bg-\[\#0a1424\] {
-  background-color: #f8fafc !important;
-  border-color: #cbd5e1 !important;
-  color: #0f172a !important;
+  background: #f0f7ff !important;
+  background-color: #f0f7ff !important;
+  background-image: none !important;
+  border-color: #cbe2fa !important;
+  color: #0c2340 !important;
 }
 
 /* General Border Color normalization */
@@ -2855,13 +2889,13 @@ html.light .signature-enterprise-footer .footer-vault-bar {
 }
 
 html.light .hero-scenic-bg::before {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 45%, rgba(241, 246, 253, 0.25) 80%, rgba(241, 246, 253, 0.95) 100%), url('/assets/hero_fintech_india_day.jpg');
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 45%, rgba(241, 246, 253, 0.25) 80%, rgba(241, 246, 253, 0.95) 100%), url('/assets/hero_fintech_india_day.jpg?v=2.9');
   filter: contrast(1.18) saturate(1.25) brightness(1.02);
   opacity: 1;
 }
 
 html.dark .hero-scenic-bg::before {
-  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.25) 0%, rgba(7, 14, 28, 0.0) 40%, rgba(7, 14, 28, 0.85) 100%), url('/assets/hero_fintech_india_night.jpg');
+  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.25) 0%, rgba(7, 14, 28, 0.0) 40%, rgba(7, 14, 28, 0.85) 100%), url('/assets/hero_fintech_india_night.jpg?v=2.9');
   filter: contrast(1.12) saturate(1.2) brightness(1.05);
   opacity: 1;
 }
