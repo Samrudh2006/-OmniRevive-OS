@@ -625,59 +625,84 @@
        ========================================================================= -->
   <div id="landing-gateway-container" class="min-h-screen bg-[#070e1c] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white transition-all duration-300">
     
-    <!-- ORIGINAL LANDING TOP NAVBAR -->
-    <nav class="h-18 border-b border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-[#070e1c]/90 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between sticky top-0 z-40 transition-colors">
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/40 flex items-center justify-center text-blue-500 shadow-sm">
-          <svg class="w-6 h-6 text-[#0c6cf2]" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd" d="M12 1.5l8.5 3.5v6.5c0 5.5-3.5 10.5-8.5 12-5-1.5-8.5-6.5-8.5-12V5L12 1.5zm1 4.5l-5 6h4l-1 6 6-7h-4l1-5z" clip-rule="evenodd"/>
-          </svg>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="text-lg font-black tracking-tight text-[#0c2340] dark:text-white">OmniRevive<span class="text-[#0c6cf2] dark:text-sky-400">-OS</span></span>
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 uppercase mono">v1.1 · CONTROL PLANE</span>
+    <!-- 2-LINE ENTERPRISE SYSTEM HEADER (Brand Telemetry + Showcase Ribbon) -->
+    <header class="sticky top-0 z-40 w-full backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/80 bg-white/95 dark:bg-[#070e1c]/95 shadow-sm transition-colors">
+      
+      <!-- LINE 1: Executive Brand & Live System Telemetry Bar -->
+      <div class="h-14 px-4 sm:px-8 flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/60">
+        <!-- Brand Logo & Title -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-blue-500/15 border border-blue-500/40 flex items-center justify-center text-blue-500 shadow-sm shrink-0">
+            <svg class="w-5 h-5 text-[#0c6cf2]" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" d="M12 1.5l8.5 3.5v6.5c0 5.5-3.5 10.5-8.5 12-5-1.5-8.5-6.5-8.5-12V5L12 1.5zm1 4.5l-5 6h4l-1 6 6-7h-4l1-5z" clip-rule="evenodd"/>
+            </svg>
           </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Universal Autonomous AI Revenue Recovery</p>
-        </div>
-      </div>
-
-      <!-- Quick Nav Links -->
-      <div class="hidden lg:flex items-center gap-5 text-xs font-semibold text-slate-700 dark:text-slate-300">
-        <a href="#showcase-constellation" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🪐</span> Architecture Hub</a>
-        <a href="#showcase-sandbox" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🔴</span> Live Sandbox</a>
-        <a href="#showcase-workspace" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📊</span> Decision Workspace</a>
-        <a href="#showcase-voice-studio" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">🎙️</span> Voice AI Studio</a>
-        <a href="#showcase-decision-trail" class="hover:text-blue-600 dark:hover:text-sky-400 transition flex items-center gap-1.5"><span class="text-sm">📜</span> Audit Trail</a>
-        <a href="#showcase-cedar-security" class="text-sky-600 dark:text-sky-400 hover:text-blue-700 dark:hover:text-sky-300 transition flex items-center gap-1.5 font-bold"><span class="text-sm">🛡️</span> Cedar Security</a>
-      </div>
-
-      <!-- Right Action CTA -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Live Telemetry & IST Clock Mini Pill -->
-        <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-[11px] text-slate-600 dark:text-slate-300">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <div id="os-forex-ticker" class="flex items-center gap-1.5">
-            <span class="font-bold text-emerald-600 dark:text-emerald-400">USD/INR</span>
-            <span class="mono font-semibold">₹96.02</span>
+          <div class="flex items-center gap-2.5">
+            <span class="text-base sm:text-lg font-black tracking-tight text-[#0c2340] dark:text-white whitespace-nowrap">OmniRevive<span class="text-[#0c6cf2] dark:text-sky-400">-OS</span></span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30 uppercase mono whitespace-nowrap">v1.1 · CONTROL PLANE</span>
+            <span class="hidden md:inline-block text-slate-300 dark:text-slate-700">|</span>
+            <span class="hidden md:inline-block text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate max-w-xs lg:max-w-md">Universal Autonomous AI Revenue Recovery</span>
           </div>
-          <span class="text-slate-300 dark:text-slate-600">|</span>
-          <span id="os-status-clock" class="mono font-bold text-slate-700 dark:text-slate-200">--:--:-- IST</span>
         </div>
 
-        <!-- Theme Mode Toggle -->
-        <button onclick="toggleThemeMode()" class="w-9 h-9 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition cursor-pointer shadow-sm" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
-          <span>☀️</span>
-        </button>
+        <!-- Right Action Cluster: Live Telemetry, Theme Toggle & Primary Launch Button -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Live Telemetry & IST Clock Pill -->
+          <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-[11px] text-slate-600 dark:text-slate-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+            <div id="os-forex-ticker" class="flex items-center gap-1.5 whitespace-nowrap">
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">USD/INR</span>
+              <span class="mono font-semibold">₹96.02</span>
+            </div>
+            <span class="text-slate-300 dark:text-slate-600">|</span>
+            <span id="os-status-clock" class="mono font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">--:--:-- IST</span>
+          </div>
 
-        <!-- Primary Launch Button -->
-        <button onclick="launchControlPlane()" class="h-9 px-4 rounded-full rzp-btn-primary text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-blue-500/25 transition cursor-pointer hover:scale-105 active:scale-95">
-          <span>🚀</span>
-          <span>Launch Control Plane</span>
-        </button>
+          <!-- Theme Mode Toggle -->
+          <button onclick="toggleThemeMode()" class="w-8 h-8 rounded-full border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-xs transition cursor-pointer shadow-sm shrink-0" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
+            <span>☀️</span>
+          </button>
+
+          <!-- Primary Launch Button -->
+          <button onclick="launchControlPlane()" class="h-8.5 px-4 rounded-full rzp-btn-primary text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-blue-500/25 transition cursor-pointer hover:scale-105 active:scale-95 whitespace-nowrap">
+            <span>🚀</span>
+            <span>Launch Control Plane</span>
+          </button>
+        </div>
       </div>
-    </nav>
+
+      <!-- LINE 2: Showcase Navigation Ribbon -->
+      <div class="h-10 px-4 sm:px-8 flex items-center justify-between overflow-x-auto no-scrollbar text-xs">
+        <!-- Showcase Nav Pills -->
+        <div class="flex items-center gap-1 sm:gap-1.5">
+          <a href="#showcase-constellation" class="px-3 py-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition flex items-center gap-1.5 whitespace-nowrap font-semibold">
+            <span>🪐</span> Architecture Hub
+          </a>
+          <a href="#showcase-cedar-security" class="px-3 py-1 rounded-full text-sky-700 dark:text-sky-300 bg-sky-50 dark:bg-sky-500/10 border border-sky-200/80 dark:border-sky-500/30 hover:bg-sky-100 dark:hover:bg-sky-500/20 transition flex items-center gap-1.5 whitespace-nowrap font-bold shadow-xs">
+            <span>🛡️</span> Cedar Security
+          </a>
+          <a href="#showcase-sandbox" class="px-3 py-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition flex items-center gap-1.5 whitespace-nowrap font-semibold">
+            <span>🔴</span> Live Sandbox
+          </a>
+          <a href="#showcase-voice-studio" class="px-3 py-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition flex items-center gap-1.5 whitespace-nowrap font-semibold">
+            <span>🎙️</span> Voice AI Studio
+          </a>
+          <a href="#showcase-workspace" class="px-3 py-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition flex items-center gap-1.5 whitespace-nowrap font-semibold">
+            <span>📊</span> Decision Workspace
+          </a>
+          <a href="#showcase-decision-trail" class="px-3 py-1 rounded-full text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-sky-400 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 transition flex items-center gap-1.5 whitespace-nowrap font-semibold">
+            <span>📜</span> Audit Trail
+          </a>
+        </div>
+
+        <!-- Right Quick Status Chips -->
+        <div class="hidden lg:flex items-center gap-2.5 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+          <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> CAS Mutex: <strong class="text-slate-700 dark:text-slate-300">0.23ms Gate</strong></span>
+          <span class="text-slate-300 dark:text-slate-700">•</span>
+          <span>SLA: <strong class="text-emerald-600 dark:text-emerald-400 font-bold">100% Safe</strong></span>
+        </div>
+      </div>
+    </header>
     <script>
       (function() {
         function syncOSClock() {
