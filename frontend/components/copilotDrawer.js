@@ -16,6 +16,8 @@ import { refreshAuditLedger } from "../services/auditService.js";
 
 let currentCopilotMode = "Ask";
 
+export const COPILOT_AVATAR_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='cg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2310b981'/%3E%3Cstop offset='50%25' stop-color='%230284c7'/%3E%3Cstop offset='100%25' stop-color='%230c55ea'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='20' cy='20' r='20' fill='url(%23cg)'/%3E%3Ccircle cx='20' cy='15' r='6' fill='%23ffffff'/%3E%3Cpath d='M10 32c0-5.5 4.5-9 10-9s10 3.5 10 9' fill='%23ffffff' opacity='0.95'/%3E%3Ccircle cx='27' cy='12' r='2.2' fill='%2338bdf8'/%3E%3C/svg%3E";
+
 // Mode Configuration Datasets
 const COPILOT_MODES_DATA = {
   Ask: {
@@ -225,7 +227,7 @@ export function renderCopilotHeroCard(mode) {
   container.innerHTML = `
     <div class="flex gap-2.5 items-start copilot-mode-view">
       <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-        <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+        <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'%3E%3Cdefs%3E%3ClinearGradient id=\\'cg\\' x1=\\'0%25\\' y1=\\'0%25\\' x2=\\'100%25\\' y2=\\'100%25\\'%3E%3Cstop offset=\\'0%25\\' stop-color=\\'%2310b981\\'/%3E%3Cstop offset=\\'50%25\\' stop-color=\\'%230284c7\\'/%3E%3Cstop offset=\\'100%25\\' stop-color=\\'%230c55ea\\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx=\\'20\\' cy=\\'20\\' r=\\'20\\' fill=\\'url(%23cg)\\'/%3E%3Ccircle cx=\\'20\\' cy=\\'15\\' r=\\'6\\' fill=\\'%23ffffff\\'/%3E%3Cpath d=\\'M10 32c0-5.5 4.5-9 10-9s10 3.5 10 9\\' fill=\\'%23ffffff\\' opacity=\\'0.95\\'/%3E%3Ccircle cx=\\'27\\' cy=\\'12\\' r=\\'2.2\\' fill=\\'%2338bdf8\\'/%3E%3C/svg%3E';};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
       </div>
       <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2">
@@ -512,7 +514,7 @@ export function renderFocusedHeroCard(title, bodyHtml) {
   container.innerHTML = `
     <div class="flex gap-2.5 items-start copilot-msg-enter">
       <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-        <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+        <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'%3E%3Cdefs%3E%3ClinearGradient id=\\'cg\\' x1=\\'0%25\\' y1=\\'0%25\\' x2=\\'100%25\\' y2=\\'100%25\\'%3E%3Cstop offset=\\'0%25\\' stop-color=\\'%2310b981\\'/%3E%3Cstop offset=\\'50%25\\' stop-color=\\'%230284c7\\'/%3E%3Cstop offset=\\'100%25\\' stop-color=\\'%230c55ea\\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx=\\'20\\' cy=\\'20\\' r=\\'20\\' fill=\\'url(%23cg)\\'/%3E%3Ccircle cx=\\'20\\' cy=\\'15\\' r=\\'6\\' fill=\\'%23ffffff\\'/%3E%3Cpath d=\\'M10 32c0-5.5 4.5-9 10-9s10 3.5 10 9\\' fill=\\'%23ffffff\\' opacity=\\'0.95\\'/%3E%3Ccircle cx=\\'27\\' cy=\\'12\\' r=\\'2.2\\' fill=\\'%2338bdf8\\'/%3E%3C/svg%3E';};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
         <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[var(--assistant-background)]"></span>
       </div>
       <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2.5">
@@ -589,7 +591,7 @@ export async function handleCopilotCustomQuery(e) {
   container.innerHTML = `
     <div class="flex gap-2.5 items-start">
       <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
-        <img src="copilot_avatar.jpg" onerror="this.onerror=null; this.src='assets/copilot_avatar.jpg'; if(!this.src) this.src='/copilot_avatar.jpg';" alt="Avatar" class="w-full h-full rounded-full object-cover">
+        <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' viewBox=\\'0 0 40 40\\'%3E%3Cdefs%3E%3ClinearGradient id=\\'cg\\' x1=\\'0%25\\' y1=\\'0%25\\' x2=\\'100%25\\' y2=\\'100%25\\'%3E%3Cstop offset=\\'0%25\\' stop-color=\\'%2310b981\\'/%3E%3Cstop offset=\\'50%25\\' stop-color=\\'%230284c7\\'/%3E%3Cstop offset=\\'100%25\\' stop-color=\\'%230c55ea\\'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx=\\'20\\' cy=\\'20\\' r=\\'20\\' fill=\\'url(%23cg)\\'/%3E%3Ccircle cx=\\'20\\' cy=\\'15\\' r=\\'6\\' fill=\\'%23ffffff\\'/%3E%3Cpath d=\\'M10 32c0-5.5 4.5-9 10-9s10 3.5 10 9\\' fill=\\'%23ffffff\\' opacity=\\'0.95\\'/%3E%3Ccircle cx=\\'27\\' cy=\\'12\\' r=\\'2.2\\' fill=\\'%2338bdf8\\'/%3E%3C/svg%3E';};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
       </div>
       <div class="copilot-message-bubble p-3 px-4 rounded-2xl rounded-tl-sm border text-[11px] text-sky-600 dark:text-sky-400 font-medium animate-pulse flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-sky-500 animate-ping"></span>

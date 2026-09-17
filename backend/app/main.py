@@ -238,7 +238,7 @@ async def serve_copilot_avatar():
     if not os.path.exists(img_path):
         img_path = os.path.join(frontend_dir, "copilot_avatar.jpg")
     if os.path.exists(img_path):
-        return FileResponse(img_path, media_type="image/jpeg")
+        return FileResponse(img_path, media_type="image/jpeg", headers={"Cache-Control": "public, max-age=31536000, immutable"})
     raise HTTPException(status_code=404, detail="Avatar image not found")
 
 @app.get("/aws_logo.png")
@@ -247,7 +247,7 @@ async def serve_aws_logo():
     if not os.path.exists(img_path):
         img_path = os.path.join(frontend_dir, "aws_logo.png")
     if os.path.exists(img_path):
-        return FileResponse(img_path, media_type="image/png")
+        return FileResponse(img_path, media_type="image/png", headers={"Cache-Control": "public, max-age=31536000, immutable"})
     raise HTTPException(status_code=404, detail="AWS logo image not found")
 
 @app.get("/", response_class=HTMLResponse)

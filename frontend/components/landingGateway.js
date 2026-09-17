@@ -259,63 +259,6 @@ if (invoiceValue > 50000) {
     if (typeof window.switchNavTab === "function") {
       window.switchNavTab('overview');
     }
-    return;
-  },
-
-    if (typeof window.playFintechAudio === "function") {
-      window.playFintechAudio("success");
-    }
-
-    hud.classList.remove("hidden");
-    hud.classList.add("flex");
-
-    const steps = [
-      { id: "hud-step-1", delay: 100 },
-      { id: "hud-step-2", delay: 350 },
-      { id: "hud-step-3", delay: 600 },
-      { id: "hud-step-4", delay: 850 },
-      { id: "hud-step-5", delay: 1100 }
-    ];
-
-    steps.forEach((step) => {
-      setTimeout(() => {
-        const el = document.getElementById(step.id);
-        if (el) {
-          el.classList.remove("opacity-20", "text-slate-500");
-          el.classList.add("opacity-100", "text-emerald-400");
-          const badge = el.querySelector(".hud-status-badge");
-          if (badge) {
-            badge.classList.remove("bg-slate-800", "text-slate-400");
-            badge.classList.add("bg-emerald-500/20", "text-emerald-300", "border-emerald-500/40");
-            badge.textContent = "LOCKED";
-          }
-        }
-      }, step.delay);
-    });
-
-    setTimeout(() => {
-      hud.classList.add("opacity-0");
-      setTimeout(() => {
-        hud.classList.add("hidden");
-        hud.classList.remove("flex", "opacity-0");
-
-        if (landing) landing.classList.add("hidden");
-        if (appShell) appShell.classList.remove("hidden");
-
-        const showcaseBtn = document.getElementById("header-showcase-btn");
-        if (showcaseBtn) showcaseBtn.classList.remove("hidden");
-
-        window.scrollTo({ top: 0, behavior: "smooth" });
-
-        if (typeof window.switchNavTab === "function") {
-          window.switchNavTab('overview');
-        }
-
-        if (typeof window.renderWeibullCurve === "function") {
-          window.renderWeibullCurve();
-        }
-      }, 300);
-    }, 1350);
   },
 
   skipHudBoot() {

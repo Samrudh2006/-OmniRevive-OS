@@ -295,6 +295,18 @@ html {
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
   overscroll-behavior: none;
+  scroll-behavior: smooth;
+}
+
+/* Instant-Loading Image Optimizations & Zero-Flash Fallback */
+img {
+  content-visibility: auto;
+}
+
+.copilot-avatar-img, img[alt*="Copilot"], img[alt="Avatar"] {
+  image-rendering: -webkit-optimize-contrast;
+  object-fit: cover;
+  background: linear-gradient(135deg, #10b981, #0284c7);
 }
 
 /* 16px minimum font size on touch devices to eliminate iOS Safari viewport auto-zoom */
@@ -2843,13 +2855,13 @@ html.light .signature-enterprise-footer .footer-vault-bar {
 }
 
 html.light .hero-scenic-bg::before {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 45%, rgba(241, 246, 253, 0.25) 80%, rgba(241, 246, 253, 0.95) 100%), url('/assets/hero_fintech_india_day.png');
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.0) 45%, rgba(241, 246, 253, 0.25) 80%, rgba(241, 246, 253, 0.95) 100%), url('/assets/hero_fintech_india_day.jpg');
   filter: contrast(1.18) saturate(1.25) brightness(1.02);
   opacity: 1;
 }
 
 html.dark .hero-scenic-bg::before {
-  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.25) 0%, rgba(7, 14, 28, 0.0) 40%, rgba(7, 14, 28, 0.85) 100%), url('/assets/hero_fintech_india_night.png');
+  background-image: linear-gradient(180deg, rgba(7, 14, 28, 0.25) 0%, rgba(7, 14, 28, 0.0) 40%, rgba(7, 14, 28, 0.85) 100%), url('/assets/hero_fintech_india_night.jpg');
   filter: contrast(1.12) saturate(1.2) brightness(1.05);
   opacity: 1;
 }
