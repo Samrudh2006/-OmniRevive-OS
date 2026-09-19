@@ -13,16 +13,16 @@
 
 ### *The Omnitrix of Indian Fintech Revenue Recovery & Multi-Rail Autonomous Orchestration*
 
-[![Release v1.1.0](https://img.shields.io/badge/Release-v1.1.0--Production-0c55ea.svg?style=for-the-badge&logo=rocket)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![Pytest Suite](https://img.shields.io/badge/Pytest-438%20Passed%20%7C%20100%25-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
-[![Multi-Rail](https://img.shields.io/badge/Multi--Rail-Juspay%20%7C%20PhonePe%20%7C%20CRED%20%7C%20Cashfree%20%7C%20Razorpay%20%7C%20Stripe-0c6cf2.svg?style=for-the-badge&logo=buffer)](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
+[![Release v1.1.0](https://img.shields.io/badge/Release-v1.1.0--Production-0c55ea.svg?style=for-the-badge&logo=rocket)](https://github.com/Samrudh2006/-OmniRevive-OS)
+[![Pytest Suite](https://img.shields.io/badge/Pytest-483%20Passed%20%7C%20100%25-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/-OmniRevive-OS)
+[![Multi-Rail](https://img.shields.io/badge/Multi--Rail-Juspay%20%7C%20PhonePe%20%7C%20CRED%20%7C%20Cashfree%20%7C%20Razorpay%20%7C%20Stripe-0c6cf2.svg?style=for-the-badge&logo=buffer)](https://github.com/Samrudh2006/-OmniRevive-OS)
 [![Flutter Mobile](https://img.shields.io/badge/Flutter-3.x%20Mobile%20Ready-02569B.svg?style=for-the-badge&logo=flutter)](mobile_flutter/)
 [![Android APK](https://img.shields.io/badge/Android-APK%2014.1MB%20Download-34d399.svg?style=for-the-badge&logo=android)](omnirevive-os-v1.1.apk)
 
 [![AWS Cedar](https://img.shields.io/badge/Zero--Trust-AWS%20Cedar%20Policy%20Engine-ff9900.svg?style=flat-square&logo=amazonaws)](backend/app/policy_engine.py)
 [![Qdrant Vector DB](https://img.shields.io/badge/Qdrant-Semantic%20Memory%20Layer-7c3aed.svg?style=flat-square&logo=qdrant)](backend/app/diagnostic_engine.py)
 [![Voice AI](https://img.shields.io/badge/Voice%20AI-Telugu%20%7C%20Hindi%20%7C%20English-c084fc.svg?style=flat-square)](frontend/index.html)
-[![NPCI Live Switch](https://img.shields.io/badge/UPI-NPCI%20Live%20Switch%20%2B%20Dynamic%20QR-00a86b.svg?style=flat-square)](backend/app/telemetry_npci.py)
+[![NPCI Switch Sandbox](https://img.shields.io/badge/UPI-NPCI%20Switch%20Telemetry%20%2B%20Dynamic%20QR-00a86b.svg?style=flat-square)](backend/app/telemetry_npci.py)
 [![Merkle Audit](https://img.shields.io/badge/Audit%20Ledger-SHA--256%20Merkle%20Chained-emerald.svg?style=flat-square)](backend/app/audit_store.py)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Video Walkthrough](https://img.shields.io/badge/Demo_Video-YouTube_Walkthrough-red.svg?style=flat-square&logo=youtube)](https://youtu.be/IBo7D1vHhd8)
@@ -266,8 +266,8 @@ P99 Decision Latency:                  18.2ms (SLA < 50.0ms)   [PASSED]
 ### 2. Launch Local Control Plane (1-Click)
 ```bash
 # Clone the repository
-git clone https://github.com/Samrudh2006/Razorpay-Target-0.1percent-.git
-cd Razorpay-Target-0.1percent-
+git clone https://github.com/Samrudh2006/-OmniRevive-OS.git
+cd -OmniRevive-OS
 
 # Install Python dependencies
 pip install -r requirements.txt
@@ -279,7 +279,7 @@ uvicorn backend.app.main:app --port 8000 --reload
 ```
 Open **`http://localhost:8000`** in your browser.
 
-### 3. Run Automated Pytest Suite (438 Tests, 100% Pass)
+### 3. Run Automated Pytest Suite (483 Tests, 100% Pass)
 ```bash
 pytest -v
 ```
@@ -350,7 +350,7 @@ python cli.py chat
 │       └── main.css                 # Razorpay Light & Dark Obsidian CSS System
 ├── mobile_flutter/                  # Standalone Flutter 3.x Mobile Project
 ├── benchmarks/                      # 100-Case Ground-Truth Benchmark Suite
-├── tests/                           # 438 Automated Unit, FSM & Adversarial Tests
+├── tests/                           # 483 Automated Unit, FSM & Adversarial Tests (100% Pass)
 ├── docs/                            # Whitepapers, Deployment Guides & Architecture
 ├── omnirevive-os-v1.1.apk           # Release Android APK Package (14.1 MB)
 ├── cli.py                           # Enterprise Command-Line Interface Suite
@@ -361,13 +361,15 @@ python cli.py chat
 
 ---
 
-## 🏆 Project & Team Information
+## 🏆 Project & Production Information
 
 - **Project Name:** OmniRevive-OS
 - **Track:** Track 03 — AI Revenue Recovery
-- **Author:** Samrudh ([@Samrudh2006](https://github.com/Samrudh2006))
+- **Author:** Samrudh Dwivedula ([@Samrudh2006](https://github.com/Samrudh2006))
+- **Primary Production Deployment:** [https://omnirevive-os.antideploy.com](https://omnirevive-os.antideploy.com)
+- **Secondary Production Mirror:** [https://razorrevive-os.onrender.com](https://razorrevive-os.onrender.com)
+- **Official GitHub Repository:** [https://github.com/Samrudh2006/-OmniRevive-OS](https://github.com/Samrudh2006/-OmniRevive-OS)
 - **Live Video Walkthrough:** [YouTube Video Link](https://youtu.be/IBo7D1vHhd8)
-- **Repository:** [https://github.com/Samrudh2006/Razorpay-Target-0.1percent-](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 
 ---
 

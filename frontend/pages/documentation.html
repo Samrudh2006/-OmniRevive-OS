@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Documentation & Quickstart | OmniRevive-OS</title>
+  <meta name="description" content="Official documentation for OmniRevive-OS: Quickstart setup, REST API endpoints, CLI reference, webhook simulator, and multi-rail gateway integration.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/documentation">
+  <meta property="og:title" content="Developer Documentation & Quickstart | OmniRevive-OS">
+  <meta property="og:description" content="Technical integration guide for the OmniRevive-OS universal recovery control plane.">
+  <meta property="og:url" content="https://omnirevive-os.antideploy.com/documentation">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OmniRevive-OS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Developer Documentation & Quickstart | OmniRevive-OS">
+  <meta name="twitter:description" content="API reference, CLI usage, and quickstart for OmniRevive-OS.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Developer Documentation & Quickstart | OmniRevive-OS",
+    "description": "Integration documentation, REST API endpoints, and setup instructions for OmniRevive-OS.",
+    "author": { "@type": "Person", "name": "Samrudh Dwivedula", "url": "https://github.com/Samrudh2006" },
+    "publisher": { "@type": "Organization", "name": "OmniRevive-OS", "url": "https://omnirevive-os.antideploy.com/" },
+    "mainEntityOfPage": "https://omnirevive-os.antideploy.com/documentation"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omnirevive-os.antideploy.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Documentation", "item": "https://omnirevive-os.antideploy.com/documentation" }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0e1526;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0c6cf2;
+      --primary-light: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --code-bg: #030712;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; padding: 0 1rem; }
+    header { max-width: 900px; margin: 0 auto; padding: 2rem 0 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .brand { font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .brand-badge { background: rgba(12, 108, 242, 0.2); color: var(--primary-light); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(12, 108, 242, 0.3); }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 1.25rem; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .btn-launch { background: var(--primary); color: #fff !important; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; }
+    main { max-width: 900px; margin: 2.5rem auto 5rem; }
+    .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary-light); }
+    h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .meta-bar { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--surface-border); }
+    h2 { font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e2e8f0; }
+    p { margin-bottom: 1.25rem; color: #cbd5e1; }
+    ul, ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; }
+    pre { background: var(--code-bg); border: 1px solid var(--surface-border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; color: #e2e8f0; margin-bottom: 1.5rem; }
+    footer { max-width: 900px; margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <nav>
+      <a href="/architecture">Architecture</a>
+      <a href="/benchmarks">Benchmarks</a>
+      <a href="/faq">FAQ</a>
+      <a href="/" class="btn-launch">Launch Control Plane</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="/">Home</a> &rsaquo; <span>Documentation</span>
+    </div>
+
+    <h1>Developer Documentation & Quickstart</h1>
+    <div class="meta-bar">
+      <span>Version: 1.1.0</span>
+      <span>Framework: FastAPI + Vanilla SRE Frontend</span>
+      <span>Author: Samrudh Dwivedula</span>
+    </div>
+
+    <h2>1. Quickstart Installation</h2>
+    <pre>
+# Clone the repository
+git clone https://github.com/Samrudh2006/-OmniRevive-OS.git
+cd -OmniRevive-OS
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run server locally
+python -m uvicorn backend.app.main:app --port 8000 --reload
+    </pre>
+
+    <h2>2. Key REST API Endpoints</h2>
+    <ul>
+      <li><code>POST /api/v1/recovery/simulate-failure</code>: Ingest a simulated payment drop and trigger the autonomous Fast-Loop recovery pipeline.</li>
+      <li><code>POST /api/v1/recovery/dynamic-upi-qr</code>: Generate an instant dynamic UPI intent link and payment QR for soft decline recovery.</li>
+      <li><code>POST /api/v1/recovery/batch</code>: Bulk recovery orchestrator for processing CSV and JSON failure batches with thread concurrency.</li>
+      <li><code>GET /api/v1/audit/verify</code>: Verify the integrity of the sequential SHA-256 Merkle audit chain from genesis to leaf.</li>
+      <li><code>POST /api/v1/b2b/dispute</code>: Ingest a B2B invoice dispute and initiate trilingual voice negotiation FSM.</li>
+      <li><code>GET /api/v1/system/health</code>: Prometheus SRE metrics, live rail status, and health telemetry.</li>
+    </ul>
+
+    <h2>3. Interactive CLI Commands</h2>
+    <pre>
+# Check health and rail telemetry
+python cli.py health
+
+# Run the 100-case held-out benchmark
+python cli.py benchmark
+
+# Verify cryptographic audit ledger
+python cli.py verify-audit
+
+# Launch conversational recovery copilot
+python cli.py chat
+    </pre>
+
+    <h2>4. Enterprise Cloud Deployment</h2>
+    <p>OmniRevive-OS includes ready configurations for:</p>
+    <ul>
+      <li><strong>Antideploy:</strong> <code>Procfile</code>, <code>runtime.txt</code>, and <code>.dockerignore</code> (Live at <a href="https://omnirevive-os.antideploy.com/">https://omnirevive-os.antideploy.com/</a>).</li>
+      <li><strong>Cloudflare Workers & Pages:</strong> Edge WAF, Turnstile bot defense, R2 audit receipts, and <code>wrangler.toml</code>.</li>
+      <li><strong>Docker:</strong> Production multi-stage Dockerfile with non-root security container.</li>
+    </ul>
+
+    <h2>Related Technical Pages</h2>
+    <ul>
+      <li><a href="/architecture">System Architecture</a></li>
+      <li><a href="/benchmarks">Benchmarks & Test Verification</a></li>
+      <li><a href="/faq">Frequently Asked Questions</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 OmniRevive-OS &bull; Built for Razorpay AI Buildathon</div>
+    <div>
+      <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener">GitHub</a> &bull;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</body>
+</html>

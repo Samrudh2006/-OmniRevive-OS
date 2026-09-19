@@ -1,0 +1,47 @@
+# User-agent directives for search engine web crawlers and AI search agents
+User-agent: *
+Allow: /
+Allow: /ai-revenue-recovery
+Allow: /payment-failure-recovery
+Allow: /b2b-dispute-resolution
+Allow: /architecture
+Allow: /idempotency-protection
+Allow: /audit-ledger
+Allow: /benchmarks
+Allow: /faq
+Allow: /documentation
+Allow: /about
+Allow: /docs
+Allow: /static/
+
+# AI Search & LLM Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Disallow administrative and internal endpoints
+Disallow: /api/v1/cfo/approve
+Disallow: /api/v1/copilot/execute
+
+# Sitemap location
+Sitemap: https://omnirevive-os.antideploy.com/sitemap.xml

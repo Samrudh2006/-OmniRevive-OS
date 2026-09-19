@@ -129,5 +129,43 @@ def test_contract_rebalance_traffic():
     assert data_failover["success"] is True
     assert data_failover["updated_distribution"]["SBI"] == 0
 
+def test_contract_seo_robots_txt():
+    response = client.get("/robots.txt")
+    assert response.status_code == 200
+    assert "text/plain" in response.headers["content-type"]
+    text = response.text
+    assert "User-agent:" in text
+    assert "Googlebot" in text
+    assert "GPTBot" in text
+    assert "ClaudeBot" in text
+    assert "Sitemap:" in text
 
+def test_contract_seo_sitemap_xml():
+    response = client.get("/sitemap.xml")
+    assert response.status_code == 200
+    assert "xml" in response.headers["content-type"]
+    text = response.text
+    assert "<urlset" in text
+    assert "https://omnirevive-os.antideploy.com/ai-revenue-recovery" in text
+    assert "https://omnirevive-os.antideploy.com/payment-failure-recovery" in text
+    assert "https://omnirevive-os.antideploy.com/architecture" in text
 
+def test_contract_seo_dedicated_pages():
+    routes = [
+        "/ai-revenue-recovery",
+        "/payment-failure-recovery",
+        "/b2b-dispute-resolution",
+        "/architecture",
+        "/idempotency-protection",
+        "/audit-ledger",
+        "/benchmarks",
+        "/faq",
+        "/documentation",
+        "/about"
+    ]
+    for route in routes:
+        resp = client.get(route)
+        assert resp.status_code == 200, f"Route {route} failed with {resp.status_code}"
+        assert "text/html" in resp.headers["content-type"]
+        assert "OmniRevive-OS" in resp.text
+        assert "schema.org" in resp.text.lower()

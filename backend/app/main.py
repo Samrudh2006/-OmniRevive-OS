@@ -256,6 +256,79 @@ async def serve_aws_logo():
         return FileResponse(img_path, media_type="image/png", headers={"Cache-Control": "public, max-age=31536000, immutable"})
     raise HTTPException(status_code=404, detail="AWS logo image not found")
 
+@app.get("/robots.txt")
+async def serve_robots():
+    robots_path = os.path.join(frontend_dir, "robots.txt")
+    if os.path.exists(robots_path):
+        return FileResponse(robots_path, media_type="text/plain; charset=utf-8", headers={"Cache-Control": "public, max-age=86400"})
+    return Response(content="User-agent: *\nAllow: /\nSitemap: https://omnirevive-os.antideploy.com/sitemap.xml\n", media_type="text/plain")
+
+@app.get("/sitemap.xml")
+async def serve_sitemap():
+    sitemap_path = os.path.join(frontend_dir, "sitemap.xml")
+    if os.path.exists(sitemap_path):
+        return FileResponse(sitemap_path, media_type="application/xml; charset=utf-8", headers={"Cache-Control": "public, max-age=3600"})
+    raise HTTPException(status_code=404, detail="Sitemap not found")
+
+SEO_PAGE_ROUTES = {
+    "/ai-revenue-recovery": "ai-revenue-recovery.html",
+    "/payment-failure-recovery": "payment-failure-recovery.html",
+    "/b2b-dispute-resolution": "b2b-dispute-resolution.html",
+    "/architecture": "architecture.html",
+    "/idempotency-protection": "idempotency-protection.html",
+    "/audit-ledger": "audit-ledger.html",
+    "/benchmarks": "benchmarks.html",
+    "/faq": "faq.html",
+    "/documentation": "documentation.html",
+    "/about": "about.html"
+}
+
+def _serve_seo_page(filename: str):
+    page_path = os.path.join(frontend_dir, "pages", filename)
+    if os.path.exists(page_path):
+        return FileResponse(page_path, media_type="text/html; charset=utf-8", headers={"Cache-Control": "public, max-age=3600"})
+    raise HTTPException(status_code=404, detail=f"Page {filename} not found")
+
+@app.get("/ai-revenue-recovery", response_class=HTMLResponse)
+async def serve_ai_revenue_recovery():
+    return _serve_seo_page("ai-revenue-recovery.html")
+
+@app.get("/payment-failure-recovery", response_class=HTMLResponse)
+async def serve_payment_failure_recovery():
+    return _serve_seo_page("payment-failure-recovery.html")
+
+@app.get("/b2b-dispute-resolution", response_class=HTMLResponse)
+async def serve_b2b_dispute_resolution():
+    return _serve_seo_page("b2b-dispute-resolution.html")
+
+@app.get("/architecture", response_class=HTMLResponse)
+async def serve_architecture():
+    return _serve_seo_page("architecture.html")
+
+@app.get("/idempotency-protection", response_class=HTMLResponse)
+async def serve_idempotency_protection():
+    return _serve_seo_page("idempotency-protection.html")
+
+@app.get("/audit-ledger", response_class=HTMLResponse)
+async def serve_audit_ledger():
+    return _serve_seo_page("audit-ledger.html")
+
+@app.get("/benchmarks", response_class=HTMLResponse)
+async def serve_benchmarks():
+    return _serve_seo_page("benchmarks.html")
+
+@app.get("/faq", response_class=HTMLResponse)
+async def serve_faq():
+    return _serve_seo_page("faq.html")
+
+@app.get("/documentation", response_class=HTMLResponse)
+async def serve_documentation():
+    return _serve_seo_page("documentation.html")
+
+@app.get("/about", response_class=HTMLResponse)
+async def serve_about():
+    return _serve_seo_page("about.html")
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():
     """Serves the OmniRevive-OS Universal Control Plane Dashboard."""

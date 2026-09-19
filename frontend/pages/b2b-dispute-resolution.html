@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B2B Payment Dispute Resolution & Voice AI FSM | OmniRevive-OS</title>
+  <meta name="description" content="Explore autonomous B2B payment dispute negotiation: trilingual neural voice agents in Telugu, Hindi, and English, GSTIN invoice validation, and Promise-to-Pay scheduling.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/b2b-dispute-resolution">
+  <meta property="og:title" content="B2B Payment Dispute Resolution & Voice AI FSM | OmniRevive-OS">
+  <meta property="og:description" content="Autonomous B2B payment dispute negotiation: trilingual voice agents in Telugu, Hindi, and English, GSTIN validation, and Promise-to-Pay commitments.">
+  <meta property="og:url" content="https://omnirevive-os.antideploy.com/b2b-dispute-resolution">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OmniRevive-OS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="B2B Payment Dispute Resolution & Voice AI FSM">
+  <meta name="twitter:description" content="Autonomous trilingual voice agents resolving complex enterprise invoice disputes with deterministic state machines.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "B2B Payment Dispute Resolution & Voice AI FSM",
+    "description": "Technical specification of deterministic finite state machine (FSM) voice arbitration for enterprise B2B invoice disputes and GSTIN compliance.",
+    "author": {
+      "@type": "Person",
+      "name": "Samrudh Dwivedula",
+      "url": "https://github.com/Samrudh2006"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OmniRevive-OS",
+      "url": "https://omnirevive-os.antideploy.com/"
+    },
+    "mainEntityOfPage": "https://omnirevive-os.antideploy.com/b2b-dispute-resolution"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omnirevive-os.antideploy.com/" },
+      { "@type": "ListItem", "position": 2, "name": "B2B Dispute Resolution", "item": "https://omnirevive-os.antideploy.com/b2b-dispute-resolution" }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0e1526;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0c6cf2;
+      --primary-light: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --code-bg: #030712;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; padding: 0 1rem; }
+    header { max-width: 900px; margin: 0 auto; padding: 2rem 0 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .brand { font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .brand-badge { background: rgba(12, 108, 242, 0.2); color: var(--primary-light); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(12, 108, 242, 0.3); }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 1.25rem; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .btn-launch { background: var(--primary); color: #fff !important; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; }
+    main { max-width: 900px; margin: 2.5rem auto 5rem; }
+    .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary-light); }
+    h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .meta-bar { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--surface-border); }
+    h2 { font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e2e8f0; }
+    p { margin-bottom: 1.25rem; color: #cbd5e1; }
+    ul, ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--surface-border); border-radius: 12px; padding: 1.75rem; margin: 2rem 0; }
+    pre { background: var(--code-bg); border: 1px solid var(--surface-border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; color: #e2e8f0; margin-bottom: 1.5rem; }
+    footer { max-width: 900px; margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <nav>
+      <a href="/ai-revenue-recovery">AI Recovery</a>
+      <a href="/architecture">Architecture</a>
+      <a href="/benchmarks">Benchmarks</a>
+      <a href="/faq">FAQ</a>
+      <a href="/" class="btn-launch">Launch Control Plane</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="/">Home</a> &rsaquo; <span>B2B Dispute Resolution</span>
+    </div>
+
+    <h1>B2B Payment Dispute Resolution & Neural Voice AI FSM</h1>
+    <div class="meta-bar">
+      <span>Topic: Enterprise Accounts Receivable & Voice AI</span>
+      <span>Author: Samrudh Dwivedula</span>
+      <span>Published: September 2026</span>
+    </div>
+
+    <p>In B2B business workflows, failed invoices cannot simply be retried against a credit card. B2B payments frequently stall due to <strong>GSTIN tax filing mismatches, purchase order (PO) discrepancies, milestone verification delays, or cashflow timing</strong>. These disputes require intelligent multi-turn negotiation governed by formal financial bounds.</p>
+
+    <h2>1. The Deterministic B2B State Machine (FSM)</h2>
+    <p>To avoid hallucinated commitments, OmniRevive-OS decouples LLM language processing from financial state execution. The negotiation flow is governed by a formal <strong>SQLite WAL Finite State Machine</strong>:</p>
+
+    <pre>
+[INVOICE_OVERDUE]
+       │
+       ▼ (Outreach Triggered - TRAI Quiet Hours Respected)
+[NEGOTIATION_INITIATED]
+       │
+  ┌────┴───────────────────────────┬────────────────────────────┐
+  │                                │                            │
+  ▼ (Customer requests discount)   ▼ (Installment Plan)         ▼ (Date Extension)
+[DISCOUNT_PROPOSED]             [MILESTONE_SPLIT]            [PTP_SCHEDULED]
+  │ (Bounded by Merchant SLA)      │ (Max 3 tranches)           │ (Promise-to-Pay)
+  │                                │                            │
+  └────────────────────────┬───────┴────────────────────────────┘
+                           │
+                           ▼ (Mutual Agreement Reached)
+                 [PTP_COMMITMENT_LOCKED]
+                           │
+                           ▼ (Automated Webhook Reminder)
+                 [SETTLEMENT_RECOVERED]
+    </pre>
+
+    <h2>2. Trilingual Autonomous Voice Agent</h2>
+    <p>Indian commerce operates across multilingual ecosystems. OmniRevive-OS features an autonomous voice negotiation studio capable of fluent, natural dialogues in:</p>
+    <ul>
+      <li><strong>Telugu (te-IN):</strong> Natural inflection for Hyderabad and Andhra Pradesh merchant corridors.</li>
+      <li><strong>Hindi (hi-IN):</strong> Conversational enterprise negotiation for North and Central Indian trade hubs.</li>
+      <li><strong>Indian English (en-IN):</strong> Formal, accent-tuned enterprise communication.</li>
+    </ul>
+
+    <h2>3. 3-Tier Financial Policy Bounds</h2>
+    <p>Every concession negotiated by the voice agent is pre-validated by the <strong>AWS Cedar policy gatekeeper</strong>:</p>
+    <ul>
+      <li><strong>Max Concession:</strong> Maximum allowable early settlement discount is capped at <strong>5.0%</strong> (configurable per enterprise merchant).</li>
+      <li><strong>Executive Dual-Key Signoff:</strong> Any invoice restructuring exceeding <strong>₹50,000</strong> requires dual-key cryptographic approval from the enterprise CFO.</li>
+      <li><strong>Non-Coercive Calling Policy:</strong> Maximum 2 call attempts per 48 hours; zero contact permitted between 21:00 and 09:00 IST.</li>
+    </ul>
+
+    <h2>4. Live Settlement & Promise-to-Pay (PTP) Tracking</h2>
+    <p>When a customer locks in a Promise-to-Pay date, OmniRevive-OS generates a calendar sync payload, issues an instant WhatsApp payment confirmation link with dynamic UPI QR, and sets a high-priority retry timer synchronized with the customer's agreed settlement date.</p>
+
+    <h2>Related Guides</h2>
+    <ul>
+      <li><a href="/architecture">Control Plane Architecture & AWS Cedar Rules</a></li>
+      <li><a href="/audit-ledger">SHA-256 Merkle Audit Chains for Voice Disputing</a></li>
+      <li><a href="/payment-failure-recovery">Autonomous 6-Step Payment Recovery Engine</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 OmniRevive-OS &bull; Built for Razorpay AI Buildathon</div>
+    <div>
+      <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener">GitHub</a> &bull;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</body>
+</html>
