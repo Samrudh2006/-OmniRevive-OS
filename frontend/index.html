@@ -2080,7 +2080,7 @@ forbid (
              LEFT: COMPACT 3D GLASSMORPHISM RECOVERY ECOSYSTEM (Col 1-5)
              ========================================================================= -->
         <div class="lg:col-span-5 w-full space-y-3.5">
-          <div class="footer-glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden group cursor-pointer transition-all duration-300" onclick="triggerOmniBotSpeech()" title="OmniRevive Autonomous Recovery Engine — Tap to interact">
+          <div class="footer-glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden group cursor-pointer transition-all duration-300" onclick="openFeatureDetailModal('overview')" title="OmniRevive-OS Control Plane — Click to explore the full platform architecture">
             
             <!-- Subtle Card Backdrop Glow -->
             <div class="absolute -top-16 -left-16 w-36 h-36 rounded-full bg-cyan-500/10 dark:bg-cyan-500/15 blur-2xl pointer-events-none"></div>
@@ -2178,7 +2178,7 @@ forbid (
                 </button>
 
                 <!-- Coffee Mug / Agent Beacon -->
-                <button onclick="event.stopPropagation(); triggerOmniBotSpeech();" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-100 to-white dark:from-[#0c182c] dark:to-[#1e3a6a] border border-slate-300 dark:border-sky-500/30 flex items-center justify-center shadow-xs group-hover:scale-105 hover:border-sky-400 transition cursor-pointer" title="OmniBot Voice Telemetry">
+                <button onclick="event.stopPropagation(); openFeatureDetailModal('sandbox');" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-100 to-white dark:from-[#0c182c] dark:to-[#1e3a6a] border border-slate-300 dark:border-sky-500/30 flex items-center justify-center shadow-xs group-hover:scale-105 hover:border-sky-400 transition cursor-pointer" title="Open Live SRE Sandbox — Simulate 18 Bank Failure Scenarios">
                   <div class="w-4 h-4 rounded-full border-2 border-sky-400 animate-pulse"></div>
                 </button>
               </div>
@@ -2187,7 +2187,7 @@ forbid (
 
             <!-- Micro Click prompt -->
             <div class="mt-2 text-[9px] text-slate-400 dark:text-slate-500 flex items-center gap-1 font-mono">
-              <span>⚡ Tap dashboard to trigger OmniBot voice telemetry</span>
+              <span>⚡ Click any item to explore — every button opens a detail popup</span>
             </div>
 
           </div>
@@ -2332,7 +2332,7 @@ forbid (
             </h3>
             <ul class="space-y-1">
               <li>
-                <a href="javascript:void(0)" onclick="openAwsCedarModal();" class="footer-nav-link group" title="AWS Cedar Zero-Trust Formal Policy Engine">
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('policy_engine');" class="footer-nav-link group" title="AWS Cedar Zero-Trust Policy Engine — Full Security Architecture">
                   <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                   <span>Cedar Security</span>
                 </a>
@@ -11574,6 +11574,36 @@ forbid (
         }
       }
     });
+  </script>
+
+  <!-- Resilient stub: openFeatureDetailModal is always callable even before main.js module loads.
+       If the real function isn't registered yet, we queue the call and replay it when it is. -->
+  <script>
+    (function() {
+      var _pendingModalCalls = [];
+      // Lightweight stub that queues calls until main.js registers the real function
+      if (!window.openFeatureDetailModal) {
+        window.openFeatureDetailModal = function(key) {
+          _pendingModalCalls.push(key);
+        };
+      }
+      // Intercept window.openFeatureDetailModal being set by main.js
+      var _realSetterDescriptor = Object.getOwnPropertyDescriptor(window, 'openFeatureDetailModal');
+      var _realFn = null;
+      Object.defineProperty(window, 'openFeatureDetailModal', {
+        configurable: true,
+        enumerable: true,
+        get: function() { return _realFn || window._omniModalStub; },
+        set: function(fn) {
+          _realFn = fn;
+          // Replay any queued calls now that the real function is available
+          if (_pendingModalCalls.length > 0) {
+            _pendingModalCalls.forEach(function(k) { try { fn(k); } catch(e) {} });
+            _pendingModalCalls = [];
+          }
+        }
+      });
+    })();
   </script>
 
   <script type="module" src="/static/main.js"></script>
