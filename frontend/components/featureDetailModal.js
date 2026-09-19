@@ -901,10 +901,10 @@ export function openFeatureDetailModal(featureKey) {
 
   container.innerHTML = `
     <!-- Separate Backdrop Layer (Never propagates opacity to modal box) -->
-    <div id="feature-detail-modal-backdrop" class="fixed inset-0 cursor-pointer" onclick="closeFeatureDetailModal()"></div>
+    <div id="feature-detail-modal-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer" onclick="closeFeatureDetailModal()"></div>
 
     <!-- Modal Box Shell (Uses semantic active theme tokens) -->
-    <div id="feature-detail-modal-box" class="relative z-10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] flex flex-col overflow-hidden" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
+    <div id="feature-detail-modal-box" class="relative z-10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-[#060d1d] border border-slate-200 dark:border-slate-800 shadow-2xl" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
       
       <!-- Background Glowing Orbs -->
       <div class="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>

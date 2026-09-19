@@ -40,10 +40,7 @@ import {
 } from "./services/auditService.js?v=2.1.0";
 
 import {
-  initLiveTelemetryStream,
-  toggleCommandPalette,
-  closeCommandPalette,
-  executePaletteAction
+  initLiveTelemetryStream
 } from "./services/liveStreamClient.js?v=2.1.0";
 
 import {
@@ -91,7 +88,7 @@ import {
 import {
   openFeatureDetailModal,
   closeFeatureDetailModal
-} from "./components/featureDetailModal.js?v=2.1.0";
+} from "./components/featureDetailModal.js?v=2.1.1";
 
 import {
   BANK_SWITCH_STATES,
