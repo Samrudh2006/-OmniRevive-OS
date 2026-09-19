@@ -2275,12 +2275,6 @@ forbid (
                   <span>Yield ROI</span>
                 </a>
               </li>
-              <li>
-                <a href="javascript:void(0)" onclick="openFeatureDetailModal('cfo_approvals');" class="footer-nav-link group" title="CFO Dual-Key Approval & Governance">
-                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                  <span>CFO Queue</span>
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -2313,12 +2307,6 @@ forbid (
                 <a href="javascript:void(0)" onclick="openFeatureDetailModal('overview');" class="footer-nav-link group" title="Multi-Rail Gateway Switcher">
                   <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                   <span>Multi-Rail Hub</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" onclick="openFeatureDetailModal('sandbox');" class="footer-nav-link group" title="Interactive Multi-Bank SRE Sandbox Lab">
-                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  <span>Live Sandbox</span>
                 </a>
               </li>
             </ul>
@@ -2355,12 +2343,6 @@ forbid (
                   <span>Attack Lab</span>
                 </a>
               </li>
-              <li>
-                <a href="javascript:void(0)" onclick="openFeatureDetailModal('cloudflare_sre');" class="footer-nav-link group" title="Cloudflare 25 Edge Infrastructure & SRE">
-                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
-                  <span>Cloudflare SRE</span>
-                </a>
-              </li>
             </ul>
           </div>
 
@@ -2393,12 +2375,6 @@ forbid (
                 <a href="javascript:void(0)" onclick="openFeatureDetailModal('architecture_page');" class="footer-nav-link group" title="Control Plane System Architecture — 3-Tier Design">
                   <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                   <span>Architecture</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" onclick="openFeatureDetailModal('faq_page');" class="footer-nav-link group" title="Frequently Asked Questions — Integration &amp; Compliance">
-                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  <span>FAQ</span>
                 </a>
               </li>
               <li>
@@ -11581,11 +11557,12 @@ forbid (
   <script>
     (function() {
       var _pendingModalCalls = [];
+      var _omniModalStub = function(key) {
+        _pendingModalCalls.push(key);
+      };
       // Lightweight stub that queues calls until main.js registers the real function
       if (!window.openFeatureDetailModal) {
-        window.openFeatureDetailModal = function(key) {
-          _pendingModalCalls.push(key);
-        };
+        window.openFeatureDetailModal = _omniModalStub;
       }
       // Intercept window.openFeatureDetailModal being set by main.js
       var _realSetterDescriptor = Object.getOwnPropertyDescriptor(window, 'openFeatureDetailModal');
@@ -11593,7 +11570,7 @@ forbid (
       Object.defineProperty(window, 'openFeatureDetailModal', {
         configurable: true,
         enumerable: true,
-        get: function() { return _realFn || window._omniModalStub; },
+        get: function() { return _realFn || _omniModalStub; },
         set: function(fn) {
           _realFn = fn;
           // Replay any queued calls now that the real function is available
