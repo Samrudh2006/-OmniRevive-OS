@@ -14,6 +14,7 @@ from backend.app.token_lifecycle import card_token_manager
 from backend.app.bulk_processor import bulk_processor
 from backend.app.services.recovery_execution_service import execute_recovery_pipeline
 from backend.app.services.telemetry_service import log_system_event
+from backend.app.services.auth_service import AuthenticationService as auth_service
 
 router = APIRouter(tags=["Fast-Loop Recovery Engine"])
 
@@ -57,10 +58,10 @@ async def razorpay_webhook_receiver(
     raw_body = await request.body()
     
     # 1. Cryptographic HMAC Verification
-    if x_razorpay_signature and not verify_razorpay_signature(raw_body, x_razorpay_signature, timestamp=x_razorpay_event_time):
+    if not x_razorpay_signature or not verify_razorpay_signature(raw_body, x_razorpay_signature, timestamp=x_razorpay_event_time):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid cryptographic HMAC signature or expired replay window."
+            detail="Missing or invalid cryptographic HMAC signature, or expired replay window."
         )
 
     try:
@@ -247,8 +248,17 @@ async def upload_bulk_recovery_csv(
     diagnosis, computes dynamic Weibull recovery hazard curves, checks policy constraints,
     and commits audit hash-chains for the entire batch.
     """
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
-    content_bytes = await file.read()
+    
+    # Enforce strict 10MB buffer limit to prevent memory exhaustion
+    MAX_CSV_BYTES = 10 * 1024 * 1024
+    content_bytes = await file.read(MAX_CSV_BYTES + 1)
+    if len(content_bytes) > MAX_CSV_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="Uploaded CSV file exceeds 10MB limit."
+        )
     csv_str = content_bytes.decode("utf-8", errors="replace")
     
     items = bulk_processor.parse_csv(csv_str)
@@ -268,6 +278,7 @@ async def upload_bulk_recovery_csv(
 
 @router.post("/api/v1/recovery/batch-json", summary="Process Bulk Failed Payment JSON Array")
 async def process_bulk_recovery_json(req: BulkJsonRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     if not req.items:
         raise HTTPException(status_code=400, detail="items array must not be empty.")

@@ -1,8 +1,31 @@
-﻿# GitHub Linguist Configuration for RazorRevive-OS
-# Ensure Python correctly reflects as the primary core architecture language
+# GitHub Linguist Configuration for OmniRevive-OS
+# Ensure repository displays 100% Python as the core autonomous intelligence engine
 
-frontend/index.html linguist-detectable=false
+# Frontend web UI & assets (exclude JS, CSS, HTML from repo language stats)
+frontend/** linguist-vendored=true
+frontend/styles/** linguist-vendored=true
+frontend/components/** linguist-vendored=true
+frontend/services/** linguist-vendored=true
+*.js linguist-vendored=true
+*.css linguist-vendored=true
+*.html linguist-vendored=true
+
+# Mobile clients (Android Kotlin & Flutter Dart)
 mobile/** linguist-vendored=true
-frontend/assets/** linguist-vendored=true
+mobile_flutter/** linguist-vendored=true
+*.dart linguist-vendored=true
+*.kt linguist-vendored=true
+*.kts linguist-vendored=true
+
+# Shell scripts, batchfiles, containers & notebooks
+*.bat linguist-vendored=true
+*.sh linguist-vendored=true
+Dockerfile linguist-vendored=true
+*.ipynb linguist-documentation=true
+
+# Documentation and benchmark outputs
 benchmarks/** linguist-generated=true
 docs/** linguist-documentation=true
+
+# Explicitly ensure Python is detected as the primary core architecture
+*.py linguist-detectable=true

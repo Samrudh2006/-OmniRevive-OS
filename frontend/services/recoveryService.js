@@ -1,10 +1,11 @@
 /**
- * RazorRevive-OS — Fast-Loop Recovery & Batch Ingestion Service
+ * OmniRevive-OS — Fast-Loop Recovery & Batch Ingestion Service
  */
 
 import { safeApiCall, showToast } from "./apiClient.js?v=2.1.0";
 import { formatINR } from "../utils/formatters.js?v=2.1.0";
 import { refreshAuditLedger } from "./auditService.js?v=2.1.0";
+import { escapeHtml, sanitizeCsvCell } from "../utils/escapeHtml.js?v=2.1.0";
 
 export async function triggerFastLoopPipeline() {
   const errCode = document.querySelector("#fast-scenario-select")?.value || "GATEWAY_ERROR";
@@ -190,15 +191,15 @@ export function renderBatchResults(data) {
   if (tbody && data.items) {
     tbody.innerHTML = data.items.map(item => `
       <tr class="hover:bg-[#081224] transition-colors">
-        <td class="p-2.5 text-white font-medium">${item.payment_id}</td>
-        <td class="p-2.5 text-emerald-400 font-bold">₹${item.amount.toLocaleString('en-IN')}</td>
-        <td class="p-2.5 text-slate-300">${item.bank || 'HDFC'}</td>
-        <td class="p-2.5 text-sky-400">${item.failure_class}</td>
-        <td class="p-2.5 text-slate-200">${item.strategy}</td>
-        <td class="p-2.5 text-slate-300">${item.action}</td>
-        <td class="p-2.5 text-purple-300">${item.scheduled_retry_at || 'Immediate (+0m)'}</td>
-        <td class="p-2.5 text-slate-300">${item.confidence.toFixed(2)}</td>
-        <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${item.policy_result}</span></td>
+        <td class="p-2.5 text-white font-medium">${escapeHtml(item.payment_id)}</td>
+        <td class="p-2.5 text-emerald-400 font-bold">₹${Number(item.amount || 0).toLocaleString('en-IN')}</td>
+        <td class="p-2.5 text-slate-300">${escapeHtml(item.bank || 'HDFC')}</td>
+        <td class="p-2.5 text-sky-400">${escapeHtml(item.failure_class)}</td>
+        <td class="p-2.5 text-slate-200">${escapeHtml(item.strategy)}</td>
+        <td class="p-2.5 text-slate-300">${escapeHtml(item.action)}</td>
+        <td class="p-2.5 text-purple-300">${escapeHtml(item.scheduled_retry_at || 'Immediate (+0m)')}</td>
+        <td class="p-2.5 text-slate-300">${Number(item.confidence || 0).toFixed(2)}</td>
+        <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${escapeHtml(item.policy_result)}</span></td>
       </tr>
     `).join("");
   }
@@ -215,15 +216,15 @@ export function exportBatchResolutionCsv() {
 
   window.latestBatchData.items.forEach(it => {
     csvRows.push([
-      it.payment_id,
+      sanitizeCsvCell(it.payment_id),
       it.amount,
-      it.bank || "HDFC",
-      it.failure_class,
-      it.strategy,
-      `"${it.action}"`,
-      it.scheduled_retry_at || "Immediate",
+      sanitizeCsvCell(it.bank || "HDFC"),
+      sanitizeCsvCell(it.failure_class),
+      sanitizeCsvCell(it.strategy),
+      sanitizeCsvCell(it.action),
+      sanitizeCsvCell(it.scheduled_retry_at || "Immediate"),
       it.confidence,
-      it.policy_result
+      sanitizeCsvCell(it.policy_result)
     ].join(","));
   });
 
@@ -231,7 +232,7 @@ export function exportBatchResolutionCsv() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `razorrevive_batch_resolution_${Date.now()}.csv`;
+  a.download = `omnirevive_batch_resolution_${Date.now()}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

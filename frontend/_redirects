@@ -1,0 +1,3 @@
+# Cloudflare Pages SPA Routing Rules
+# 1. Host Your Websites (Clean SPA URLs)
+/*    /index.html   200

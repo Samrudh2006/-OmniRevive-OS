@@ -29,6 +29,34 @@ class CopilotActionRouter:
     """
 
     @classmethod
+    def has_action_intent(cls, query: str) -> bool:
+        """
+        Evaluates whether a natural language query targets an active financial mutation,
+        email dispatch, or PTP lock tool without executing any state change.
+        """
+        q_raw = query.strip()
+        q = q_raw.lower()
+
+        # Tool 1: GST / Tax Line Mutation
+        if ("gst" in q or "pan" in q or "tax" in q) and any(verb in q for verb in ["change", "update", "mutate", "set", "daal", "karo", "cheyyi", "marchu", "bhejo"]):
+            return True
+
+        # Tool 2: Invoice Email Dispatch
+        if any(term in q for term in ["mail pampu", "email", "mail", "send invoice", "bhejo email", "dispatch mail", "mail pampana"]):
+            return True
+
+        # Tool 3: Amount / Price Mutation
+        amt_match = re.search(r"\b(?:rs\.?|inr|₹)?\s*(\d{4,8})\b", q_raw)
+        if any(verb in q for verb in ["amount", "price", "discount", "value", "rupees"]) and any(k in q for k in ["change", "update", "set", "karo", "cheyyi", "reduce"]) and amt_match:
+            return True
+
+        # Tool 4: Promise to Pay (PTP) Lock
+        if any(term in q for term in ["friday", "monday", "tomorrow", "next week", "ptp", "promise to pay", "kal dega", "clear karega"]):
+            return True
+
+        return False
+
+    @classmethod
     def parse_and_execute(
         cls,
         query: str,

@@ -51,7 +51,7 @@ export async function safeApiCall(url, method = "GET", body = null, headers = {}
   }
 
   // Hermetic Offline Simulator Fallback (Ensures zero-crash local presentation)
-  console.warn(`[RazorRevive UI] Backend unreachable at ${url}. Engaging Hermetic Client Simulator.`);
+  console.warn(`[OmniRevive UI] Backend unreachable at ${url}. Engaging Hermetic Client Simulator.`);
 
   if (url.includes("/api/v1/simulate/failure")) {
     const errCode = body?.error_code || "GATEWAY_ERROR";

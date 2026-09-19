@@ -2,7 +2,8 @@ import time
 import uuid
 from typing import Dict, Any, Optional
 from pydantic import BaseModel, Field
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from backend.app.services.auth_service import AuthenticationService as auth_service
 
 from backend.app.gateways import multi_rail_router
 
@@ -35,10 +36,12 @@ def get_supported_rails():
     }
 
 @router.post("/select")
-def select_active_rail(req: SelectRailRequest):
+def select_active_rail(req: SelectRailRequest, request: Request):
     """
     Switches the active payment rail or sets to 'universal_auto' for autonomous routing.
+    Enforces authorization check for SRE_Admin.
     """
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin")
     success = multi_rail_router.set_active_rail(req.rail_id)
     if not success:
         raise HTTPException(

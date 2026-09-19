@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>OmniRevive-OS | Universal AI Revenue Recovery Control Plane</title>
+  <title>OmniRevive-OS | Autonomous AI Revenue Recovery Control Plane</title>
   
   <!-- Primary SEO Meta Tags -->
-  <meta name="title" content="OmniRevive-OS | Universal AI Revenue Recovery Control Plane">
-  <meta name="description" content="Universal Autonomous AI Revenue Recovery Control Plane for payment rails and gateways (Juspay, Cashfree, PhonePe, CRED, Razorpay, Stripe). Features Weibull hazard retries, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice negotiation.">
+  <meta name="title" content="OmniRevive-OS | Autonomous AI Revenue Recovery Control Plane">
+  <meta name="description" content="Autonomous AI Revenue Recovery Control Plane for payment rails and gateways (Juspay, Cashfree, PhonePe, CRED, Razorpay, Stripe). Features Weibull hazard retries, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice negotiation.">
   <meta name="keywords" content="OmniRevive-OS, Juspay, Cashfree, PhonePe, CRED, Razorpay, AI revenue recovery, failed payment recovery, smart mandate retry, UPI 2.0 recovery, NPCI switch telemetry, Weibull hazard curve, Qdrant vector memory, B2B voice agent, fintech payment control plane">
   <meta name="author" content="OmniRevive Core Engineering Team">
   <meta name="publisher" content="OmniRevive-OS">
@@ -22,8 +22,8 @@
   <!-- Open Graph / Facebook / LinkedIn / WhatsApp Social Previews -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://omnirevive-os.internal/">
-  <meta property="og:title" content="OmniRevive-OS | Universal AI Revenue Recovery Control Plane">
-  <meta property="og:description" content="Universal autonomous AI revenue recovery control plane with sub-millisecond diagnostics, dynamic UPI retries, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice resolution.">
+  <meta property="og:title" content="OmniRevive-OS | Autonomous AI Revenue Recovery Control Plane">
+  <meta property="og:description" content="Autonomous AI revenue recovery control plane with sub-millisecond diagnostics, dynamic UPI retries, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice resolution.">
   <meta property="og:image" content="/assets/aws_logo.png">
   <meta property="og:site_name" content="OmniRevive-OS">
   <meta property="og:locale" content="en_IN">
@@ -31,8 +31,8 @@
   <!-- Twitter / X Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://omnirevive-os.internal/">
-  <meta name="twitter:title" content="OmniRevive-OS | Universal AI Revenue Recovery Control Plane">
-  <meta name="twitter:description" content="Universal autonomous AI revenue recovery control plane for payment gateways with Weibull hazard retries and Qdrant semantic memory.">
+  <meta name="twitter:title" content="OmniRevive-OS | Autonomous AI Revenue Recovery Control Plane">
+  <meta name="twitter:description" content="Autonomous AI revenue recovery control plane for payment gateways with Weibull hazard retries and Qdrant semantic memory.">
   <meta name="twitter:image" content="/assets/aws_logo.png">
 
   <!-- Structured Data: JSON-LD Schema.org -->
@@ -41,10 +41,10 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "OmniRevive-OS",
-    "headline": "Universal Autonomous AI Revenue Recovery Control Plane",
+    "headline": "Autonomous AI Revenue Recovery Control Plane",
     "applicationCategory": "FinancialApplication, BusinessApplication",
     "operatingSystem": "Cloud, Web, Android",
-    "description": "High-throughput universal autonomous AI recovery engine for payment failures across Indian rails (Juspay, Cashfree, PhonePe, CRED, Razorpay), featuring dynamic Weibull hazard retry windows, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice negotiation FSM.",
+    "description": "High-throughput autonomous AI recovery engine for payment failures across Indian rails (Juspay, Cashfree, PhonePe, CRED, Razorpay), featuring dynamic Weibull hazard retry windows, Redis CAS idempotency, Qdrant vector memory, and trilingual B2B voice negotiation FSM.",
     "softwareVersion": "1.1.0",
     "url": "https://omnirevive-os.internal/",
     "creator": {
@@ -632,11 +632,46 @@
       height: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: var(--bg-page);
+    /* 3D OmniBot Mascot Animation */
+    @keyframes omnibotFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-6px) rotate(0.4deg);
+      }
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
+    @keyframes omnibotGlow {
+      0%, 100% {
+        opacity: 0.35;
+        transform: scale(0.96);
+      }
+      50% {
+        opacity: 0.75;
+        transform: scale(1.05);
+      }
+    }
+    .omnibot-animated-card {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+    }
+    .omnibot-animated-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px -8px rgba(12, 108, 242, 0.14), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+    }
+    .omnibot-character-container {
+      animation: omnibotFloat 4.2s ease-in-out infinite;
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+    .omnibot-ambient-glow {
+      animation: omnibotGlow 3.6s ease-in-out infinite;
+      will-change: opacity, transform;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .omnibot-character-container,
+      .omnibot-ambient-glow {
+        animation: none !important;
+      }
     }
   </style>
 <body class="min-h-screen flex flex-col antialiased selection:bg-[#0c55ea] selection:text-white">
@@ -747,7 +782,7 @@
       <!-- Top Beacon Tag -->
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-400/50 text-cyan-600 dark:text-cyan-300 text-xs font-bold shadow-sm backdrop-blur-md">
         <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-        <span>INDIA'S FIRST MULTI-RAIL REVENUE RECOVERY CONTROL PLANE</span>
+        <span>MULTI-RAIL AUTONOMOUS REVENUE RECOVERY CONTROL PLANE</span>
       </div>
 
       <!-- Hero Headline with Dynamic Typewriter Rotation Animation -->
@@ -813,8 +848,8 @@
             <span class="text-purple-500 text-sm">🔲</span>
             <span>VERIFIED INVARIANTS</span>
           </div>
-          <div class="text-3xl sm:text-4xl font-black text-purple-500 dark:text-purple-400 pt-1">465+ Tests</div>
-          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Cedar Policy &amp; Merkle Ledger</div>
+          <div class="text-3xl sm:text-4xl font-black text-purple-500 dark:text-purple-400 pt-1">475+ Tests</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">100% Passing Invariant Test Suite</div>
         </div>
 
       </div>
@@ -1963,109 +1998,347 @@ forbid (
     <!-- =========================================================================
          UNIQUELY HIGHLIGHTED SIGNATURE ENTERPRISE CONTROL PLANE FOOTER
          ========================================================================= -->
-    <footer id="showcase-governance" class="signature-enterprise-footer relative w-full text-xs overflow-hidden">
+    <footer id="showcase-governance" class="signature-enterprise-footer relative w-full overflow-hidden transition-colors" role="contentinfo">
       
-      <!-- Top Subtle Cyber Glow for Dark Theme -->
-      <div class="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-36 bg-gradient-to-r from-blue-600/20 via-sky-400/20 to-emerald-400/20 blur-3xl pointer-events-none"></div>
+      <!-- Top Subtle Cyber Ambient Glow (Dark Mode) -->
+      <div class="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-44 bg-gradient-to-r from-blue-600/10 via-cyan-500/10 to-emerald-500/10 blur-3xl pointer-events-none"></div>
 
-      <!-- Main Footer Grid -->
-      <div class="max-w-6xl mx-auto py-14 px-4 sm:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10">
+      <!-- Main Footer Grid (Desktop: 3-Part Architecture | Mobile: Intentional Stack) -->
+      <div class="max-w-7xl mx-auto pt-12 pb-8 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10 items-start">
         
-        <!-- Brand & Mission Column (Seamlessly Blended, No Bounding Box) -->
-        <div class="lg:col-span-2 space-y-4 pt-1">
-          <div class="flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#0c2340] via-[#0c55ea] to-[#38bdf8] p-0.5 shadow-md flex items-center justify-center shrink-0">
-              <div class="w-full h-full bg-[#081224] rounded-2xl flex items-center justify-center text-sky-400 font-black text-lg">
-                ⚡
+        <!-- =========================================================================
+             LEFT: COMPACT 3D GLASSMORPHISM RECOVERY ECOSYSTEM (Col 1-5)
+             ========================================================================= -->
+        <div class="lg:col-span-5 w-full space-y-3.5">
+          <div class="footer-glass-card rounded-2xl p-4 sm:p-5 relative overflow-hidden group cursor-pointer transition-all duration-300" onclick="triggerOmniBotSpeech()" title="OmniRevive Autonomous Recovery Engine — Tap to interact">
+            
+            <!-- Subtle Card Backdrop Glow -->
+            <div class="absolute -top-16 -left-16 w-36 h-36 rounded-full bg-cyan-500/10 dark:bg-cyan-500/15 blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-16 -right-16 w-36 h-36 rounded-full bg-blue-600/10 dark:bg-blue-600/15 blur-2xl pointer-events-none"></div>
+
+            <!-- Top Row: Floating "Failed Payments" Window & "Auto Recovery" Chips -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 relative z-10">
+              
+              <!-- Failed Payments Mini Dashboard Window -->
+              <div class="flex-1 rounded-xl bg-slate-50/90 dark:bg-[#060e1d]/90 border border-slate-200/90 dark:border-slate-800 p-3 shadow-xs space-y-2">
+                <!-- Window Header Bar -->
+                <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-800/80">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                    <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 tracking-tight">Failed Payments</span>
+                  </div>
+                  <span class="text-[9px] font-mono text-slate-400 dark:text-slate-500">live stream</span>
+                </div>
+                
+                <!-- 4 Real Transaction Line Items -->
+                <div class="space-y-1.5 text-[10.5px]">
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span class="text-slate-400 dark:text-slate-600">UPI</span> ₹2,499
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold font-mono bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400">Failed</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span class="text-slate-400 dark:text-slate-600">CARD</span> ₹6,799
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold font-mono bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400">Failed</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span class="text-slate-400 dark:text-slate-600">ENACH</span> ₹1,299
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold font-mono bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400">Failed</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <span class="text-slate-400 dark:text-slate-600">UPI</span> ₹4,800
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded text-[9px] font-bold font-mono bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400">Failed</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Right Stack: Auto Recovery Chip & Revenue Growth Graph -->
+              <div class="flex sm:flex-col gap-2.5 justify-between sm:justify-start">
+                <!-- Auto Recovery Pill -->
+                <button onclick="event.stopPropagation(); openFeatureDetailModal('fast_loop');" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-[10.5px] font-bold flex items-center gap-2 shadow-xs shrink-0 transition cursor-pointer" title="Inspect Autonomous Fast-Loop Recovery Architecture">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                  <span>Auto Recovery</span>
+                </button>
+
+                <!-- Rising Revenue Analytics Bar Graph -->
+                <div class="p-2.5 rounded-xl bg-slate-50/90 dark:bg-[#060e1d]/90 border border-slate-200/90 dark:border-slate-800 flex items-end gap-1.5 h-20 shadow-xs justify-center flex-1 sm:flex-initial cursor-pointer" onclick="event.stopPropagation(); openFeatureDetailModal('financial_yield');" title="View Financial Yield & ARR Forecaster">
+                  <div class="w-2.5 bg-gradient-to-t from-blue-600 to-sky-400 rounded-xs h-6 footer-bar-anim-1"></div>
+                  <div class="w-2.5 bg-gradient-to-t from-blue-600 to-sky-400 rounded-xs h-10 footer-bar-anim-2"></div>
+                  <div class="w-2.5 bg-gradient-to-t from-blue-600 to-sky-400 rounded-xs h-8 footer-bar-anim-3"></div>
+                  <div class="w-2.5 bg-gradient-to-t from-blue-600 to-emerald-400 rounded-xs h-14 footer-bar-anim-4"></div>
+                </div>
+              </div>
+
             </div>
-            <div>
-              <div class="text-lg font-black footer-title text-[#0c2340] dark:text-white tracking-tight flex items-center gap-2">
-                <span>OmniRevive</span><span class="text-[#0c6cf2] dark:text-sky-400">-OS</span>
-                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 mono uppercase">ENTERPRISE CORE</span>
+
+            <!-- Bottom Row: 3 Stacked Recovery Books + Terminal Node + Shield -->
+            <div class="mt-3.5 pt-3 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs relative z-10">
+              
+              <!-- 3 Stacked Books/Cards -->
+              <div class="flex flex-col gap-1 text-[9.5px] font-bold tracking-tight">
+                <button onclick="event.stopPropagation(); openFeatureDetailModal('fast_loop');" class="px-2 py-0.5 rounded bg-sky-100 hover:bg-sky-200 dark:bg-sky-500/20 dark:hover:bg-sky-500/30 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-500/30 flex items-center gap-1 transition cursor-pointer text-left" title="Payment Recovery Fast-Loop Architecture">
+                  <span>📘</span> Payment Recovery
+                </button>
+                <button onclick="event.stopPropagation(); openFeatureDetailModal('ptp_calendar');" class="px-2 py-0.5 rounded bg-emerald-100 hover:bg-emerald-200 dark:bg-emerald-500/20 dark:hover:bg-emerald-500/30 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/30 flex items-center gap-1 transition cursor-pointer text-left" title="PTP Mandate Control Matrix">
+                  <span>📗</span> Mandate Control
+                </button>
+                <button onclick="event.stopPropagation(); openFeatureDetailModal('financial_yield');" class="px-2 py-0.5 rounded bg-indigo-100 hover:bg-indigo-200 dark:bg-indigo-500/20 dark:hover:bg-indigo-500/30 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30 flex items-center gap-1 transition cursor-pointer text-left" title="Financial Yield & ROI Forecaster">
+                  <span>📙</span> Revenue Growth
+                </button>
               </div>
-              <p class="text-[10px] footer-desc text-slate-500 dark:text-slate-400 font-medium">Universal Autonomous AI Revenue Recovery Control Plane</p>
+
+              <!-- Recovery Active Shield Indicator & Torus Brand Tag -->
+              <div class="flex items-center gap-3">
+                <!-- Recovery Active Badge -->
+                <button onclick="event.stopPropagation(); openAwsCedarModal();" class="p-2 rounded-xl bg-slate-100/90 hover:bg-slate-200/90 dark:bg-[#0c1b33] dark:hover:bg-[#112444] border border-cyan-200 dark:border-cyan-500/30 hover:border-cyan-400 text-[10px] space-y-0.5 shadow-xs transition cursor-pointer text-left" title="Click to inspect AWS Cedar Zero-Trust policy engine">
+                  <div class="flex items-center gap-1.5 font-bold text-cyan-700 dark:text-cyan-300">
+                    <svg class="w-3.5 h-3.5 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                    <span>Recovery Active</span>
+                  </div>
+                  <div class="text-[9px] text-slate-400 font-mono">0.23ms CAS MUTEX ›</div>
+                </button>
+
+                <!-- Coffee Mug / Agent Beacon -->
+                <button onclick="event.stopPropagation(); triggerOmniBotSpeech();" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-100 to-white dark:from-[#0c182c] dark:to-[#1e3a6a] border border-slate-300 dark:border-sky-500/30 flex items-center justify-center shadow-xs group-hover:scale-105 hover:border-sky-400 transition cursor-pointer" title="OmniBot Voice Telemetry">
+                  <div class="w-4 h-4 rounded-full border-2 border-sky-400 animate-pulse"></div>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Micro Click prompt -->
+            <div class="mt-2 text-[9px] text-slate-400 dark:text-slate-500 flex items-center gap-1 font-mono">
+              <span>⚡ Tap dashboard to trigger OmniBot voice telemetry</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- =========================================================================
+             CENTER: OMNIREVIVE-OS BRAND IDENTITY & MISSION STATEMENT (Col 6-8)
+             ========================================================================= -->
+        <div class="lg:col-span-3 flex flex-col justify-start pt-1 space-y-3">
+          
+          <!-- Logo: Torus Circle + Typography -->
+          <div class="flex items-center gap-2.5 select-none cursor-pointer" onclick="openFeatureDetailModal('overview')" title="OmniRevive-OS Platform Overview">
+            <svg class="w-9 h-9 shrink-0 drop-shadow-sm" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="omniFooterBrandLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="45%" stop-color="#2563eb"/>
+                  <stop offset="100%" stop-color="#1e40af"/>
+                </linearGradient>
+              </defs>
+              <circle cx="20" cy="20" r="13" stroke="url(#omniFooterBrandLogoGrad)" stroke-width="6.5"/>
+            </svg>
+            <div class="flex items-baseline text-2xl font-black tracking-tight">
+              <span class="text-slate-900 dark:text-white">Omni Revive</span>
+              <span class="text-blue-600 dark:text-sky-400 ml-1.5">OS</span>
             </div>
           </div>
 
-          <p class="text-xs footer-desc text-slate-600 dark:text-slate-300 leading-relaxed max-w-sm">
-            Autonomous multi-rail revenue recovery across 18 failure topologies (Juspay, PhonePe, CRED, Cashfree, Razorpay). Powered by Weibull temporal hazard models and AWS Cedar zero-trust governance.
+          <!-- Headline -->
+          <p class="text-slate-700 dark:text-slate-300 font-semibold text-[15px] leading-snug">
+            Smarter recovery. Stronger revenue.<br>
+            Built for what matters.
           </p>
 
-          <!-- Live Telemetry Badges -->
-          <div class="pt-1 flex flex-wrap items-center gap-2 text-[10px] font-mono">
-            <span class="px-2.5 py-1 rounded-full footer-badge-emerald bg-emerald-50 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 flex items-center gap-1.5 font-bold shadow-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
-              <span>18/18 SWITCHES ONLINE</span>
-            </span>
-            <span class="px-2.5 py-1 rounded-full footer-badge-sky bg-sky-50 dark:bg-sky-500/15 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-bold shadow-sm">
-              CAS 0.23ms MUTEX
-            </span>
-            <span class="px-2.5 py-1 rounded-full footer-badge-purple bg-purple-50 dark:bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30 font-bold shadow-sm">
-              SHA-256 MERKLE SEALED
-            </span>
+          <!-- Gradient Accent Line -->
+          <div class="w-8 h-1 rounded-full bg-gradient-to-r from-teal-400 via-sky-400 to-blue-600 shadow-xs"></div>
+
+          <!-- Supporting Text -->
+          <p class="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">
+            AI-powered revenue recovery &amp;<br>
+            intelligent mandate control plane.
+          </p>
+
+          <!-- Micro-Telemetry Tags -->
+          <div class="flex flex-wrap gap-1.5 pt-1 text-[9.5px] font-mono">
+            <button onclick="openFeatureDetailModal('npci_switch');" class="px-2 py-0.5 rounded bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-bold transition cursor-pointer" title="Inspect 18/18 Multi-Rail Switches Radar">18/18 SWITCHES</button>
+            <button onclick="openFeatureDetailModal('audit_ledger');" class="px-2 py-0.5 rounded bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/10 dark:hover:bg-sky-500/20 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-bold transition cursor-pointer" title="Inspect SHA-256 Merkle Ledger">SHA-256</button>
           </div>
+
         </div>
 
-        <!-- Col 1: Recovery Engines -->
-        <div class="space-y-3 pt-2">
-          <div class="text-xs font-bold footer-title text-[#0c2340] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-[#0c6cf2] dark:text-sky-400">⚡</span>
-            <span>Recovery Engines</span>
+        <!-- =========================================================================
+             RIGHT: NAVIGATION COLUMNS (Col 9-12)
+             ========================================================================= -->
+        <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-1">
+          
+          <!-- Column 1: Recovery Engines -->
+          <div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <span class="text-[#0c6cf2] dark:text-sky-400">⚡</span>
+              <span>Engines</span>
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('fast_loop');" class="footer-nav-link group" title="B2C Autonomous Fast-Loop Recovery">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Fast Loop</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('deep_loop');" class="footer-nav-link group" title="B2B Voice FSM & Objection Engine">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+                  <span>Deep Loop</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('bulk_recovery');" class="footer-nav-link group" title="Enterprise Bulk CSV Batch Processing">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                  <span>Bulk Batch</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('financial_yield');" class="footer-nav-link group" title="Financial Yield & ARR Forecaster">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                  <span>Yield ROI</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('cfo_approvals');" class="footer-nav-link group" title="CFO Dual-Key Approval & Governance">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  <span>CFO Queue</span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul class="space-y-2.5 text-xs">
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('fast_loop');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Fast-Loop Ingestion</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('deep_loop');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Deep-Loop Voice FSM</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('bulk_recovery');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Bulk CSV Recovery</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('financial_yield');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Financial Yield Forecaster</a></li>
-          </ul>
-        </div>
 
-        <!-- Col 2: Rails & Switches -->
-        <div class="space-y-3 pt-2">
-          <div class="text-xs font-bold footer-title text-[#0c2340] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-emerald-600 dark:text-emerald-400">📡</span>
-            <span>Payment Rails</span>
+          <!-- Column 2: Banking & Rails -->
+          <div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <span class="text-emerald-600 dark:text-emerald-400">📡</span>
+              <span>Rails</span>
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('npci_switch');" class="footer-nav-link group" title="NPCI Dynamic Switch Radar">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>
+                  <span>NPCI Switch</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('card_tokens');" class="footer-nav-link group" title="RBI CoFT Card Token Lifecycle">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                  <span>Card Tokens</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('ptp_calendar');" class="footer-nav-link group" title="Promise-To-Pay Calendar Matrix">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span>PTP Matrix</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('overview');" class="footer-nav-link group" title="Multi-Rail Gateway Switcher">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <span>Multi-Rail Hub</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('sandbox');" class="footer-nav-link group" title="Interactive Multi-Bank SRE Sandbox Lab">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span>Live Sandbox</span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul class="space-y-2.5 text-xs">
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('npci_switch');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> NPCI Switch Radar</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('card_tokens');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Card Token Lifecycle</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('ptp_calendar');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> PTP Scheduling Matrix</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('overview');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Multi-Rail Gateways</a></li>
-          </ul>
-        </div>
 
-        <!-- Col 3: Zero-Trust & SRE -->
-        <div class="space-y-3 pt-2">
-          <div class="text-xs font-bold footer-title text-[#0c2340] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-purple-600 dark:text-purple-400">🛡️</span>
-            <span>Zero-Trust &amp; Audit</span>
+          <!-- Column 3: Security & Governance -->
+          <div>
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <span class="text-purple-600 dark:text-purple-400">🛡️</span>
+              <span>Security</span>
+            </h3>
+            <ul class="space-y-1">
+              <li>
+                <a href="javascript:void(0)" onclick="openAwsCedarModal();" class="footer-nav-link group" title="AWS Cedar Zero-Trust Formal Policy Engine">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  <span>Cedar Security</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('audit_ledger');" class="footer-nav-link group" title="SHA-256 Immutable Audit Ledger">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  <span>Audit Ledger</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('evaluation');" class="footer-nav-link group" title="100-Case Production Evaluation Suite">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                  <span>Benchmarks</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('red_team');" class="footer-nav-link group" title="Red-Team Adversarial Attack Lab">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                  <span>Attack Lab</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="openFeatureDetailModal('cloudflare_sre');" class="footer-nav-link group" title="Cloudflare 25 Edge Infrastructure & SRE">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                  <span>Cloudflare SRE</span>
+                </a>
+              </li>
+            </ul>
           </div>
-          <ul class="space-y-2.5 text-xs">
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('policy_engine');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> AWS Cedar Policy Engine</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('audit_ledger');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> SHA-256 Merkle Ledger</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('evaluation');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Ragas &amp; DeepEval Suite</a></li>
-            <li><a href="javascript:void(0)" onclick="openFeatureDetailModal('red_team');" class="footer-link text-slate-600 dark:text-slate-400 hover:text-[#0c6cf2] dark:hover:text-sky-300 transition flex items-center gap-1 group font-medium"><span class="text-slate-400 dark:text-slate-600 group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 group-hover:translate-x-0.5 transition">›</span> Red-Team Attack Lab</a></li>
-          </ul>
+
         </div>
 
       </div>
 
-      <!-- Bottom Bar with Cryptographic Seal & Compliance -->
-      <div class="footer-vault-bar border-t border-sky-200/80 dark:border-slate-800/80 bg-[#e2eefa] dark:bg-[#010308] py-5 px-4 sm:px-8">
-        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 text-[11px] text-slate-600 dark:text-slate-400">
-          <div class="flex items-center gap-2">
+      <!-- =========================================================================
+           BOTTOM BAR: COPYRIGHT & LEGAL LINKS WITH RBI COMPLIANCE
+           ========================================================================= -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="border-t border-slate-200/80 dark:border-slate-800/80 pt-5 pb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          
+          <!-- Copyright & Logo Lockup -->
+          <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <svg class="w-4 h-4 shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="13" stroke="url(#omniFooterBrandLogoGrad)" stroke-width="7"/>
+            </svg>
             <span>© 2026 OmniRevive-OS. Enterprise Revenue Recovery Control Plane.</span>
           </div>
-          <div class="flex flex-wrap items-center gap-5 font-mono text-[10px]">
-            <span class="flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400 font-bold">
-              <span>🔒</span> 100% RBI &amp; TRAI Non-Coercive Verified
-            </span>
-            <span class="flex items-center gap-1.5 text-[#0c6cf2] dark:text-sky-400 font-bold">
-              <span>📜</span> Merkle Seal: 0x9f82...1a3b
-            </span>
-            <span class="text-slate-500">ISO/IEC 27001 · PCI-DSS Level 1</span>
+
+          <!-- Compliance & Live Badges -->
+          <div class="flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <a href="javascript:void(0)" onclick="openFeatureDetailModal('rbi_coft');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1 font-medium" title="Inspect RBI & TRAI Governance Spec">
+              <span>🔒</span> 100% RBI &amp; TRAI Non-Coercive
+            </a>
+            <span class="text-slate-300 dark:text-slate-700">|</span>
+            <a href="javascript:void(0)" onclick="openFeatureDetailModal('audit_ledger');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1 font-mono font-bold text-sky-600 dark:text-sky-400" title="Inspect Cryptographic Ledger">
+              <span>📜</span> Merkle: 0x9f82...1a3b
+            </a>
+            <span class="text-slate-300 dark:text-slate-700">|</span>
+            <a href="javascript:void(0)" onclick="openFeatureDetailModal('docs');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Interactive OpenAPI Architecture Spec">
+              <span>📚</span> OpenAPI Spec
+            </a>
+            <span class="text-slate-300 dark:text-slate-700">|</span>
+            <a href="/health" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Live SRE Health Endpoint">
+              <span>🟢</span> SRE Health
+            </a>
+            <span class="text-slate-300 dark:text-slate-700">|</span>
+            <a href="javascript:void(0)" onclick="openFeatureDetailModal('cloudflare_sre');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Cloudflare 25 Edge Services Matrix">
+              <span>☁️</span> Cloudflare 25
+            </a>
+            <span class="text-slate-300 dark:text-slate-700">|</span>
+            <a href="javascript:void(0)" onclick="openFeatureDetailModal('terms_of_service');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="99.999% Enterprise SLA Terms">
+              <span>⚖️</span> SLA Terms
+            </a>
           </div>
+
         </div>
       </div>
 
@@ -3740,7 +4013,7 @@ forbid (
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
               <span>📋 Batch Payment Diagnostics & Action Plan</span>
             </h3>
-            <span class="text-xs mono text-slate-400" id="bulk-table-count">Showing 25 transactions</span>
+            <span class="text-xs mono text-slate-400" id="bulk-table-count">Showing 4 diagnosed transactions</span>
           </div>
 
           <div class="overflow-x-auto">
@@ -3759,7 +4032,50 @@ forbid (
                 </tr>
               </thead>
               <tbody id="bulk-table-body" class="divide-y divide-[#142442]">
-                <!-- Batch items rendered here -->
+                <tr class="hover:bg-[#081224] transition-colors">
+                  <td class="p-2.5 text-white font-medium">pay_9A12BC34DE</td>
+                  <td class="p-2.5 text-emerald-400 font-bold">₹2,499</td>
+                  <td class="p-2.5 text-slate-300">HDFC</td>
+                  <td class="p-2.5 text-sky-400">GATEWAY_TIMEOUT</td>
+                  <td class="p-2.5 text-slate-200">SciPy Weibull Hazard (k=1.42)</td>
+                  <td class="p-2.5 text-slate-300">Reschedule to Hazard Peak</td>
+                  <td class="p-2.5 text-purple-300">+45m (91.4% prob)</td>
+                  <td class="p-2.5 text-slate-300">0.94</td>
+                  <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">ALLOWED</span></td>
+                </tr>
+                <tr class="hover:bg-[#081224] transition-colors">
+                  <td class="p-2.5 text-white font-medium">pay_8B34CD56EF</td>
+                  <td class="p-2.5 text-emerald-400 font-bold">₹18,500</td>
+                  <td class="p-2.5 text-slate-300">ICICI</td>
+                  <td class="p-2.5 text-sky-400">SOFT_DECLINE</td>
+                  <td class="p-2.5 text-slate-200">1-Click WhatsApp Dynamic UPI</td>
+                  <td class="p-2.5 text-slate-300">Dispatch Instant UPI QR</td>
+                  <td class="p-2.5 text-purple-300">Immediate (+0m)</td>
+                  <td class="p-2.5 text-slate-300">0.96</td>
+                  <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">ALLOWED</span></td>
+                </tr>
+                <tr class="hover:bg-[#081224] transition-colors">
+                  <td class="p-2.5 text-white font-medium">pay_7C56DE78GH</td>
+                  <td class="p-2.5 text-emerald-400 font-bold">₹54,000</td>
+                  <td class="p-2.5 text-slate-300">SBI</td>
+                  <td class="p-2.5 text-sky-400">B2B_INVOICE_DISPUTE</td>
+                  <td class="p-2.5 text-slate-200">Deep-Loop Voice Agent (Telugu/Hindi)</td>
+                  <td class="p-2.5 text-slate-300">Autonomous Voice Turn &amp; PTP Lock</td>
+                  <td class="p-2.5 text-purple-300">PTP +48h</td>
+                  <td class="p-2.5 text-slate-300">0.89</td>
+                  <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">ALLOWED</span></td>
+                </tr>
+                <tr class="hover:bg-[#081224] transition-colors">
+                  <td class="p-2.5 text-white font-medium">pay_6D78EF90IJ</td>
+                  <td class="p-2.5 text-emerald-400 font-bold">₹3,200</td>
+                  <td class="p-2.5 text-slate-300">Axis</td>
+                  <td class="p-2.5 text-sky-400">CRYPTOGRAM_EXPIRED</td>
+                  <td class="p-2.5 text-slate-200">Token Reprovisioning (Visa VTS)</td>
+                  <td class="p-2.5 text-slate-300">Zero-Friction Re-Tokenize</td>
+                  <td class="p-2.5 text-purple-300">Immediate (+0m)</td>
+                  <td class="p-2.5 text-slate-300">0.97</td>
+                  <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">ALLOWED</span></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -3847,7 +4163,7 @@ forbid (
                 </div>
               </div>
               <div class="text-[11px] text-slate-400 pt-2 border-t border-[#142442]" id="token-res-desc">
-                The stored token cryptogram has expired past the 24-hour network validity window. RazorRevive-OS automatically calls Visa VTS / Mastercard MDES API to reprovision a fresh cryptogram without disrupting checkout conversion.
+                The stored token cryptogram has expired past the 24-hour network validity window. OmniRevive-OS automatically calls Visa VTS / Mastercard MDES API to reprovision a fresh cryptogram without disrupting checkout conversion.
               </div>
             </div>
 
@@ -3885,10 +4201,10 @@ forbid (
               </svg>
               <span>Enterprise Financial Yield & GMV Recovery Modeling</span>
             </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Mathematical projection model calibrated on 100-case empirical test suite and local zero-cost AI architecture</p>
+            <p class="text-xs text-slate-400 mt-0.5">Mathematical projection model calibrated on 100-case empirical test suite with dual-engine local edge and AWS Bedrock orchestration</p>
           </div>
           <span class="px-3 py-1 rounded-full text-xs font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 mono">
-            100% Local AI (₹0 Cloud API Bills)
+            Dual-Engine AI (Local Edge ₹0 + AWS Bedrock Cloud)
           </span>
         </div>
 
@@ -4160,7 +4476,7 @@ forbid (
 
           <!-- Terminal Container -->
           <div class="p-4 rounded-xl bg-[#02050c] border border-[#111d31] font-mono text-xs space-y-2 max-h-[500px] overflow-y-auto" id="live-logs-container">
-            <div class="text-slate-400">[INFO] RazorRevive-OS Control Plane Initialized in Local Sandbox Mode.</div>
+            <div class="text-slate-400">[INFO] OmniRevive-OS Control Plane Initialized in Local Sandbox Mode.</div>
             <div class="text-emerald-400">{"module": "Security", "event": "HMAC SHA-256 Verifier & Distributed Idempotency Mutex active."}</div>
             <div class="text-sky-400">{"module": "Policy", "event": "TRAI Quiet Hours (21:00-09:00 IST) & Discount Clamping (<=10%, <=500 INR) active."}</div>
             <div class="text-purple-400">{"module": "Telemetry", "event": "Live NPCI UPI Switch Ingestion listening across 7 major banking rails."}</div>
@@ -4224,7 +4540,7 @@ forbid (
               <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
               </svg>
-              <span>RazorRevive-OS System Architecture & Track 03 Playbook</span>
+              <span>OmniRevive-OS System Architecture & Multi-Rail Playbook</span>
             </h2>
             <p class="text-xs text-slate-400 mt-0.5">Comprehensive engineering design document, REST API reference, and video walkthrough</p>
           </div>
@@ -4303,7 +4619,7 @@ forbid (
                   <th class="p-2">Architecture</th>
                   <th class="p-2">Operational Mechanism</th>
                   <th class="p-2">Core Limitation</th>
-                  <th class="p-2 text-sky-400">RazorRevive-OS Advantage</th>
+                  <th class="p-2 text-sky-400">OmniRevive-OS Advantage</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[#142442] text-slate-300">
@@ -4789,8 +5105,8 @@ forbid (
               <option value="Can you offer a prompt settlement discount on this invoice?">
                 "Can you offer a prompt settlement discount on this invoice?" (English Discount)
               </option>
-              <option value="Hello Neerja, who are you and how does RazorRevive work?">
-                "Hello Neerja, who are you and how does RazorRevive work?" (English Platform Overview)
+              <option value="Hello Neerja, who are you and how does OmniRevive work?">
+                "Hello Neerja, who are you and how does OmniRevive work?" (English Platform Overview)
               </option>
             </optgroup>
           </select>
@@ -5227,6 +5543,8 @@ forbid (
       if (landing) landing.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+    window.launchControlPlane = launchControlPlane;
+    window.returnToShowcase = returnToShowcase;
 
     // ==========================================
     // LANDING GATEWAY INTERACTIVE ACTIONS & RESILIENT FALLBACKS
@@ -5869,7 +6187,7 @@ forbid (
       }
 
       // Offline Hermetic Simulator Fallback (Ensures zero-crash local execution)
-      console.warn(`[RazorRevive UI] Backend unreachable at ${url}. Engaging Hermetic Client Simulator.`);
+      console.warn(`[OmniRevive UI] Backend unreachable at ${url}. Engaging Hermetic Client Simulator.`);
 
       if (url.includes("/api/v1/simulate/failure")) {
         const errCode = body?.error_code || "GATEWAY_ERROR";
@@ -6260,7 +6578,7 @@ forbid (
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `razorrevive_batch_resolution_${Date.now()}.csv`;
+      a.download = `omnirevive_batch_resolution_${Date.now()}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -6532,7 +6850,7 @@ forbid (
         ];
 
         const cert = {
-          protocol: "RazorRevive-OS SHA-256 Tamper-Evident Audit Proof",
+          protocol: "OmniRevive-OS SHA-256 Tamper-Evident Audit Proof",
           exported_at_utc: new Date().toISOString(),
           verification_status: "VERIFIED_VALID",
           chain_valid: true,
@@ -6546,7 +6864,7 @@ forbid (
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `razorrevive_audit_certificate_${Date.now()}.json`;
+        a.download = `omnirevive_audit_certificate_${Date.now()}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -7949,7 +8267,7 @@ forbid (
         const payId = document.getElementById("wa-order-id")?.textContent || "pay_9A12BC34DE";
         const amtStr = document.getElementById("wa-amount")?.textContent || "₹2,499.00";
         const amt = parseFloat(amtStr.replace(/[^0-9.]/g, "")) || 2499.0;
-        const upiUri = `upi://pay?pa=razorrevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&tr=${payId}&cu=INR&tn=Invoice+Recovery`;
+        const upiUri = `upi://pay?pa=omnirevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&tr=${payId}&cu=INR&tn=Invoice+Recovery`;
 
         const mount = document.getElementById("wa-qr-code-mount");
         if (mount) {
@@ -8024,7 +8342,7 @@ forbid (
     function copyUpiIntentUri() {
       const amtInput = document.getElementById("fast-amount");
       const amt = amtInput ? parseFloat(amtInput.value) || 2499.0 : 2499.0;
-      const uri = `upi://pay?pa=razorrevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&cu=INR&tn=Invoice+Recovery`;
+      const uri = `upi://pay?pa=omnirevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&cu=INR&tn=Invoice+Recovery`;
       navigator.clipboard.writeText(uri).then(() => {
         showToast("UPI Intent URI copied to clipboard!", "success");
       });
@@ -8476,7 +8794,7 @@ forbid (
           <span>Navigate: <kbd class="font-bold mono">↑</kbd> <kbd class="font-bold mono">↓</kbd></span>
           <span>Select: <kbd class="font-bold mono">↵ Enter</kbd></span>
         </div>
-        <span>RazorRevive-OS Command Palette</span>
+        <span>OmniRevive-OS Command Palette</span>
       </div>
     </div>
   </div>
@@ -8654,7 +8972,7 @@ forbid (
               </div>
 
               <div class="text-[9.5px] text-[#8696a0] mono">
-                VPA: <span class="text-white">razorrevive.merchant@razorpay</span>
+                VPA: <span class="text-white">omnirevive.merchant@razorpay</span>
               </div>
 
               <button onclick="simulateUpiAppPayment('UPI QR Scan')" class="w-full py-1.5 bg-[#00a884] hover:bg-[#008f6f] text-white text-[10px] font-bold rounded-lg shadow transition">
@@ -8960,7 +9278,7 @@ forbid (
       <div class="bg-slate-50 dark:bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-slate-200 dark:border-[#1e293b] flex justify-between items-center text-[11px] text-slate-600 dark:text-slate-400">
         <span class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="font-medium">RazorRevive Control Plane • Enterprise Zero-Trust Pipeline • Production Hardened 2026</span>
+          <span class="font-medium">OmniRevive Control Plane • Enterprise Multi-Rail Pipeline • Production Hardened 2026</span>
         </span>
         <button onclick="closeAwsCedarModal()" class="px-3.5 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold rounded-lg text-xs transition cursor-pointer shadow-sm">
           Close Inspector
@@ -9046,8 +9364,8 @@ forbid (
     const COPILOT_MODES_DATA = {
       Ask: {
         heroHtml: `
-          <div>Hey Sanmudh! 👋</div>
-          <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+          <div>Hey Samrudh! 👋</div>
+          <div>I'm your <strong>OmniRevive SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
           <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
         `,
         badge: "SRE Intelligence",
@@ -9534,7 +9852,7 @@ forbid (
         } else if (text.includes("sbi") || text.includes("hdfc") || text.includes("504") || text.includes("weibull") || text.includes("hazard") || text.includes("retry") || text.includes("downtime") || text.includes("outage")) {
           return "⚡ **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n" +
                  "Traditional gateways retry failed bank charges instantly, causing cascading 504 gateway timeouts.\n\n" +
-                 "RazorRevive-OS solves this using a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
+                 "OmniRevive-OS solves this using a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
                  "1. Calculates recovery half-life dynamics from live NPCI switch signals.\n" +
                  "2. Dynamically mode-shifts the retry window to the mathematical peak at **+45 minutes**.\n" +
                  "3. Boosts cohort recovery yield from a 42.24% baseline to **78.39%** without triggering bank rate limits.";
@@ -9551,7 +9869,7 @@ forbid (
                  "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n" +
                  "3. Guaranteed **0 double-debit collisions and 0 idempotency violations** under extreme network chaos.";
         } else if (text.includes("architecture") || text.includes("3-tier") || text.includes("tier") || text.includes("how does") || text.includes("overview") || text.includes("control plane")) {
-          return "🏛️ **RazorRevive-OS Three-Tier Financial Isolation Boundary**:\n\n" +
+          return "🏛️ **OmniRevive-OS Three-Tier Financial Isolation Boundary**:\n\n" +
                  "• **Tier 1 (Ingestion & Mutex)**: HMAC-SHA256 signature verification, replay drift checks (<300s), and atomic CAS idempotency locks.\n" +
                  "• **Tier 2 (AI Reasoning Kernel)**: Fast-Loop Weibull hazard survival models & Deep-Loop B2B Hinglish conversational negotiation.\n" +
                  "• **Tier 3 (Deterministic Policy Engine)**: Hard mathematical guardrails enforcing TRAI quiet-hours (21:00-09:00 IST), discount clamping (min(10%, ₹500)), and immutable SHA-256 audit chaining.";
@@ -9566,10 +9884,10 @@ forbid (
                  "$$\\text{Hash}_n = \\text{SHA-256}(\\text{Hash}_{n-1} + \\text{EventData})$$\n" +
                  "Continuous verification from Genesis (`0000...`) to Head guarantees that tampering with historical records immediately breaks the cryptographic proof.";
         } else if (text.includes("stripe") || text.includes("netflix") || text.includes("uber") || text.includes("competitor") || text.includes("difference")) {
-          return "🏆 **RazorRevive-OS vs. Tier-1 Industry Systems**:\n\n" +
-                 "• **vs. Stripe Smart Retries**: Stripe optimizes discrete time slots on unconstrained credit cards. RazorRevive-OS uses continuous Weibull hazard models adapted for Indian attempt caps (NPCI pre-debit notices & NACH return fees).\n" +
-                 "• **vs. Netflix Dunning**: Netflix does silent retries on ₹499 consumer plans. RazorRevive-OS handles high-value commercial B2B invoices (>₹50,000) with conversational voice negotiation.\n" +
-                 "• **vs. Uber Arrears**: Uber waits for the next ride. RazorRevive-OS mathematically manufactures the recovery trigger at the Weibull hazard peak via 1-Click WhatsApp UPI Intent links.";
+          return "🏆 **OmniRevive-OS vs. Tier-1 Industry Systems**:\n\n" +
+                 "• **vs. Stripe Smart Retries**: Stripe optimizes discrete time slots on unconstrained credit cards. OmniRevive-OS uses continuous Weibull hazard models adapted for Indian attempt caps (NPCI pre-debit notices & NACH return fees).\n" +
+                 "• **vs. Netflix Dunning**: Netflix does silent retries on ₹499 consumer plans. OmniRevive-OS handles high-value commercial B2B invoices (>₹50,000) with conversational voice negotiation.\n" +
+                 "• **vs. Uber Arrears**: Uber waits for the next ride. OmniRevive-OS mathematically manufactures the recovery trigger at the Weibull hazard peak via 1-Click WhatsApp UPI Intent links.";
         } else if (text.includes("benchmark") || text.includes("yield") || text.includes("rate") || text.includes("score") || text.includes("gmv") || text.includes("results")) {
           return "📊 **100-Batch Empirical Benchmark Performance**:\n\n" +
                  "• **Live Net Recovery Yield**: **78.39%** (vs 42.24% static retry baseline).\n" +
@@ -9577,8 +9895,8 @@ forbid (
                  "• **Mean Orchestration Latency**: **18.4ms** per transaction.\n" +
                  "• **Compliance Violations**: Exactly **0** breaches of TRAI or DPDP guardrails.";
         } else {
-          return `🤖 **Razor Copilot Architectural Intelligence**:\n\n` +
-                 "RazorRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
+          return `🤖 **OmniRevive Copilot Architectural Intelligence**:\n\n` +
+                 "OmniRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
                  "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
                  "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
                  "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.";
@@ -10245,8 +10563,8 @@ forbid (
               </button>
             </div>
             <div class="copilot-msg-content leading-relaxed text-[11.5px] space-y-1">
-              <div>Hey Sanmudh! 👋</div>
-              <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+              <div>Hey Samrudh! 👋</div>
+              <div>I'm your <strong>OmniRevive SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
               <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
             </div>
           </div>

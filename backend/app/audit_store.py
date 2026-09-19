@@ -254,19 +254,31 @@ class CryptographicAuditLedger:
             "message": f"Successfully verified {len(rows)} chained audit records with 0 tampering detected."
         }
 
-    def get_events(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def get_events(self, limit: int = 50, merchant_id: Optional[str] = None) -> List[Dict[str, Any]]:
         self._init_db()
         conn = get_db_connection(self.db_path)
         cursor = conn.cursor()
-        cursor.execute("""
-            SELECT sequence_id, event_id, trace_id, timestamp, merchant_id,
-                   payment_id, event_type, failure_class, decision_json,
-                   policy_verdict, action_taken, gateway_result_json,
-                   prev_hash, current_hash
-            FROM audit_chain_ledger
-            ORDER BY sequence_id DESC
-            LIMIT ?
-        """, (limit,))
+        if merchant_id:
+            cursor.execute("""
+                SELECT sequence_id, event_id, trace_id, timestamp, merchant_id,
+                       payment_id, event_type, failure_class, decision_json,
+                       policy_verdict, action_taken, gateway_result_json,
+                       prev_hash, current_hash
+                FROM audit_chain_ledger
+                WHERE merchant_id = ?
+                ORDER BY sequence_id DESC
+                LIMIT ?
+            """, (merchant_id, limit))
+        else:
+            cursor.execute("""
+                SELECT sequence_id, event_id, trace_id, timestamp, merchant_id,
+                       payment_id, event_type, failure_class, decision_json,
+                       policy_verdict, action_taken, gateway_result_json,
+                       prev_hash, current_hash
+                FROM audit_chain_ledger
+                ORDER BY sequence_id DESC
+                LIMIT ?
+            """, (limit,))
         
         rows = cursor.fetchall()
         events = []

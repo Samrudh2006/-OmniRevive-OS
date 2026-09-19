@@ -52,6 +52,7 @@ from backend.app.routes.memory import router as memory_router
 from backend.app.routes.gateways import router as gateways_router
 from backend.app.routes.evaluation import router as evaluation_router
 from backend.app.routes.live_stream import router as live_stream_router
+from backend.app.routes.cloudflare import router as cloudflare_router
 
 TAGS_METADATA = [
     {
@@ -139,11 +140,12 @@ async def add_security_headers(request: Request, call_next):
     
     csp_directives = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com",
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://challenges.cloudflare.com https://static.cloudflareinsights.com",
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com data:",
         "img-src 'self' data: blob: https:",
         "connect-src 'self' ws: wss: https:",
+        "frame-src 'self' https://challenges.cloudflare.com",
         "media-src 'self' blob: data:",
         "object-src 'none'",
         "base-uri 'self'",
@@ -215,7 +217,8 @@ async def generic_exception_handler(request: Request, exc: Exception):
 # Security and Rate Limiting Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ALLOWED_ORIGINS,
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -277,3 +280,4 @@ app.include_router(memory_router)
 app.include_router(gateways_router)
 app.include_router(evaluation_router)
 app.include_router(live_stream_router)
+app.include_router(cloudflare_router)

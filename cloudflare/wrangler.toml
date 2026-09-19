@@ -1,0 +1,33 @@
+name = "omnirevive-edge-gateway"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+# 1. Host Your Websites & 16. Cache Your Pages (Cloudflare Pages / Workers Sites)
+[site]
+bucket = "../frontend"
+
+# 14. Serverless Edge Gateway
+[vars]
+ENVIRONMENT = "production"
+API_ORIGIN = "https://api.omnirevive.internal"
+ENABLE_EDGE_CACHE = "true"
+
+# 15. Edge SQL Database (Cloudflare D1 - Free 5M queries/mo, 5GB storage)
+[[d1_databases]]
+binding = "DB"
+database_name = "omnirevive-edge-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+# 24. Edge Key-Value Store (Cloudflare KV - Free 100k reads/day)
+[[kv_namespaces]]
+binding = "RECOVERY_KV"
+id = "00000000000000000000000000000000"
+
+# 2. Store Files & 9. Store Backups (Cloudflare R2 - Free 10GB, Zero Egress Fees)
+[[r2_buckets]]
+binding = "RECOVERY_BUCKET"
+bucket_name = "omnirevive-backups"
+
+# 19. Run Cron Jobs (Workers Scheduled Triggers - Free automated cron tasks)
+[triggers]
+crons = ["*/15 * * * *"]

@@ -5,6 +5,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, Request, HTTPException
 from backend.app.copilot.action_agent import action_router
+from backend.app.services.auth_service import AuthenticationService as auth_service
 
 router = APIRouter()
 
@@ -18,25 +19,27 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
     if not query:
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
 
-    # 0. Check for Real Action Intent & Tool Calling Execution
-    action_res = action_router.parse_and_execute(query, trace_id=trace_id)
-    if action_res.action_executed:
-        return {
-            "success": True,
-            "data": {
-                "source": "action_execution_agent",
-                "action_executed": True,
-                "tool_name": action_res.tool_name,
-                "action_summary": action_res.action_summary,
-                "dispatch_id": action_res.dispatch_id,
-                "invoice_id": action_res.invoice_id,
-                "audit_hash": action_res.audit_hash,
-                "mutated_data": action_res.mutated_data,
-                "response": action_res.response_text
-            },
-            "trace_id": trace_id,
-            "timestamp": time.time()
-        }
+    # 0. Check for Real Action Intent & Pre-Execution Authorization Gate
+    if action_router.has_action_intent(query):
+        auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
+        action_res = action_router.parse_and_execute(query, trace_id=trace_id)
+        if action_res.action_executed:
+            return {
+                "success": True,
+                "data": {
+                    "source": "action_execution_agent",
+                    "action_executed": True,
+                    "tool_name": action_res.tool_name,
+                    "action_summary": action_res.action_summary,
+                    "dispatch_id": action_res.dispatch_id,
+                    "invoice_id": action_res.invoice_id,
+                    "audit_hash": action_res.audit_hash,
+                    "mutated_data": action_res.mutated_data,
+                    "response": action_res.response_text
+                },
+                "trace_id": trace_id,
+                "timestamp": time.time()
+            }
 
     # 1. Attempt Local Ollama connection (if available)
     ollama_url = "http://localhost:11434/api/generate"

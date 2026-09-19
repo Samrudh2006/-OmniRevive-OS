@@ -1,0 +1,21 @@
+# Cloudflare Tunnel Configuration
+# 20. Hide your home server / on-premise backend with Zero Trust Tunnel
+# No public IP required, no port-forwarding on router, fully encrypted TLS.
+
+tunnel: omnirevive-secure-tunnel
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  # 1. Route API traffic to local FastAPI instance
+  - hostname: api.omnirevive.internal
+    service: http://localhost:8000
+    originRequest:
+      connectTimeout: 30s
+      noTLSVerify: false
+
+  # 2. Route Web UI traffic to local frontend dev server (if running locally)
+  - hostname: app.omnirevive.internal
+    service: http://localhost:3000
+
+  # 3. Catch-all rule (returns HTTP 404 for unmatched hosts)
+  - service: http_status:404

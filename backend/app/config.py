@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     # Security & Execution Modes
     SAFE_DEMO_MODE: bool = True
     API_AUTH_KEY: str = "rzp_sec_live_recovery_key_99"
+    CFO_AUTH_KEY: str = "cfo_sec_live_recovery_key_99"
     CORS_ALLOWED_ORIGINS: list[str] = [
         "http://localhost:8000",
         "http://127.0.0.1:8000",

@@ -789,7 +789,7 @@ export function toggleWhatsAppQrCode() {
     const payId = document.getElementById("wa-order-id")?.textContent || "pay_9A12BC34DE";
     const amtStr = document.getElementById("wa-amount")?.textContent || "₹2,499.00";
     const amt = parseFloat(amtStr.replace(/[^0-9.]/g, "")) || 2499.0;
-    const upiUri = `upi://pay?pa=razorrevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&tr=${payId}&cu=INR&tn=Invoice+Recovery`;
+    const upiUri = `upi://pay?pa=omnirevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&tr=${payId}&cu=INR&tn=Invoice+Recovery`;
 
     const mount = document.getElementById("wa-qr-code-mount");
     if (mount) {
@@ -835,7 +835,7 @@ export function resetWhatsAppModalView() {
 export function copyUpiIntentUri() {
   const amtInput = document.getElementById("fast-amount");
   const amt = amtInput ? parseFloat(amtInput.value) || 2499.0 : 2499.0;
-  const uri = `upi://pay?pa=razorrevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&cu=INR&tn=Invoice+Recovery`;
+  const uri = `upi://pay?pa=omnirevive.merchant@razorpay&pn=Razorpay+Merchant&am=${amt.toFixed(2)}&cu=INR&tn=Invoice+Recovery`;
   navigator.clipboard.writeText(uri).then(() => {
     showToast("UPI Intent URI copied to clipboard!", "success");
   });
@@ -1588,4 +1588,27 @@ window.executePaletteAction = executePaletteAction;
 
 // Initialize Live Real Telemetry and Forex Stream
 initLiveTelemetryStream();
+
+// Interactive OmniBot Mascot Speech & Toast
+window.triggerOmniBotSpeech = function() {
+  const speechBubble = document.getElementById("omnibot-speech-bubble");
+  const speechText = document.getElementById("omnibot-speech-text");
+  const quotes = [
+    "\"Steady. Smart. Systematic. 0.1% recovered every day! 🪙\"",
+    "\"All 18 payment switch rails verified & healthy. Zero double-debits! 🛡️\"",
+    "\"Weibull Hazard optimal: Retry window shifted +45m for 91.4% yield. 📈\"",
+    "\"AWS Cedar policy active: Every discount and token capped safely! 🔒\"",
+    "\"Autonomous FSM: Listening, negotiating, and resolving payments 24/7! ⚡\""
+  ];
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  if (speechText) speechText.textContent = randomQuote;
+  if (speechBubble) {
+    speechBubble.style.transform = "scale(1.04)";
+    setTimeout(() => { speechBubble.style.transform = "scale(1)"; }, 220);
+  }
+  if (typeof showToast === "function") {
+    showToast("🤖 OmniBot: " + randomQuote.replace(/\"/g, ""), "info");
+  }
+};
+
 

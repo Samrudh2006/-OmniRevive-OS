@@ -1,9 +1,10 @@
 /**
- * RazorRevive-OS — Executive CFO Approval & Zero-Trust Gating Service
+ * OmniRevive-OS — Executive CFO Approval & Zero-Trust Gating Service
  */
 
 import { safeApiCall, showToast } from "./apiClient.js";
 import { formatINR, formatDateIST } from "../utils/formatters.js";
+import { escapeHtml } from "../utils/escapeHtml.js";
 
 export async function fetchCFOQueue(status = null) {
   const url = status ? `/api/v1/cfo/queue?status=${status}` : "/api/v1/cfo/queue";
@@ -71,17 +72,17 @@ export async function refreshCFOQueueUI() {
 
       return `
         <tr class="border-b border-slate-200 dark:border-[#1e293b] hover:bg-slate-50 dark:hover:bg-[#0c182c]/40 transition text-xs">
-          <td class="p-3 font-mono text-sky-400">${item.approval_id}</td>
-          <td class="p-3 font-medium text-slate-200">${item.entity_id}</td>
+          <td class="p-3 font-mono text-sky-400">${escapeHtml(item.approval_id)}</td>
+          <td class="p-3 font-medium text-slate-200">${escapeHtml(item.entity_id)}</td>
           <td class="p-3 font-mono font-bold text-white">${formatINR(item.amount)}</td>
-          <td class="p-3 text-slate-400 max-w-xs truncate" title="${item.reason}">${item.reason}</td>
+          <td class="p-3 text-slate-400 max-w-xs truncate" title="${escapeHtml(item.reason)}">${escapeHtml(item.reason)}</td>
           <td class="p-3">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${statusBadge}">${item.status}</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${statusBadge}">${escapeHtml(item.status)}</span>
           </td>
           <td class="p-3 text-right space-x-1.5">
             ${isPending ? `
-              <button onclick="window.handleCFOApprove('${item.approval_id}')" class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition shadow-sm cursor-pointer">Approve</button>
-              <button onclick="window.handleCFOReject('${item.approval_id}')" class="px-2.5 py-1 rounded bg-rose-600/80 hover:bg-rose-500 text-white font-semibold text-[11px] transition cursor-pointer">Reject</button>
+              <button onclick="window.handleCFOApprove('${escapeHtml(item.approval_id)}')" class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] transition shadow-sm cursor-pointer">Approve</button>
+              <button onclick="window.handleCFOReject('${escapeHtml(item.approval_id)}')" class="px-2.5 py-1 rounded bg-rose-600/80 hover:bg-rose-500 text-white font-semibold text-[11px] transition cursor-pointer">Reject</button>
             ` : `<span class="text-slate-500 italic text-[11px]">Decided</span>`}
           </td>
         </tr>

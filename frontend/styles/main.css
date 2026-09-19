@@ -2809,61 +2809,113 @@ html.light #landing-gateway-container footer {
 }
 
 /* ==============================================================================
-   SIGNATURE ENTERPRISE CONTROL PLANE FOOTER (Uniquely Highlighted, Luxury & Distinct)
+   OMNIREVIVE-OS REAL ENTERPRISE FINTECH FOOTER
+   Real HTML/CSS Glassmorphism Visual + Responsive Navigation + Dynamic Light/Dark
    ============================================================================== */
 .signature-enterprise-footer {
   position: relative;
-  background: radial-gradient(120% 100% at 50% 0%, #071533 0%, #030a1c 50%, #010309 100%);
-  border-top: 3px solid transparent;
-  border-image: linear-gradient(90deg, #0c6cf2 0%, #00d285 25%, #38bdf8 50%, #a855f7 75%, #0c6cf2 100%) 1;
-  box-shadow: 0 -12px 50px -10px rgba(12, 108, 242, 0.25);
+  background-color: #030712;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
 }
 
 html.light .signature-enterprise-footer {
-  background: radial-gradient(120% 100% at 50% 0%, #dbeafe 0%, #eaf3fe 45%, #f4f8fe 100%) !important;
-  border-top: 3px solid transparent !important;
-  border-image: linear-gradient(90deg, #0c6cf2 0%, #00d285 25%, #38bdf8 50%, #a855f7 75%, #0c6cf2 100%) 1 !important;
-  box-shadow: 0 -12px 50px -10px rgba(12, 108, 242, 0.18) !important;
+  background-color: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
 }
 
-html.light .signature-enterprise-footer .footer-title {
-  color: #0c2340 !important;
+/* 3D Visual Stage & Glassmorphism Cards */
+.footer-visual-stage {
+  perspective: 1000px;
 }
 
-html.light .signature-enterprise-footer .footer-link {
-  color: #334155 !important;
+.footer-glass-card {
+  background: rgba(7, 19, 38, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 58, 102, 0.45);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(6, 182, 212, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
 }
 
-html.light .signature-enterprise-footer .footer-link:hover {
-  color: #0c6cf2 !important;
+html.light .footer-glass-card {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
 }
 
-html.light .signature-enterprise-footer .footer-desc {
+.footer-glass-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.6), 0 0 25px -3px rgba(6, 182, 212, 0.15);
+}
+
+html.light .footer-glass-card:hover {
+  border-color: rgba(37, 99, 235, 0.35) !important;
+  box-shadow: 0 14px 30px -5px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Navigation Links */
+.footer-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: #94a3b8;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  transition: color 0.18s ease, transform 0.18s ease;
+  padding: 0.25rem 0;
+}
+
+.footer-nav-link svg {
+  color: #64748b;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.footer-nav-link:hover {
+  color: #38bdf8;
+  transform: translateX(2px);
+}
+
+.footer-nav-link:hover svg {
+  color: #38bdf8;
+}
+
+html.light .footer-nav-link {
   color: #475569 !important;
 }
 
-html.light .signature-enterprise-footer .footer-badge-emerald {
-  background-color: #ecfdf5 !important;
-  color: #065f46 !important;
-  border-color: #a7f3d0 !important;
+html.light .footer-nav-link svg {
+  color: #94a3b8 !important;
 }
 
-html.light .signature-enterprise-footer .footer-badge-sky {
-  background-color: #f0f9ff !important;
-  color: #0369a1 !important;
-  border-color: #bae6fd !important;
+html.light .footer-nav-link:hover {
+  color: #0c6cf2 !important;
 }
 
-html.light .signature-enterprise-footer .footer-badge-purple {
-  background-color: #faf5ff !important;
-  color: #6b21a8 !important;
-  border-color: #e9d5ff !important;
+html.light .footer-nav-link:hover svg {
+  color: #0c6cf2 !important;
 }
 
-html.light .signature-enterprise-footer .footer-vault-bar {
-  background-color: #d2e4f9 !important;
-  border-color: #bfdbfe !important;
-  color: #1e3a8a !important;
+/* Animated recovery bars */
+@keyframes barPulse {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.25); }
+}
+
+.footer-bar-anim-1 { animation: barPulse 2.8s ease-in-out infinite 0.2s; transform-origin: bottom; }
+.footer-bar-anim-2 { animation: barPulse 2.8s ease-in-out infinite 0.6s; transform-origin: bottom; }
+.footer-bar-anim-3 { animation: barPulse 2.8s ease-in-out infinite 1.0s; transform-origin: bottom; }
+.footer-bar-anim-4 { animation: barPulse 2.8s ease-in-out infinite 1.4s; transform-origin: bottom; }
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-bar-anim-1,
+  .footer-bar-anim-2,
+  .footer-bar-anim-3,
+  .footer-bar-anim-4 {
+    animation: none !important;
+  }
 }
 
 

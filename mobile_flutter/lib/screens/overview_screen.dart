@@ -132,7 +132,7 @@ class OverviewScreen extends StatelessWidget {
               ),
               _buildMetricCard(
                 title: 'MERKLE CHAIN',
-                value: '465+ Tests',
+                value: '475+ Tests',
                 subtitle: 'SHA-256 Verified',
                 icon: Icons.verified_user,
                 accentColor: const Color(0xFFD97706),

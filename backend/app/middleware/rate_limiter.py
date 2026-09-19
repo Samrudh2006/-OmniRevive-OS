@@ -1,9 +1,12 @@
 import time
+import hmac
+import hashlib
 import threading
 from typing import Dict, List, Tuple
 from fastapi import Request, HTTPException, status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, JSONResponse
+from backend.app.config import settings
 
 class SlidingWindowRateLimiter(BaseHTTPMiddleware):
     """
@@ -21,15 +24,27 @@ class SlidingWindowRateLimiter(BaseHTTPMiddleware):
         self._lock = threading.Lock()
 
     def _get_client_id(self, request: Request) -> str:
-        # Prioritize authenticated client ID / API key, then forward headers, then client IP
+        # Prioritize authenticated client ID / API key only if it matches configured secrets
         api_key = request.headers.get("X-API-Key")
         if api_key:
-            return f"key_{api_key[:12]}"
-        forwarded = request.headers.get("X-Forwarded-For")
-        if forwarded:
-            return forwarded.split(",")[0].strip()
+            api_key_clean = api_key.strip()
+            sre_key = getattr(settings, "API_AUTH_KEY", "rzp_sec_live_recovery_agent_88")
+            cfo_key = getattr(settings, "CFO_AUTH_KEY", "cfo_sec_live_recovery_key_99")
+            if hmac.compare_digest(api_key_clean, sre_key) or hmac.compare_digest(api_key_clean, cfo_key):
+                return f"key_{hashlib.sha256(api_key_clean.encode('utf-8')).hexdigest()[:12]}"
+
         client = request.client
-        return client.host if client else "127.0.0.1"
+        client_ip = client.host if client else "127.0.0.1"
+
+        # Only trust X-Forwarded-For if request originates from trusted local/proxy interfaces
+        trusted_proxies = {"127.0.0.1", "::1", "localhost"}
+        forwarded = request.headers.get("X-Forwarded-For")
+        if forwarded and (client_ip in trusted_proxies or client_ip.startswith("10.") or client_ip.startswith("172.") or client_ip.startswith("192.168.")):
+            forwarded_ip = forwarded.split(",")[0].strip()
+            if forwarded_ip:
+                return f"fwd_{forwarded_ip}"
+
+        return f"ip_{client_ip}"
 
     def _is_sensitive_route(self, path: str) -> bool:
         sensitive_prefixes = [
@@ -55,6 +70,12 @@ class SlidingWindowRateLimiter(BaseHTTPMiddleware):
         window_start = now - 60.0  # 1-minute sliding window
 
         with self._lock:
+            # Memory leak mitigation: prune stale client records if cache exceeds threshold
+            if len(self._clients) > 1000:
+                stale_keys = [k for k, h in self._clients.items() if not h or h[-1][0] <= window_start]
+                for k in stale_keys:
+                    del self._clients[k]
+
             history = self._clients.get(client_id, [])
             # Prune records older than 60s
             valid_history = [item for item in history if item[0] > window_start]

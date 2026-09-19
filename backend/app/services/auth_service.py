@@ -1,3 +1,4 @@
+import hmac
 import logging
 from typing import Optional, Tuple
 from fastapi import Request, HTTPException, status
@@ -11,7 +12,7 @@ class AuthenticationService:
     
     Modes:
     1. SAFE_DEMO_MODE=True:
-       Allows unauthenticated interactions from demo UI/sandbox runners.
+       Allows unauthenticated interactions from demo UI/sandbox runners when no token provided.
        Logs audit events as DEMO_SIMULATION.
     2. SAFE_DEMO_MODE=False:
        Enforces cryptographic API key / Bearer token authentication on all mutating endpoints.
@@ -39,33 +40,36 @@ class AuthenticationService:
         required_role: Optional[str] = None
     ) -> Tuple[bool, str, str]:
         """
-        Validates whether the request is authorized.
+        Validates whether the request is authorized using cryptographic constant-time equality.
         Returns: (is_authorized: bool, actor: str, mode: str)
         Raises HTTPException(401) or HTTPException(403) if unauthorized under strict mode.
         """
         provided_token = cls.extract_token_or_key(request)
-        configured_key = settings.API_AUTH_KEY
+        configured_sre_key = settings.API_AUTH_KEY
+        configured_cfo_key = getattr(settings, "CFO_AUTH_KEY", "cfo_sec_live_recovery_key_99")
 
-        # Valid credentials provided
-        if provided_token and (provided_token == configured_key or provided_token.startswith("rzp_sec_") or provided_token.startswith("cfo_sec_")):
-            role = "Role::CFO" if "cfo" in provided_token.lower() else "Role::SRE_Admin"
-            return True, role, "PRODUCTION"
+        # Valid credentials provided with constant-time comparison (no wildcard startswith)
+        if provided_token:
+            if hmac.compare_digest(provided_token, configured_cfo_key):
+                return True, "Role::CFO", "PRODUCTION"
+            if hmac.compare_digest(provided_token, configured_sre_key):
+                role = "Role::Finance_Officer" if required_role == "Role::Finance_Officer" else "Role::SRE_Admin"
+                return True, role, "PRODUCTION"
+            # Invalid credentials explicitly provided -> reject with 403 Forbidden even in demo mode
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Invalid API key or insufficient permissions for this operation."
+            )
 
-        # Safe Demo Mode fallback
+        # Safe Demo Mode fallback when no token is provided
         if settings.SAFE_DEMO_MODE:
             logger.info("[AUTH_SERVICE] Request permitted under SAFE_DEMO_MODE.")
             return True, "Role::Demo_Operator", "DEMO_MODE"
 
         # Strict Production Mode enforcement
-        if not provided_token:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Authentication required. Provide valid X-API-Key or Authorization Bearer header."
-            )
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Invalid API key or insufficient permissions for this operation."
-            )
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required. Provide valid X-API-Key or Authorization Bearer header."
+        )
 
 auth_service = AuthenticationService()

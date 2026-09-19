@@ -22,8 +22,8 @@ export const COPILOT_AVATAR_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://
 const COPILOT_MODES_DATA = {
   Ask: {
     heroHtml: `
-      <div>Hey Sanmudh! 👋</div>
-      <div>I'm your <strong>Razor SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
+      <div>Hey Samrudh! 👋</div>
+      <div>I'm your <strong>OmniRevive SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
       <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
     `,
     badge: "SRE Intelligence",
@@ -636,7 +636,7 @@ function getLocalCopilotFallback(queryText) {
   } else if (text.includes("sbi") || text.includes("hdfc") || text.includes("504") || text.includes("weibull") || text.includes("hazard") || text.includes("retry") || text.includes("downtime") || text.includes("outage")) {
     return "⚡ **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n" +
            "Traditional gateways retry failed bank charges instantly, causing cascading 504 timeouts.\n\n" +
-           "RazorRevive-OS uses a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
+           "OmniRevive-OS uses a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
            "1. Calculates recovery half-life dynamics from live NPCI switch signals.\n" +
            "2. Shifts the retry window to the mathematical peak at **+45 minutes**.\n" +
            "3. Boosts cohort recovery yield from 42.24% baseline to **78.39%**.";
@@ -653,8 +653,8 @@ function getLocalCopilotFallback(queryText) {
            "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n" +
            "3. Guaranteed **0 double-debit collisions** under extreme network chaos.";
   } else {
-    return `🤖 **Razor Copilot Architectural Intelligence**:\n\n` +
-           "RazorRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
+    return `🤖 **OmniRevive Copilot Architectural Intelligence**:\n\n` +
+           "OmniRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
            "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
            "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
            "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.";
