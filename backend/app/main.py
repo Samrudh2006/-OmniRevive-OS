@@ -53,6 +53,7 @@ from backend.app.routes.gateways import router as gateways_router
 from backend.app.routes.evaluation import router as evaluation_router
 from backend.app.routes.live_stream import router as live_stream_router
 from backend.app.routes.cloudflare import router as cloudflare_router
+from backend.app.routes.agency import router as agency_router
 
 TAGS_METADATA = [
     {
@@ -354,3 +355,4 @@ app.include_router(gateways_router)
 app.include_router(evaluation_router)
 app.include_router(live_stream_router)
 app.include_router(cloudflare_router)
+app.include_router(agency_router)
