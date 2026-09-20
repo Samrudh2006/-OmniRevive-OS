@@ -67,6 +67,7 @@ def list_divisions():
     }
 
 from backend.app.services.email_report_service import send_daily_email_report
+from backend.app.services.autonomous_bug_repair import get_welcome_back_briefing
 
 @router.post("/run_cycle")
 def trigger_manual_cycle():
@@ -84,4 +85,10 @@ def send_daily_report(
     """Generates and dispatches a rich executive daily report containing project issues, system health, and agent swarm metrics."""
     result = send_daily_email_report(recipient_email=email)
     return result
+
+@router.get("/welcome_back")
+def welcome_back_briefing():
+    """Retrieves Samrudh's Welcome Back Executive Briefing detailing autonomous bug fixes and system health."""
+    return get_welcome_back_briefing()
+
 
