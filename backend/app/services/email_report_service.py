@@ -195,3 +195,41 @@ def send_daily_email_report(
             "error": str(e),
             "timestamp": time.time()
         }
+
+# =============================================================================
+# 10:00 AM IST DAILY AUTOMATED BACKGROUND SCHEDULER
+# =============================================================================
+
+import threading
+
+_scheduler_state = {"last_sent_date": None, "is_active": False}
+
+def _daily_10am_schedule_loop():
+    """Background thread that checks for 10:00 AM IST every day and dispatches report."""
+    logger.info("Daily 10:00 AM IST Automated Email Report Scheduler initialized.")
+    _scheduler_state["is_active"] = True
+    while _scheduler_state["is_active"]:
+        try:
+            # Check current IST time
+            now_ist = time.strftime("%H:%M", time.gmtime(time.time() + 19800)) # IST offset +5:30
+            today_date = time.strftime("%Y-%m-%d", time.gmtime(time.time() + 19800))
+
+            if now_ist == "10:00" and _scheduler_state["last_sent_date"] != today_date:
+                logger.info(f"Triggering automated 10:00 AM IST Daily Email Report to {DEFAULT_RECIPIENT_EMAIL}...")
+                send_daily_email_report()
+                _scheduler_state["last_sent_date"] = today_date
+
+            time.sleep(30) # Check every 30 seconds
+        except Exception as e:
+            logger.error(f"Error in daily email scheduler: {e}")
+            time.sleep(60)
+
+def start_daily_10am_scheduler():
+    """Launches the 10:00 AM IST daily report scheduler thread."""
+    if not _scheduler_state["is_active"]:
+        t = threading.Thread(target=_daily_10am_schedule_loop, daemon=True)
+        t.start()
+
+# Auto-start scheduler thread on import
+start_daily_10am_scheduler()
+
