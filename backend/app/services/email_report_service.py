@@ -144,19 +144,33 @@ def send_daily_email_report(
 
     html_content = build_daily_report_html(recipient_name=target.split("@")[0].title())
 
+    # Save local report HTML preview for browser viewing
+    try:
+        reports_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "docs", "reports")
+        os.makedirs(reports_dir, exist_ok=True)
+        preview_file = os.path.join(reports_dir, "daily_executive_digest.html")
+        with open(preview_file, "w", encoding="utf-8") as f:
+            f.write(html_content)
+    except Exception as e:
+        logger.warning(f"Could not save preview html: {e}")
+
+    sender_header = f'"OmniRevive-OS Control Plane" <{user or "system@omnirevive-os.ai"}>'
+
     if not user or not password:
         logger.info(f"[SIMULATION MODE] Daily email report generated for {target}. Configure SMTP_USER and SMTP_PASSWORD for live dispatch.")
         return {
             "status": "SIMULATED_SUCCESS",
+            "sender": sender_header,
             "recipient": target,
-            "message": f"Daily executive digest successfully generated & scheduled for {target}. (Set SMTP_USER/SMTP_PASSWORD for live SMTP dispatch)",
+            "preview_file": "docs/reports/daily_executive_digest.html",
+            "message": f"Daily executive digest from 'OmniRevive-OS Control Plane' generated & saved to docs/reports/daily_executive_digest.html for {target}.",
             "timestamp": time.time()
         }
 
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"⚡ OmniRevive-OS Daily Executive Digest — {time.strftime('%b %d, %Y')}"
-        msg["From"] = user
+        msg["From"] = sender_header
         msg["To"] = target
 
         msg.attach(MIMEText(html_content, "html"))
