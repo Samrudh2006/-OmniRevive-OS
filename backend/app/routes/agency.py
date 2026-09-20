@@ -66,6 +66,8 @@ def list_divisions():
         }
     }
 
+from backend.app.services.email_report_service import send_daily_email_report
+
 @router.post("/run_cycle")
 def trigger_manual_cycle():
     """Manually trigger an immediate execution pass across all specialized agents."""
@@ -74,3 +76,12 @@ def trigger_manual_cycle():
         "message": "Continuous specialized agent swarm cycle executed successfully.",
         "cycle_result": result
     }
+
+@router.post("/send_daily_report")
+def send_daily_report(
+    email: str = Query(..., description="Target email address to receive the daily project digest report")
+):
+    """Generates and dispatches a rich executive daily report containing project issues, system health, and agent swarm metrics."""
+    result = send_daily_email_report(recipient_email=email)
+    return result
+
