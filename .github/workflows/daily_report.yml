@@ -1,0 +1,45 @@
+name: OmniRevive-OS 10:00 AM IST Daily Automated Executive Report
+
+on:
+  schedule:
+    # 10:00 AM IST is 04:30 AM UTC
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  dispatch_daily_report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Dispatch Executive Daily Email Digest
+        env:
+          REPORT_RECIPIENT_EMAIL: ${{ secrets.REPORT_RECIPIENT_EMAIL }}
+          SMTP_HOST: 'smtp.gmail.com'
+          SMTP_PORT: 587
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: |
+          python -c "
+          import os
+          from backend.app.services.email_report_service import send_daily_email_report
+
+          recipient = os.environ.get('REPORT_RECIPIENT_EMAIL', 'samrudhdwivedula12@gmail.com')
+          user = os.environ.get('SMTP_USER', 'samrudhdwivedula12@gmail.com')
+          password = os.environ.get('SMTP_PASSWORD', 'dlatodwhkuensloy')
+
+          res = send_daily_email_report(recipient_email=recipient, smtp_user=user, smtp_pass=password)
+          print('GitHub Actions Cloud Dispatch Result:', res)
+          "
