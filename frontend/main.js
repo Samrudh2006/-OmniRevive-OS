@@ -6,6 +6,7 @@
 import { safeApiCall } from "./services/apiClient.js?v=2.1.0";
 import { showToast } from "./utils/toast.js?v=2.1.0";
 import { formatINR, formatDateIST, maskPII, truncateHash } from "./utils/formatters.js?v=2.1.0";
+import { initGlobalUiSounds, toggleUiSounds, playUiSound } from "./utils/uiSoundEffects.js?v=2.1.0";
 import {
   UnifiedVoiceEngine,
   loadVoices,
@@ -1582,9 +1583,12 @@ window.closeFeatureDetailModal = closeFeatureDetailModal;
 window.toggleCommandPalette = toggleCommandPalette;
 window.closeCommandPalette = closeCommandPalette;
 window.executePaletteAction = executePaletteAction;
+window.toggleUiSounds = toggleUiSounds;
+window.playUiSound = playUiSound;
 
-// Initialize Live Real Telemetry and Forex Stream
+// Initialize Live Real Telemetry, Forex Stream, and UI Sound Effects Engine
 initLiveTelemetryStream();
+initGlobalUiSounds();
 
 // Interactive OmniBot Mascot Speech & Toast
 window.triggerOmniBotSpeech = function() {
@@ -1607,5 +1611,6 @@ window.triggerOmniBotSpeech = function() {
     showToast("🤖 OmniBot: " + randomQuote.replace(/\"/g, ""), "info");
   }
 };
+
 
 

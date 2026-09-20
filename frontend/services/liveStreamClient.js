@@ -244,6 +244,12 @@ export function executePaletteAction(actionName) {
     case "toggle_theme":
       if (typeof window.toggleThemeMode === "function") window.toggleThemeMode();
       break;
+    case "toggle_sound":
+      if (typeof window.toggleUiSounds === "function") {
+        const state = window.toggleUiSounds();
+        if (typeof showToast === "function") showToast(state ? "🔊 UI Micro-Interaction Sounds ENABLED" : "🔇 UI Micro-Interaction Sounds MUTED", "info");
+      }
+      break;
     case "launch_control_plane":
       if (typeof window.launchControlPlane === "function") window.launchControlPlane('overview');
       break;

@@ -2392,61 +2392,7 @@ forbid (
 
       </div>
 
-      <!-- =========================================================================
-           BOTTOM BAR: COPYRIGHT & LEGAL LINKS WITH RBI COMPLIANCE
-           ========================================================================= -->
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="border-t border-slate-200/80 dark:border-slate-800/80 pt-5 pb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          
-          <!-- Copyright & Logo Lockup -->
-          <div class="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-            <svg class="w-4 h-4 shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="13" stroke="url(#omniFooterBrandLogoGrad)" stroke-width="7"/>
-            </svg>
-            <span>© 2026 OmniRevive-OS. Enterprise Revenue Recovery Control Plane.</span>
-          </div>
 
-          <!-- Compliance & Live Badges -->
-          <div class="flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs text-slate-500 dark:text-slate-400">
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('rbi_coft');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1 font-medium" title="Inspect RBI &amp; TRAI Governance Spec">
-              <span>🔒</span> 100% RBI &amp; TRAI Non-Coercive
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('audit_ledger');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1 font-mono font-bold text-sky-600 dark:text-sky-400" title="Inspect Cryptographic Ledger">
-              <span>📜</span> Merkle: 0x9f82...1a3b
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('swagger_docs');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Swagger UI &amp; Interactive OpenAPI Spec">
-              <span>📚</span> Swagger API
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('sre_health');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Live SRE Health &amp; Observability">
-              <span>🟢</span> SRE Health
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('cloudflare_sre');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="Cloudflare 25 Edge Services Matrix">
-              <span>☁️</span> Cloudflare 25
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('benchmarks_page');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1 font-mono font-bold" title="486-Test Production Benchmark Suite">
-              <span>📊</span> Benchmarks (486 Tests)
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('about_page');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="About OmniRevive-OS &amp; Builder">
-              <span>👤</span> About
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('sitemap_page');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="XML Sitemap for Search Bots">
-              <span>🗺️</span> Sitemap
-            </a>
-            <span class="text-slate-300 dark:text-slate-700">|</span>
-            <a href="javascript:void(0)" onclick="openFeatureDetailModal('terms_of_service');" class="hover:text-blue-600 dark:hover:text-sky-400 transition-colors flex items-center gap-1" title="99.999% Enterprise SLA Terms">
-              <span>⚖️</span> SLA Terms
-            </a>
-          </div>
-
-        </div>
-      </div>
 
     </footer>
   </div>
@@ -11510,6 +11456,17 @@ forbid (
             </div>
           </div>
           <span class="text-[10px] font-mono text-slate-500">Theme</span>
+        </button>
+
+        <button onclick="executePaletteAction('toggle_sound')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
+          <div class="flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold">🔊</span>
+            <div>
+              <div class="font-bold text-white group-hover:text-sky-400">Toggle UI Micro-Interaction Sounds</div>
+              <div class="text-[10.5px] text-slate-400">Enable or mute futuristic button click & hover audio feedback</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-slate-500">Audio</span>
         </button>
       </div>
 
