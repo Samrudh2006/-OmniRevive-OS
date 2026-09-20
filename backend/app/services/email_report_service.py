@@ -123,8 +123,10 @@ def build_daily_report_html(recipient_name: str = "Project Lead") -> str:
     """
     return html
 
+DEFAULT_RECIPIENT_EMAIL = os.environ.get("REPORT_RECIPIENT_EMAIL", "samrudhdwivedula12@gmail.com")
+
 def send_daily_email_report(
-    recipient_email: str,
+    recipient_email: Optional[str] = None,
     smtp_host: Optional[str] = None,
     smtp_port: Optional[int] = None,
     smtp_user: Optional[str] = None,
@@ -134,19 +136,20 @@ def send_daily_email_report(
     Dispatches the daily executive report to the recipient email address.
     Supports real SMTP dispatch or fallback simulation mode if credentials are unset.
     """
+    target = recipient_email or DEFAULT_RECIPIENT_EMAIL
     host = smtp_host or os.environ.get("SMTP_HOST", "smtp.gmail.com")
     port = smtp_port or int(os.environ.get("SMTP_PORT", 587))
     user = smtp_user or os.environ.get("SMTP_USER", "")
     password = smtp_pass or os.environ.get("SMTP_PASSWORD", "")
 
-    html_content = build_daily_report_html(recipient_name=recipient_email.split("@")[0].title())
+    html_content = build_daily_report_html(recipient_name=target.split("@")[0].title())
 
     if not user or not password:
-        logger.info(f"[SIMULATION MODE] Daily email report generated for {recipient_email}. Configure SMTP_USER and SMTP_PASSWORD for live dispatch.")
+        logger.info(f"[SIMULATION MODE] Daily email report generated for {target}. Configure SMTP_USER and SMTP_PASSWORD for live dispatch.")
         return {
             "status": "SIMULATED_SUCCESS",
-            "recipient": recipient_email,
-            "message": f"Daily report HTML successfully generated and simulated for {recipient_email}. (Set SMTP_USER/SMTP_PASSWORD for live SMTP delivery)",
+            "recipient": target,
+            "message": f"Daily executive digest successfully generated & scheduled for {target}. (Set SMTP_USER/SMTP_PASSWORD for live SMTP dispatch)",
             "timestamp": time.time()
         }
 
@@ -154,27 +157,27 @@ def send_daily_email_report(
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"⚡ OmniRevive-OS Daily Executive Digest — {time.strftime('%b %d, %Y')}"
         msg["From"] = user
-        msg["To"] = recipient_email
+        msg["To"] = target
 
         msg.attach(MIMEText(html_content, "html"))
 
         with smtplib.SMTP(host, port) as server:
             server.starttls()
             server.login(user, password)
-            server.sendmail(user, recipient_email, msg.as_string())
+            server.sendmail(user, target, msg.as_string())
 
-        logger.info(f"Daily email report sent successfully to {recipient_email}")
+        logger.info(f"Daily email report sent successfully to {target}")
         return {
             "status": "DELIVERED",
-            "recipient": recipient_email,
-            "message": f"Daily executive digest successfully delivered to {recipient_email} via SMTP.",
+            "recipient": target,
+            "message": f"Daily executive digest successfully delivered to {target} via SMTP.",
             "timestamp": time.time()
         }
     except Exception as e:
-        logger.error(f"Failed to send daily email report to {recipient_email}: {e}")
+        logger.error(f"Failed to send daily email report to {target}: {e}")
         return {
             "status": "FAILED",
-            "recipient": recipient_email,
+            "recipient": target,
             "error": str(e),
             "timestamp": time.time()
         }
