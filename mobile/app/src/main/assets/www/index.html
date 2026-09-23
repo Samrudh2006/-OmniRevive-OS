@@ -11560,6 +11560,34 @@ forbid (
     })();
   </script>
 
+  <!-- Cookie & Telemetry Privacy Banner (Item 5) -->
+  <div id="cookie-consent-banner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md p-4 rounded-2xl bg-[#060d1d]/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl z-50 transition-all duration-300 transform translate-y-0 text-xs text-slate-300 flex flex-col gap-3">
+    <div class="flex items-start gap-2.5">
+      <span class="text-base shrink-0">🍪</span>
+      <div>
+        <p class="font-bold text-white leading-tight">Privacy &amp; Telemetry Consent</p>
+        <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+          OmniRevive-OS uses local telemetry to optimize real-time recovery routes and monitor switch SLA latencies. No PII is tracked. See <a href="/pages/privacy.html" class="text-sky-400 hover:underline">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+    <div class="flex items-center justify-end gap-2 pt-1 border-t border-slate-800">
+      <button onclick="dismissCookieBanner('declined')" class="px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 hover:text-white text-[11px] font-medium transition-all">Essential Only</button>
+      <button onclick="dismissCookieBanner('accepted')" class="px-4 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-900 font-bold text-[11px] transition-all">Accept All</button>
+    </div>
+  </div>
+  <script>
+    function dismissCookieBanner(choice) {
+      localStorage.setItem('omnirevive_cookie_consent', choice);
+      var el = document.getElementById('cookie-consent-banner');
+      if (el) el.style.display = 'none';
+    }
+    if (localStorage.getItem('omnirevive_cookie_consent')) {
+      var b = document.getElementById('cookie-consent-banner');
+      if (b) b.style.display = 'none';
+    }
+  </script>
+
   <script type="module" src="/static/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | OmniRevive-OS Control Plane</title>
+  <meta name="description" content="OmniRevive-OS Terms of Service — Operational boundaries, multi-rail failover SLA, AWS Cedar compliance limits, and API usage terms.">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/terms">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230c2340'/%3E%3Cpath d='M18 3L5 18h11l-2 11 13-15H16l2-14z' fill='%2338bdf8' stroke='%2338bdf8' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #030712; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.7; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+
+  <nav class="mb-10 flex items-center justify-between pb-4 border-b border-slate-800">
+    <a href="/" class="text-lg font-black text-white flex items-center gap-2">
+      <span class="text-sky-400">⚡</span> OmniRevive-OS
+    </a>
+    <a href="/" class="text-xs font-semibold text-sky-400 hover:text-sky-300">← Back to Dashboard</a>
+  </nav>
+
+  <main class="space-y-8 text-slate-300 text-sm">
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Terms of Service</h1>
+      <p class="text-xs text-slate-400 mt-1 mono">Effective Date: September 23, 2026 · Version 1.2.0-Production</p>
+    </div>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">1. Scope of Control Plane Operation</h2>
+      <p>OmniRevive-OS provides autonomous transaction recovery, predictive Weibull retry scheduling, and B2B dispute resolution across Indian payment rails (NPCI UPI 2.0, Juspay, PhonePe, Cashfree, Razorpay, and Stripe). By accessing this control plane, you agree to these Terms.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">2. Deterministic Guardrails & TRAI Invariants</h2>
+      <p>All automated notifications, WhatsApp intent dispatches, and outbound voice negotiation turns are strictly bounded by TRAI Quiet Hours (21:00 to 09:00 IST) and AWS Cedar policy bounds (discounts capped at &le;10% and &le;₹500). High-ticket actions require CFO dual-key authorization.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">3. Zero Double-Debit Warranty</h2>
+      <p>OmniRevive-OS guarantees zero double-debit mutations through atomic Redis Compare-And-Swap (CAS) distributed locks. In the event of network partition, the control plane prioritizes idempotency safety over speculative retries.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">4. Merkle Audit Non-Repudiation</h2>
+      <p>All state transitions, failover actions, and policy evaluations are appended as immutable SHA-256 blocks to the Merkle ledger. Audit trails are cryptographically verifiable and admissible for regulatory reporting.</p>
+    </section>
+  </main>
+
+  <footer class="mt-16 pt-8 border-t border-slate-800 text-xs text-slate-500 text-center mono">
+    © 2026 OmniRevive-OS · Built for Razorpay AI Buildathon 2026 by Samrudh Dwivedula
+  </footer>
+
+</body>
+</html>

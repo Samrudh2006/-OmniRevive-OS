@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | OmniRevive-OS Control Plane</title>
+  <meta name="description" content="OmniRevive-OS Privacy Policy — Strict data localization, zero PII retention in vector memory, DPDP Act 2023 compliance, and cryptographic audit security.">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/privacy">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230c2340'/%3E%3Cpath d='M18 3L5 18h11l-2 11 13-15H16l2-14z' fill='%2338bdf8' stroke='%2338bdf8' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #030712; color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.7; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+
+  <nav class="mb-10 flex items-center justify-between pb-4 border-b border-slate-800">
+    <a href="/" class="text-lg font-black text-white flex items-center gap-2">
+      <span class="text-sky-400">⚡</span> OmniRevive-OS
+    </a>
+    <a href="/" class="text-xs font-semibold text-sky-400 hover:text-sky-300">← Back to Dashboard</a>
+  </nav>
+
+  <main class="space-y-8 text-slate-300 text-sm">
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Privacy Policy</h1>
+      <p class="text-xs text-slate-400 mt-1 mono">Effective Date: September 23, 2026 · Version 1.2.0-Production</p>
+    </div>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">1. Executive Overview</h2>
+      <p>OmniRevive-OS is an autonomous revenue recovery control plane engineered under strict zero-trust principles. We adhere to the Digital Personal Data Protection Act (DPDP) 2023, RBI Data Localization Directives, and GDPR standards.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">2. Zero-PII Vector Memory Guarantee</h2>
+      <p>All transaction events ingested via webhook are cryptographically masked before semantic similarity evaluation in Qdrant Vector DB. Customer Phone Numbers, Virtual Payment Addresses (VPAs), PAN, and Credit Card Primary Account Numbers (PANs) are salted with SHA-256 HMAC tokens and never stored in plaintext vector memory.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">3. Data Localization & Sovereign Infrastructure</h2>
+      <p>All payment diagnostic data, state mutexes, and voice FSM audio buffers are processed within sovereign Indian data centers: AWS Mumbai (<code class="mono text-sky-400">ap-south-1</code>) and AWS Hyderabad (<code class="mono text-sky-400">ap-south-2</code>). No payment data is transmitted outside Indian jurisdiction.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">4. Voice AI Data Retention</h2>
+      <p>Deep-Loop voice agent interactions (Telugu, Hindi, and English) are synthesized ephemerally. Audio recordings are held in volatile in-memory buffers during the negotiation turn and permanently destroyed once the Promise-to-Pay (PTP) hash is recorded in the Merkle audit ledger.</p>
+    </section>
+
+    <section class="space-y-3">
+      <h2 class="text-xl font-bold text-white">5. Cryptographic Ledger Integrity</h2>
+      <p>Transaction state transformations are sealed into a tamper-evident SHA-256 Merkle chain. This ledger contains only mathematical proofs, event timestamps, and policy decisions, providing verifiable compliance without exposing raw financial credentials.</p>
+    </section>
+  </main>
+
+  <footer class="mt-16 pt-8 border-t border-slate-800 text-xs text-slate-500 text-center mono">
+    © 2026 OmniRevive-OS · Built for Razorpay AI Buildathon 2026 by Samrudh Dwivedula
+  </footer>
+
+</body>
+</html>
