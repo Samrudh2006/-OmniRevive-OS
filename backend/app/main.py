@@ -109,7 +109,7 @@ Universal Autonomous AI Revenue Recovery Control Plane with Zero-Trust Guardrail
 * **Semantic Memory:** On-device Qdrant vector memory collection for failure precedents.
 * **Audit Ledger:** SHA-256 sequential hash chaining ensuring 100% cryptographic continuity.
     """,
-    version="1.1.0",
+    version="1.2.0",
     openapi_tags=TAGS_METADATA,
     contact={
         "name": "OmniRevive Core Engineering Team",

@@ -24,7 +24,7 @@ async def healthcheck(request: Request):
         "data": {
             "status": "healthy",
             "service": "OmniRevive-OS",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "architecture": "Universal Multi-Rail Deterministic Control Plane",
             "environment": settings.ENVIRONMENT
         },
