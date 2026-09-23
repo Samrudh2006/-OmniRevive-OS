@@ -1,0 +1,25 @@
+# OmniRevive-OS
+
+> OmniRevive-OS is an autonomous AI-powered revenue recovery control plane for fintech payment failures and B2B dispute resolution. It features sub-50ms Fast-Loop autonomous gateway failover, Weibull hazard curve retry modeling, Deep-Loop neural voice agents, Redis Compare-And-Swap (CAS) distributed idempotency, AWS Cedar zero-trust security gatekeeping, and cryptographic SHA-256 Merkle audit ledgers.
+
+## Key Capabilities & Core Architecture
+- **Dual-Speed Control Plane**: Sub-50ms Fast-Loop for instant gateway failover & Smart Retries alongside Deep-Loop neural voice negotiation for enterprise B2B disputes.
+- **Mathematical Determinism**: Weibull hazard rate survival modeling calibrated on NPCI UPI switch health telemetry.
+- **Strict Idempotency**: Redis atomic Compare-And-Swap (CAS) distributed mutex preventing double-debit mutations.
+- **Institutional Compliance**: TRAI quiet hours (9 PM - 9 AM IST) enforcement, RBI financial safety bounds, and AWS Cedar formal policy gatekeeper.
+- **Tamper-Evident Audit Ledger**: Sequential SHA-256 Merkle hash chain for immutable regulatory verification.
+
+## Documentation & Deep Dives
+- [System Architecture](https://omnirevive-os.antideploy.com/architecture): Detailed dual-speed control plane design and component specifications.
+- [AI Revenue Recovery](https://omnirevive-os.antideploy.com/ai-revenue-recovery): Technical breakdown of the 6-stage autonomous payment recovery pipeline.
+- [B2B Dispute Resolution](https://omnirevive-os.antideploy.com/b2b-dispute-resolution): Deterministic Finite State Machine (FSM) voice agent for invoice reconciliation.
+- [Idempotency Protection](https://omnirevive-os.antideploy.com/idempotency-protection): Atomic CAS mutexes, HMAC signatures, and zero duplicate charging guarantees.
+- [Empirical Benchmarks](https://omnirevive-os.antideploy.com/benchmarks): Held-out 100-case test suite metrics (78.39% recovery rate, +36.15% uplift).
+- [Audit Ledger & Security](https://omnirevive-os.antideploy.com/audit-ledger): Cryptographic Merkle tree verification and SRE audit trail.
+- [FAQ](https://omnirevive-os.antideploy.com/faq): Frequently asked technical and architectural questions.
+- [API Reference](https://omnirevive-os.antideploy.com/docs): OpenAPI and Swagger specification for developers.
+
+## Repository & Open Source
+- GitHub: https://github.com/Samrudh2006/-OmniRevive-OS
+- Track: Razorpay AI Buildathon 2026 (Track 03: AI Revenue Recovery)
+- Author: Samrudh Dwivedula

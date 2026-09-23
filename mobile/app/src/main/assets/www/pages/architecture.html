@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniRevive-OS System Architecture & Dual-Speed Control Plane</title>
+  <meta name="description" content="Technical architecture documentation for OmniRevive-OS: Dual-Speed Control Plane, Fast-Loop vs Deep-Loop, AWS Cedar policy gatekeeper, and Qdrant semantic memory.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/architecture">
+  <meta property="og:title" content="OmniRevive-OS System Architecture & Dual-Speed Control Plane">
+  <meta property="og:description" content="Deep engineering architecture: Fast-Loop sub-50ms failover, AWS Cedar zero-trust policies, and SHA-256 Merkle audit trees.">
+  <meta property="og:url" content="https://omnirevive-os.antideploy.com/architecture">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OmniRevive-OS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OmniRevive-OS System Architecture & Dual-Speed Control Plane">
+  <meta name="twitter:description" content="Explore the high-availability fintech recovery architecture powering OmniRevive-OS.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "OmniRevive-OS System Architecture & Dual-Speed Control Plane",
+    "description": "Comprehensive engineering whitepaper covering FastAPI services, Redis CAS mutex, AWS Cedar zero-trust policies, and Qdrant memory.",
+    "author": {
+      "@type": "Person",
+      "name": "Samrudh Dwivedula",
+      "url": "https://github.com/Samrudh2006"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OmniRevive-OS",
+      "url": "https://omnirevive-os.antideploy.com/"
+    },
+    "mainEntityOfPage": "https://omnirevive-os.antideploy.com/architecture"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omnirevive-os.antideploy.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Architecture", "item": "https://omnirevive-os.antideploy.com/architecture" }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0e1526;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0c6cf2;
+      --primary-light: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --code-bg: #030712;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; padding: 0 1rem; }
+    header { max-width: 900px; margin: 0 auto; padding: 2rem 0 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .brand { font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .brand-badge { background: rgba(12, 108, 242, 0.2); color: var(--primary-light); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(12, 108, 242, 0.3); }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 1.25rem; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .btn-launch { background: var(--primary); color: #fff !important; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; }
+    main { max-width: 900px; margin: 2.5rem auto 5rem; }
+    .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary-light); }
+    h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .meta-bar { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--surface-border); }
+    h2 { font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e2e8f0; }
+    p { margin-bottom: 1.25rem; color: #cbd5e1; }
+    ul, ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--surface-border); border-radius: 12px; padding: 1.75rem; margin: 2rem 0; }
+    pre { background: var(--code-bg); border: 1px solid var(--surface-border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; color: #e2e8f0; margin-bottom: 1.5rem; }
+    footer { max-width: 900px; margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; flex-wrap: gap; gap: 1rem; }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <nav>
+      <a href="/ai-revenue-recovery">AI Recovery</a>
+      <a href="/payment-failure-recovery">Payments</a>
+      <a href="/benchmarks">Benchmarks</a>
+      <a href="/documentation">Docs</a>
+      <a href="/" class="btn-launch">Launch Control Plane</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="/">Home</a> &rsaquo; <span>Architecture</span>
+    </div>
+
+    <h1>OmniRevive-OS System Architecture & Dual-Speed Control Plane</h1>
+    <div class="meta-bar">
+      <span>Topic: High-Availability Systems & Fintech Architecture</span>
+      <span>Author: Samrudh Dwivedula</span>
+      <span>Verified Tests: 483 / 483</span>
+    </div>
+
+    <p>OmniRevive-OS is structured as a <strong>Dual-Speed Autonomous Revenue Recovery Control Plane</strong> engineered to handle both sub-50ms synchronous consumer transaction failovers and long-running, multi-day B2B accounts receivable disputes.</p>
+
+    <h2>High-Level System Topology</h2>
+    <pre>
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            OMNIREVIVE-OS CONTROL PLANE                       │
+├───────────────────────────────────────┬─────────────────────────────────────┤
+│   FAST-LOOP ENGINE (< 50ms)           │   DEEP-LOOP AR ENGINE (Multi-Day)   │
+│   • Webhook Replay Filter (< 2ms)     │   • Trilingual Voice Agent (FSM)    │
+│   • Qdrant Semantic Vector Memory     │   • GSTIN / TDS Discrepancy Solver  │
+│   • Weibull Hazard Survival Peak      │   • Promise-to-Pay (PTP) Lock-In    │
+│   • Dynamic Multi-Rail Failover       │   • Executive CFO Dual-Key Signoff  │
+├───────────────────────────────────────┴─────────────────────────────────────┤
+│                          CORE GOVERNANCE & SAFETY                           │
+│   • AWS Cedar Policy Gatekeeper (Formal Zero-Trust Specification)           │
+│   • Redis Compare-And-Swap (CAS) Atomic Distributed Mutex (0 Double Debits)  │
+│   • Cryptographic SHA-256 Merkle Audit Chain (Tamper-Evident Forensics)     │
+└─────────────────────────────────────────────────────────────────────────────┘
+    </pre>
+
+    <h2>Core Architectural Components</h2>
+
+    <h3>1. Ingestion & Idempotency Layer</h3>
+    <p>Every inbound webhook is evaluated for HMAC authenticity (using gateway shared secrets) and verified against an atomic Redis key. Duplicate event IDs within a 24-hour sliding window are rejected instantly with <code>HTTP 200 { "status": "duplicate_idempotent" }</code>, preventing cascading re-processing.</p>
+
+    <h3>2. Diagnostic Kernel (Vector Memory)</h3>
+    <p>Utilizes Qdrant vector embeddings to semantically index error descriptions and issuer failure responses. Unlike keyword regex matching, the vector memory detects semantic equivalents such as <em>"card declined: limit exceeded"</em> and <em>"transaction rejected due to user velocity ceiling"</em>, standardizing remediation strategies across all banking partners.</p>
+
+    <h3>3. AWS Cedar Policy Gatekeeper</h3>
+    <p>All recovery plans generated by the AI reasoning models must pass through the deterministic <strong>AWS Cedar policy engine</strong>. Cedar operates independently from the LLM, guaranteeing that no AI model can violate financial invariants:</p>
+    <pre>
+permit(
+    principal in Role::"RecoveryAgent",
+    action in [Action::"ApplyDiscount", Action::"ScheduleRetry"],
+    resource in Resource::"Transaction"
+)
+when {
+    context.discount_pct <= 5.0 &&
+    context.hour >= 9 && context.hour < 21
+};
+    </pre>
+
+    <h3>4. Universal Multi-Rail Gateway Adapters</h3>
+    <p>OmniRevive-OS provides a normalized gateway abstraction supporting:</p>
+    <ul>
+      <li><strong>Juspay HyperSDK:</strong> Direct bank switch routing and dynamic UPI intent generation.</li>
+      <li><strong>PhonePe Switch:</strong> Server-to-server UPI QR and mandate re-attempts.</li>
+      <li><strong>Cashfree Payments:</strong> Instant Payouts, auto-collect virtual accounts, and subscriptions.</li>
+      <li><strong>Stripe / Razorpay:</strong> Global card tokenization, 3DS authentication, and refund processing.</li>
+    </ul>
+
+    <h3>5. Cryptographic SHA-256 Merkle Audit Ledger</h3>
+    <p>To satisfy RBI and enterprise auditor standards, each state transition appends to an immutable sequential hash chain: <code>H_n = SHA256(H_(n-1) || EventPayload || Nonce)</code>. Any attempt to alter past records breaks the hash verification, providing non-repudiation.</p>
+
+    <h2>Related Technical Pages</h2>
+    <ul>
+      <li><a href="/idempotency-protection">Deep Dive: CAS Distributed Idempotency Protection</a></li>
+      <li><a href="/audit-ledger">Forensic SHA-256 Merkle Audit Chains</a></li>
+      <li><a href="/benchmarks">Production Benchmark Results (100-Case Suite)</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 OmniRevive-OS &bull; Built for Razorpay AI Buildathon</div>
+    <div>
+      <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener">GitHub</a> &bull;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</body>
+</html>

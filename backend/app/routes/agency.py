@@ -68,6 +68,7 @@ def list_divisions():
 
 from backend.app.services.email_report_service import send_daily_email_report
 from backend.app.services.autonomous_bug_repair import get_welcome_back_briefing
+from backend.app.services.ai_enterprise_suite import generate_ai_executive_board_meeting
 
 @router.post("/run_cycle")
 def trigger_manual_cycle():
@@ -90,5 +91,11 @@ def send_daily_report(
 def welcome_back_briefing():
     """Retrieves Samrudh's Welcome Back Executive Briefing detailing autonomous bug fixes and system health."""
     return get_welcome_back_briefing()
+
+@router.get("/enterprise_board")
+def enterprise_board_meeting():
+    """Retrieves live autonomous AI C-Suite Board meeting decisions (CEO, CTO, CFO, CMO, VP Eng, Legal, VP Ops)."""
+    return generate_ai_executive_board_meeting()
+
 
 

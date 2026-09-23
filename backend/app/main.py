@@ -281,7 +281,9 @@ SEO_PAGE_ROUTES = {
     "/benchmarks": "benchmarks.html",
     "/faq": "faq.html",
     "/documentation": "documentation.html",
-    "/about": "about.html"
+    "/about": "about.html",
+    "/auth": "auth.html",
+    "/pages/auth.html": "auth.html"
 }
 
 def _serve_seo_page(filename: str):
@@ -329,6 +331,11 @@ async def serve_documentation():
 @app.get("/about", response_class=HTMLResponse)
 async def serve_about():
     return _serve_seo_page("about.html")
+
+@app.get("/auth", response_class=HTMLResponse)
+@app.get("/pages/auth.html", response_class=HTMLResponse)
+async def serve_auth():
+    return _serve_seo_page("auth.html")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():

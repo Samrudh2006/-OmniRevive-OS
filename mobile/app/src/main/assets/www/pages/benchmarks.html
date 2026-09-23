@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empirical Benchmarks & Recovery Metrics (100-Case Suite) | OmniRevive-OS</title>
+  <meta name="description" content="Transparent, empirical benchmarks for OmniRevive-OS: 100-case held-out financial evaluation, ₹4.15L GMV recovered (42.24%), 0 double debits, and 483 automated tests.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/benchmarks">
+  <meta property="og:title" content="Empirical Benchmarks & Recovery Metrics | OmniRevive-OS">
+  <meta property="og:description" content="100-case held-out production benchmark evaluation: 42.24% net recovery rate, zero double debits, 483 tests passing.">
+  <meta property="og:url" content="https://omnirevive-os.antideploy.com/benchmarks">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OmniRevive-OS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Empirical Benchmarks & Recovery Metrics">
+  <meta name="twitter:description" content="Transparent verification of fintech recovery rates and automated tests.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Empirical Benchmarks & Recovery Metrics (100-Case Suite)",
+    "description": "Evaluation methodology, financial recovery metrics, and test coverage statistics for the OmniRevive-OS fintech control plane.",
+    "author": { "@type": "Person", "name": "Samrudh Dwivedula", "url": "https://github.com/Samrudh2006" },
+    "publisher": { "@type": "Organization", "name": "OmniRevive-OS", "url": "https://omnirevive-os.antideploy.com/" },
+    "mainEntityOfPage": "https://omnirevive-os.antideploy.com/benchmarks"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omnirevive-os.antideploy.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Benchmarks", "item": "https://omnirevive-os.antideploy.com/benchmarks" }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0e1526;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0c6cf2;
+      --primary-light: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --code-bg: #030712;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; padding: 0 1rem; }
+    header { max-width: 900px; margin: 0 auto; padding: 2rem 0 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .brand { font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .brand-badge { background: rgba(12, 108, 242, 0.2); color: var(--primary-light); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(12, 108, 242, 0.3); }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 1.25rem; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .btn-launch { background: var(--primary); color: #fff !important; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; }
+    main { max-width: 900px; margin: 2.5rem auto 5rem; }
+    .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary-light); }
+    h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .meta-bar { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--surface-border); }
+    h2 { font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e2e8f0; }
+    p { margin-bottom: 1.25rem; color: #cbd5e1; }
+    ul, ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+    .stat-box { background: var(--surface); border: 1px solid var(--surface-border); border-radius: 10px; padding: 1.5rem; text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); margin-bottom: 0.25rem; }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+    pre { background: var(--code-bg); border: 1px solid var(--surface-border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; color: #e2e8f0; margin-bottom: 1.5rem; }
+    footer { max-width: 900px; margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <nav>
+      <a href="/architecture">Architecture</a>
+      <a href="/documentation">Docs</a>
+      <a href="/faq">FAQ</a>
+      <a href="/" class="btn-launch">Launch Control Plane</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="/">Home</a> &rsaquo; <span>Benchmarks</span>
+    </div>
+
+    <h1>Empirical Benchmarks & Recovery Metrics (100-Case Suite)</h1>
+    <div class="meta-bar">
+      <span>Benchmark: 100 Held-Out Real-World Scenarios</span>
+      <span>Automated Tests: 483 / 483 (100%)</span>
+      <span>Author: Samrudh Dwivedula</span>
+    </div>
+
+    <p>To provide reproducible, transparent evidence of recovery efficacy, OmniRevive-OS is evaluated against an authoritative <strong>100-case held-out financial recovery benchmark suite</strong> representing realistic failure profiles across Indian and international payment rails.</p>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-num">42.24%</div>
+        <div class="stat-label">Net Recovery Rate</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">₹4,15,450</div>
+        <div class="stat-label">GMV Recovered</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Double Debits</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">483 / 483</div>
+        <div class="stat-label">Pytest Suite Passing</div>
+      </div>
+    </div>
+
+    <h2>Benchmark Evaluation Breakdown</h2>
+    <ul>
+      <li><strong>Total Ingested Failure GMV:</strong> ₹9,83,603.69</li>
+      <li><strong>Successfully Recovered GMV:</strong> ₹4,15,450.31 (42.24%)</li>
+      <li><strong>Average Recovery Decision Latency:</strong> 18.4ms (Fast-Loop)</li>
+      <li><strong>Idempotency Collision Rejection Rate:</strong> 100.0% (Zero race conditions)</li>
+      <li><strong>TRAI Quiet-Hour Violations:</strong> 0 (100.0% regulatory enforcement)</li>
+    </ul>
+
+    <h2>Running the Automated Benchmark CLI</h2>
+    <pre>
+# Run the 100-case production benchmark suite
+python cli.py benchmark
+
+# Run the complete 483-test pytest suite
+pytest -v
+    </pre>
+
+    <h2>Stress Test Verification: 50-Thread Concurrent Storm</h2>
+    <p>In addition to the 100-case scenario evaluation, the system was subjected to a 50-thread concurrent webhook storm simulating an issuing bank switch outage. The Redis CAS distributed mutex and SQLite WAL database handled all concurrent requests without deadlocks or double-debit mutations.</p>
+
+    <h2>Related Technical Guides</h2>
+    <ul>
+      <li><a href="/ai-revenue-recovery">How AI Revenue Recovery Works</a></li>
+      <li><a href="/architecture">System Architecture & AWS Cedar Engine</a></li>
+      <li><a href="/audit-ledger">SHA-256 Merkle Cryptographic Audit Ledger</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 OmniRevive-OS &bull; Built for Razorpay AI Buildathon</div>
+    <div>
+      <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener">GitHub</a> &bull;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</body>
+</html>

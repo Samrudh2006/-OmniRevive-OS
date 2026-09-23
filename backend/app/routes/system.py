@@ -194,35 +194,124 @@ async def calculate_merchant_roi(
     }
 
 @router.get("/robots.txt", response_class=Response, tags=["System & Telemetry"], summary="Robots.txt Crawler Directives")
-async def get_robots_txt():
+async def get_robots_txt(request: Request):
     """Returns robots.txt directives for search engine crawlers."""
-    content = """User-agent: *
+    host = request.headers.get("host", "omnirevive-os.antideploy.com")
+    base_url = f"https://{host}" if host and not host.startswith("localhost") and not host.startswith("127.0.0.1") else "https://omnirevive-os.antideploy.com"
+    content = f"""User-agent: *
 Allow: /
 Disallow: /api/v1/internal/
-Sitemap: http://localhost:8000/sitemap.xml
+
+# Sitemap & AI Search LLM Discovery
+Sitemap: {base_url}/sitemap.xml
+llms-txt: {base_url}/llms.txt
 """
     return Response(content=content, media_type="text/plain")
 
 @router.get("/sitemap.xml", response_class=Response, tags=["System & Telemetry"], summary="Sitemap XML for SEO Indexing")
-async def get_sitemap_xml():
-    """Returns sitemap.xml declaring canonical URLs for search engine indexing."""
-    content = """<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+async def get_sitemap_xml(request: Request):
+    """Returns sitemap.xml declaring canonical HTTPS URLs for search engine indexing."""
+    host = request.headers.get("host", "omnirevive-os.antideploy.com")
+    base_url = f"https://{host}" if host and not host.startswith("localhost") and not host.startswith("127.0.0.1") else "https://omnirevive-os.antideploy.com"
+    content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>http://localhost:8000/</loc>
-    <lastmod>2026-09-09</lastmod>
+    <loc>{base_url}/</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://localhost:8000/docs</loc>
-    <lastmod>2026-09-09</lastmod>
+    <loc>{base_url}/ai-revenue-recovery</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{base_url}/payment-failure-recovery</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{base_url}/b2b-dispute-resolution</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>{base_url}/architecture</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{base_url}/idempotency-protection</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{base_url}/audit-ledger</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{base_url}/benchmarks</loc>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{base_url}/faq</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{base_url}/documentation</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>{base_url}/about</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>{base_url}/docs</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
   </url>
 </urlset>
 """
     return Response(content=content, media_type="application/xml")
+
+@router.get("/llms.txt", response_class=Response, tags=["System & Telemetry"], summary="LLMs.txt for AI Search Indexing")
+async def get_llms_txt():
+    """Returns llms.txt standard documentation for LLM discovery and AI search bots."""
+    file_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", "frontend", "llms.txt")
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return Response(content=f.read(), media_type="text/markdown")
+    fallback = "# OmniRevive-OS\n\n> Autonomous AI Revenue Recovery Control Plane for payment failures and B2B dispute resolution.\n"
+    return Response(content=fallback, media_type="text/markdown")
+
+@router.get("/llms-full.txt", response_class=Response, tags=["System & Telemetry"], summary="Full LLMs.txt for AI Search Engines")
+async def get_llms_full_txt():
+    """Returns complete llms-full.txt technical specification for AI search engines."""
+    file_path = os.path.join(os.path.dirname(__file__), "..", "..", "..", "frontend", "llms-full.txt")
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return Response(content=f.read(), media_type="text/markdown")
+    return Response(content="# OmniRevive-OS Full Documentation", media_type="text/markdown")
 
 # Global in-memory state for dynamic load balancing
 _LOAD_BALANCER_WEIGHTS = {

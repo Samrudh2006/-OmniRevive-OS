@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHA-256 Merkle Cryptographic Audit Ledger | OmniRevive-OS</title>
+  <meta name="description" content="Forensic architecture of the SHA-256 Merkle audit ledger in OmniRevive-OS: tamper-evident hash chaining, CFO dual-key quorum signing, and verifiable non-repudiation.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://omnirevive-os.antideploy.com/audit-ledger">
+  <meta property="og:title" content="SHA-256 Merkle Cryptographic Audit Ledger | OmniRevive-OS">
+  <meta property="og:description" content="Tamper-evident sequential hash chains and forensic verification for autonomous fintech recovery.">
+  <meta property="og:url" content="https://omnirevive-os.antideploy.com/audit-ledger">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="OmniRevive-OS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SHA-256 Merkle Cryptographic Audit Ledger">
+  <meta name="twitter:description" content="Mathematical non-repudiation for AI payment recovery decisions.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "SHA-256 Merkle Cryptographic Audit Ledger",
+    "description": "Cryptographic specification of sequential hash chains, Merkle trees, and tamper-evident audit storage in fintech control planes.",
+    "author": { "@type": "Person", "name": "Samrudh Dwivedula", "url": "https://github.com/Samrudh2006" },
+    "publisher": { "@type": "Organization", "name": "OmniRevive-OS", "url": "https://omnirevive-os.antideploy.com/" },
+    "mainEntityOfPage": "https://omnirevive-os.antideploy.com/audit-ledger"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://omnirevive-os.antideploy.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Audit Ledger", "item": "https://omnirevive-os.antideploy.com/audit-ledger" }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: #0e1526;
+      --surface-border: rgba(255, 255, 255, 0.08);
+      --primary: #0c6cf2;
+      --primary-light: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --code-bg: #030712;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-sans); line-height: 1.7; padding: 0 1rem; }
+    header { max-width: 900px; margin: 0 auto; padding: 2rem 0 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--surface-border); }
+    .brand { font-weight: 800; font-size: 1.25rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    .brand-badge { background: rgba(12, 108, 242, 0.2); color: var(--primary-light); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(12, 108, 242, 0.3); }
+    nav a { color: var(--text-muted); text-decoration: none; margin-left: 1.25rem; font-size: 0.9rem; }
+    nav a:hover { color: #fff; }
+    .btn-launch { background: var(--primary); color: #fff !important; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; }
+    main { max-width: 900px; margin: 2.5rem auto 5rem; }
+    .breadcrumbs { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .breadcrumbs a { color: var(--text-muted); text-decoration: none; }
+    .breadcrumbs a:hover { color: var(--primary-light); }
+    h1 { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(135deg, #fff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .meta-bar { display: flex; gap: 1.5rem; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--surface-border); }
+    h2 { font-size: 1.6rem; font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+    h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.75rem; color: #e2e8f0; }
+    p { margin-bottom: 1.25rem; color: #cbd5e1; }
+    ul, ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #cbd5e1; }
+    li { margin-bottom: 0.5rem; }
+    pre { background: var(--code-bg); border: 1px solid var(--surface-border); border-radius: 8px; padding: 1.25rem; overflow-x: auto; font-family: var(--font-mono); font-size: 0.9rem; color: #e2e8f0; margin-bottom: 1.5rem; }
+    footer { max-width: 900px; margin: 0 auto; padding: 3rem 0; border-top: 1px solid var(--surface-border); color: var(--text-muted); font-size: 0.85rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer a { color: var(--text-muted); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <nav>
+      <a href="/architecture">Architecture</a>
+      <a href="/idempotency-protection">Idempotency</a>
+      <a href="/benchmarks">Benchmarks</a>
+      <a href="/documentation">Docs</a>
+      <a href="/" class="btn-launch">Launch Control Plane</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="/">Home</a> &rsaquo; <span>Audit Ledger</span>
+    </div>
+
+    <h1>SHA-256 Merkle Cryptographic Audit Ledger</h1>
+    <div class="meta-bar">
+      <span>Topic: Cryptographic Security & Financial Compliance</span>
+      <span>Hashing: SHA-256 Chained</span>
+      <span>Author: Samrudh Dwivedula</span>
+    </div>
+
+    <p>Financial auditors, enterprise CFOs, and regulatory bodies (such as RBI in India) require absolute non-repudiation: proof that autonomous AI actions, retry schedules, discount authorizations, and webhook logs were not tampered with post-hoc.</p>
+
+    <h2>The Cryptographic Hash Chain Structure</h2>
+    <p>Every event recorded by OmniRevive-OS is linked into a sequential cryptographic hash chain. Each entry computes its hash using the hash of the preceding block:</p>
+
+    <pre>
+Entry_0 (Genesis):
+  Hash_0 = SHA256("GENESIS" || timestamp || metadata)
+
+Entry_n:
+  Hash_n = SHA256(Hash_(n-1) || Event_Type || Payload_JSON || Nonce || Timestamp)
+    </pre>
+
+    <p>If an adversary or rogue database administrator modifies a single byte in any historical event (such as changing a discount percentage or invoice amount), the hash computation for that entry changes, invalidating every subsequent block in the chain.</p>
+
+    <h2>CFO Dual-Key Quorum Signoff</h2>
+    <p>For high-value recovery interventions (transactions exceeding ₹50,000 or concessions above merchant policy thresholds):</p>
+    <ul>
+      <li>The recovery plan is placed into an executive pending queue.</li>
+      <li>An authorized executive must submit an Ed25519 digital signature or dual-key TOTP quorum.</li>
+      <li>The signature is recorded directly into the Merkle node before the execution engine dispatches payment instructions.</li>
+    </ul>
+
+    <h2>Automated Tamper-Detection Engine</h2>
+    <p>The system provides automated forensic verification via CLI and API:</p>
+    <pre>
+# Execute complete forensic ledger verification
+python cli.py verify-audit
+    </pre>
+    <p>The verification routine reads the entire sequential chain from SQLite WAL / Cloudflare R2 object storage, recalculates every SHA-256 digest from genesis to leaf, and verifies that 100% of chain links are intact.</p>
+
+    <h2>Related Technical Pages</h2>
+    <ul>
+      <li><a href="/architecture">System Architecture & AWS Cedar Rules</a></li>
+      <li><a href="/idempotency-protection">CAS Idempotency Protection</a></li>
+      <li><a href="/benchmarks">100-Case Production Benchmark Suite</a></li>
+    </ul>
+  </main>
+
+  <footer>
+    <div>&copy; 2026 OmniRevive-OS &bull; Built for Razorpay AI Buildathon</div>
+    <div>
+      <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener">GitHub</a> &bull;
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </footer>
+</body>
+</html>
