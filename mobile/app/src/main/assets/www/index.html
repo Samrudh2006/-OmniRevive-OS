@@ -778,21 +778,21 @@
     <nav class="h-20 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/85 dark:bg-[#070e1c]/85 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center sticky top-0 z-40 transition-colors shadow-xs">
       <div class="w-full flex items-center justify-between gap-3 lg:gap-6">
         
-        <!-- Left: Brand Logo -->
-        <div class="shrink-0 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 via-indigo-500/15 to-sky-400/10 border border-blue-500/30 flex items-center justify-center text-[#0c6cf2] dark:text-sky-400 shadow-md shadow-blue-500/10">
+        <!-- Left: Brand Logo (Clickable) -->
+        <a href="/" class="shrink-0 flex items-center gap-3 group text-inherit no-underline cursor-pointer" title="OmniRevive-OS — Return to Top">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-500/20 via-indigo-500/15 to-sky-400/10 border border-blue-500/30 flex items-center justify-center text-[#0c6cf2] dark:text-sky-400 shadow-md shadow-blue-500/10 group-hover:scale-105 transition-transform">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path fill-rule="evenodd" d="M12 1.5l8.5 3.5v6.5c0 5.5-3.5 10.5-8.5 12-5-1.5-8.5-6.5-8.5-12V5L12 1.5zm1 4.5l-5 6h4l-1 6 6-7h-4l1-5z" clip-rule="evenodd"/>
             </svg>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-base sm:text-lg font-black tracking-tight text-[#0c2340] dark:text-white whitespace-nowrap">OmniRevive<span class="text-[#0c6cf2] dark:text-sky-400">-OS</span></span>
+              <span class="text-base sm:text-lg font-black tracking-tight text-[#0c2340] dark:text-white whitespace-nowrap group-hover:text-sky-400 transition-colors">OmniRevive<span class="text-[#0c6cf2] dark:text-sky-400">-OS</span></span>
               <span class="whitespace-nowrap px-2 py-0.5 rounded-full text-[8.5px] font-bold tracking-wider bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-500/25 uppercase mono">v1.2 · CONTROL PLANE</span>
             </div>
             <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">Universal Autonomous AI Revenue Recovery</p>
           </div>
-        </div>
+        </a>
 
         <!-- Center: Frosted Capsule Dock (Centered, Single-Line, Responsive) -->
         <div class="hidden xl:flex items-center gap-1 p-1 rounded-full bg-slate-100/90 dark:bg-slate-900/70 border border-slate-200/90 dark:border-slate-800/80 shadow-inner backdrop-blur-xl shrink-0 max-w-fit">
@@ -835,6 +835,13 @@
             <span id="os-status-clock" class="mono font-bold text-slate-700 dark:text-slate-200">--:--:-- IST</span>
           </div>
 
+          <!-- Mobile Navigation Drawer Toggle Button -->
+          <button id="landing-mobile-menu-btn" onclick="toggleLandingMobileMenu()" class="xl:hidden w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:text-blue-600 transition cursor-pointer active:scale-95" aria-label="Toggle Mobile Menu">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+
           <!-- Theme Mode Toggle -->
           <button onclick="toggleThemeMode()" class="w-9 h-9 rounded-full border border-slate-300/80 dark:border-slate-700/80 bg-white/90 dark:bg-slate-800/90 hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center text-sm transition-all duration-200 cursor-pointer shadow-xs hover:scale-105 active:scale-95" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode">
             <span>☀️</span>
@@ -849,6 +856,49 @@
 
       </div>
     </nav>
+
+    <!-- Slide-Down Landing Mobile Navigation Menu (Item 3 & 16 & 20) -->
+    <div id="landing-mobile-menu" class="hidden xl:hidden bg-white/95 dark:bg-[#070e1c]/95 border-b border-slate-200 dark:border-slate-800 backdrop-blur-2xl px-4 py-4 space-y-2.5 transition-all duration-300 z-30 sticky top-20 shadow-xl">
+      <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+        <a href="#showcase-constellation" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>🪐</span> Architecture
+        </a>
+        <a href="#showcase-sandbox" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>🔴</span> Sandbox
+        </a>
+        <a href="#showcase-workspace" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>📊</span> Decisions
+        </a>
+        <a href="#showcase-voice-studio" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>🎙️</span> Voice AI
+        </a>
+        <a href="#showcase-decision-trail" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>📜</span> Audit Trail
+        </a>
+        <a href="#showcase-cedar-security" onclick="toggleLandingMobileMenu()" class="px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 text-slate-700 dark:text-slate-200 hover:text-sky-400">
+          <span>🛡️</span> Cedar Security
+        </a>
+      </div>
+      <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+        <a href="/pages/documentation.html" class="hover:text-sky-400 font-medium">Docs Hub</a>
+        <span>·</span>
+        <a href="/pages/faq.html" class="hover:text-sky-400 font-medium">FAQ</a>
+        <span>·</span>
+        <a href="/pages/privacy.html" class="hover:text-sky-400 font-medium">Privacy</a>
+        <span>·</span>
+        <a href="/pages/terms.html" class="hover:text-sky-400 font-medium">Terms</a>
+        <span>·</span>
+        <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 font-medium">GitHub</a>
+      </div>
+    </div>
+    <script>
+      function toggleLandingMobileMenu() {
+        var menu = document.getElementById('landing-mobile-menu');
+        if (menu) {
+          menu.classList.toggle('hidden');
+        }
+      }
+    </script>
     <script>
       (function() {
         function syncOSClock() {
@@ -2412,7 +2462,45 @@ forbid (
 
       </div>
 
+      <!-- BOTTOM SUB-FOOTER BAR (Items 7, 9, 17, 18, 19, 20) -->
+      <div class="border-t border-slate-200/80 dark:border-slate-800/80 bg-slate-50/80 dark:bg-[#040914]/80 backdrop-blur-md px-4 sm:px-6 lg:px-8 py-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+          
+          <!-- Brand Copyright & Origin -->
+          <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-slate-500 dark:text-slate-400 text-center sm:text-left">
+            <a href="/" class="font-bold text-slate-800 dark:text-slate-200 hover:text-sky-400 transition flex items-center gap-1.5">
+              <span>⚡</span>
+              <span>OmniRevive-OS</span>
+            </a>
+            <span class="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+            <span class="mono">© 2026 OmniRevive-OS · All rights reserved</span>
+            <span class="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+            <span class="text-[11px]">Built by <a href="https://github.com/Samrudh2006" target="_blank" rel="noopener noreferrer" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline">Samrudh Dwivedula</a> for Razorpay AI Buildathon 2026</span>
+          </div>
 
+          <!-- Contact & Telephony Hub (Items 18 & 19) -->
+          <div class="flex flex-wrap items-center justify-center gap-4 text-[11.5px]">
+            <a href="mailto:support@omnirevive-os.antideploy.com" class="text-slate-600 dark:text-slate-300 hover:text-sky-500 flex items-center gap-1.5 transition">
+              <span>✉️</span>
+              <span class="underline underline-offset-2">support@omnirevive-os.antideploy.com</span>
+            </a>
+            <a href="tel:+918000102026" class="text-slate-600 dark:text-slate-300 hover:text-emerald-400 flex items-center gap-1.5 mono transition">
+              <span>📞</span>
+              <span>+91 80001 02026</span>
+            </a>
+          </div>
+
+          <!-- Legal & Compliance Links -->
+          <div class="flex items-center gap-3 text-[11px] text-slate-500 dark:text-slate-400">
+            <a href="/pages/privacy.html" class="hover:text-sky-400 transition">Privacy Policy</a>
+            <span>·</span>
+            <a href="/pages/terms.html" class="hover:text-sky-400 transition">Terms of Service</a>
+            <span>·</span>
+            <a href="https://github.com/Samrudh2006/-OmniRevive-OS" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition">GitHub</a>
+          </div>
+
+        </div>
+      </div>
 
     </footer>
   </div>

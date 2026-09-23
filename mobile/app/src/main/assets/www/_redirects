@@ -1,0 +1,11 @@
+# Cloudflare Pages / Static Routing Rules for Clean SEO URLs
+/ai-revenue-recovery       /pages/ai-revenue-recovery.html       200
+/payment-failure-recovery  /pages/payment-failure-recovery.html  200
+/b2b-dispute-resolution    /pages/b2b-dispute-resolution.html    200
+/architecture              /pages/architecture.html              200
+/idempotency-protection    /pages/idempotency-protection.html    200
+/audit-ledger              /pages/audit-ledger.html              200
+/benchmarks                /pages/benchmarks.html                200
+/faq                       /pages/faq.html                       200
+/documentation             /pages/documentation.html             200
+/about                     /pages/about.html                     200

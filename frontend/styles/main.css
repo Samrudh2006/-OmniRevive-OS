@@ -4,6 +4,20 @@
    Vercel Web Interface Guidelines, Rauno Freiberg Interfaces, Bergside WCAG 2.2 AA)
    ============================================================================== */
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 :root, html.light {
   /* Centralized Semantic Design Tokens (Light Theme) */
   --background: #f4f8fe;
