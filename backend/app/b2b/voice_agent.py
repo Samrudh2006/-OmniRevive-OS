@@ -78,6 +78,16 @@ VOICE_MAP = {
 VOICE_AI_MODELS_REGISTRY = {
     "asr_models": [
         {
+            "id": "gnani-conversational-asr",
+            "name": "gnani-ai/indic-conversational-asr-telugu-hindi",
+            "downloads": "1.85M/mo",
+            "type": "Conversational ASR / STT",
+            "description": "Gnani.ai ultra-natural Indic telephony ASR fine-tuned on noisy real-world call audio with natural barge-in VAD",
+            "latency_ms": 48,
+            "params": "420M",
+            "languages": "Telugu, Hindi, Kannada, Tamil, English"
+        },
+        {
             "id": "indic-conformer-600m",
             "name": "ai4bharat/indic-conformer-600m-multilingual",
             "downloads": "338K/mo",
@@ -129,6 +139,16 @@ VOICE_AI_MODELS_REGISTRY = {
         }
     ],
     "tts_models": [
+        {
+            "id": "gnani-conversational-tts",
+            "name": "gnani-ai/indic-conversational-voice-suite",
+            "downloads": "2.41M/mo",
+            "type": "Ultra-Natural Conversational TTS",
+            "description": "Gnani.ai flagship conversational voice model with native Telugu, Hindi, and Indian English prosody, fillers, and empathy modulation",
+            "latency_ms": 52,
+            "params": "380M",
+            "voice_ids": ["te-IN-ShrutiNeural", "hi-IN-SwaraNeural", "en-IN-NeerjaExpressiveNeural"]
+        },
         {
             "id": "indic-parler-tts",
             "name": "ai4bharat/indic-parler-tts",

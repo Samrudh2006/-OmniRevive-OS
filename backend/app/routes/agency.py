@@ -98,4 +98,53 @@ def enterprise_board_meeting():
     return generate_ai_executive_board_meeting()
 
 
+@router.post("/c-suite/debate")
+def trigger_c_suite_debate(
+    amount_inr: float = Query(default=15000.0, description="Dispute or failed transaction amount in INR"),
+    bank_issuer: str = Query(default="HDFC", description="Bank issuer"),
+    preferred_language: str = Query(default="te-IN", description="Customer language (te-IN, hi-IN, en-IN)"),
+    attempt_number: int = Query(default=2, description="Attempt count")
+):
+    """
+    Triggers a live multi-agent executive debate (CEO, CFO, Head of Recovery, SRE Sentinel)
+    following the Brahma structured consensus protocol.
+    """
+    from autonomous_ai_company_os.c_suite import c_suite_swarm_engine
+    tx_context = {
+        "amount_inr": amount_inr,
+        "bank_issuer": bank_issuer,
+        "preferred_language": preferred_language,
+        "attempt_number": attempt_number
+    }
+    debate_result = c_suite_swarm_engine.run_executive_debate(tx_context)
+    return {
+        "success": True,
+        "data": debate_result
+    }
+
+@router.post("/swarm/stress-test")
+@router.post("/api/v1/agency/swarm/stress-test")
+def trigger_swarm_stress_test(
+    total_transactions: int = Query(default=10000, description="Number of concurrent transactions to simulate"),
+    target_bank_rail: str = Query(default="hdfc_switch", description="Target bank rail for catastrophic black-swan outage"),
+    outage_severity: float = Query(default=0.95, description="Outage severity (0.0 to 1.0)")
+):
+    """
+    Executes a high-throughput 10,000-TPS Multi-Agent Swarm stress run with acute black-swan failure.
+    Validates LinUCB dynamic routing resilience, CAS mutex contention, and CFO quarantine invariants.
+    """
+    from autonomous_ai_company_os.stress_testing.swarm_stress_simulator import swarm_stress_simulator
+    result = swarm_stress_simulator.run_black_swan_simulation(
+        total_transactions=total_transactions,
+        black_swan_target_rail=target_bank_rail,
+        outage_severity=outage_severity
+    )
+    return {
+        "success": True,
+        "data": result
+    }
+
+
+
+
 

@@ -41,45 +41,86 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
                 "timestamp": time.time()
             }
 
-    # 1. Attempt Local Ollama connection (if available)
-    ollama_url = "http://localhost:11434/api/generate"
+    # 1. Attempt Local Open-Source AI connection (Ollama, LM Studio, LocalAI, text-gen-webui)
     system_prompt = (
         "You are OmniRevive AI Copilot, a senior enterprise SRE & payment recovery architect for OmniRevive-OS across universal payment rails (Juspay, Cashfree, PhonePe, Razorpay, Stripe). "
-        "OmniRevive-OS is a 3-tier deterministic recovery control plane for Indian payments (Fast-Loop B2C, Deep-Loop B2B Voice, and Governance). "
-        "Key specs: Real-time NPCI switch telemetry, SciPy-fitted Weibull hazard retries (+45m on SBI 504 outage), 1-Click WhatsApp dynamic UPI links, "
+        "OmniRevive-OS is an autonomous 3-tier deterministic recovery control plane for Indian payments (Fast-Loop B2C, Deep-Loop B2B Voice, and Governance). "
+        "Key capabilities: Real-time NPCI switch telemetry, SciPy-fitted Weibull hazard retries (+45m on SBI/HDFC 504 outage), 1-Click WhatsApp dynamic UPI links, "
         "autonomous Hinglish/Telugu/English B2B voice dispute resolution & PTP locks, Distributed CAS Mutex with 0 double debits, SQLite WAL mode, "
         "TRAI quiet hours (21:00-09:00 IST), max 10%/500 INR discount clamp, and 42.24% Net GMV Recovery Yield across 100 cases. "
-        "Answer warmly, concisely, professionally, and like a brilliant senior software engineer."
+        "Answer the user's question directly, accurately, warmly, concisely, and professionally like an expert software & fintech engineer."
     )
 
-    ollama_response = None
+    local_ai_response = None
+    local_ai_source = None
+
+    # Step A: Query Local Ollama API (http://localhost:11434)
     try:
-        async with httpx.AsyncClient(timeout=2.5) as client:
+        async with httpx.AsyncClient(timeout=4.0) as client:
+            # Auto-detect available models from Ollama tags
+            active_model = "llama3"
+            try:
+                tags_resp = await client.get("http://localhost:11434/api/tags")
+                if tags_resp.status_code == 200:
+                    models = tags_resp.json().get("models", [])
+                    if models:
+                        active_model = models[0].get("name", "llama3")
+            except Exception:
+                pass
+
             resp = await client.post(
-                ollama_url,
+                "http://localhost:11434/api/generate",
                 json={
-                    "model": "llama3",
-                    "prompt": f"System: {system_prompt}\nUser: {query}\nCopilot:",
+                    "model": active_model,
+                    "prompt": f"System: {system_prompt}\n\nUser: {query}\n\nCopilot Response:",
                     "stream": False
                 }
             )
             if resp.status_code == 200:
-                ollama_response = resp.json().get("response")
+                out = resp.json().get("response", "").strip()
+                if out:
+                    local_ai_response = out
+                    local_ai_source = f"local_ollama ({active_model})"
     except Exception:
-        ollama_response = None
+        local_ai_response = None
 
-    if ollama_response:
+    # Step B: Query Local OpenAI-compatible endpoint (LM Studio / LocalAI / llama.cpp on port 1234 or 8080)
+    if not local_ai_response:
+        for local_endpoint in ["http://localhost:1234/v1/chat/completions", "http://localhost:11434/v1/chat/completions"]:
+            try:
+                async with httpx.AsyncClient(timeout=3.0) as client:
+                    resp = await client.post(
+                        local_endpoint,
+                        json={
+                            "messages": [
+                                {"role": "system", "content": system_prompt},
+                                {"role": "user", "content": query}
+                            ],
+                            "temperature": 0.3,
+                            "max_tokens": 512
+                        }
+                    )
+                    if resp.status_code == 200:
+                        choices = resp.json().get("choices", [])
+                        if choices:
+                            local_ai_response = choices[0].get("message", {}).get("content", "").strip()
+                            local_ai_source = "local_ai_studio"
+                            break
+            except Exception:
+                continue
+
+    if local_ai_response:
         return {
             "success": True,
             "data": {
-                "source": "local_ollama_llama3",
-                "response": ollama_response
+                "source": local_ai_source or "local_open_source_ai",
+                "response": local_ai_response
             },
             "trace_id": trace_id,
             "timestamp": time.time()
         }
 
-    # 2. High-Precision Domain Knowledge & Human-Grade Semantic Engine
+    # 2. High-Precision Domain Knowledge & SRE Neural Engine Fallback
     q = query.lower()
 
     if any(k in q for k in ["hi", "hello", "hey", "who are you", "what are you", "what can you do", "help me"]):

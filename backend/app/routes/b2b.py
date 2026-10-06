@@ -331,3 +331,69 @@ async def synthesize_neural_voice(
         }
     )
 
+
+# ---------------------------------------------------------------------------
+# VoxCPM Real-Time Spoken Epistemics & Full-Duplex Streaming Endpoints
+# ---------------------------------------------------------------------------
+from backend.app.b2b.voxcpm_streaming_engine import voxcpm_engine, EpistemicStateTracker
+
+class VoxCPMStreamRequest(BaseModel):
+    text_prompt: str
+    lang_code: Optional[str] = "te-IN"
+    epistemic_mode: Optional[str] = "AUTO"
+
+class EpistemicUpdateRequest(BaseModel):
+    user_utterance: str
+    acoustic_pause_ms: Optional[float] = 0.0
+
+@router.post("/api/v1/b2b/voice/voxcpm-stream", tags=["VoxCPM Spoken Epistemics"], summary="Stream 24kHz VoxCPM Audio Chunks")
+async def voxcpm_stream_audio_chunks(req: VoxCPMStreamRequest, request: Request):
+    """Yields token-level 20ms audio frame chunks with TTFA < 45ms and epistemic modulation."""
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    chunks = list(voxcpm_engine.stream_speech_chunks(
+        text_prompt=req.text_prompt,
+        lang_code=req.lang_code or "te-IN",
+        epistemic_mode=req.epistemic_mode or "AUTO"
+    ))
+    return {
+        "success": True,
+        "data": {
+            "prompt": req.text_prompt,
+            "lang_code": req.lang_code,
+            "total_chunks_streamed": len(chunks),
+            "time_to_first_audio_ms": chunks[0]["time_to_first_audio_ms"] if chunks else None,
+            "sample_rate_hz": voxcpm_engine.sample_rate,
+            "chunks_sample": chunks[:3]
+        },
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@router.post("/api/v1/b2b/voice/voxcpm-barge-in", tags=["VoxCPM Spoken Epistemics"], summary="Execute Sub-18ms Interruption Cut-Off")
+async def voxcpm_barge_in(request: Request):
+    """Cuts off active speech playback when user interrupts with sub-18ms cut-off latency."""
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    result = voxcpm_engine.handle_barge_in_interruption()
+    return {
+        "success": True,
+        "data": result,
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+@router.post("/api/v1/b2b/voice/voxcpm-epistemics", tags=["VoxCPM Spoken Epistemics"], summary="Update Conversational Epistemic Stance")
+async def voxcpm_update_epistemic_state(req: EpistemicUpdateRequest, request: Request):
+    """Updates mutual belief state, hesitation score, and selects empathetic backchannels."""
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    update = voxcpm_engine.epistemic_tracker.update_epistemic_state(
+        user_utterance=req.user_utterance,
+        acoustic_pause_ms=req.acoustic_pause_ms or 0.0
+    )
+    return {
+        "success": True,
+        "data": update,
+        "trace_id": trace_id,
+        "timestamp": time.time()
+    }
+
+

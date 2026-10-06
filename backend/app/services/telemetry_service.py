@@ -1,17 +1,28 @@
 import time
 import uuid
+import logging
 from typing import Dict, Any, List, Optional
 from prometheus_client import Counter, Histogram
-import structlog
-import logging
 
-structlog.configure(
-    processors=[
-        structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.JSONRenderer()
-    ]
-)
-s_logger = structlog.get_logger()
+try:
+    import structlog
+    structlog.configure(
+        processors=[
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.JSONRenderer()
+        ]
+    )
+    s_logger = structlog.get_logger()
+except ImportError:
+    class _FallbackStructlog:
+        def info(self, msg, **kwargs):
+            logging.getLogger("RazorRevive").info(f"{msg} {kwargs}")
+        def warning(self, msg, **kwargs):
+            logging.getLogger("RazorRevive").warning(f"{msg} {kwargs}")
+        def error(self, msg, **kwargs):
+            logging.getLogger("RazorRevive").error(f"{msg} {kwargs}")
+    s_logger = _FallbackStructlog()
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("RazorRevive")
 

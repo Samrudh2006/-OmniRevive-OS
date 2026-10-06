@@ -290,3 +290,152 @@ async def process_bulk_recovery_json(req: BulkJsonRequest, request: Request):
         "trace_id": trace_id,
         "timestamp": time.time()
     }
+
+
+class CausalUpliftRequest(BaseModel):
+    amount_inr: float = Field(default=3500.0, description="Transaction amount in INR")
+    failure_class: str = Field(default="USER_DROPOUT", description="Classified error category")
+    attempt_count: int = Field(default=1, description="Number of previous attempts")
+    bank_issuer: Optional[str] = Field(default="HDFC", description="Issuing bank")
+    customer_intent_score: Optional[float] = Field(default=0.75, description="Prior customer intent score")
+
+class ConformalPredictRequest(BaseModel):
+    predicted_median_seconds: float = Field(default=45.0, description="Point estimate of recovery window")
+    bank_issuer: Optional[str] = Field(default="HDFC", description="Issuing bank")
+    failure_class: Optional[str] = Field(default="TRANSIENT_GATEWAY", description="Failure category")
+    confidence_level: Optional[float] = Field(default=0.90, description="Target coverage confidence (e.g., 0.90, 0.95)")
+
+
+@router.post("/api/v1/recovery/causal-uplift", summary="Causal Uplift & Optimal Intervention Estimation")
+def evaluate_causal_uplift(req: CausalUpliftRequest):
+    """
+    Computes Individual Treatment Effects (ITE / CATE) via Double Machine Learning meta-learners
+    to select the optimal intervention maximizing net revenue and avoiding deadweight subsidy loss.
+    """
+    from backend.app.causal_uplift import causal_uplift_optimizer
+    res = causal_uplift_optimizer.select_optimal_intervention(
+        amount_inr=req.amount_inr,
+        failure_class=req.failure_class,
+        attempt_count=req.attempt_count,
+        bank_issuer=req.bank_issuer or "HDFC",
+        customer_intent_score=req.customer_intent_score or 0.70
+    )
+    return {
+        "success": True,
+        "data": res,
+        "timestamp": time.time()
+    }
+
+
+@router.post("/api/v1/recovery/conformal-predict", summary="Conformal Risk-Bounded Recovery Prediction Interval")
+def predict_conformal_bounds(req: ConformalPredictRequest):
+    """
+    Generates distribution-free, finite-sample calibrated prediction intervals for recovery delays.
+    """
+    from backend.app.conformal_predictor import conformal_predictor
+    res = conformal_predictor.predict_recovery_interval(
+        predicted_median_seconds=req.predicted_median_seconds,
+        bank_issuer=req.bank_issuer or "HDFC",
+        failure_class=req.failure_class or "TRANSIENT_GATEWAY",
+        confidence_level=req.confidence_level or 0.90
+    )
+    return {
+        "success": True,
+        "data": res,
+        "timestamp": time.time()
+    }
+
+
+class GNNCascadeRequest(BaseModel):
+    initial_failed_bank: str = Field(default="SBI", description="Shock originator bank (e.g. SBI, HDFC)")
+    failure_severity: Optional[float] = Field(default=0.85, description="Shock magnitude (0.0 to 1.0)")
+
+class PINNQueueRequest(BaseModel):
+    bank_issuer: str = Field(default="HDFC", description="Bank switch name")
+    current_queue_depth: Optional[int] = Field(default=1500, description="Pending transaction queue depth")
+    inbound_rate_lambda: Optional[float] = Field(default=450.0, description="Inbound surge arrival rate (TPS)")
+    service_rate_mu: Optional[float] = Field(default=600.0, description="Bank nominal capacity (TPS)")
+    switch_degradation_factor: Optional[float] = Field(default=0.40, description="Outage degradation factor")
+
+class CBDCMintRequest(BaseModel):
+    payment_id: str = Field(default="pay_cbdc_offline_101", description="Target payment ID")
+    amount_inr: float = Field(default=3500.0, description="Payment amount in INR")
+    merchant_vpa: Optional[str] = Field(default="merchant.enterprise@razorpay")
+    customer_wallet_id: Optional[str] = Field(default="cbdc_wallet_in_98765")
+
+
+@router.post("/api/v1/research/gnn-cascade", summary="Graph Neural Network Inter-Bank Contagion Simulation")
+def evaluate_gnn_cascade(req: GNNCascadeRequest):
+    """
+    Runs 2-layer Graph Convolutional Network forward pass over Indian Clearing Network
+    to predict systemic failure cascade risks.
+    """
+    from backend.app.research import gnn_cascade_model
+    res = gnn_cascade_model.predict_cascade_risk(
+        initial_failed_bank=req.initial_failed_bank,
+        failure_severity=req.failure_severity or 0.85
+    )
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+
+@router.post("/api/v1/research/federated-round", summary="Privacy-Preserving Federated Learning Round")
+def trigger_federated_round():
+    """
+    Executes a multi-merchant FedAvg training round with (epsilon, delta)-Differential Privacy.
+    """
+    from backend.app.research import federated_aggregator
+    res = federated_aggregator.execute_federated_round()
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+
+@router.post("/api/v1/research/pinn-queue", summary="Physics-Informed Fluid Queue Differential Equation Solver")
+def solve_pinn_queue_moment(req: PINNQueueRequest):
+    """
+    Integrates continuous fluid dynamic queue ODEs to determine the exact optimal retry moment.
+    """
+    from backend.app.research import pinn_queue_solver
+    res = pinn_queue_solver.solve_optimal_dispatch_moment(
+        bank_issuer=req.bank_issuer,
+        current_queue_depth=req.current_queue_depth or 1500,
+        inbound_rate_lambda=req.inbound_rate_lambda or 450.0,
+        service_rate_mu=req.service_rate_mu or 600.0,
+        switch_degradation_factor=req.switch_degradation_factor or 0.40
+    )
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+
+@router.post("/api/v1/research/cbdc-mint", summary="Mint Programmable Offline e-Rupee Recovery Escrow Token")
+def mint_cbdc_token(req: CBDCMintRequest):
+    """
+    Mints a cryptographic e-Rupee programmable smart recovery voucher for zero-connectivity situations.
+    """
+    from backend.app.research import cbdc_escrow_engine
+    res = cbdc_escrow_engine.mint_offline_recovery_token(
+        payment_id=req.payment_id,
+        amount_inr=req.amount_inr,
+        merchant_vpa=req.merchant_vpa or "merchant.enterprise@razorpay",
+        customer_wallet_id=req.customer_wallet_id or "cbdc_wallet_in_98765"
+    )
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+
+@router.get("/api/v1/streaming/surge-stream", summary="High-Throughput Inter-Bank Surge Simulator")
+def run_surge_stream(rate_tps: int = 1000, duration_sec: float = 1.0):
+    """
+    Simulates high-throughput inter-bank clearing traffic (up to 10,000 TPS) with backpressure management.
+    """
+    from backend.app.streaming import interbank_simulator
+    res = interbank_simulator.generate_surge_stream(rate_tps=rate_tps, duration_seconds=duration_sec)
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+
+@router.get("/api/v1/streaming/columnar-olap", summary="ClickHouse-Style Sub-10ms OLAP Columnar Aggregation")
+def query_columnar_olap(bank: Optional[str] = None, min_amount: Optional[float] = None):
+    """
+    Executes vectorized SIMD columnar queries over transaction drop records in sub-10ms.
+    """
+    from backend.app.streaming import columnar_analytics_store
+    res = columnar_analytics_store.execute_olap_aggregation(bank_filter=bank, min_amount=min_amount)
+    return {"success": True, "data": res, "timestamp": time.time()}
+
+

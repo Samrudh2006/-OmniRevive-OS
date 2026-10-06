@@ -10,6 +10,12 @@ import argparse
 import json
 import time
 
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # Ensure project root is in python path
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 
@@ -265,6 +271,93 @@ def cmd_roi(args):
     print(f"[IMPACT] RazorRevive-OS adds INR {annual_recovered:,.2f} in net new annualized cash flow.\n")
     return 0
 
+def cmd_verify_proof(args):
+    print("\n" + "=" * 80)
+    print("🔒 STANDALONE RFC 6962 MERKLE INCLUSION PROOF VERIFIER")
+    print("=" * 80)
+    tx_id = args.tx_id or "pay_prod_recovery_001"
+    
+    from backend.app.merkle_proof import CompactMerkleTree, verify_merkle_inclusion_proof
+    
+    # Generate sample tree with realistic transactions
+    leaves = [
+        f"RECOVERY_RESOLVED:pay_seed_101:1499.0",
+        f"RECOVERY_RESOLVED:{tx_id}:2499.0",
+        f"RECOVERY_RESOLVED:pay_seed_103:999.0",
+        f"RECOVERY_RESOLVED:pay_seed_104:45000.0"
+    ]
+    tree = CompactMerkleTree(leaves)
+    leaf_idx = leaves.index(f"RECOVERY_RESOLVED:{tx_id}:2499.0")
+    proof = tree.get_audit_proof(leaf_idx)
+    
+    print(f"• Target Transaction ID: {tx_id}")
+    print(f"• Leaf Data:             {proof['leaf_data']}")
+    print(f"• Computed Leaf Hash:    {proof['leaf_hash']}")
+    print(f"• Merkle Root:           {proof['merkle_root']}")
+    print(f"• Audit Path Depth:      {len(proof['audit_path'])} hops")
+    print("-" * 80)
+    print("Executing offline verification without backend DB connection...")
+    
+    is_valid, msg = verify_merkle_inclusion_proof(proof)
+    if is_valid:
+        print(f"✅ [VERIFIED] {msg}")
+    else:
+        print(f"❌ [TAMPERED] {msg}")
+    print("=" * 80 + "\n")
+    return 0 if is_valid else 1
+
+def cmd_csuite_debate(args):
+    print("\n" + "=" * 80)
+    print("🏛️ AUTONOMOUS C-SUITE MULTI-AGENT DEBATE (BRAHMA PROTOCOL)")
+    print("=" * 80)
+    
+    from autonomous_ai_company_os.c_suite import c_suite_swarm_engine
+    tx_context = {
+        "amount_inr": args.amount,
+        "bank_issuer": args.bank,
+        "preferred_language": args.lang,
+        "attempt_number": args.attempt
+    }
+    
+    res = c_suite_swarm_engine.run_executive_debate(tx_context)
+    print(f"• Debate ID:        {res['debate_id']}")
+    print(f"• Target Context:   ₹{args.amount:,.2f} | Bank: {args.bank} | Lang: {args.lang} | Attempt: {args.attempt}")
+    print(f"• Consensus Status: {res['status']} (Confidence: {res['consensus_score']*100:.1f}%)")
+    print(f"• Final Decree:     {res['final_decree']}")
+    print(f"• Action Channel:   {res['action_channel']}")
+    print(f"• Discount Cap:     {res['authorized_discount_pct']}% (Cedar Enforced)")
+    print(f"• Latency:          {res['execution_latency_ms']} ms")
+    print("-" * 80)
+    print("EXECUTIVE VOTING RECORD:")
+    for op in res["debate_rounds"][0]["executive_opinions"]:
+        print(f"  [{op['avatar']}] {op['executive']} ({op['title']}):")
+        print(f"      Stance: {op['stance']} | Vote: {op['vote']}")
+        print(f"      Rationale: {op['rationale']}")
+    print("=" * 80 + "\n")
+    return 0
+
+def cmd_bandit_benchmark(args):
+    print("\n" + "=" * 80)
+    print("🎯 CONTEXTUAL MULTI-ARMED BANDIT ROUTING BENCHMARK")
+    print("=" * 80)
+    
+    from backend.app.contextual_bandit import contextual_bandit_router
+    test_cases = [
+        (1500.0, "HDFC", 1),
+        (85000.0, "ICICI", 1),
+        (3500.0, "SBI", 2),
+        (12000.0, "AXIS", 1),
+        (450.0, "PNB", 3)
+    ]
+    
+    print(f"{'Amount (INR)':<14} | {'Bank':<8} | {'Att':<4} | {'Selected Rail':<12} | {'UCB Score':<10} | {'Expected Rate':<14} | {'Bonus':<8}")
+    print("-" * 80)
+    for amt, bank, att in test_cases:
+        res = contextual_bandit_router.select_optimal_rail(amt, bank, att, strategy="LINUCB")
+        print(f"₹{amt:<13,.0f} | {bank:<8} | {att:<4} | {res['selected_rail']:<12} | {res['ucb_score']:<10.4f} | {res['expected_success_rate']*100:<13.1f}% | {res['exploration_bonus']:<8.4f}")
+    print("=" * 80 + "\n")
+    return 0
+
 def main():
     parser = argparse.ArgumentParser(
         description="RazorRevive-OS Enterprise Control Plane CLI",
@@ -273,6 +366,9 @@ def main():
 Examples:
   python cli.py health
   python cli.py verify-audit
+  python cli.py verify-proof --tx-id pay_prod_recovery_001
+  python cli.py c-suite-debate --amount 15000 --bank HDFC --lang te-IN
+  python cli.py bandit-benchmark
   python cli.py benchmark
   python cli.py replay --case 42
   python cli.py fuzz --count 25
@@ -290,6 +386,23 @@ Examples:
     # verify-audit
     sub_audit = subparsers.add_parser("verify-audit", help="Verify SHA-256 cryptographic audit chain integrity")
     sub_audit.set_defaults(func=cmd_verify_audit)
+
+    # verify-proof
+    sub_vproof = subparsers.add_parser("verify-proof", help="Verify standalone RFC 6962 Merkle Inclusion Proof")
+    sub_vproof.add_argument("--tx-id", type=str, default="pay_prod_recovery_001", help="Target transaction ID")
+    sub_vproof.set_defaults(func=cmd_verify_proof)
+
+    # c-suite-debate
+    sub_csuite = subparsers.add_parser("c-suite-debate", help="Trigger autonomous multi-agent C-Suite debate (Brahma style)")
+    sub_csuite.add_argument("--amount", type=float, default=15000.0, help="Amount in INR")
+    sub_csuite.add_argument("--bank", type=str, default="HDFC", help="Bank issuer")
+    sub_csuite.add_argument("--lang", type=str, default="te-IN", help="Language: te-IN, hi-IN, en-IN")
+    sub_csuite.add_argument("--attempt", type=int, default=1, help="Attempt count")
+    sub_csuite.set_defaults(func=cmd_csuite_debate)
+
+    # bandit-benchmark
+    sub_bandit = subparsers.add_parser("bandit-benchmark", help="Benchmark LinUCB contextual multi-rail routing")
+    sub_bandit.set_defaults(func=cmd_bandit_benchmark)
     
     # benchmark
     sub_bench = subparsers.add_parser("benchmark", help="Execute the 100-case recovery benchmark")
@@ -345,4 +458,5 @@ Examples:
 
 if __name__ == "__main__":
     main()
+
 

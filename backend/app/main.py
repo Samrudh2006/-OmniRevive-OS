@@ -9,7 +9,10 @@ from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-import structlog
+try:
+    import structlog
+except ImportError:
+    structlog = None
 
 from backend.app.config import settings
 from backend.app.middleware.rate_limiter import SlidingWindowRateLimiter

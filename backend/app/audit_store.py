@@ -301,4 +301,9 @@ class CryptographicAuditLedger:
             })
         return events
 
+    def get_recent_events(self, limit: int = 50, merchant_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Alias for get_events."""
+        return self.get_events(limit=limit, merchant_id=merchant_id)
+
 audit_store = CryptographicAuditLedger()
+

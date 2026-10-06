@@ -272,3 +272,152 @@ def simulate_multi_rail_recovery(req: SimulateRecoveryRequest):
         "execution_time_ms": round((time.perf_counter() - start_time) * 1000, 2),
         "timestamp": time.time()
     }
+
+
+class BanditRouteRequest(BaseModel):
+    amount_inr: float = Field(default=5000.0, description="Transaction amount in INR")
+    bank_issuer: str = Field(default="HDFC", description="Issuing bank (e.g., HDFC, ICICI, SBI)")
+    attempt_number: int = Field(default=1, description="Current attempt number")
+    strategy: Optional[str] = Field(default="LINUCB", description="Exploration strategy: LINUCB or THOMPSON")
+
+class BanditFeedbackRequest(BaseModel):
+    rail: str = Field(..., description="Executed payment rail")
+    amount_inr: float = Field(..., description="Transaction amount in INR")
+    bank_issuer: str = Field(..., description="Issuing bank")
+    attempt_number: int = Field(default=1, description="Attempt number")
+    success: bool = Field(..., description="Whether transaction was recovered successfully")
+    latency_ms: Optional[float] = Field(default=120.0, description="Observed network latency in ms")
+
+
+@router.post("/bandit-route")
+def route_via_contextual_bandit(req: BanditRouteRequest):
+    """
+    Evaluates multi-rail candidates using LinUCB / Thompson Sampling with real-time context covariates.
+    """
+    from backend.app.contextual_bandit import contextual_bandit_router
+    decision = contextual_bandit_router.select_optimal_rail(
+        amount_inr=req.amount_inr,
+        bank_issuer=req.bank_issuer,
+        attempt_number=req.attempt_number,
+        strategy=req.strategy or "LINUCB"
+    )
+    return {
+        "success": True,
+        "data": decision,
+        "timestamp": time.time()
+    }
+
+
+@router.post("/bandit-feedback")
+def submit_bandit_feedback(req: BanditFeedbackRequest):
+    """
+    Updates the online Bayesian / Ridge Regression weights for the chosen payment rail arm.
+    """
+    from backend.app.contextual_bandit import contextual_bandit_router
+    contextual_bandit_router.record_feedback(
+        rail=req.rail,
+        amount_inr=req.amount_inr,
+        bank_issuer=req.bank_issuer,
+        attempt_number=req.attempt_number,
+        success=req.success,
+        latency_ms=req.latency_ms or 120.0
+    )
+    return {
+        "success": True,
+        "message": f"Online bandit feedback recorded for rail {req.rail.upper()}",
+        "timestamp": time.time()
+    }
+
+
+class FXArbitrageRequest(BaseModel):
+    amount_foreign: float = Field(default=150.0, description="Payment amount in foreign currency")
+    currency: str = Field(default="USD", description="Foreign currency code (USD, EUR, GBP, AED, SGD)")
+    customer_name: Optional[str] = Field(default="Global Enterprise Client", description="Payer name")
+
+class SelfHealingRemediateRequest(BaseModel):
+    gateway_name: str = Field(default="RAZORPAY", description="Gateway experiencing contract drift")
+    http_status: int = Field(default=422, description="HTTP status code received")
+    error_message: str = Field(default="Unrecognized field: charge_id", description="Error message from gateway")
+
+
+@router.post("/fx-arbitrage", summary="Cross-Border Multi-Currency FX Arbitrage & VAN Optimization")
+def evaluate_fx_arbitrage(req: FXArbitrageRequest):
+    """
+    Evaluates global payment rails (Stripe Direct, Wise VAN, PayPal, Adyen), computes real-time
+    forward hedged FX rates, and generates dynamic single-use Virtual Account Numbers (VAN).
+    """
+    from backend.app.gateways.fx_arbitrage_engine import fx_arbitrage_engine
+    decision = fx_arbitrage_engine.evaluate_cross_border_arbitrage(
+        amount_foreign=req.amount_foreign,
+        currency=req.currency,
+        customer_name=req.customer_name or "Global Enterprise Client"
+    )
+    return {
+        "success": True,
+        "data": decision,
+        "timestamp": time.time()
+    }
+
+
+@router.get("/fx-rates", summary="Live Volatility-Adjusted FX Rates Matrix")
+def get_live_fx_rates():
+    """
+    Returns spot rates, 7-day forward locked rates, and volatility metrics for all supported global currencies.
+    """
+    from backend.app.gateways.fx_arbitrage_engine import fx_arbitrage_engine
+    currencies = ["USD", "EUR", "GBP", "AED", "SGD"]
+    rates = {c: fx_arbitrage_engine.get_spot_fx_rate(c) for c in currencies}
+    return {
+        "success": True,
+        "data": rates,
+        "timestamp": time.time()
+    }
+
+
+@router.post("/self-healing/remediate", summary="Trigger Autonomous Self-Healing Code Patch Synthesizer")
+def trigger_self_healing_repair(req: SelfHealingRemediateRequest):
+    """
+    Autonomous SRE agent detects gateway contract drift, synthesizes dynamic hot-patch adapter,
+    verifies in sandbox, and applies zero-downtime runtime patch.
+    """
+    from autonomous_ai_company_os.self_healing import self_healing_synthesizer
+    anomaly = self_healing_synthesizer.detect_schema_drift(
+        gateway_name=req.gateway_name,
+        sent_payload={"charge_id": "ch_98124", "amount": 2500.0},
+        received_response={"error": req.error_message},
+        http_status=req.http_status
+    )
+    if not anomaly:
+        return {"success": True, "message": "No breaking drift detected. Baseline nominal."}
+        
+    repair_res = self_healing_synthesizer.synthesize_and_apply_remediation(anomaly, dry_run=False)
+    return {
+        "success": True,
+        "data": repair_res,
+        "timestamp": time.time()
+    }
+
+
+@router.get("/self-healing/patches", summary="List Active Runtime Hot-Patches")
+def get_active_self_healing_patches():
+    """
+    Returns list of all active hot-patches and historical self-healing mutations.
+    """
+    from autonomous_ai_company_os.self_healing import self_healing_synthesizer
+    return {
+        "success": True,
+        "active_patches": [
+            {
+                "patch_id": p["patch_id"],
+                "target": f"{p['target_module']}.{p['target_func']}",
+                "status": p["status"],
+                "applied_at": p["applied_at"],
+                "synthesized_code": p["metadata"].get("synthesized_code", "")
+            }
+            for p in self_healing_synthesizer.registry.active_patches.values()
+        ],
+        "total_patches_applied": len(self_healing_synthesizer.registry.patch_history),
+        "timestamp": time.time()
+    }
+
+
