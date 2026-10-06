@@ -6,9 +6,9 @@
 
 ---
 
-## 01 System Overview
+## 01 System Overview & Three-Tier Financial Isolation Boundary Pattern
 
-OmniRevive-OS is structured as a **Dual-Speed Autonomous Revenue Recovery Control Plane** separating ultra-low latency Fast-Loop gateway failovers from Deep-Loop neural voice negotiations, guarded by a deterministic AWS Cedar policy engine and sealed in a SHA-256 Merkle audit ledger.
+OmniRevive-OS is structured as a **Dual-Speed Autonomous Revenue Recovery Control Plane** leveraging the **Three-Tier Financial Isolation Boundary Pattern** to separate ultra-low latency Fast-Loop gateway failovers from Deep-Loop neural voice negotiations. Inbound transactions pass through a cryptographic **HMAC SHA-256** signature and replay verification gate. Inbound payment failures follow non-homogeneous **Poisson** arrival processes, optimized via continuous Weibull hazard survival analysis, guarded by a deterministic AWS Cedar policy engine, and sealed in an immutable SHA-256 Merkle audit ledger.
 
 ```
                               ┌──────────────────────────────────────────────┐
