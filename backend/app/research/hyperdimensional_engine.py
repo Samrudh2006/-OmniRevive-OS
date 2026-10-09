@@ -103,6 +103,10 @@ class HyperdimensionalVectorEngine:
         ])
         self.prototype_classes["SUSPICIOUS_VELOCITY"] = p_fraud
 
+        # Precompute matrix for SIMD single-instruction batch dot product
+        self._class_names = list(self.prototype_classes.keys())
+        self._proto_matrix = np.vstack([self.prototype_classes[k] for k in self._class_names]).astype(np.int16)
+
     def classify_payment_event_hdc(
         self,
         bank_rail: str,
@@ -127,11 +131,10 @@ class HyperdimensionalVectorEngine:
             vel_vec
         ])
 
-        # 2. Compare against all prototype classes in item memory
-        similarities = {}
-        for cls_name, proto_vec in self.prototype_classes.items():
-            sim = self._cosine_similarity(query_hypervector, proto_vec)
-            similarities[cls_name] = round(sim, 4)
+        # 2. Compare against all prototype classes in single SIMD matrix-vector product
+        dots = np.dot(self._proto_matrix, query_hypervector.astype(np.int16))
+        sims = dots / float(self.dim)
+        similarities = {name: round(float(sim), 4) for name, sim in zip(self._class_names, sims)}
 
         predicted_class = max(similarities, key=similarities.get)
         confidence = max(0.0, similarities[predicted_class])

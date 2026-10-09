@@ -421,3 +421,34 @@ def get_active_self_healing_patches():
     }
 
 
+@router.get("/bank-pulse", summary="Live Bank Switch Health Telemetry")
+def get_bank_health_pulse():
+    """
+    Returns real-time health telemetry, latency, error rates, and degradation scores
+    for all major Indian banking rails (HDFC, ICICI, SBI, Axis, Kotak, UPI_NPCI).
+    """
+    from backend.app.services.bank_health_pulse import bank_health_pulse_sensor
+    return {
+        "success": True,
+        "data": bank_health_pulse_sensor.get_all_health_telemetry(),
+        "timestamp": time.time()
+    }
+
+
+@router.post("/bank-pulse/scan", summary="Trigger Synthetic Bank Switch Health Probing")
+def trigger_synthetic_bank_scan():
+    """
+    Triggers an active synthetic probe across all banking switch endpoints
+    to update EWMA latency and degradation indices.
+    """
+    from backend.app.services.bank_health_pulse import bank_health_pulse_sensor
+    scan_results = bank_health_pulse_sensor.simulate_synthetic_pulse_scan()
+    return {
+        "success": True,
+        "message": f"Successfully probed {len(scan_results)} banking switches",
+        "data": scan_results,
+        "timestamp": time.time()
+    }
+
+
+

@@ -11,8 +11,13 @@ Allow: /benchmarks
 Allow: /faq
 Allow: /documentation
 Allow: /about
-Allow: /docs
+Allow: /privacy
+Allow: /terms
+Allow: /llms.txt
+Allow: /llms-full.txt
 Allow: /static/
+Allow: /assets/
+Disallow: /docs
 
 # AI Search & LLM Crawlers
 User-agent: Googlebot
@@ -27,6 +32,9 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: ClaudeBot
 Allow: /
 
@@ -39,11 +47,11 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Disallow administrative and internal endpoints
+# Disallow administrative, internal execution, and raw API swagger docs from search crawl
 Disallow: /api/v1/cfo/approve
 Disallow: /api/v1/copilot/execute
+Disallow: /docs
 
 # Sitemap location & AI LLM Discovery
 Sitemap: https://omnirevive-os.antideploy.com/sitemap.xml
 llms-txt: https://omnirevive-os.antideploy.com/llms.txt
-

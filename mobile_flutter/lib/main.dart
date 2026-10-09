@@ -5,6 +5,7 @@ import 'screens/rails_screen.dart';
 import 'screens/voice_screen.dart';
 import 'screens/cedar_screen.dart';
 import 'screens/audit_screen.dart';
+import 'screens/recovery_offline_screen.dart';
 
 void main() {
   runApp(const OmniReviveApp());
@@ -101,6 +102,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
     OverviewScreen(),
     RailsScreen(),
     VoiceScreen(),
+    RecoveryOfflineScreen(),
     CedarScreen(),
     AuditScreen(),
   ];
@@ -182,7 +184,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: isDark ? const Color(0xFF040918) : Colors.white,
           selectedItemColor: const Color(0xFF0C6CF2),
-          unselectedItemColor: isDark ? Colors.slate : const Color(0xFF64748B),
+          unselectedItemColor: isDark ? Colors.grey : const Color(0xFF64748B),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
           unselectedLabelStyle: const TextStyle(fontSize: 10),
           items: const [
@@ -200,6 +202,11 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
               icon: Icon(Icons.mic_none_outlined),
               activeIcon: Icon(Icons.mic),
               label: 'Voice AI',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.offline_bolt_outlined),
+              activeIcon: Icon(Icons.offline_bolt),
+              label: 'Offline UPI',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shield_outlined),

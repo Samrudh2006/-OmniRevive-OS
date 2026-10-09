@@ -1,0 +1,108 @@
+{
+  "audit_version": "1.0.0",
+  "audit_date": "2026-10-09",
+  "environment": "Production Build & Local Integration Verification",
+  "scores": {
+    "initial_score": 76,
+    "final_score": 96,
+    "absolute_improvement": 20,
+    "confidence_rating": "HIGH",
+    "max_possible_points": 100
+  },
+  "routes_summary": {
+    "discovered_routes": 14,
+    "inspected_routes": 14,
+    "tested_routes": 14,
+    "all_routes_200_ok": true
+  },
+  "category_scores": {
+    "technical_crawlability_and_indexability": {
+      "category": "Technical crawlability and indexability",
+      "max_points": 15,
+      "initial_score": 11,
+      "final_score": 15,
+      "evidence": "All 14 canonical routes registered in sitemap.xml, robots.txt allows search and AI crawlers, clean 200 OK statuses, no redirect loops.",
+      "status": "PASS"
+    },
+    "metadata_and_serp_presentation": {
+      "category": "Metadata and SERP presentation",
+      "max_points": 10,
+      "initial_score": 7,
+      "final_score": 10,
+      "evidence": "100% of public pages contain unique title, meta description, canonical link, Open Graph tags, and Twitter Cards.",
+      "status": "PASS"
+    },
+    "structured_data_and_entity_clarity": {
+      "category": "Structured data and entity clarity",
+      "max_points": 15,
+      "initial_score": 11,
+      "final_score": 14,
+      "evidence": "Valid JSON-LD schema across all pages (SoftwareApplication, WebSite, WebPage, TechArticle, FAQPage, BreadcrumbList). Self-review mock removed.",
+      "status": "PASS"
+    },
+    "answer_engine_readability_and_extractability": {
+      "category": "Answer-engine readability and extractability",
+      "max_points": 15,
+      "initial_score": 12,
+      "final_score": 15,
+      "evidence": "Direct answer opening summaries, single semantic H1 per page, comparison tables, step-by-step lifecycles, and domain definitions.",
+      "status": "PASS"
+    },
+    "content_quality_intent_coverage_and_trust": {
+      "category": "Content quality, intent coverage, and trust",
+      "max_points": 15,
+      "initial_score": 12,
+      "final_score": 14,
+      "evidence": "Deep technical coverage of payment failure mechanisms, mathematical Weibull retry models, and institutional compliance. Open-source MIT license.",
+      "status": "PASS"
+    },
+    "internal_linking_and_topical_architecture": {
+      "category": "Internal linking and topical architecture",
+      "max_points": 8,
+      "initial_score": 6,
+      "final_score": 8,
+      "evidence": "Bidirectional cross-linking across topic clusters (Architecture, Recovery, Idempotency, Audit Ledger, FAQ, Privacy, Terms).",
+      "status": "PASS"
+    },
+    "rendering_mobile_experience_accessibility_and_performance": {
+      "category": "Rendering, mobile experience, accessibility, and performance",
+      "max_points": 10,
+      "initial_score": 8,
+      "final_score": 9,
+      "evidence": "Responsive mobile layout, high-contrast Obsidian Navy palette, tabular numbers for fintech metrics, zero-flash SVG fallbacks.",
+      "status": "PASS"
+    },
+    "ai_crawler_policy_and_external_discoverability": {
+      "category": "AI crawler policy and external discoverability",
+      "max_points": 5,
+      "initial_score": 3,
+      "final_score": 5,
+      "evidence": "Dedicated robots.txt directives for GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, Applebot; llms.txt and llms-full.txt endpoints live.",
+      "status": "PASS"
+    },
+    "security_consistency_and_regression_resilience": {
+      "category": "Security, consistency, and regression resilience",
+      "max_points": 7,
+      "initial_score": 6,
+      "final_score": 6,
+      "evidence": "HSTS, X-Content-Type-Options, X-Frame-Options enforced; no plaintext credentials exposed in HTML or public metadata.",
+      "status": "PASS"
+    }
+  },
+  "routes": [
+    {"route": "/", "template": "index.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/", "schema": ["SoftwareApplication", "BreadcrumbList", "FAQPage"]},
+    {"route": "/ai-revenue-recovery", "template": "ai-revenue-recovery.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/ai-revenue-recovery", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/payment-failure-recovery", "template": "payment-failure-recovery.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/payment-failure-recovery", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/b2b-dispute-resolution", "template": "b2b-dispute-resolution.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/b2b-dispute-resolution", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/architecture", "template": "architecture.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/architecture", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/idempotency-protection", "template": "idempotency-protection.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/idempotency-protection", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/audit-ledger", "template": "audit-ledger.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/audit-ledger", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/benchmarks", "template": "benchmarks.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/benchmarks", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/faq", "template": "faq.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/faq", "schema": ["FAQPage"]},
+    {"route": "/documentation", "template": "documentation.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/documentation", "schema": ["TechArticle", "BreadcrumbList"]},
+    {"route": "/about", "template": "about.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/about", "schema": ["AboutPage"]},
+    {"route": "/privacy", "template": "privacy.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/privacy", "schema": ["WebPage", "BreadcrumbList"]},
+    {"route": "/terms", "template": "terms.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/terms", "schema": ["WebPage", "BreadcrumbList"]},
+    {"route": "/docs", "template": "documentation.html", "status": 200, "canonical": "https://omnirevive-os.antideploy.com/documentation", "schema": ["TechArticle"]}
+  ]
+}

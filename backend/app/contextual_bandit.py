@@ -157,6 +157,13 @@ class ContextualMultiRailRouter:
         hour_rad = 2.0 * math.pi * float(hour_of_day) / 24.0
         sin_hour = math.sin(hour_rad)
         cos_hour = math.cos(hour_rad)
+        if switch_degradation_score <= 0.0:
+            try:
+                from backend.app.services.bank_health_pulse import bank_health_pulse_sensor
+                switch_degradation_score = bank_health_pulse_sensor.get_bank_degradation(bank_upper)
+            except Exception:
+                switch_degradation_score = 0.05
+
         degrade_feat = min(1.0, max(0.0, float(switch_degradation_score)))
 
         x = np.array([

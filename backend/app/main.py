@@ -274,6 +274,21 @@ async def serve_sitemap():
         return FileResponse(sitemap_path, media_type="application/xml; charset=utf-8", headers={"Cache-Control": "public, max-age=3600"})
     raise HTTPException(status_code=404, detail="Sitemap not found")
 
+@app.get("/llms.txt")
+@app.get("/.well-known/llms.txt")
+async def serve_llms_txt():
+    llms_path = os.path.join(frontend_dir, "llms.txt")
+    if os.path.exists(llms_path):
+        return FileResponse(llms_path, media_type="text/plain; charset=utf-8", headers={"Cache-Control": "public, max-age=86400"})
+    raise HTTPException(status_code=404, detail="llms.txt not found")
+
+@app.get("/llms-full.txt")
+async def serve_llms_full_txt():
+    llms_full_path = os.path.join(frontend_dir, "llms-full.txt")
+    if os.path.exists(llms_full_path):
+        return FileResponse(llms_full_path, media_type="text/plain; charset=utf-8", headers={"Cache-Control": "public, max-age=86400"})
+    raise HTTPException(status_code=404, detail="llms-full.txt not found")
+
 SEO_PAGE_ROUTES = {
     "/ai-revenue-recovery": "ai-revenue-recovery.html",
     "/payment-failure-recovery": "payment-failure-recovery.html",
@@ -285,6 +300,8 @@ SEO_PAGE_ROUTES = {
     "/faq": "faq.html",
     "/documentation": "documentation.html",
     "/about": "about.html",
+    "/privacy": "privacy.html",
+    "/terms": "terms.html",
     "/auth": "auth.html",
     "/pages/auth.html": "auth.html"
 }
@@ -334,6 +351,14 @@ async def serve_documentation():
 @app.get("/about", response_class=HTMLResponse)
 async def serve_about():
     return _serve_seo_page("about.html")
+
+@app.get("/privacy", response_class=HTMLResponse)
+async def serve_privacy():
+    return _serve_seo_page("privacy.html")
+
+@app.get("/terms", response_class=HTMLResponse)
+async def serve_terms():
+    return _serve_seo_page("terms.html")
 
 @app.get("/auth", response_class=HTMLResponse)
 @app.get("/pages/auth.html", response_class=HTMLResponse)

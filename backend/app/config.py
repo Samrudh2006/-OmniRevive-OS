@@ -30,11 +30,14 @@ class Settings(BaseSettings):
     SAFE_DEMO_MODE: bool = True
     API_AUTH_KEY: str = "rzp_sec_live_recovery_key_99"
     CFO_AUTH_KEY: str = "cfo_sec_live_recovery_key_99"
+    CANONICAL_DOMAIN: str = "https://omnirevive-os.antideploy.com"
     CORS_ALLOWED_ORIGINS: list[str] = [
         "http://localhost:8000",
         "http://127.0.0.1:8000",
         "http://localhost:3000",
-        "https://razorpay-target-0-1percent.onrender.com"
+        "https://omnirevive-os.antideploy.com",
+        "https://razorpay-target-0-1percent.onrender.com",
+        "https://razorrevive-os.onrender.com"
     ]
     REDIS_URL: Optional[str] = None
 

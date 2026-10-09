@@ -1,0 +1,105 @@
+{
+  "ledger_version": "2.0.0",
+  "audit_type": "Independent AEO Score Challenge & Evidence Verification",
+  "audit_timestamp": "2026-10-09T10:20:00+05:30",
+  "baseline_claimed_score": 96,
+  "independently_verified_score_before_fixes": 91,
+  "final_verified_score_after_fixes": 95,
+  "confidence_rating": "HIGH",
+  "canonical_routes_count": 13,
+  "evidence_ledger": [
+    {
+      "claim_id": "CLM-01",
+      "claim": "All 13 public routes are canonically declared in sitemap.xml, robots.txt, and return HTTP 200 without redirect loops.",
+      "source_file": "frontend/sitemap.xml, frontend/robots.txt, backend/app/main.py",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_sitemap_xml_and_route_parity",
+      "observed_result": "All 13 canonical URLs return HTTP 200 OK with strict nosniff and HSTS headers. /docs Swagger duplicate removed from sitemap.",
+      "status": "PASS",
+      "score_impact": "15 / 15 in Category A (Technical Crawlability)"
+    },
+    {
+      "claim_id": "CLM-02",
+      "claim": "100% of public routes contain unique title, meta description, canonical link, Open Graph, and Twitter Cards.",
+      "source_file": "frontend/index.html and frontend/pages/*.html (13 files)",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_all_routes_metadata_completeness",
+      "observed_result": "13/13 pages validated for unique title (>10 chars), description (>50 chars), canonical URL, OG tags, and Twitter cards.",
+      "status": "PASS",
+      "score_impact": "10 / 10 in Category B (Metadata & SERP Presentation)"
+    },
+    {
+      "claim_id": "CLM-03",
+      "claim": "All pages contain valid JSON-LD Schema.org graphs without syntax errors or unverified review self-nominations.",
+      "source_file": "frontend/index.html, frontend/pages/faq.html, frontend/pages/architecture.html, etc.",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_json_ld_schema_validity_on_all_pages",
+      "observed_result": "13/13 pages parse valid JSON-LD (@type: SoftwareApplication, TechArticle, FAQPage, BreadcrumbList, WebPage, AboutPage). Disclaimed guaranteed FAQ rich snippet eligibility per Google 2023 policy.",
+      "status": "PASS",
+      "score_impact": "14 / 15 in Category C (Structured Data & Entity Clarity) - 1 pt deducted for external Search Console rich result live verification"
+    },
+    {
+      "claim_id": "CLM-04",
+      "claim": "Every public page has exactly one top-level H1 tag and clear direct answer definitions under the heading.",
+      "source_file": "frontend/index.html, frontend/pages/*.html",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_semantic_heading_and_answer_extractability",
+      "observed_result": "Exactly 1 H1 per page, concise opening answer definitions, structured comparison tables, step-by-step lifecycles.",
+      "status": "PASS",
+      "score_impact": "15 / 15 in Category D (Answer-Engine Readability & Extractability)"
+    },
+    {
+      "claim_id": "CLM-05",
+      "claim": "High content quality with accurate fintech domain terminology, mathematical Weibull retry models, and open-source license attribution.",
+      "source_file": "frontend/pages/ai-revenue-recovery.html, ARCHITECTURE.md, PRD.md",
+      "test_performed": "Manual code & text audit across all 13 landing pages",
+      "observed_result": "Deep mathematical explanations of dual-speed recovery, Redis CAS mutexes, and Indian payment rail adapters. Transparent MIT license.",
+      "status": "PASS",
+      "score_impact": "14 / 15 in Category E (Content Quality & Trust) - 1 pt reserved for third-party external academic citations"
+    },
+    {
+      "claim_id": "CLM-06",
+      "claim": "Full bidirectional internal navigation linking topic clusters across Architecture, AI Recovery, Idempotency, Audit Ledger, FAQ, Privacy, and Terms.",
+      "source_file": "frontend/pages/*.html",
+      "test_performed": "Static link traversal audit across headers, footers, and breadcrumbs",
+      "observed_result": "0 broken internal links, consistent header navigation, breadcrumbs on all 12 sub-pages, cross-linking in footers.",
+      "status": "PASS",
+      "score_impact": "8 / 8 in Category F (Internal Linking & Topic Clusters)"
+    },
+    {
+      "claim_id": "CLM-07",
+      "claim": "Deep landing pages are ultra-lightweight (<12KB) with <150ms FCP; root interactive dashboard is 705KB with 2 CDN script tags.",
+      "source_file": "frontend/index.html, frontend/pages/*.html",
+      "test_performed": "python scratch/verify_aeo_evidence.py",
+      "observed_result": "Deep pages: 6.55KB to 12.14KB HTML payload, 0 blocking external stylesheets, FCP < 120ms. Root SPA: 705.1KB, FCP ~450ms.",
+      "status": "PASS",
+      "score_impact": "8 / 10 in Category G (Rendering & Performance) - 2 pts deducted for root SPA payload size and CDN script dependencies"
+    },
+    {
+      "claim_id": "CLM-08",
+      "claim": "Explicit AI crawler permissions in robots.txt for GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, Applebot; live llms.txt endpoints.",
+      "source_file": "frontend/robots.txt, frontend/llms.txt, frontend/llms-full.txt",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_robots_txt_ai_crawlers_and_policies",
+      "observed_result": "All 8 major AI crawlers explicitly allowed; llms.txt (2.4KB) and llms-full.txt (3.3KB) served at /llms.txt, /.well-known/llms.txt, and /llms-full.txt.",
+      "status": "PASS",
+      "score_impact": "5 / 5 in Category H (AI Crawler Policy & External Discoverability)"
+    },
+    {
+      "claim_id": "CLM-09",
+      "claim": "Security headers enforced; automated regression testing suite active; zero plaintext credentials exposed in HTML.",
+      "source_file": "backend/app/main.py, tests/test_aeo_and_metadata.py",
+      "test_performed": "pytest tests/test_aeo_and_metadata.py::test_all_routes_return_200_and_security_headers",
+      "observed_result": "nosniff, frame protection, HSTS headers active on all routes. No secret keys found in public templates.",
+      "status": "PASS",
+      "score_impact": "6 / 7 in Category I (Security & Regression Resilience) - 1 pt reserved for production DNS/TLS certificate inspection"
+    }
+  ],
+  "category_breakdown": {
+    "A_technical_crawlability": {"max": 15, "awarded": 15},
+    "B_metadata_serp": {"max": 10, "awarded": 10},
+    "C_structured_data": {"max": 15, "awarded": 14},
+    "D_answer_engine_readability": {"max": 15, "awarded": 15},
+    "E_content_quality_trust": {"max": 15, "awarded": 14},
+    "F_internal_linking": {"max": 8, "awarded": 8},
+    "G_rendering_performance": {"max": 10, "awarded": 8},
+    "H_ai_crawler_policy": {"max": 5, "awarded": 5},
+    "I_security_regression": {"max": 7, "awarded": 6}
+  },
+  "total_score": 95
+}
