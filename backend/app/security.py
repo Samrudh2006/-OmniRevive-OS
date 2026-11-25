@@ -217,6 +217,21 @@ class DistributedIdempotencyStore:
             "merchant_api_key_id": row[6] if len(row) > 6 else "default_merchant"
         }
 
+    def purge_completed(self, older_than_seconds: float = 90 * 86400) -> int:
+        """
+        Retention: delete COMPLETED keys older than the retention window (default 90 days) so the table does not grow
+        forever. Never touches ACQUIRED/RENEWED rows (in-flight work). Returns the number of rows removed.
+        Not scheduled automatically: callers choose when, because a purged key can be executed again.
+        """
+        conn = get_db_connection(self.db_path)
+        cutoff = time.time() - older_than_seconds
+        with conn:
+            cur = conn.execute(
+                "DELETE FROM idempotency_keys WHERE status = 'COMPLETED' AND completed_at IS NOT NULL AND completed_at < ?",
+                (cutoff,),
+            )
+        return cur.rowcount
+
     def is_execution_completed(self, key: str) -> bool:
         """
         Checks if the action for this idempotency key was already completed.
