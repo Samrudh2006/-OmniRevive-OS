@@ -40,7 +40,7 @@ const switchHealth = await npciRadar.evaluateSwitchCluster({
   degradationThreshold: 0.12,
   routeFallback: "DYNAMIC_UPI_LINK"
 });`,
-      metrics: "18 Bank Endpoints · 99.99% Uptime",
+      metrics: "18 Bank Endpoints · Simulated Rails",
       workspaceTab: "npci_switch"
     },
     cedar_policy: {

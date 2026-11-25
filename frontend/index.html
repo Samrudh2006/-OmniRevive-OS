@@ -5566,7 +5566,7 @@ forbid (
         description: "Live synthetic health probes and webhook telemetry monitoring 18 major Indian bank switches (HDFC, ICICI, SBI, Axis, Kotak) to prevent failed transaction routing during switch degradation.",
         handledCodes: ["NPCI_U16", "NPCI_U69", "UPI_LIMIT_EXCEEDED", "REMITTER_DOWN"],
         codeSnippet: "// NPCI Switch Health Resolver\nconst switchHealth = await npciRadar.evaluateSwitchCluster({\n  banks: ['HDFC', 'ICICI', 'SBI'],\n  degradationThreshold: 0.12,\n  routeFallback: 'DYNAMIC_UPI_LINK'\n});",
-        metrics: "18 Bank Endpoints · 99.99% Uptime",
+        metrics: "18 Bank Endpoints · Simulated Rails",
         workspaceTab: "npci_switch"
       },
       cedar_policy: {
@@ -10821,7 +10821,7 @@ forbid (
           const metrics = rail.metrics || {
             throughput: '25,000 TPS',
             decision_latency: 'simulated',
-            failover_sla: '99.99%',
+            failover_sla: 'simulated',
             concurrency: 'Atomic CAS'
           };
           const deepDive = rail.deep_dive || {
