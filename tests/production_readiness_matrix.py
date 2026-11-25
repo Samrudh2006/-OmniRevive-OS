@@ -1,5 +1,5 @@
 """
-RazorRevive-OS 10-Layer Production Readiness Verification Matrix (Hardened Edition)
+OmniRevive-OS 10-Layer Production Readiness Verification Matrix (Hardened Edition)
 Executes a multi-tier testing matrix across:
 - Layer 1: Unit & Invariants
 - Layer 2: Integration & Database Persistence
@@ -97,7 +97,7 @@ class ProductionReadinessMatrixRunner:
 
     def run_full_matrix(self):
         print("=" * 90)
-        print("RAZORREVIVE-OS: 10-LAYER PRODUCTION READINESS VERIFICATION MATRIX")
+        print("OMNIREVIVE-OS: 10-LAYER PRODUCTION READINESS VERIFICATION MATRIX")
         print("=" * 90)
         start_matrix = time.perf_counter()
 
@@ -1025,7 +1025,7 @@ class ProductionReadinessMatrixRunner:
 
     def _save_matrix_artifacts(self, total_elapsed: float, pass_rate: float):
         report_data = {
-            "matrix_title": "RazorRevive-OS 10-Layer Production Readiness Verification Matrix",
+            "matrix_title": "OmniRevive-OS 10-Layer Production Readiness Verification Matrix",
             "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "total_assertions_executed": self.total_assertions,
             "passed_assertions": self.passed_assertions,
@@ -1043,7 +1043,7 @@ class ProductionReadinessMatrixRunner:
         # Write Markdown Matrix Artifact
         md_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs", "PRODUCTION_READINESS_MATRIX.md"))
         with open(md_path, "w", encoding="utf-8") as f:
-            f.write(f"# 🛡️ RazorRevive-OS: 10-Layer Production Readiness Verification Matrix\n\n")
+            f.write(f"# 🛡️ OmniRevive-OS: 10-Layer Production Readiness Verification Matrix\n\n")
             f.write(f"> **Verification Status:** Production-Readiness Validated Across 10 Engineering Dimensions  \n")
             f.write(f"> **Core Invariant:** *\"AI proposes; deterministic policy decides; the execution layer enforces; and the cryptographic ledger records what happened.\"*  \n\n")
             f.write(f"**Execution Timestamp:** {report_data['timestamp_utc']}  \n")

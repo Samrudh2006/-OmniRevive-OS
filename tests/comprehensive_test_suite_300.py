@@ -1,5 +1,5 @@
 """
-Comprehensive 300+ Automated Validation Test Suite for RazorRevive-OS
+Comprehensive 300+ Automated Validation Test Suite for OmniRevive-OS
 Executes 300+ discrete, individually asserted, and timed tests across 15 engineering categories.
 Outputs structured JSON and Markdown execution logs with exact inputs, expected results, and millisecond latencies.
 """
@@ -74,7 +74,7 @@ class ComprehensiveTestSuite:
 
     def run_all_tests(self):
         print("=" * 80)
-        print("STARTING 300+ DISCRETE AUTOMATED VALIDATION SUITE FOR RAZORREVIVE-OS")
+        print("STARTING 300+ DISCRETE AUTOMATED VALIDATION SUITE FOR OMNIREVIVE-OS")
         print("=" * 80)
         suite_start = time.perf_counter()
 
@@ -686,7 +686,7 @@ class ComprehensiveTestSuite:
 
     def _save_report(self, total_elapsed: float, total_tests: int, pass_rate: float):
         report_data = {
-            "suite_title": "RazorRevive-OS 300+ Automated Validation Suite",
+            "suite_title": "OmniRevive-OS 300+ Automated Validation Suite",
             "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "total_tests_executed": total_tests,
             "passed": self.passed_count,
@@ -704,7 +704,7 @@ class ComprehensiveTestSuite:
         # Write Markdown Summary Artifact
         md_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "docs", "VALIDATION_300_REPORT.md"))
         with open(md_path, "w", encoding="utf-8") as f:
-            f.write(f"# 🧪 RazorRevive-OS 300+ Automated Validation Suite Report\n\n")
+            f.write(f"# 🧪 OmniRevive-OS 300+ Automated Validation Suite Report\n\n")
             f.write(f"**Execution Date:** {report_data['timestamp_utc']}  \n")
             f.write(f"**Total Tests Executed:** {total_tests}  \n")
             f.write(f"**Passed:** {self.passed_count}  \n")

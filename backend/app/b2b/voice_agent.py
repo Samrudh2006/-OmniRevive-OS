@@ -14,7 +14,7 @@ from aws.cedar.cedar_engine import get_cedar_engine
 from aws.bedrock.bedrock_client import get_bedrock_agent
 from backend.app.b2b.ai_voice_brain import get_best_ai_response, normalize_lang
 
-logger = logging.getLogger("RazorRevive.B2B.VoiceAgent")
+logger = logging.getLogger("OmniRevive.B2B.VoiceAgent")
 
 def detect_recommended_voice(agent_speech: str, user_speech: str = "") -> str:
     """
@@ -319,7 +319,7 @@ class VoiceDialogueResponse(BaseModel):
             self.recommended_voice = detect_recommended_voice(self.agent_speech_response)
         
         if self.dispatched_whatsapp_recipient and not self.whatsapp_upi_intent_url:
-            self.whatsapp_upi_intent_url = "upi://pay?pa=razorrevive.enterprise@razorpay&pn=RazorpayRevive&am=85000.00&cu=INR&tn=InvoiceSettlement"
+            self.whatsapp_upi_intent_url = "upi://pay?pa=omnirevive.enterprise@razorpay&pn=RazorpayRevive&am=85000.00&cu=INR&tn=InvoiceSettlement"
             
         if not self.acoustic_telemetry:
             stt = self.active_stt_model or "ai4bharat/indic-conformer-600m-multilingual"
@@ -469,7 +469,7 @@ def query_external_llm_if_configured(speech: str, inv_id: str, amt: float) -> Op
     try:
         import httpx
         openrouter_key = os.environ.get("OPENROUTER_API_KEY", "")
-        headers = {"Content-Type": "application/json", "HTTP-Referer": "https://razorrevive.razorpay.com"}
+        headers = {"Content-Type": "application/json", "HTTP-Referer": "https://omnirevive.razorpay.com"}
         if openrouter_key:
             headers["Authorization"] = f"Bearer {openrouter_key}"
         with httpx.Client(timeout=2.0) as client:
@@ -568,17 +568,17 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
     if re.search(r"\b(joke|jokes|chutkula|funny|hasao|laugh|comedy)\b", s_lower):
         if lang == "telugu":
             return (
-                "Haha tappakunda mawa! Oka sari rendu payment gateways kalisi matladukunnayi: 'Nuvvu enduku antha tension paduthunnav?' ante, inkokati cheppindi: 'HDFC server 504 timeout ichindi, RazorRevive nannu chusthondi!' Haha bagunda mawa?",
+                "Haha tappakunda mawa! Oka sari rendu payment gateways kalisi matladukunnayi: 'Nuvvu enduku antha tension paduthunnav?' ante, inkokati cheppindi: 'HDFC server 504 timeout ichindi, OmniRevive nannu chusthondi!' Haha bagunda mawa?",
                 "CASUAL_HUMOR"
             )
         elif lang == "hindi":
             return (
-                "Haha zaroor sir! Ek baar ek payment gateway ne doosre gateway se pucha: 'Tum itne nervous kyun ho?' Usne bola: 'HDFC ka server 504 timeout de raha hai aur RazorRevive mujhe dekh raha hai!' Haha, kaisa laga sir?",
+                "Haha zaroor sir! Ek baar ek payment gateway ne doosre gateway se pucha: 'Tum itne nervous kyun ho?' Usne bola: 'HDFC ka server 504 timeout de raha hai aur OmniRevive mujhe dekh raha hai!' Haha, kaisa laga sir?",
                 "CASUAL_HUMOR"
             )
         else:
             return (
-                "Haha certainly sir! Why did the payment gateway cross the road? To avoid a 504 gateway timeout and reach RazorRevive! Haha, hope that made you smile!",
+                "Haha certainly sir! Why did the payment gateway cross the road? To avoid a 504 gateway timeout and reach OmniRevive! Haha, hope that made you smile!",
                 "CASUAL_HUMOR"
             )
 
@@ -628,7 +628,7 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
             )
         else:
             return (
-                "Take a deep breath and relax sir! You have had a long day. Grab a warm cup of coffee while RazorRevive handles all pending operational workflows automatically.",
+                "Take a deep breath and relax sir! You have had a long day. Grab a warm cup of coffee while OmniRevive handles all pending operational workflows automatically.",
                 "CASUAL_EMPATHY"
             )
     if any(k in s_lower for k in ["i am sad", "mood off", "upset", "pareshan"]):
@@ -716,15 +716,15 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
             )
 
     # 11. Website, Platform & Architecture Explanations
-    if any(k in s_lower for k in ["what is this website", "what is this platform", "what is razorrevive", "yeh website kya hai", "kya kaam karta hai", "about this"]):
+    if any(k in s_lower for k in ["what is this website", "what is this platform", "what is omnirevive", "yeh website kya hai", "kya kaam karta hai", "about this"]):
         if lang == "hindi":
             return (
-                "Yeh RazorRevive-OS hai - Razorpay ka autonomous revenue recovery control plane! Yeh failed UPI aur card recurring payments ko real-time telemetry aur Weibull hazard modeling se bina merchant intervention ke recover karta hai.",
+                "Yeh OmniRevive-OS hai - Razorpay ka autonomous revenue recovery control plane! Yeh failed UPI aur card recurring payments ko real-time telemetry aur Weibull hazard modeling se bina merchant intervention ke recover karta hai.",
                 "PLATFORM_EXPLANATION"
             )
         else:
             return (
-                "This is RazorRevive-OS - Razorpay's autonomous revenue recovery control plane! It recovers failed UPI and card recurring payments using real-time telemetry and Weibull hazard modeling without merchant intervention.",
+                "This is OmniRevive-OS - Razorpay's autonomous revenue recovery control plane! It recovers failed UPI and card recurring payments using real-time telemetry and Weibull hazard modeling without merchant intervention.",
                 "PLATFORM_EXPLANATION"
             )
     if any(k in s_lower for k in ["what is fast loop", "fast loop kya hai", "fast loop"]):
@@ -855,12 +855,12 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
     if any(k in s_lower for k in ["python", "programming", "code"]):
         if lang == "hindi":
             return (
-                "Python ek high-level, interpreted programming language hai jo simplicity aur readability ke liye famous hai. Hamara pura RazorRevive backend bhi FastAPI aur Python par bana hai!",
+                "Python ek high-level, interpreted programming language hai jo simplicity aur readability ke liye famous hai. Hamara pura OmniRevive backend bhi FastAPI aur Python par bana hai!",
                 "GENERAL_KNOWLEDGE"
             )
         else:
             return (
-                "Python is a high-level programming language praised for its elegance and readability. Our entire RazorRevive backend is engineered using Python and FastAPI!",
+                "Python is a high-level programming language praised for its elegance and readability. Our entire OmniRevive backend is engineered using Python and FastAPI!",
                 "GENERAL_KNOWLEDGE"
             )
     if any(k in s_lower for k in ["upi", "unified payments"]):
@@ -896,11 +896,11 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
             "hindi": f"Abhi server par {now_ist} UTC hai sir. IST ke liye 5:30 ghante add karein!",
             "english": f"Current server time is {now_ist} UTC. Add 5 hours 30 minutes for IST."
         }
-    elif any(k in s_lower for k in ["razorpay", "razorrevive", "company", "who made", "built", "created"]):
+    elif any(k in s_lower for k in ["razorpay", "omnirevive", "company", "who made", "built", "created"]):
         topic_resp = {
-            "telugu": "RazorRevive-OS ni Razorpay engineers team build chesindi mawa! Idi autonomous AI revenue recovery platform, failed UPI and card payments ni Weibull hazard modeling use chesi automatically recover chestundi!",
-            "hindi": "RazorRevive-OS Razorpay ki engineering team ne build kiya hai sir! Yeh autonomous AI revenue recovery platform hai jo failed UPI aur card payments ko Weibull hazard model use karke recover karta hai!",
-            "english": "RazorRevive-OS was built by the Razorpay engineering team! It is an autonomous AI revenue recovery platform that uses Weibull hazard modeling to automatically recover failed UPI and card payments!"
+            "telugu": "OmniRevive-OS ni Razorpay engineers team build chesindi mawa! Idi autonomous AI revenue recovery platform, failed UPI and card payments ni Weibull hazard modeling use chesi automatically recover chestundi!",
+            "hindi": "OmniRevive-OS Razorpay ki engineering team ne build kiya hai sir! Yeh autonomous AI revenue recovery platform hai jo failed UPI aur card payments ko Weibull hazard model use karke recover karta hai!",
+            "english": "OmniRevive-OS was built by the Razorpay engineering team! It is an autonomous AI revenue recovery platform that uses Weibull hazard modeling to automatically recover failed UPI and card payments!"
         }
     elif any(k in s_lower for k in ["joke", "funny", "chutkula", "hasao", "comedy", "entertain"]):
         topic_resp = {
@@ -929,9 +929,9 @@ def synthesize_rich_conversational_turn(speech: str, inv_id: str = "inv_enterpri
         }
     else:
         topic_resp = {
-            "telugu": "Meeru emi cheppali anukunnaaru mawa? Nenu payments, invoices, GST, TDS, leda RazorRevive platform gurinchi aythe chala bagaa help cheyagalanu!",
-            "hindi": "Aap kya jaanna chahte hain sir? Main payments, invoices, GST, TDS, ya RazorRevive platform ke baare mein expert hoon!",
-            "english": "Could you share a bit more sir? I specialize in payments, invoices, GST compliance, TDS, and RazorRevive platform topics — happy to help with any of those!"
+            "telugu": "Meeru emi cheppali anukunnaaru mawa? Nenu payments, invoices, GST, TDS, leda OmniRevive platform gurinchi aythe chala bagaa help cheyagalanu!",
+            "hindi": "Aap kya jaanna chahte hain sir? Main payments, invoices, GST, TDS, ya OmniRevive platform ke baare mein expert hoon!",
+            "english": "Could you share a bit more sir? I specialize in payments, invoices, GST compliance, TDS, and OmniRevive platform topics — happy to help with any of those!"
         }
 
     return (topic_resp.get(lang, topic_resp["english"]), "CONVERSATIONAL_RESPONSE")

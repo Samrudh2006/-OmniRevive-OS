@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS Unified Voice & Speech Engine (TTS / STT)
+ * OmniRevive-OS Unified Voice & Speech Engine (TTS / STT)
  * Production-grade Duplex Voice Controller
  * 
  * Guarantees:

@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 from fastapi import Request, HTTPException, status
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.Cloudflare.Turnstile")
+logger = logging.getLogger("OmniRevive.Cloudflare.Turnstile")
 
 class CloudflareTurnstileVerifier:
     """

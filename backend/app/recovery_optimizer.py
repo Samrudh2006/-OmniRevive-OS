@@ -6,7 +6,7 @@ from scipy import stats  # type: ignore
 from backend.app.schemas import RetryWindowRecommendation, FailureClassType
 from backend.app.telemetry_npci import npci_telemetry
 
-logger = logging.getLogger("RazorRevive.RecoveryOptimizer")
+logger = logging.getLogger("OmniRevive.RecoveryOptimizer")
 
 class RecoveryHazardOptimizer:
     """

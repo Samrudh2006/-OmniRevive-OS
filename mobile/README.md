@@ -1,6 +1,6 @@
-# RazorRevive-OS Mobile (Android APK)
+# OmniRevive-OS Mobile (Android APK)
 
-A dedicated, isolated native Android client for **RazorRevive-OS | AI Revenue Recovery Control Plane**.
+A dedicated, isolated native Android client for **OmniRevive-OS | AI Revenue Recovery Control Plane**.
 
 ---
 

@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 from backend.app.config import settings
 from backend.app.schemas import DiagnosisProposal, PolicyVerdict
 
-logger = logging.getLogger("RazorRevive.PolicyEngine")
+logger = logging.getLogger("OmniRevive.PolicyEngine")
 
 class PolicyEngine:
     """

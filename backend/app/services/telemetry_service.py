@@ -16,33 +16,33 @@ try:
 except ImportError:
     class _FallbackStructlog:
         def info(self, msg, **kwargs):
-            logging.getLogger("RazorRevive").info(f"{msg} {kwargs}")
+            logging.getLogger("OmniRevive").info(f"{msg} {kwargs}")
         def warning(self, msg, **kwargs):
-            logging.getLogger("RazorRevive").warning(f"{msg} {kwargs}")
+            logging.getLogger("OmniRevive").warning(f"{msg} {kwargs}")
         def error(self, msg, **kwargs):
-            logging.getLogger("RazorRevive").error(f"{msg} {kwargs}")
+            logging.getLogger("OmniRevive").error(f"{msg} {kwargs}")
     s_logger = _FallbackStructlog()
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("RazorRevive")
+logger = logging.getLogger("OmniRevive")
 
 # Prometheus Metrics Definitions for Production SRE Telemetry
 RECOVERY_REQUESTS_TOTAL = Counter(
-    "razorrevive_recovery_requests_total",
+    "omnirevive_recovery_requests_total",
     "Total count of revenue recovery requests processed",
     ["status", "failure_class"]
 )
 RECOVERED_GMV_INR = Counter(
-    "razorrevive_recovered_gmv_inr_total",
+    "omnirevive_recovered_gmv_inr_total",
     "Total Gross Merchandise Value recovered in INR"
 )
 DIAGNOSTIC_LATENCY_HISTOGRAM = Histogram(
-    "razorrevive_diagnostic_latency_seconds",
+    "omnirevive_diagnostic_latency_seconds",
     "End-to-end diagnostic and hazard window latency in seconds",
     buckets=[0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
 )
 IDEMPOTENCY_COLLISIONS_TOTAL = Counter(
-    "razorrevive_idempotency_collisions_total",
+    "omnirevive_idempotency_collisions_total",
     "Total count of concurrent duplicate attacks blocked by distributed mutex"
 )
 
@@ -66,7 +66,7 @@ def log_system_event(level: str, module: str, message: str, trace_id: str = "tr_
         LIVE_LOGS_BUFFER.pop()
 
 # Initialize baseline logs
-log_system_event("INFO", "Bootstrap", "RazorRevive-OS Control Plane initialized in Sandbox/Test Mode.")
+log_system_event("INFO", "Bootstrap", "OmniRevive-OS Control Plane initialized in Sandbox/Test Mode.")
 log_system_event("INFO", "Security", "HMAC SHA-256 Verifier & Distributed Idempotency Mutex active.")
 log_system_event("INFO", "Policy", "TRAI Quiet Hours (21:00-09:00 IST) & Discount Clamping (<=10%, <=500 INR) active.")
 

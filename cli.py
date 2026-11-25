@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RazorRevive-OS Enterprise CLI Suite
+OmniRevive-OS Enterprise CLI Suite
 Command-line utility for SREs, Auditors, and Technical Evaluators.
 """
 
@@ -29,7 +29,7 @@ from benchmarks.benchmark_runner import run_held_out_benchmark
 
 def print_header(title: str):
     print("=" * 80)
-    print(f" RAZORREVIVE-OS :: {title.upper()}")
+    print(f" OMNIREVIVE-OS :: {title.upper()}")
     print("=" * 80)
 
 def cmd_health(args):
@@ -37,7 +37,7 @@ def cmd_health(args):
     print_header("System Health & Diagnostic Check")
     audit_health = audit_store.verify_chain_integrity()
     
-    print(f"• Service Name:       RazorRevive-OS")
+    print(f"• Service Name:       OmniRevive-OS")
     print(f"• Version:            1.0.0")
     print(f"• Environment:        {settings.ENVIRONMENT}")
     print(f"• Database (SQLite):  {settings.DATABASE_PATH}")
@@ -296,7 +296,7 @@ def cmd_roi(args):
     print(f"• Net Top-Line Revenue Boost: +{net_boost:.2f}%")
     print(f"• Infrastructure Cost:       INR 0.00 (100% Local Open-Source AI)")
     print("-" * 80)
-    print(f"[IMPACT] RazorRevive-OS adds INR {annual_recovered:,.2f} in net new annualized cash flow.\n")
+    print(f"[IMPACT] OmniRevive-OS adds INR {annual_recovered:,.2f} in net new annualized cash flow.\n")
     return 0
 
 def cmd_verify_proof(args):
@@ -388,7 +388,7 @@ def cmd_bandit_benchmark(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="RazorRevive-OS Enterprise Control Plane CLI",
+        description="OmniRevive-OS Enterprise Control Plane CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

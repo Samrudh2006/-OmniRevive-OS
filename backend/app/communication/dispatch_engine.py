@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional
 from pydantic import BaseModel, Field
 from backend.app.b2b.invoice_store import invoice_store, InvoiceRecord
 
-logger = logging.getLogger("RazorRevive.Communication.DispatchEngine")
+logger = logging.getLogger("OmniRevive.Communication.DispatchEngine")
 
 class DispatchRecord(BaseModel):
     dispatch_id: str
@@ -54,7 +54,7 @@ class DispatchEngine:
         ])
 
         gstin_badge_color = "#10b981" if invoice.gstin != "UNREGISTERED" else "#f59e0b"
-        upi_pay_link = f"upi://pay?pa=razorrevive.enterprise@razorpay&pn=Razorpay+Enterprise&am={invoice.amount:.2f}&tr={invoice.invoice_id}&cu=INR&tn=Invoice+Settlement"
+        upi_pay_link = f"upi://pay?pa=omnirevive.enterprise@razorpay&pn=Razorpay+Enterprise&am={invoice.amount:.2f}&tr={invoice.invoice_id}&cu=INR&tn=Invoice+Settlement"
 
         note_section = f"""
         <div style="background-color: #0c1b33; border: 1px solid #192f54; border-left: 4px solid #38bdf8; border-radius: 8px; padding: 12px 16px; margin: 20px 0; color: #cbd5e1; font-size: 12px; line-height: 1.5;">
@@ -273,7 +273,7 @@ class DispatchEngine:
 
         text_content = (
             f"⚡ Razorpay Notice: Invoice #{inv.invoice_id} for ₹{inv.amount:,.2f} has been updated. "
-            f"GSTIN: {inv.gstin}. Tap to settle via UPI: upi://pay?pa=razorrevive.enterprise@razorpay&am={inv.amount:.2f}"
+            f"GSTIN: {inv.gstin}. Tap to settle via UPI: upi://pay?pa=omnirevive.enterprise@razorpay&am={inv.amount:.2f}"
         )
         if custom_note:
             text_content += f"\nNote: {custom_note}"

@@ -66,7 +66,7 @@ This ensures mandate retries are dispatched precisely when the receiving switch 
 
 A major danger of "AI-driven" systems is the hallucination risk: an LLM deciding to offer a 90% discount to retain a customer, or calling a customer at 2:00 AM.
 
-In **RazorRevive-OS**, we implemented a strict **Three-Tier Financial Isolation Boundary** using **AWS Cedar**:
+In **OmniRevive-OS**, we implemented a strict **Three-Tier Financial Isolation Boundary** using **AWS Cedar**:
 
 ```
 Probabilistic AI Kernel (Tier 2)
@@ -157,10 +157,10 @@ Even if 50 duplicate webhooks storm the server in 10 milliseconds, exactly **1 a
 
 ## 7. Results on Held-Out 100-Transaction Production Benchmark
 
-We evaluated RazorRevive-OS against a realistic 100-case held-out dataset containing real-world failure patterns:
+We evaluated OmniRevive-OS against a realistic 100-case held-out dataset containing real-world failure patterns:
 
 - **Baseline Naive Exponential Backoff**: 42.24% GMV Recovered
-- **RazorRevive-OS (Weibull + Cedar + CAS)**: **78.39% GMV Recovered**
+- **OmniRevive-OS (Weibull + Cedar + CAS)**: **78.39% GMV Recovered**
 - **Net Uplift**: **+36.15% incremental revenue recovery**
 - **Zero-Trust Policy Violations**: 0 (100% TRAI compliance & discount cap enforcement)
 - **Duplicate Debits**: 0 (100% idempotency collision containment)
@@ -170,7 +170,7 @@ We evaluated RazorRevive-OS against a realistic 100-case held-out dataset contai
 
 ## 8. Get Started & Explore the Code
 
-RazorRevive-OS is 100% open-source and comes with a rich control plane UI, Android APK, and 103 automated tests:
+OmniRevive-OS is 100% open-source and comes with a rich control plane UI, Android APK, and 103 automated tests:
 
 - **GitHub Repository**: [https://github.com/Samrudh2006/Razorpay-Target-0.1percent-](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-)
 - **Video Walkthrough**: [Watch 4-Minute Demo on YouTube](https://youtu.be/IBo7D1vHhd8)

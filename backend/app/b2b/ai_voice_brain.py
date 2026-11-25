@@ -11,7 +11,7 @@ import time
 import logging
 from typing import Optional, Dict, List
 
-logger = logging.getLogger("RazorRevive.B2B.AIVoiceBrain")
+logger = logging.getLogger("OmniRevive.B2B.AIVoiceBrain")
 
 # ---------------------------------------------------------------------------
 # Intent taxonomy

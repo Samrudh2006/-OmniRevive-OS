@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS — SHA-256 Chained Cryptographic Audit Ledger Service
+ * OmniRevive-OS — SHA-256 Chained Cryptographic Audit Ledger Service
  */
 
 import { safeApiCall, showToast } from "./apiClient.js";

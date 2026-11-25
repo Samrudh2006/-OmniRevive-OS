@@ -74,8 +74,8 @@ def test_contract_security_headers_present():
 def test_contract_prometheus_metrics():
     response = client.get("/metrics")
     assert response.status_code == 200
-    assert "razorrevive_recovery_requests_total" in response.text
-    assert "razorrevive_diagnostic_latency_seconds" in response.text
+    assert "omnirevive_recovery_requests_total" in response.text
+    assert "omnirevive_diagnostic_latency_seconds" in response.text
 
 def test_contract_roi_calculator():
     response = client.get("/api/v1/analytics/roi?monthly_gmv=10000000&failure_rate_pct=15.0")

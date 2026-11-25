@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, List, Optional
 from backend.app.schemas import CardTokenLifecycleRecord, CardTokenStatusType, CardNetworkType
 
-logger = logging.getLogger("RazorRevive.TokenLifecycle")
+logger = logging.getLogger("OmniRevive.TokenLifecycle")
 
 class CardNetworkTokenLifecycleManager:
     """

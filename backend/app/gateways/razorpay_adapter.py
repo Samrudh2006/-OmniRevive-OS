@@ -4,7 +4,7 @@ from typing import Dict, Any, Optional
 from backend.app.gateways.base import PaymentGateway
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.Gateway.Razorpay")
+logger = logging.getLogger("OmniRevive.Gateway.Razorpay")
 
 try:
     import razorpay
@@ -59,7 +59,7 @@ class RazorpayTestAdapter(PaymentGateway):
                     },
                     "notify": {"sms": True, "email": True, "whatsapp": True},
                     "reminder_enable": True,
-                    "notes": {"recovered_by": "RazorRevive-OS", "original_payment_id": payment_id},
+                    "notes": {"recovered_by": "OmniRevive-OS", "original_payment_id": payment_id},
                     "expire_by": expire_by_epoch
                 }
                 response = self.client.payment_link.create(payload)

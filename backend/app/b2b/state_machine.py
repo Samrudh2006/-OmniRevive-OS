@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, List, Optional, Set
 from backend.app.schemas import B2BStateTransition
 
-logger = logging.getLogger("RazorRevive.B2B.StateMachine")
+logger = logging.getLogger("OmniRevive.B2B.StateMachine")
 
 class B2BReceivablesStateMachine:
     """

@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS Centralized State Management Store
+ * OmniRevive-OS Centralized State Management Store
  * Manages reactive UI state for tabs, bank switches, command palette, and guided tour.
  */
 

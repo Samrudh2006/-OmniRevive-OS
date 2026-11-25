@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo =======================================================
-echo Building RazorRevive-OS Android APK
+echo Building OmniRevive-OS Android APK
 echo =======================================================
 cd /d "%~dp0"
 call gradlew.bat assembleDebug

@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS Sonner-Grade Toast Notification System
+ * OmniRevive-OS Sonner-Grade Toast Notification System
  * Conforms to Emil Kowalski's design engineering standards (ask-sonner & animations.dev)
  */
 

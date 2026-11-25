@@ -1,5 +1,5 @@
 """
-RazorRevive Autonomous Sentinel Daemon
+OmniRevive Autonomous Sentinel Daemon
 ======================================
 Real-time autonomous revenue recovery daemon. Intercepts failed transactions,
 evaluates live NPCI bank switch telemetry, calculates Weibull hazard retry windows,
@@ -156,7 +156,7 @@ def main():
     print(f"  • {BOLD}Mean Decision Latency:{RESET}        {CYAN}{BOLD}{avg_latency:.2f} ms{RESET} (Target < 28ms: {GREEN}PASSED{RESET})")
     print(f"  • {BOLD}Double-Debit Invariants:{RESET}      {GREEN}0 Violations (100% Deterministic CAS){RESET}")
     print(f"{CYAN}{BOLD}========================================================================================{RESET}\n")
-    print(f"{DIM}Run 'python run_sentinel.py' anytime to demonstrate RazorRevive Autonomous Sentinel.{RESET}\n")
+    print(f"{DIM}Run 'python run_sentinel.py' anytime to demonstrate OmniRevive Autonomous Sentinel.{RESET}\n")
 
 if __name__ == "__main__":
     main()

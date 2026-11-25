@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from backend.app.config import settings
 from backend.app.security import get_db_connection
 
-logger = logging.getLogger("RazorRevive.Audit")
+logger = logging.getLogger("OmniRevive.Audit")
 
 GENESIS_HASH = "0" * 64
 

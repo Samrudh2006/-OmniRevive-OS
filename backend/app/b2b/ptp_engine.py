@@ -7,7 +7,7 @@ from backend.app.config import settings
 from backend.app.security import get_db_connection
 from backend.app.schemas import PromiseToPayRecord
 
-logger = logging.getLogger("RazorRevive.PTP")
+logger = logging.getLogger("OmniRevive.PTP")
 
 class PTPStore:
     """

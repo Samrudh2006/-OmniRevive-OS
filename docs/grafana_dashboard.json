@@ -18,7 +18,7 @@
         "y": 0
       },
       "id": 100,
-      "title": "RazorRevive-OS Revenue Recovery KPIs",
+      "title": "OmniRevive-OS Revenue Recovery KPIs",
       "type": "row"
     },
     {
@@ -75,7 +75,7 @@
       "type": "gauge",
       "targets": [
         {
-          "expr": "sum(rate(razorrevive_recovery_requests_total{status=\"ALLOWED\"}[5m])) / sum(rate(razorrevive_recovery_requests_total[5m])) * 100",
+          "expr": "sum(rate(omnirevive_recovery_requests_total{status=\"ALLOWED\"}[5m])) / sum(rate(omnirevive_recovery_requests_total[5m])) * 100",
           "refId": "A"
         }
       ]
@@ -115,7 +115,7 @@
       "type": "stat",
       "targets": [
         {
-          "expr": "razorrevive_recovered_gmv_inr_total",
+          "expr": "omnirevive_recovered_gmv_inr_total",
           "refId": "A"
         }
       ]
@@ -201,7 +201,7 @@
       "type": "stat",
       "targets": [
         {
-          "expr": "histogram_quantile(0.99, sum(rate(razorrevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(omnirevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
           "refId": "A"
         }
       ]
@@ -234,7 +234,7 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "sum(rate(razorrevive_recovery_requests_total[1m])) by (status)",
+          "expr": "sum(rate(omnirevive_recovery_requests_total[1m])) by (status)",
           "legendFormat": "{{status}}",
           "refId": "A"
         }
@@ -256,17 +256,17 @@
       "type": "timeseries",
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(rate(razorrevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(rate(omnirevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
           "legendFormat": "P50",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.90, sum(rate(razorrevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
+          "expr": "histogram_quantile(0.90, sum(rate(omnirevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
           "legendFormat": "P90",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(razorrevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(omnirevive_diagnostic_latency_seconds_bucket[5m])) by (le))",
           "legendFormat": "P99",
           "refId": "C"
         }
@@ -288,7 +288,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "RazorRevive-OS :: SRE Control Plane & Revenue Telemetry",
-  "uid": "razorrevive-overview",
+  "title": "OmniRevive-OS :: SRE Control Plane & Revenue Telemetry",
+  "uid": "omnirevive-overview",
   "version": 1
 }

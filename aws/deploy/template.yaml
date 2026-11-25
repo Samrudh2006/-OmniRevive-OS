@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  RazorRevive-OS: Cloud-Native Revenue Recovery & SRE Control Plane
+  OmniRevive-OS: Cloud-Native Revenue Recovery & SRE Control Plane
   Powered by Amazon Bedrock, AWS Cedar Zero-Trust, and EventBridge.
 
 Globals:
@@ -12,13 +12,13 @@ Globals:
     Environment:
       Variables:
         AWS_BEDROCK_MODEL: anthropic.claude-3-5-sonnet-20241022-v2:0
-        POWERTOOLS_SERVICE_NAME: RazorReviveOS
+        POWERTOOLS_SERVICE_NAME: OmniReviveOS
 
 Resources:
   # ============================================================================
   # 1. API Gateway & Fast-Loop SRE Control Plane Lambda
   # ============================================================================
-  RazorReviveApiFunction:
+  OmniReviveApiFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ../../
@@ -38,7 +38,7 @@ Resources:
   BankingSwitchEventBus:
     Type: AWS::Events::EventBus
     Properties:
-      Name: RazorRevive-BankingSwitchRadar
+      Name: OmniRevive-BankingSwitchRadar
 
   SwitchFailureRule:
     Type: AWS::Events::Rule
@@ -47,7 +47,7 @@ Resources:
       Description: Captures high error rate spikes on NPCI switches for Weibull retry triggers
       EventPattern:
         source:
-          - "razorrevive.telemetry"
+          - "omnirevive.telemetry"
         detail-type:
           - "SwitchErrorSpike"
       Targets:
@@ -67,7 +67,7 @@ Resources:
   RecoveryAuditTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: RazorRevive-RecoveryAuditTrail
+      TableName: OmniRevive-RecoveryAuditTrail
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: recovery_id
@@ -81,8 +81,8 @@ Resources:
           KeyType: RANGE
 
 Outputs:
-  RazorReviveApiUrl:
-    Description: "API Gateway endpoint URL for RazorRevive-OS"
+  OmniReviveApiUrl:
+    Description: "API Gateway endpoint URL for OmniRevive-OS"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
   EventBusArn:
     Description: "ARN of the Banking Switch EventBridge bus"

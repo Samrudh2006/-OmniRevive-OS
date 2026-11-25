@@ -9,7 +9,7 @@ from backend.app.security import get_db_connection
 from backend.app.audit_store import audit_store
 from aws.cedar.cedar_engine import get_cedar_engine
 
-logger = logging.getLogger("RazorRevive.CFO.Service")
+logger = logging.getLogger("OmniRevive.CFO.Service")
 
 class CFOApprovalService:
     """

@@ -152,7 +152,7 @@ def test_b2b_voice_casual_talk_and_general_knowledge():
         invoice_amount=85000.0
     ))
     assert r4.intent_detected == "PLATFORM_EXPLANATION"
-    assert "RazorRevive" in r4.agent_speech_response
+    assert "OmniRevive" in r4.agent_speech_response
 
     # 5. General Knowledge
     r5 = engine.process_customer_turn(VoiceDialogueTurnRequest(

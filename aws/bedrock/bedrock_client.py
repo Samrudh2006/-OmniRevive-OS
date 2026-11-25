@@ -1,5 +1,5 @@
 """
-Amazon Bedrock Generative AI Adapter for RazorRevive-OS.
+Amazon Bedrock Generative AI Adapter for OmniRevive-OS.
 Handles conversational Hinglish negotiation, structured intent extraction,
 and dynamic fallback for zero-bill local execution.
 """

@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS AWS Cloud & Cedar Zero-Trust Security Modal Component
+ * OmniRevive-OS AWS Cloud & Cedar Zero-Trust Security Modal Component
  */
 
 import { safeApiCall } from "../services/apiClient.js";

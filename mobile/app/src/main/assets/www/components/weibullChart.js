@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS Weibull Hazard Curve & Analytics Component
+ * OmniRevive-OS Weibull Hazard Curve & Analytics Component
  * Consolidates Weibull PDF canvas plotting with parametric hazard sliders (k, lambda, age)
  * and overview SVG curve bank presets.
  */

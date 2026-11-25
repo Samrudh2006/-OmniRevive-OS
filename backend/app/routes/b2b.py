@@ -7,7 +7,7 @@ from typing import Optional, Any, Dict
 from pydantic import BaseModel
 from fastapi import APIRouter, Request, HTTPException, status, Response
 
-logger = logging.getLogger("RazorRevive.B2B.VoiceRoute")
+logger = logging.getLogger("OmniRevive.B2B.VoiceRoute")
 
 try:
     import edge_tts

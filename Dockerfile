@@ -1,5 +1,5 @@
 # ==============================================================================
-# RazorRevive-OS: Production-Grade Multi-Stage Container
+# OmniRevive-OS: Production-Grade Multi-Stage Container
 # ==============================================================================
 FROM python:3.12-slim AS builder
 

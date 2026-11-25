@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS Graphify Engine
+ * OmniRevive-OS Graphify Engine
  * Interactive Directed Acyclic Graph (DAG) & Banking Mesh Topology.
  * Visualizes the real-time autonomous recovery pipeline, particle flow,
  * Cedar policy checkpoints, and chaos outage rerouting.

@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS — Unified Frontend Application Entrypoint
+ * OmniRevive-OS — Unified Frontend Application Entrypoint
  * Orchestrates modules, services, reactive state, and registers window actions.
  */
 

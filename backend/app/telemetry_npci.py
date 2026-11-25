@@ -3,7 +3,7 @@ import logging
 from typing import Dict, Any, List, Optional
 from backend.app.schemas import NPCISwitchStatus, SwitchHealthStateType
 
-logger = logging.getLogger("RazorRevive.NPCITelemetry")
+logger = logging.getLogger("OmniRevive.NPCITelemetry")
 
 class NPCISwitchTelemetryEngine:
     """

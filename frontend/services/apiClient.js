@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS — Resilient Centralized API Client
+ * OmniRevive-OS — Resilient Centralized API Client
  * Features:
  * - Exponential backoff retry & multi-port discovery
  * - Timeout handling (6s AbortSignal)

@@ -1,1 +1,1 @@
-"""Unit and Integration test suite for RazorRevive-OS."""
+"""Unit and Integration test suite for OmniRevive-OS."""

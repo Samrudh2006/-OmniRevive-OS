@@ -12,10 +12,10 @@ try:
 except ImportError:
     QDRANT_AVAILABLE = False
 
-logger = logging.getLogger("RazorRevive.SemanticMemory")
+logger = logging.getLogger("OmniRevive.SemanticMemory")
 
 VECTOR_DIMENSION = 64
-COLLECTION_NAME = "razorrevive_recovery_precedents"
+COLLECTION_NAME = "omnirevive_recovery_precedents"
 
 # Canonical feature categories for embedding projection
 KNOWN_BANKS = ["SBI", "HDFC", "ICICI", "AXIS", "KOTAK", "PNB", "BOB", "YES", "OTHER"]

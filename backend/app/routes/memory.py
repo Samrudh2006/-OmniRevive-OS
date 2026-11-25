@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 from backend.app.semantic_memory import semantic_memory_engine
 
-logger = logging.getLogger("RazorRevive.MemoryRouter")
+logger = logging.getLogger("OmniRevive.MemoryRouter")
 router = APIRouter(prefix="/api/v1/memory", tags=["Semantic Memory & Qdrant Engine"])
 
 class PrecedentSearchRequest(BaseModel):

@@ -1,6 +1,6 @@
-# ☁️ RazorRevive-OS: Cloud Deployment Guide (GitHub Student Pack)
+# ☁️ OmniRevive-OS: Cloud Deployment Guide (GitHub Student Pack)
 
-Deploy **RazorRevive-OS** to production in under 5 minutes using your **GitHub Student Developer Pack** benefits.
+Deploy **OmniRevive-OS** to production in under 5 minutes using your **GitHub Student Developer Pack** benefits.
 
 ---
 
@@ -14,12 +14,12 @@ az login
 ### Step 2: Build & Deploy Container to Azure Container Apps
 ```bash
 # Create Resource Group
-az group create --name razorrevive-rg --location eastus
+az group create --name omnirevive-rg --location eastus
 
 # Deploy App directly from Dockerfile / Container
 az containerapp up \
   --name razorrevive-os \
-  --resource-group razorrevive-rg \
+  --resource-group omnirevive-rg \
   --ingress external \
   --target-port 8000 \
   --source .
@@ -45,11 +45,11 @@ git push heroku main
 
 ## 3. Custom Domain Setup (Namecheap / .TECH from Student Pack)
 
-1. Claim your free 1-year domain (e.g. `razorrevive.tech`) from the GitHub Student Pack.
+1. Claim your free 1-year domain (e.g. `omnirevive.tech`) from the GitHub Student Pack.
 2. In your DNS settings (Cloudflare or Namecheap), add a **CNAME** record:
    * **Host:** `@` or `app`
    * **Target:** Your Azure / Heroku generated domain.
-3. Access your live application at `https://razorrevive.tech`!
+3. Access your live application at `https://omnirevive.tech`!
 
 ---
 

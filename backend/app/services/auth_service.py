@@ -4,7 +4,7 @@ from typing import Optional, Tuple
 from fastapi import Request, HTTPException, status
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.Security.AuthService")
+logger = logging.getLogger("OmniRevive.Security.AuthService")
 
 class AuthenticationService:
     """

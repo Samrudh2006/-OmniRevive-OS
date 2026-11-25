@@ -1,4 +1,4 @@
-# RazorRevive-OS: Engineering Observation & Empirical Benchmark Whitepaper
+# OmniRevive-OS: Engineering Observation & Empirical Benchmark Whitepaper
 **Mathematical Survival Modeling, Regulatory Failure Taxonomies, Tier-1 Comparative Case Studies, and Empirical Prior Art in Autonomous Payment Recovery**  
 *Razorpay AI Buildathon 2026 — Track 03: Autonomous Revenue Recovery*
 
@@ -12,13 +12,13 @@ Historically, payment gateways and merchants have treated failure handling throu
 1. **Blind Exponential Backoff / Static Retries**: Blindly resubmitting transactions immediately or after a fixed interval (e.g., +15m, +1h). This triggers issuing bank rate-limits, degrades UPI switches during ongoing NPCI outages, and increases double-debit customer disputes.
 2. **Generic LLM Chatbot Wrappers**: Offloading unstructured natural language recovery nudges to non-deterministic LLMs. In financial domains, this leads to fatal hallucinations (such as unauthorized 50% discount offers), missing idempotency locks, and violations of TRAI commercial communication quiet-hours.
 
-**RazorRevive-OS** was designed and observed as a **Three-Tier Deterministic Control Plane** that treats payments not as text, but as **high-velocity financial state machines**. It unifies mathematical hazard modeling, multi-channel payment link generation, Hinglish conversational voice agents, and zero-trust cryptographic audit chains.
+**OmniRevive-OS** was designed and observed as a **Three-Tier Deterministic Control Plane** that treats payments not as text, but as **high-velocity financial state machines**. It unifies mathematical hazard modeling, multi-channel payment link generation, Hinglish conversational voice agents, and zero-trust cryptographic audit chains.
 
 ---
 
 ## 2. Data Acquisition Strategy & Failure Telemetry Pipeline
 
-To evaluate recovery dynamics without leaking sensitive production PII, RazorRevive-OS implements a multi-substrate data synthesis and labeling pipeline:
+To evaluate recovery dynamics without leaking sensitive production PII, OmniRevive-OS implements a multi-substrate data synthesis and labeling pipeline:
 
 ```
 ┌────────────────────────────────┐       ┌────────────────────────────────┐
@@ -36,7 +36,7 @@ To evaluate recovery dynamics without leaking sensitive production PII, RazorRev
                                     │
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│               RazorRevive-OS Deterministic Control Plane                │
+│               OmniRevive-OS Deterministic Control Plane                │
 │    (SciPy Weibull Hazard Mode-Shifting + Distributed CAS Mutex)        │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
@@ -61,21 +61,21 @@ To evaluate recovery dynamics without leaking sensitive production PII, RazorRev
 ### 3.1 Stripe: Statistical Retries over Closed Card Networks
 * **Mechanism**: Stripe Smart Retries / Authorization Boost models discrete time-slots using offline classifiers trained across global credit card networks.
 * **The Structural Gap**: Stripe optimizes probability of success over an unconstrained, penalty-free retry regime. 
-* **The RazorRevive-OS Difference**: Under Indian banking regulations, retries are strictly rationed and penalized (see Section 4). RazorRevive-OS utilizes a continuous **Weibull Hazard Rate** $h(t)$:
+* **The OmniRevive-OS Difference**: Under Indian banking regulations, retries are strictly rationed and penalized (see Section 4). OmniRevive-OS utilizes a continuous **Weibull Hazard Rate** $h(t)$:
   * Shape parameter $k < 1$ (decreasing hazard) diagnoses liquidity/salary-credit delays where near-term retries dominate.
   * Shape parameter $k > 1$ (increasing hazard) diagnoses credential or mandate structural issues where immediate retries destroy attempt budgets and require an immediate instrument or channel switch.
 
 ### 3.2 Razorpay: Acquirer Routing vs. Temporal Control
 * **Mechanism**: Razorpay Optimizer dynamically chooses the optimal gateway or acquirer in real time across HDFC, SBI, ICICI, and Axis, improving success rates by ~10% along the **spatial dimension**.
-* **The RazorRevive-OS Difference**: While Optimizer routes across *where* to charge right now, RazorRevive-OS solves the **temporal dimension** (*when* to retry and *how* to pivot across channels) under tight attempt caps and notification windows.
+* **The OmniRevive-OS Difference**: While Optimizer routes across *where* to charge right now, OmniRevive-OS solves the **temporal dimension** (*when* to retry and *how* to pivot across channels) under tight attempt caps and notification windows.
 
 ### 3.3 Netflix: Grace Period Continuity vs. B2B High-Value Negotiation
 * **Mechanism**: Netflix relies on silent background retries and Card Account Updater across a generous 7-to-14 day grace period on low-ARPU consumer plans (₹499/mo).
-* **The RazorRevive-OS Difference**: On high-value B2B commercial invoices (₹50,000 to ₹10,00,000), silent retries fail when purchase orders mismatch or GSTIN inputs are missing. RazorRevive-OS introduces an **Autonomous Conversational Voice Turn**, proposing structured invoice mutations under CFO approval gates and locking Promise-to-Pay (PTP) calendars.
+* **The OmniRevive-OS Difference**: On high-value B2B commercial invoices (₹50,000 to ₹10,00,000), silent retries fail when purchase orders mismatch or GSTIN inputs are missing. OmniRevive-OS introduces an **Autonomous Conversational Voice Turn**, proposing structured invoice mutations under CFO approval gates and locking Promise-to-Pay (PTP) calendars.
 
 ### 3.4 Uber: Arrears Surface vs. Statistical Engagement Trigger
 * **Mechanism**: Uber blocks the next ride until past arrears are cleared, giving users a high-motivation 1-click fallback prompt.
-* **The RazorRevive-OS Difference**: Enterprise subscriptions lack an organic next-trip forcing function. RazorRevive-OS manufactures the trigger at the calculated Weibull hazard peak via WhatsApp UPI 1-Click Intent deep-links and dynamic scannable QR codes.
+* **The OmniRevive-OS Difference**: Enterprise subscriptions lack an organic next-trip forcing function. OmniRevive-OS manufactures the trigger at the calculated Weibull hazard peak via WhatsApp UPI 1-Click Intent deep-links and dynamic scannable QR codes.
 
 ---
 
@@ -92,7 +92,7 @@ Western retry engines fail in India because they ignore the strict regulatory ce
 4. **RBI e-Mandate Master Directions & Card-on-File Tokenization (CoFT)**:
    * Enforces mandatory AFA, pre-debit notifications, and forbids raw PAN retries, requiring cryptogram reprovisioning via network tokenizers (Visa VTS, Mastercard MDES).
 5. **TRAI Commercial Communication Quiet Hours**:
-   * Outlaws automated commercial recovery outreach between 21:00 and 09:00 IST. RazorRevive-OS enforces a deferred queue releasing messages at 09:05 AM IST.
+   * Outlaws automated commercial recovery outreach between 21:00 and 09:00 IST. OmniRevive-OS enforces a deferred queue releasing messages at 09:05 AM IST.
 
 ---
 
@@ -128,7 +128,7 @@ In 50-thread concurrent chaos testing, the mutex recorded **100% collision suppr
 
 ## 6. Empirical Benchmark Observations
 
-| Metric Parameter | Static Retry Baseline | RazorRevive-OS Observed | Delta / Impact |
+| Metric Parameter | Static Retry Baseline | OmniRevive-OS Observed | Delta / Impact |
 | :--- | :--- | :--- | :--- |
 | **Recovery Success Rate** | 42.24% | **78.39%** | **+36.15% Absolute Yield** |
 | **Mean Orchestration Latency** | 340.0 ms | **18.4 ms** | **18.5x Throughput Improvement** |
@@ -164,6 +164,6 @@ In 50-thread concurrent chaos testing, the mutex recorded **100% collision suppr
 
 ---
 
-*Authored by: Samrudh & RazorRevive-OS Engineering Team*  
+*Authored by: Samrudh & OmniRevive-OS Engineering Team*  
 *Repository: https://github.com/Samrudh2006/Razorpay-Target-0.1percent-*  
 *Deployment: https://razorrevive-os.onrender.com/*

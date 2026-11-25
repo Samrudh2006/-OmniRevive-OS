@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS CFO Executive Approval Component
+ * OmniRevive-OS CFO Executive Approval Component
  * Provides UI rendering, approval/rejection actions, and pending badge updates.
  */
 

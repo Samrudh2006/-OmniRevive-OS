@@ -16,7 +16,7 @@ except ImportError:
 
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.Security")
+logger = logging.getLogger("OmniRevive.Security")
 
 # Thread-local storage for SQLite connections in WAL mode
 _local = threading.local()

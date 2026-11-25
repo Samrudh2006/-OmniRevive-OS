@@ -1,5 +1,5 @@
 """
-AWS Cedar Policy Evaluation Engine for RazorRevive-OS.
+AWS Cedar Policy Evaluation Engine for OmniRevive-OS.
 Provides formal Zero-Trust Authorization checks for banking SRE circuit breakers,
 GSTIN invoice mutations, and audit log immutability.
 """

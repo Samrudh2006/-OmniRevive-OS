@@ -135,7 +135,7 @@ async def calculate_merchant_roi(
 ):
     """
     Computes business impact and net recovered revenue for Razorpay merchants
-    based on RazorRevive-OS empirical benchmark statistics.
+    based on OmniRevive-OS empirical benchmark statistics.
     """
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
     
@@ -174,7 +174,7 @@ async def calculate_merchant_roi(
             },
             "monthly_yield": {
                 "baseline_recovered_gmv": round(failed_gmv * 0.4224, 2),
-                "razorrevive_recovered_gmv": round(failed_gmv * 0.7839, 2),
+                "omnirevive_recovered_gmv": round(failed_gmv * 0.7839, 2),
                 "incremental_recovered_gmv": round(failed_gmv * (0.7839 - 0.4224), 2),
                 "net_margin_saved_inr": saved_merchant_margin
             },

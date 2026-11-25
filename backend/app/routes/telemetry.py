@@ -59,7 +59,7 @@ async def update_npci_switch_telemetry(req: UpdateSwitchTelemetryRequest, reques
 async def get_context7_telemetry(request: Request, bank_code: Optional[str] = "SBI", invoice_id: Optional[str] = None):
     """
     Returns the real-time 7-Dimensional Context Matrix (Context7) driving
-    RazorRevive-OS AI Copilot and Autonomous Payment Recovery decisions:
+    OmniRevive-OS AI Copilot and Autonomous Payment Recovery decisions:
     D1: Switch Telemetry, D2: Weibull Hazard, D3: Enterprise SLA, D4: Cedar Guardrails,
     D5: Multi-Rail Vector, D6: Merkle Hash Continuity, D7: Multilingual Sentiment.
     """

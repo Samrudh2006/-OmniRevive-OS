@@ -17,7 +17,7 @@
         android:largeHeap="true"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize"
-        android:theme="@style/Theme.RazorReviveOS">
+        android:theme="@style/Theme.OmniReviveOS">
         <activity
             android:name=".MainActivity"
             android:exported="true"

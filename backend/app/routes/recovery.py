@@ -30,7 +30,7 @@ class SimulatedFailureRequest(BaseModel):
 class UpiQrRequest(BaseModel):
     payment_id: str = Field(default="pay_mock_upi_101")
     amount: float = Field(default=2499.0)
-    merchant_vpa: str = Field(default="razorrevive.merchant@razorpay")
+    merchant_vpa: str = Field(default="omnirevive.merchant@razorpay")
     merchant_name: str = Field(default="Razorpay Merchant")
     transaction_note: str = Field(default="Invoice Recovery")
 

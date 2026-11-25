@@ -1,20 +1,20 @@
-# 🚀 RazorRevive-OS: Community Launch Kit (HackerNews, Reddit, LinkedIn & Twitter)
+# 🚀 OmniRevive-OS: Community Launch Kit (HackerNews, Reddit, LinkedIn & Twitter)
 
-Use these pre-formatted, high-conversion posts to launch **RazorRevive-OS** across developer communities to generate GitHub stars, backlinks, and AI index citation authority.
+Use these pre-formatted, high-conversion posts to launch **OmniRevive-OS** across developer communities to generate GitHub stars, backlinks, and AI index citation authority.
 
 ---
 
 ## 1. Hacker News (Show HN)
 
 **URL to submit**: [https://news.ycombinator.com/submit](https://news.ycombinator.com/submit)  
-**Title**: `Show HN: RazorRevive-OS – AI payment recovery using Weibull hazard and AWS Cedar`  
+**Title**: `Show HN: OmniRevive-OS – AI payment recovery using Weibull hazard and AWS Cedar`  
 **URL field**: `https://github.com/Samrudh2006/Razorpay-Target-0.1percent-` *(or leave blank for text post)*  
 
 **Text Body** (if text post):
 ```text
 Hey HN,
 
-I built RazorRevive-OS (https://github.com/Samrudh2006/Razorpay-Target-0.1percent-), an open-source autonomous revenue recovery control plane for payment gateways like Razorpay.
+I built OmniRevive-OS (https://github.com/Samrudh2006/Razorpay-Target-0.1percent-), an open-source autonomous revenue recovery control plane for payment gateways like Razorpay.
 
 Traditional retry queues use naive exponential backoff (retry after 1m, 2m, 4m, 8m). In high-volume payment switches (like NPCI UPI and bank mandate rails), this causes two major problems:
 1. Bank downtime is asymmetric: retrying during an outage wastes rate limits and triggers switch rejection penalties.
@@ -45,7 +45,7 @@ Would love your thoughts and feedback on the architecture!
 ```text
 Hey everyone!
 
-I wanted to share RazorRevive-OS, an open-source project I’ve been building to tackle the long-tail 0.1% of payment failure drop-offs in payment gateways and recurring mandates.
+I wanted to share OmniRevive-OS, an open-source project I’ve been building to tackle the long-tail 0.1% of payment failure drop-offs in payment gateways and recurring mandates.
 
 ### The Problem
 Most payment systems handle failures with static exponential backoff queues (e.g., retry after 1 min, 2 min, 4 min). When an underlying banking switch (like HDFC or SBI) is degraded, naive retries just hammer the switch, burn API quotas, and lead to churn.
@@ -71,13 +71,13 @@ All feedback, questions, or critiques on the architecture are welcome!
 ## 3. LinkedIn Viral Tech Post
 
 ```text
-🚀 Excited to open-source RazorRevive-OS — an autonomous AI Revenue Recovery Control Plane built for Razorpay and digital payment switches!
+🚀 Excited to open-source OmniRevive-OS — an autonomous AI Revenue Recovery Control Plane built for Razorpay and digital payment switches!
 
 In high-volume fintech platforms, even a 0.1% transaction failure rate leads to crores in lost GMV and involuntary subscription churn.
 
 Yet, most systems still rely on 1980s exponential backoff (1m ➔ 2m ➔ 4m) to retry failed payments. 
 
-In RazorRevive-OS, we brought distributed systems and mathematical rigor to payment recovery:
+In OmniRevive-OS, we brought distributed systems and mathematical rigor to payment recovery:
 
 ⚡ Weibull Hazard Survival Modeling: Rather than asking "how long to wait?", we estimate the instantaneous hazard rate h(t) to predict the exact window when an issuing switch (e.g., HDFC or SBI) is most likely to have recovered capacity.
 🛡️ AWS Cedar Zero-Trust Engine: Mathematical policy boundaries that prevent AI hallucinations from offering rogue discounts or calling customers during TRAI quiet hours (9 PM - 9 AM IST).
@@ -109,7 +109,7 @@ Would love to hear feedback from fellow engineers, platform leaders, and payment
 **Tweet 1**:  
 Why does exponential backoff fail for payment retries? 🧵  
 When a bank switch drops payments, retrying at 1m, 2m, 4m simply wastes rate limits during outages.  
-Today, I’m open-sourcing RazorRevive-OS: an AI Revenue Recovery Engine for payment gateways!  
+Today, I’m open-sourcing OmniRevive-OS: an AI Revenue Recovery Engine for payment gateways!  
 👇 (1/5)  
 https://github.com/Samrudh2006/Razorpay-Target-0.1percent-
 

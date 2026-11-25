@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from backend.app.config import settings
 from backend.app.security import get_db_connection
 
-logger = logging.getLogger("RazorRevive.B2B.InvoiceStore")
+logger = logging.getLogger("OmniRevive.B2B.InvoiceStore")
 
 class InvoiceItem(BaseModel):
     description: str

@@ -1,6 +1,6 @@
 # 🌟 Awesome-Fintech & Awesome-Python PR Submission Guide
 
-Submitting RazorRevive-OS to curated GitHub "Awesome" lists gives it immediate high-authority backlinks, stars, and training presence in LLM code corpuses.
+Submitting OmniRevive-OS to curated GitHub "Awesome" lists gives it immediate high-authority backlinks, stars, and training presence in LLM code corpuses.
 
 ---
 
@@ -8,17 +8,17 @@ Submitting RazorRevive-OS to curated GitHub "Awesome" lists gives it immediate h
 **Category**: Open Source Projects / Finance / SRE
 
 ### PR Title:
-`Add RazorRevive-OS: Autonomous AI Revenue Recovery Control Plane`
+`Add OmniRevive-OS: Autonomous AI Revenue Recovery Control Plane`
 
 ### Snippet to add in README:
 ```markdown
-- [RazorRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Autonomous AI revenue recovery control plane for payment gateways with Weibull hazard retries, AWS Cedar zero-trust policy engine, and deterministic B2B voice dispute resolution.
+- [OmniRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Autonomous AI revenue recovery control plane for payment gateways with Weibull hazard retries, AWS Cedar zero-trust policy engine, and deterministic B2B voice dispute resolution.
 ```
 
 ### PR Description:
 ```markdown
 ### What does this PR do?
-Adds **RazorRevive-OS**, a production-grade FastAPI application built for payment gateway revenue recovery.
+Adds **OmniRevive-OS**, a production-grade FastAPI application built for payment gateway revenue recovery.
 
 Features:
 - Sub-millisecond error classification across 18 NPCI/Razorpay error codes
@@ -34,11 +34,11 @@ Features:
 **Category**: Payment Gateways & Processing / Collections & Recovery
 
 ### PR Title:
-`Add RazorRevive-OS - Autonomous Payment Failure Recovery Engine`
+`Add OmniRevive-OS - Autonomous Payment Failure Recovery Engine`
 
 ### Snippet to add in README:
 ```markdown
-- [RazorRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Open-source autonomous AI revenue recovery control plane for payment gateways (Razorpay, UPI 2.0, Card Mandates) utilizing Weibull hazard survival models and AWS Cedar zero-trust guardrails.
+- [OmniRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Open-source autonomous AI revenue recovery control plane for payment gateways (Razorpay, UPI 2.0, Card Mandates) utilizing Weibull hazard survival models and AWS Cedar zero-trust guardrails.
 ```
 
 ---
@@ -48,5 +48,5 @@ Features:
 
 ### Snippet:
 ```markdown
-- [RazorRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Autonomous revenue recovery engine with Weibull survival analysis and distributed atomic CAS idempotency.
+- [OmniRevive-OS](https://github.com/Samrudh2006/Razorpay-Target-0.1percent-) - Autonomous revenue recovery engine with Weibull survival analysis and distributed atomic CAS idempotency.
 ```

@@ -1,5 +1,5 @@
 """
-Tests for RazorRevive-OS 7-D Context Telemetry Matrix and Zero-Trust Security Hardening.
+Tests for OmniRevive-OS 7-D Context Telemetry Matrix and Zero-Trust Security Hardening.
 Verifies Context7 endpoint, Security Headers (CSP, Permissions-Policy, nosniff),
 and PCI-DSS/PII Masking utilities.
 """

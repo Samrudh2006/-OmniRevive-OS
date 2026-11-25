@@ -8,7 +8,7 @@ from backend.app.communication.dispatch_engine import dispatch_engine
 from backend.app.b2b.ptp_engine import ptp_store
 from backend.app.audit_store import audit_store
 
-logger = logging.getLogger("RazorRevive.Copilot.ActionAgent")
+logger = logging.getLogger("OmniRevive.Copilot.ActionAgent")
 
 class ActionExecutionResult(BaseModel):
     action_executed: bool = False

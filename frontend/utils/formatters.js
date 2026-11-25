@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS — Utility Formatters & Compliance Validators
+ * OmniRevive-OS — Utility Formatters & Compliance Validators
  * Implements Indian Fintech formatting (INR currency, IST timestamps, PII masking, GSTIN regex)
  */
 

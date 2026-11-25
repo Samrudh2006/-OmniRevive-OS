@@ -1,6 +1,6 @@
 // ==============================================================================
 // AWS CEDAR ZERO-TRUST AUTHORIZATION POLICIES
-// Target: RazorRevive-OS Banking SRE & Autonomous Invoice Recovery Engine
+// Target: OmniRevive-OS Banking SRE & Autonomous Invoice Recovery Engine
 // Specification: Cedar Policy Language v3.0 (Amazon Web Services)
 // ==============================================================================
 

@@ -101,7 +101,7 @@ def run_held_out_benchmark(dataset_path: str = "benchmarks/test_dataset_100.json
     false_positive_overhead_inr = round(suppressions * 12.0 + automated_interventions * 1.5, 2)
 
     print("\n" + "=" * 80)
-    print("RAZORREVIVE-OS REVENUE RECOVERY BENCHMARK REPORT (100 HELD-OUT CASES)")
+    print("OMNIREVIVE-OS REVENUE RECOVERY BENCHMARK REPORT (100 HELD-OUT CASES)")
     print("=" * 80)
     print(f"Total Transactions Ingested:          {total_records}")
     print(f"Total At-Risk Gross Merchandise Value: INR {total_at_risk_gmv:,.2f}")

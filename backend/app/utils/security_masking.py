@@ -1,5 +1,5 @@
 """
-RazorRevive-OS Security & Compliance Masking Utilities
+OmniRevive-OS Security & Compliance Masking Utilities
 Adheres to PCI-DSS v4.0, RBI PII guidelines, and NPCI Tokenization mandates.
 Redacts card numbers (PAN), customer phone numbers, UPI VPAs, and Aadhaar numbers.
 """

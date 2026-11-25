@@ -1,6 +1,6 @@
-# RazorRevive System Architecture & Visual Engineering Specifications
+# OmniRevive System Architecture & Visual Engineering Specifications
 
-This document catalogs the 7 core architectural diagrams and engineering specifications for **RazorRevive**, an autonomous AI-driven revenue recovery control plane engineered for the Razorpay ecosystem.
+This document catalogs the 7 core architectural diagrams and engineering specifications for **OmniRevive**, an autonomous AI-driven revenue recovery control plane engineered for the Razorpay ecosystem.
 
 ---
 

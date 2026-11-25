@@ -1,5 +1,5 @@
 """
-RazorRevive B2B Conversational Autonomous Agent
+OmniRevive B2B Conversational Autonomous Agent
 ==============================================
 Interactive terminal dialogue agent for enterprise B2B accounts receivable.
 Evaluates natural speech input, extracts entities (TDS, GSTIN, UTR, PTP),

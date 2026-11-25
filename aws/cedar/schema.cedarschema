@@ -1,5 +1,5 @@
 {
-  "RazorRevive": {
+  "OmniRevive": {
     "entityTypes": {
       "Role": {
         "memberOfTypes": []

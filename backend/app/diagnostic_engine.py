@@ -7,7 +7,7 @@ import numpy as np
 from backend.app.schemas import DiagnosisProposal, FailureClassType, RecoveryStrategyType
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.DiagnosticEngine")
+logger = logging.getLogger("OmniRevive.DiagnosticEngine")
 
 class LocalVectorSpaceSemanticClassifier:
     """

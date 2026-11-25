@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS — Deep-Loop B2B Voice & PTP Service
+ * OmniRevive-OS — Deep-Loop B2B Voice & PTP Service
  */
 
 import { safeApiCall, showToast } from "./apiClient.js?v=2.1.0";

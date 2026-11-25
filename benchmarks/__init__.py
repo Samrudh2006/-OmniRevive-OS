@@ -1,1 +1,1 @@
-"""RazorRevive-OS Benchmark Suite."""
+"""OmniRevive-OS Benchmark Suite."""

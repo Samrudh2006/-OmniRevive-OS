@@ -4,7 +4,7 @@ import logging
 from typing import Optional, Dict, Any
 from backend.app.config import settings
 
-logger = logging.getLogger("RazorRevive.Cloudflare.R2")
+logger = logging.getLogger("OmniRevive.Cloudflare.R2")
 
 class CloudflareR2StorageService:
     """

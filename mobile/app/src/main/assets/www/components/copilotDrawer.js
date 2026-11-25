@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS AI Copilot & SRE Assistant Drawer Component
+ * OmniRevive-OS AI Copilot & SRE Assistant Drawer Component
  * Matches Razor Humanoid Copilot specifications exactly:
  * - Single Focused Mode Card (replaces view in-place, eliminating messy stacked chat history)
  * - Mode Switcher: Ask, Investigate, Explain, Explore

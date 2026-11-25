@@ -50,9 +50,9 @@ fun MainScreen(modifier: Modifier = Modifier) {
     contract = ActivityResultContracts.RequestPermission()
   ) { isGranted ->
     if (isGranted) {
-      Log.d("RazorRevive", "Record Audio permission granted")
+      Log.d("OmniRevive", "Record Audio permission granted")
     } else {
-      Log.w("RazorRevive", "Record Audio permission denied")
+      Log.w("OmniRevive", "Record Audio permission denied")
     }
   }
 
@@ -94,7 +94,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             mediaPlaybackRequiresUserGesture = false
             cacheMode = WebSettings.LOAD_DEFAULT
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-            userAgentString = "${settings.userAgentString} RazorReviveAndroid/1.0"
+            userAgentString = "${settings.userAgentString} OmniReviveAndroid/1.0"
           }
 
           // WebChromeClient with auto-permission granting for WebAudio and Microphone STT
@@ -112,7 +112,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 val hasAudio = resources.any { res -> res == PermissionRequest.RESOURCE_AUDIO_CAPTURE }
                 if (hasAudio) {
                   it.grant(arrayOf(PermissionRequest.RESOURCE_AUDIO_CAPTURE))
-                  Log.d("RazorRevive", "Auto-granted WebRTC audio capture for speech engine")
+                  Log.d("OmniRevive", "Auto-granted WebRTC audio capture for speech engine")
                 } else {
                   it.grant(resources)
                 }
@@ -133,7 +133,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 """
                 (function() {
                   window.IS_ANDROID_NATIVE = true;
-                  console.log('RazorRevive-OS Mobile Native Fullscreen Active');
+                  console.log('OmniRevive-OS Mobile Native Fullscreen Active');
                 })();
                 """.trimIndent(),
                 null
@@ -143,7 +143,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
               if (request?.isForMainFrame == true) {
                 val errorDesc = error?.description?.toString() ?: "Connection error"
-                Log.e("RazorRevive", "Mainframe load error: $errorDesc")
+                Log.e("OmniRevive", "Mainframe load error: $errorDesc")
               }
             }
           }

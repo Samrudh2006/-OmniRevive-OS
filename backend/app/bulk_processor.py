@@ -10,7 +10,7 @@ from backend.app.recovery_optimizer import recovery_optimizer
 from backend.app.policy_engine import policy_engine
 from backend.app.audit_store import audit_store
 
-logger = logging.getLogger("RazorRevive.BulkProcessor")
+logger = logging.getLogger("OmniRevive.BulkProcessor")
 
 class EnterpriseBulkRecoveryProcessor:
     """

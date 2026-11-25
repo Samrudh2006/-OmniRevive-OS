@@ -1,5 +1,5 @@
 /**
- * RazorRevive-OS 3D Financial Topology & Gateway Mesh Engine
+ * OmniRevive-OS 3D Financial Topology & Gateway Mesh Engine
  * Renders real-time interactive 3D node network of payment switches,
  * card networks, NPCI UPI Hub, and dynamic transaction packet flow.
  */
