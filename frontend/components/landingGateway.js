@@ -83,11 +83,11 @@ const fsmState = await voiceAgent.processTurn({
     },
     redis_cas: {
       title: "Redis CAS Distributed Idempotency Mutex",
-      subsystem: "Zero Double-Debit Protection",
+      subsystem: "Duplicate-Debit Protection",
       sla: "0.23ms Atomic Mutex Gate",
       badge: "Concurrency Invariant",
       icon: "",
-      description: "Compare-And-Swap (CAS) distributed lock ensures high-frequency webhooks across 10,000 req/sec never trigger concurrent duplicate charges or double-debited accounts.",
+      description: "Compare-And-Swap (CAS) distributed lock is designed to stop duplicate charges when webhooks arrive in bursts.",
       handledCodes: ["CONCURRENT_WEBHOOK", "DUPLICATE_RETRY", "RACE_CONDITION", "IDEMPOTENCY_COLLISION"],
       codeSnippet: `// Redis CAS Atomic Mutex Acquisition
 const lockAcquired = await redis.set(
@@ -96,7 +96,7 @@ const lockAcquired = await redis.set(
   "NX", "EX", 300 // 5-minute atomic lease
 );
 if (!lockAcquired) throw new DuplicateExecutionError();`,
-      metrics: "0 Double-Debits · 10k Req/sec Scale",
+      metrics: "Idempotency lock · 50-webhook test",
       workspaceTab: "overview"
     },
     card_tokens: {
@@ -432,7 +432,7 @@ if (invoiceValue > 50000) {
 
     const logs = [
       { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
-      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
+      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). idempotency lock held.`, delay: 450, step: 1 },
       { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
       { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
       { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! `, delay: 1650, step: 4 }

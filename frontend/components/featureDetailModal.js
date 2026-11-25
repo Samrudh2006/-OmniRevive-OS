@@ -491,7 +491,7 @@ export default {
     icon: "",
     metrics: [
       { label: "High Availability", value: "99.999%", sub: "Multi-Cloud Fallback" },
-      { label: "CAS Mutex Lock", value: "0.23ms", sub: "Zero-Double-Debit SLA" },
+      { label: "CAS Mutex Lock", value: "0.23ms", sub: "Lock latency in test" },
       { label: "Data Residency", value: "India Only", sub: "Mumbai/Hyderabad MeitY" },
       { label: "Pen-Test Score", value: "Grade A+", sub: "Quarterly Audit Passed" }
     ],

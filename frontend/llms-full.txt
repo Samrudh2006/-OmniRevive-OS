@@ -17,7 +17,7 @@
    - **Semantic Qdrant Vector Memory**: Embeds and retrieves past dispute context, merchant transaction histories, and customer dispute dispositions.
 
 ### 2. Safety Invariants & Zero-Trust Governance
-- **Atomic Idempotency Mutex**: Redis Compare-And-Swap (`SET key value NX PX ttl`) with HMAC-SHA256 signature verification guarantees exactly-once execution.
+- **Atomic Idempotency Mutex**: Redis Compare-And-Swap (`SET key value NX PX ttl`) with HMAC-SHA256 signature verification is intended to give exactly-once execution.
 - **AWS Cedar Policy Engine**: Formal logic evaluation enforcing zero-trust boundaries on high-value interventions (> ₹50,000 INR), discount caps (< 10%), and role permissions.
 - **TRAI Quiet-Hours Compliance**: Built-in statutory quiet hours enforcement (9:00 PM to 9:00 AM IST) deferring automated customer outreach to 9:05 AM IST next business day.
 - **Sequential SHA-256 Merkle Audit Ledger**: Every transaction failure, diagnosis, intervention, and state mutation is cryptographically signed and chained in an immutable audit ledger.
@@ -27,7 +27,7 @@
 - **OmniRevive-OS Net Recovery Rate**: **78.39%**.
 - **Industry Baseline Recovery Rate**: **42.24%**.
 - **Net Recovery Uplift**: **+36.15%**.
-- **Double-Debit / Idempotency Violations**: **0 (0.00%)**.
+- **Double-Debit / Idempotency Violations in the 50-thread test**: **0**.
 - **TRAI Regulatory Compliance**: **100%**.
 
 ## Key API Endpoints

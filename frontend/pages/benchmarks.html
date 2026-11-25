@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Empirical Benchmarks & Recovery Metrics (100-Case Suite) | OmniRevive-OS</title>
-  <meta name="description" content="Transparent, empirical benchmarks for OmniRevive-OS: 100-case held-out financial evaluation, ₹4.15L GMV recovered (42.24%), 0 double debits, and 483 automated tests.">
+  <meta name="description" content="Transparent, empirical benchmarks for OmniRevive-OS: 100-case held-out financial evaluation, ₹4.15L GMV recovered (42.24%), 0 double debits in the 50-thread test, and 483 automated tests.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://omnirevive-os.antideploy.com/benchmarks">
   <meta property="og:title" content="Empirical Benchmarks & Recovery Metrics | OmniRevive-OS">
-  <meta property="og:description" content="100-case held-out production benchmark evaluation: 42.24% net recovery rate, zero double debits, 483 tests passing.">
+  <meta property="og:description" content="100-case held-out production benchmark evaluation: 42.24% net recovery rate, 0 double debits in the 50-thread test, 483 tests passing.">
   <meta property="og:url" content="https://omnirevive-os.antideploy.com/benchmarks">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="OmniRevive-OS">
@@ -142,7 +142,7 @@ pytest -v
     </pre>
 
     <h2>Stress Test Verification: 50-Thread Concurrent Storm</h2>
-    <p>In addition to the 100-case scenario evaluation, the system was subjected to a 50-thread concurrent webhook storm simulating an issuing bank switch outage. The Redis CAS distributed mutex and SQLite WAL database handled all concurrent requests without deadlocks or double-debit mutations.</p>
+    <p>In addition to the 100-case scenario evaluation, the system was subjected to a 50-thread concurrent webhook storm simulating an issuing bank switch outage. The Redis CAS distributed mutex and SQLite WAL database handled all concurrent requests in that test without deadlocks or double-debit mutations.</p>
 
     <h2>Related Technical Guides</h2>
     <ul>

@@ -8,7 +8,7 @@
 
 ## 01 Purpose
 
-This document provides strict instructions, context, and operational rules for AI coding agents (Claude, Gemini, Cursor, Copilot, Antigravity) working on OmniRevive-OS. Follow these guidelines to maintain mission-critical stability, zero double-debit guarantees, anti-slop visual quality, and 100% web-mobile parity.
+This document provides strict instructions, context, and operational rules for AI coding agents (Claude, Gemini, Cursor, Copilot, Antigravity) working on OmniRevive-OS. Follow these guidelines to maintain mission-critical stability, duplicate-debit protection, anti-slop visual quality, and 100% web-mobile parity.
 
 ---
 
@@ -51,7 +51,7 @@ This document provides strict instructions, context, and operational rules for A
 
 ## 05 Security & Best Practices
 
-- [x] **Strict 0 Double-Debits Guarantee**: All transaction mutations MUST acquire a Redis Compare-And-Swap (CAS) distributed lock before execution.
+- [x] **Strict duplicate-debit protection**: All transaction mutations MUST acquire a Redis Compare-And-Swap (CAS) distributed lock before execution.
 - [x] **Constant-Time Cryptography**: Use `hmac.compare_digest()` for API keys, bearer tokens, and webhook signature verification.
 - [x] **TRAI Quiet Hours Compliance**: Never execute outbound consumer notifications or retries between 21:00 and 09:00 IST unless customer-initiated.
 - [x] **AWS Cedar Policy Guardrails**: Enforce discount bounds (`<=10%`, `<=₹500`) and place high-ticket actions into the CFO dual-key quarantine queue.

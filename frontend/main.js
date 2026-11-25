@@ -1618,7 +1618,7 @@ window.triggerOmniBotSpeech = function() {
   const speechText = document.getElementById("omnibot-speech-text");
   const quotes = [
     "\"Steady. Smart. Systematic. 0.1% recovered every day! \"",
-    "\"All 18 payment switch rails verified & healthy. Zero double-debits! \"",
+    "\"All 18 payment switch rails verified & healthy.\"",
     "\"Weibull Hazard optimal: Retry window shifted +45m for 91.4% yield. \"",
     "\"AWS Cedar policy active: Every discount and token capped safely! \"",
     "\"Autonomous FSM: Listening, negotiating, and resolving payments 24/7! \""

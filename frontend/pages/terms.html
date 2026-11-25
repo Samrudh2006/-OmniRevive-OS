@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Service | OmniRevive-OS Control Plane</title>
-  <meta name="description" content="OmniRevive-OS Terms of Service — Operational boundaries, multi-rail failover SLA, AWS Cedar compliance limits, zero double-debit guarantees, and API usage terms.">
+  <meta name="description" content="OmniRevive-OS Terms of Service — Operational boundaries, multi-rail failover SLA, AWS Cedar compliance limits, duplicate-debit protection, and API usage terms.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://omnirevive-os.antideploy.com/terms">
 
@@ -20,7 +20,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Terms of Service | OmniRevive-OS Control Plane">
-  <meta name="twitter:description" content="Operational SLAs, zero double-debit guarantees, and institutional compliance bounds.">
+  <meta name="twitter:description" content="Operational SLAs, duplicate-debit protection, and institutional compliance bounds.">
   <meta name="twitter:image" content="https://omnirevive-os.antideploy.com/assets/aws_logo.png">
 
   <!-- Favicon -->
@@ -102,8 +102,8 @@
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-xl font-bold text-white">3. Zero Double-Debit Warranty</h2>
-      <p>OmniRevive-OS guarantees zero double-debit mutations through atomic Redis Compare-And-Swap (CAS) distributed locks. In the event of network partition, the control plane prioritizes idempotency safety over speculative retries.</p>
+      <h2 class="text-xl font-bold text-white">3. Duplicate-Debit Protection</h2>
+      <p>OmniRevive-OS uses atomic Redis Compare-And-Swap (CAS) distributed locks to prevent duplicate debit mutations. This is a design goal, not a warranty. In the event of network partition, the control plane prioritizes idempotency safety over speculative retries.</p>
     </section>
 
     <section class="space-y-3">

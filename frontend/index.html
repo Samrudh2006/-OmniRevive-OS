@@ -121,7 +121,7 @@
             "name": "How does OmniRevive-OS prevent duplicate charging or double debits?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis with sliding TTL alongside HMAC signature validation, guaranteeing zero double-debit mutations."
+              "text": "OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis with sliding TTL alongside HMAC signature validation, intended to prevent duplicate debit mutations."
             }
           },
           {
@@ -1158,7 +1158,7 @@
             </div>
             <div>
               <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Redis CAS Idempotency</div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Guarantees zero double-debit charges across 10,000 req/sec.</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Idempotency lock to block duplicate charges.</div>
             </div>
           </div>
           <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
@@ -5657,13 +5657,13 @@ forbid (
       },
       redis_cas: {
         title: "Redis CAS Distributed Idempotency Mutex",
-        subsystem: "Zero Double-Debit Protection",
+        subsystem: "Duplicate-Debit Protection",
         sla: "0.23ms Atomic Mutex Gate",
         badge: "Concurrency Invariant",
-        description: "Compare-And-Swap (CAS) distributed lock ensures high-frequency webhooks across 10,000 req/sec never trigger concurrent duplicate charges or double-debited accounts.",
+        description: "Compare-And-Swap (CAS) distributed lock is designed to stop duplicate charges when webhooks arrive in bursts.",
         handledCodes: ["CONCURRENT_WEBHOOK", "DUPLICATE_RETRY", "RACE_CONDITION", "IDEMPOTENCY_COLLISION"],
         codeSnippet: "// Redis CAS Atomic Mutex Acquisition\nconst lockAcquired = await redis.set(\n  `idempotency:lock:${paymentId}`,\n  traceId,\n  'NX', 'EX', 300\n);\nif (!lockAcquired) throw new DuplicateExecutionError();",
-        metrics: "0 Double-Debits · 10k Req/sec Scale",
+        metrics: "Idempotency lock · 50-webhook test",
         workspaceTab: "overview"
       },
       card_tokens: {
@@ -5791,7 +5791,7 @@ forbid (
 
       const logs = [
         { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
-        { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
+        { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). idempotency lock held.`, delay: 450, step: 1 },
         { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
         { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
         { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! `, delay: 1650, step: 4 }
@@ -9764,7 +9764,7 @@ forbid (
           queryTitle = " Safety: Distributed Atomic CAS Mutex";
           answerHtml = `
             <div class="space-y-1.5">
-              <div class="text-emerald-600 dark:text-emerald-400 font-bold">Zero Double-Debit Concurrency Protection</div>
+              <div class="text-emerald-600 dark:text-emerald-400 font-bold">Concurrency protection (50-thread test)</div>
               <div>• <strong>Compare-And-Swap (CAS)</strong>: Acquired in <span class="font-mono text-cyan-700 dark:text-cyan-300">0.23ms</span> on <code>merchant_id:payment_id</code>.</div>
               <div>• <strong>Webhook Storm Resilience</strong>: Tested under 50 simultaneous retry threads; secondary threads rejected with <code>HTTP 409 Conflict</code>.</div>
               <div>• <strong>Result</strong>: Exactly <span class="text-emerald-600 dark:text-emerald-400 font-bold">0 double debits</span> and 0 idempotency violations.</div>
@@ -9862,11 +9862,11 @@ forbid (
                  "2. Instantly generates a verified WhatsApp template with a pre-filled UPI Intent link (`upi://pay?...`) and dynamic QR code.\n" +
                  "3. The consumer taps once on Google Pay, PhonePe, or Paytm to complete payment in under 3 seconds.";
         } else if (text.includes("mutex") || text.includes("storm") || text.includes("double") || text.includes("concurrency") || text.includes("lock") || text.includes("idempot") || text.includes("race")) {
-          return " **Distributed Atomic CAS Mutex & Zero Double-Debits**:\n\n" +
+          return " **Distributed Atomic CAS Mutex**:\n\n" +
                  "During concurrent webhook storms (tested under 50 simultaneous retry threads):\n" +
                  "1. Thread 1 acquires an in-memory atomic Compare-And-Swap (CAS) lock on `merchant_id:payment_id` in 0.23ms.\n" +
                  "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n" +
-                 "3. Guaranteed **0 double-debit collisions and 0 idempotency violations** under extreme network chaos.";
+                 "3. 0 double-debit collisions and 0 idempotency violations in the 50-thread concurrency test.";
         } else if (text.includes("architecture") || text.includes("3-tier") || text.includes("tier") || text.includes("how does") || text.includes("overview") || text.includes("control plane")) {
           return " **OmniRevive-OS Three-Tier Financial Isolation Boundary**:\n\n" +
                  "• **Tier 1 (Ingestion & Mutex)**: HMAC-SHA256 signature verification, replay drift checks (<300s), and atomic CAS idempotency locks.\n" +
@@ -9898,7 +9898,7 @@ forbid (
                  "OmniRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
                  "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
                  "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +
-                 "• **Policy Engine**: In-memory CAS mutex locks ensuring zero double-debit collisions.";
+                 "• **Policy Engine**: In-memory CAS mutex locks to prevent duplicate-debit collisions.";
         }
       }
 
@@ -10347,7 +10347,7 @@ forbid (
       </div>
 
       <div class="px-5 py-3 border-t border-slate-800 flex items-center justify-between bg-[#081224]">
-        <span class="text-[10px] text-emerald-400 font-mono">✓ Zero Unauthenticated Debits Guarantee</span>
+        <span class="text-[10px] text-emerald-400 font-mono">✓ Unauthenticated debits blocked by policy</span>
         <button onclick="closeSecurityShieldModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition cursor-pointer">Close</button>
       </div>
     </div>

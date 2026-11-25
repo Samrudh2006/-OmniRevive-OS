@@ -60,7 +60,7 @@ Every year, Indian enterprises lose **₹18,000+ Crores** to transient gateway d
 - ⚡ **Autonomous Failover (<50ms):** Automatically diagnoses drop causes and dynamically routes transactions across **Juspay HyperSDK, PhonePe Switch, CRED, Cashfree, Razorpay, and Stripe**.
 - 🛡️ **Mathematical Precision:** Fits continuous **SciPy Weibull Hazard Survival Models** to schedule retries at the exact empirical recovery peak (+45m) rather than naive backoffs.
 - 🎙️ **Trilingual Autonomous Voice AI:** Employs an interactive voice negotiation FSM in **Telugu (`te-IN`), Hindi (`hi-IN`), and Indian English (`en-IN`)** to resolve disputed B2B payments and lock Promise-to-Pay (PTP) commitments.
-- 🔒 **Zero-Trust Safety Invariants:** Enforces **AWS Cedar policies**, strict TRAI quiet hours (21:00–09:00 IST), and atomic **Redis CAS distributed mutexes** guaranteeing **0 double-debits**.
+- 🔒 **Zero-Trust Safety Invariants:** Enforces **AWS Cedar policies**, strict TRAI quiet hours (21:00–09:00 IST), and atomic **Redis CAS distributed mutexes** designed to prevent duplicate debits (0 in the 50-thread test).
 - 📱 **Cross-Platform Supremacy:** Dual-theme Web Control Plane (Razorpay Light & Dark Obsidian SRE), complete standalone **Flutter 3.x Mobile App**, and native release APK ready to deploy.
 
 ---
