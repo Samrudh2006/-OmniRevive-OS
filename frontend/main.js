@@ -62,7 +62,7 @@ import {
 
 import { initFintech3DTopology } from "./components/topologyCanvas.js?v=2.1.0";
 import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js?v=2.1.0";
-import { landingGateway } from "./components/landingGateway.js?v=2.1.0";
+import { landingGateway } from "./components/landingGateway.js?v=2.1.1";
 import {
   toggleAiCopilotDrawer,
   minimizeCopilotDrawer,

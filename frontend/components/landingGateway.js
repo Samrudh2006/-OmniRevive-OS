@@ -725,6 +725,8 @@ if (invoiceValue > 50000) {
     this.typewriterCharIndex = this.typewriterPhrases[0].length;
     this.typewriterIsDeleting = false;
     el.textContent = this.typewriterPhrases[0];
+    // Headline stays fixed; the rotating text made it read mid-word on slow screens.
+    return;
 
     const tick = () => {
       const currentPhrase = this.typewriterPhrases[this.typewriterIndex];
