@@ -474,7 +474,7 @@ export function triggerCopilotSuggestion(actionKey) {
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-emerald-600 dark:text-emerald-400 font-bold">Concurrency protection (50-thread test)</div>
-          <div>• <strong>Compare-And-Swap (CAS)</strong>: Acquired in <span class="font-mono text-cyan-700 dark:text-cyan-300">0.23ms</span> on <code>merchant_id:payment_id</code>.</div>
+          <div>• <strong>Compare-And-Swap (CAS)</strong>: Acquired on <code>merchant_id:payment_id</code>.</div>
           <div>• <strong>Webhook Storm Resilience</strong>: Tested under 50 simultaneous retry threads; secondary threads rejected with <code>HTTP 409 Conflict</code>.</div>
           <div>• <strong>Result</strong>: Exactly <span class="text-emerald-600 dark:text-emerald-400 font-bold">0 double debits</span> and 0 idempotency violations.</div>
         </div>
@@ -649,7 +649,7 @@ function getLocalCopilotFallback(queryText) {
   } else if (text.includes("mutex") || text.includes("storm") || text.includes("double") || text.includes("concurrency") || text.includes("lock")) {
     return " **Distributed Atomic CAS Mutex**:\n\n" +
            "During concurrent webhook storms:\n" +
-           "1. Thread 1 acquires in-memory atomic CAS lock in 0.23ms.\n" +
+           "1. Thread 1 acquires in-memory atomic CAS lock atomically.\n" +
            "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n" +
            "3. 0 double-debit collisions in the 50-thread concurrency test.";
   } else {

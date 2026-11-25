@@ -84,7 +84,7 @@ const fsmState = await voiceAgent.processTurn({
     redis_cas: {
       title: "Redis CAS Distributed Idempotency Mutex",
       subsystem: "Duplicate-Debit Protection",
-      sla: "0.23ms Atomic Mutex Gate",
+      sla: "Atomic Mutex Gate",
       badge: "Concurrency Invariant",
       icon: "",
       description: "Compare-And-Swap (CAS) distributed lock is designed to stop duplicate charges when webhooks arrive in bursts.",
@@ -187,7 +187,7 @@ if (invoiceValue > 50000) {
       error: "COF_CRYPT_EXPIRED",
       confidence: "98.2%",
       decision: "Network Token Cryptogram Refreshed & Instant Re-dispatch",
-      window: "Instant (<18.4ms)",
+      window: "Instant",
       policy: "ALLOWED (RBI Card Tokenization Compliance Verified)"
     },
     high_val_invoice: {
@@ -350,10 +350,10 @@ if (invoiceValue > 50000) {
   inspectPipelineStage(idx) {
     const stageDetails = [
       "> [STAGE 1 INGESTION]: Razorpay webhook HMAC-SHA256 signature verified with constant-time compare in 0.04ms.",
-      "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired (0.23ms). 0 race condition collisions across 10,000 req/sec.",
+      "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired. 0 race condition collisions across 10,000 req/sec.",
       "> [STAGE 3 WEIBULL MATH]: Continuous Poisson-Weibull temporal decay computed peak recovery inflection at T+45m.",
       "> [STAGE 4 CEDAR POLICY]: AWS Cedar evaluated 8 regulatory rules: Daytime window valid, discount <=10%, attempts 1 <= 3. Verdict: ALLOWED.",
-      "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed in 18.4ms. Cryptographic Merkle Block sealed to SHA-256 Ledger."
+      "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed (simulated). Cryptographic Merkle Block sealed to SHA-256 Ledger."
     ];
     const term = document.getElementById("landing-sandbox-terminal");
     if (term && stageDetails[idx]) {
@@ -432,10 +432,10 @@ if (invoiceValue > 50000) {
 
     const logs = [
       { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
-      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). idempotency lock held.`, delay: 450, step: 1 },
+      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired. idempotency lock held.`, delay: 450, step: 1 },
       { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
       { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
-      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! `, delay: 1650, step: 4 }
+      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed (simulated). Merkle Block sealed! `, delay: 1650, step: 4 }
     ];
 
     logs.forEach(log => {
@@ -475,7 +475,7 @@ if (invoiceValue > 50000) {
         voice: "te-IN-ShrutiNeural"
       },
       hindi: {
-        text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने 0.23ms में वैकल्पिक UPI रेल तैयार की है..."',
+        text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने वैकल्पिक UPI रेल तैयार की है..."',
         rawText: 'नमस्ते, आपके बयालीस हजार पांच सौ रुपये के भुगतान में एचडीएफसी स्विच टाइमआउट हुआ था। हमारी एआई प्रणाली ने वैकल्पिक यूपीआई रेल तैयार की है।',
         intent: "Switch Timeout Fallback -> UPI Dynamic QR Auto-Dispatched",
         audioWave: "Active Voice Synthesis (Hindi / hi-IN)",
@@ -708,7 +708,7 @@ if (invoiceValue > 50000) {
     "Sub-Millisecond Zero-Trust AWS Cedar Policy Gatekeeper",
     "Trilingual Autonomous B2B Voice Dispute Resolution FSM",
     "Sequential SHA-256 Merkle Ledger Audit Trail Invariants",
-    "0.23ms CAS Mutex Gate for Real-Time Multi-Rail Recovery"
+    "CAS Mutex Gate for Real-Time Multi-Rail Recovery"
   ],
 
   initTypewriterEffect() {

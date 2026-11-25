@@ -12,8 +12,8 @@ const FEATURE_MATTER = {
     icon: "",
     metrics: [
       { label: "Recovery Peak", value: "91.4%", sub: "SBI/HDFC Outage Window" },
-      { label: "Idempotency Mutex", value: "0.23ms", sub: "Redis CAS Atomic Lock" },
-      { label: "Switch Latency", value: "<18.4ms", sub: "Universal Gateway Switch" },
+      { label: "Idempotency Mutex", value: "CAS", sub: "Redis atomic lock" },
+      { label: "Switch Latency", value: "6", sub: "Supported gateways" },
       { label: "Retry Reduction", value: "87.6%", sub: "Zero Blind Retry Storms" }
     ],
     overview: "Fast-Loop is OmniRevive-OS's flagship B2C mandate recovery engine. Traditional payment gateways execute fixed exponential backoff retries (1m, 2m, 4m), which fail when bank core switches face severe 504 Gateway Timeouts. Fast-Loop calculates dynamic Weibull survival probability curves to defer retries until the bank's operational recovery peak (+45 minutes).",
@@ -205,11 +205,11 @@ res = b2b_voice_engine.process_customer_turn(req)
   overview: {
     category: "PAYMENT RAILS",
     title: "Universal Multi-Rail Gateway Router",
-    badge: "Sub-18.4ms Switch · 6 Supported Gateways",
+    badge: "6 Supported Gateways",
     icon: "",
     metrics: [
       { label: "Gateways", value: "6 Active", sub: "Razorpay, Juspay, PhonePe, CRED, Cashfree, Stripe" },
-      { label: "Switch Speed", value: "<18.4ms", sub: "Sub-Second Fallback" },
+      { label: "Fallback", value: "Auto", sub: "Multi-rail failover" },
       { label: "Uptime", value: "99.99%", sub: "Distributed Control Plane" },
       { label: "Routing Fee", value: "Optimized", sub: "Lowest Interbank Rate" }
     ],
@@ -384,7 +384,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     architecture: [
       "1. Select simulation scenario (e.g. HDFC 504 Gateway Timeout)",
       "2. Engine generates high-fidelity simulated telemetry matching real bank response codes",
-      "3. OmniRevive autonomous recovery pipeline detects degradation within 0.23ms",
+      "3. OmniRevive autonomous recovery pipeline detects degradation",
       "4. Dynamic rerouting switches transaction to healthy fallback rails",
       "5. Side-by-side terminal logs compare standard recovery vs OmniRevive 91.4% success"
     ],
@@ -491,7 +491,7 @@ export default {
     icon: "",
     metrics: [
       { label: "High Availability", value: "99.999%", sub: "Multi-Cloud Fallback" },
-      { label: "CAS Mutex Lock", value: "0.23ms", sub: "Lock latency in test" },
+      { label: "CAS Mutex Lock", value: "CAS", sub: "Atomic lock" },
       { label: "Data Residency", value: "India Only", sub: "Mumbai/Hyderabad MeitY" },
       { label: "Pen-Test Score", value: "Grade A+", sub: "Quarterly Audit Passed" }
     ],
@@ -641,7 +641,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     codeSnippet: `# FastAPI Application Architecture
 @app.post("/api/v1/recovery/fast-loop")
 async def trigger_fast_loop(req: RecoveryRequest):
-    # 1. Redis CAS idempotency check (0.23ms)
+    # 1. Redis CAS idempotency check
     await redis_cas.acquire_mutex(req.payment_id)
     # 2. Weibull retry scheduling
     retry_ts = weibull_engine.calculate_optimal_retry(req)
@@ -839,7 +839,7 @@ curl https://omnirevive-os.antideploy.com/health
   "subsystems": {
     "fast_loop": "active",
     "weibull_engine": "active",
-    "redis_cas": "locked_0.23ms",
+    "redis_cas": "locked",
     "merkle_ledger": "verified",
     "cloudflare_edge": "330+ PoPs"
   },
@@ -866,7 +866,7 @@ curl https://omnirevive-os.antideploy.com/health
       "/payment-failure-recovery — 6-Stage Failure Classification & Recovery Actions",
       "/b2b-dispute-resolution — Trilingual Voice AI B2B Dispute Negotiation System",
       "/architecture — 3-Tier Control Plane: Edge + App + Data Architecture",
-      "/idempotency-protection — Redis CAS Distributed Idempotency Mutex (0.23ms)",
+      "/idempotency-protection — Redis CAS Distributed Idempotency Mutex",
       "/audit-ledger — SHA-256 Merkle Tamper-Evident Cryptographic Audit Chain",
       "/benchmarks — 597-Test Production Benchmark Suite & Ragas Evaluation",
       "/faq — Integration, Compliance & Performance FAQs",
