@@ -34,10 +34,18 @@ section[class*="bg-gradient"], div[class*="bg-gradient-to"][class*="from-"]:not(
 /* Labels use the text face; the coding face is for code and data only */
 .font-mono:not(pre):not(code):not(td):not(th):not(kbd):not(pre *):not(code *):not(table *),
 .mono:not(pre):not(code):not(td):not(th):not(pre *):not(code *):not(table *) {
-  font-family: "IBM Plex Sans", system-ui, sans-serif !important; letter-spacing: 0 !important;
+  font-family: "Hanken Grotesk", system-ui, sans-serif !important; letter-spacing: 0 !important;
 }
-body, button, input, select, textarea { font-family: "IBM Plex Sans", system-ui, sans-serif; }
+body, button, input, select, textarea { font-family: "Hanken Grotesk", system-ui, sans-serif; }
 pre, code, kbd, samp, table .mono, td.font-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 
 /* Buttons made from former anchors keep link look */
 button.footer-nav-link { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+
+/* Quiet labels: no wide-tracked capitals */
+.uppercase, [class*="uppercase"] { text-transform: none !important; }
+[class*="tracking-wide"], [class*="tracking-widest"], [class*="tracking-wider"] { letter-spacing: 0 !important; }
+/* Small tinted icon tiles become plain icons */
+.w-6.h-6.rounded-md, .w-6.h-6.rounded-lg, .w-8.h-8.rounded-xl, .w-8.h-8.rounded-lg, .w-9.h-9.rounded-xl, .w-10.h-10.rounded-xl {
+  background: transparent !important; background-image: none !important; border-color: transparent !important;
+}

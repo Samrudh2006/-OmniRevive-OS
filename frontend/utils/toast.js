@@ -47,7 +47,7 @@ export function showToast(message, type = "info") {
   const icon = type === "success" 
     ? "✓" 
     : type === "warning" 
-      ? "⚡" 
+      ? "" 
       : type === "error" 
         ? "✕" 
         : "ℹ";

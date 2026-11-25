@@ -178,7 +178,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles/main.css?v=2.9">
   <link rel="stylesheet" href="/static/styles/refresh.css?v=3.0">
   <script>
@@ -191,8 +191,8 @@
             brand: {
               bg: '#f4f6fa',
               card: '#ffffff',
-              cardBorder: '#e2e8f0',
-              cardHover: '#f8fafc',
+              cardBorder: '#cfdbe6',
+              cardHover: '#f1f6fa',
               sidebar: '#0c2340',
               accentBlue: '#0c55ea',
               accentCyan: '#0284c7',
@@ -200,12 +200,12 @@
               accentPurple: '#7c3aed',
               accentAmber: '#d97706',
               accentRed: '#dc2626',
-              muted: '#64748b',
-              subtext: '#475569'
+              muted: '#66798f',
+              subtext: '#4b5d72'
             }
           },
           fontFamily: {
-            sans: ['"IBM Plex Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+            sans: ['"Hanken Grotesk"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
             mono: ['"IBM Plex Mono"', 'monospace']
           }
         }
@@ -227,8 +227,8 @@
       --border-subtle: #e2efff;
       --text-primary: #0c2340;
       --text-secondary: #1b3152;
-      --text-muted: #475569;
-      --text-disabled: #94a3b8;
+      --text-muted: #4b5d72;
+      --text-disabled: #8a9fb4;
       --overlay: rgba(12, 35, 64, 0.45);
       --shadow: 0 4px 14px -2px rgba(12, 108, 242, 0.08);
       --input-background: #ffffff;
@@ -254,7 +254,7 @@
     html.dark {
       /* Centralized Semantic Tokens (Dark Mode) */
       --background: #030712;
-      --foreground: #f8fafc;
+      --foreground: #f1f6fa;
       --surface: #060d1d;
       --surface-elevated: #091427;
       --surface-secondary: #081224;
@@ -262,10 +262,10 @@
       --surface-muted: #101e38;
       --border: #101e38;
       --border-subtle: #0f1c34;
-      --text-primary: #f8fafc;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
-      --text-disabled: #64748b;
+      --text-primary: #f1f6fa;
+      --text-secondary: #b3c4d4;
+      --text-muted: #8a9fb4;
+      --text-disabled: #66798f;
       --overlay: rgba(3, 7, 18, 0.8);
       --shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
       --input-background: #060d1d;
@@ -291,7 +291,7 @@
     body {
       background-color: var(--bg-page);
       color: var(--text-title);
-      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
@@ -353,7 +353,7 @@
     html.light main .bg-\[\#071328\],
     html.light main .bg-\[\#0a1628\],
     html.light main .bg-\[\#090e17\],
-    html.light main .bg-\[\#0f172a\],
+    html.light main .bg-\[\#111b2d\],
     html.light main .bg-\[\#060a12\] {
       background: #ffffff !important;
       background-color: #ffffff !important;
@@ -379,30 +379,30 @@
     html.light main .border-\[\#142442\],
     html.light main .border-\[\#142442\]\/60,
     html.light main .border-\[\#132f54\],
-    html.light main .border-\[\#1e293b\],
+    html.light main .border-\[\#1f2c40\],
     html.light main .border-\[\#1e3a6a\],
     html.light main .border-\[\#1b345f\],
     html.light main .border-\[\#2a4365\] {
-      border-color: #e2e8f0 !important;
+      border-color: #cfdbe6 !important;
     }
 
     /* Text Color Legibility Upgrades in Light Mode */
     html.light main .text-white,
     html.light main .text-slate-100 {
-      color: #0f172a !important;
+      color: #111b2d !important;
       font-weight: 600;
     }
     html.light main .text-slate-200 {
-      color: #1e293b !important;
+      color: #1f2c40 !important;
     }
     html.light main .text-slate-300 {
-      color: #334155 !important;
+      color: #35445a !important;
     }
     html.light main .text-slate-400 {
-      color: #64748b !important;
+      color: #66798f !important;
     }
     html.light main .text-slate-500 {
-      color: #475569 !important;
+      color: #4b5d72 !important;
     }
 
     /* Accent & Brand Colors in Light Mode */
@@ -465,14 +465,14 @@
     html.light main .bg-\[\#142442\],
     html.light main .bg-\[\#122038\],
     html.light main .bg-\[\#182a4d\] {
-      background-color: #f1f5f9 !important;
-      color: #1e293b !important;
-      border: 1px solid #cbd5e1 !important;
+      background-color: #e4edf5 !important;
+      color: #1f2c40 !important;
+      border: 1px solid #b3c4d4 !important;
     }
     html.light main .bg-\[\#142442\]:hover,
     html.light main .bg-\[\#122038\]:hover {
-      background-color: #e2e8f0 !important;
-      color: #0f172a !important;
+      background-color: #cfdbe6 !important;
+      color: #111b2d !important;
     }
 
     /* Form Inputs & Select Elements */
@@ -480,8 +480,8 @@
     html.light select,
     html.light textarea {
       background-color: #ffffff !important;
-      border: 1px solid #cbd5e1 !important;
-      color: #0f172a !important;
+      border: 1px solid #b3c4d4 !important;
+      color: #111b2d !important;
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     }
     html.light input:focus,
@@ -493,21 +493,21 @@
 
     /* Tables in Light Mode */
     html.light table thead tr {
-      background-color: #f8fafc !important;
-      border-bottom: 2px solid #e2e8f0 !important;
+      background-color: #f1f6fa !important;
+      border-bottom: 2px solid #cfdbe6 !important;
     }
     html.light table thead th {
-      color: #475569 !important;
+      color: #4b5d72 !important;
       font-weight: 700 !important;
     }
     html.light table tbody tr {
-      border-bottom: 1px solid #f1f5f9 !important;
+      border-bottom: 1px solid #e4edf5 !important;
     }
     html.light table tbody tr:hover {
-      background-color: #f8fafc !important;
+      background-color: #f1f6fa !important;
     }
     html.light table tbody td {
-      color: #1e293b !important;
+      color: #1f2c40 !important;
     }
 
     /* Terminals, Console Logs, & Code Blocks (Sleek Dark Navy Contrast in ALL Themes) */
@@ -516,12 +516,12 @@
     .mono-code-block,
     .terminal-window {
       background-color: #070d18 !important;
-      border: 1px solid #1e293b !important;
+      border: 1px solid #1f2c40 !important;
       color: #38bdf8 !important;
     }
     #red-team-console .text-slate-400,
     #event-log-container .text-slate-400 {
-      color: #94a3b8 !important;
+      color: #8a9fb4 !important;
     }
     #red-team-console .text-emerald-400,
     #event-log-container .text-emerald-400 {
@@ -551,12 +551,12 @@
       color: #38bdf8 !important;
     }
     html.dark #app-header .header-center-sub {
-      color: #94a3b8 !important;
+      color: #8a9fb4 !important;
     }
 
     html.light #app-header {
       background-color: #ffffff !important;
-      border-bottom: 1px solid #e2e8f0 !important;
+      border-bottom: 1px solid #cfdbe6 !important;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     html.light #app-header .header-brand-title,
@@ -567,7 +567,7 @@
       color: #0c55ea !important;
     }
     html.light #app-header .header-center-sub {
-      color: #475569 !important;
+      color: #4b5d72 !important;
     }
 
     /* ==============================================================================
@@ -592,7 +592,7 @@
       color: #1b3152 !important;
     }
     html.light #app-sidebar .text-slate-400 {
-      color: #475569 !important;
+      color: #4b5d72 !important;
     }
     html.light #app-sidebar .nav-btn-inactive {
       color: #1b3152 !important;
@@ -626,7 +626,7 @@
     html.light #app-sidebar .sidebar-footer-version {
       background-color: #f0f7ff !important;
       border-color: #d4e5f9 !important;
-      color: #475569 !important;
+      color: #4b5d72 !important;
     }
 
     /* Dark Mode Sidebar */
@@ -638,10 +638,10 @@
       color: #ffffff !important;
     }
     html.dark #app-sidebar .text-slate-400 {
-      color: #94a3b8 !important;
+      color: #8a9fb4 !important;
     }
     html.dark #app-sidebar .nav-btn-inactive {
-      color: #cbd5e1 !important;
+      color: #b3c4d4 !important;
     }
     html.dark #app-sidebar .nav-btn-inactive:hover {
       background-color: #132f54 !important;
@@ -711,15 +711,15 @@
 
     /* Light Mode Table Styling */
     html.light table th {
-      background-color: #f8fafc !important;
-      color: #475569 !important;
-      border-color: #e2e8f0 !important;
+      background-color: #f1f6fa !important;
+      color: #4b5d72 !important;
+      border-color: #cfdbe6 !important;
     }
     html.light table td {
-      border-color: #e2e8f0 !important;
+      border-color: #cfdbe6 !important;
     }
     html.light table tr:hover {
-      background-color: #f1f5f9 !important;
+      background-color: #e4edf5 !important;
     }
     .wave-bar {
       transition: height 0.1s ease-in-out;
@@ -801,27 +801,21 @@
         <!-- Center: Frosted Capsule Dock (Centered, Single-Line, Responsive in exact page order) -->
         <div class="hidden xl:flex items-center gap-1 p-1 rounded-full bg-slate-100/90 dark:bg-slate-900/70 border border-slate-200/90 dark:border-slate-800/80 shadow-inner backdrop-blur-xl shrink-0 max-w-fit">
           <a href="#showcase-constellation" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Architecture</span>
           </a>
           <a href="#showcase-cedar-security" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Cedar Security</span>
           </a>
           <a href="#showcase-sandbox" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Sandbox</span>
           </a>
           <a href="#showcase-voice-studio" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Voice AI</span>
           </a>
           <a href="#showcase-workspace" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Decisions</span>
           </a>
           <a href="#showcase-decision-trail" class="whitespace-nowrap px-2.5 lg:px-3 py-1.5 rounded-full text-[11px] lg:text-[11.5px] font-semibold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <span class="text-xs"></span>
             <span>Audit Trail</span>
           </a>
         </div>
@@ -830,7 +824,6 @@
         <div class="shrink-0 flex items-center gap-2 sm:gap-3">
           <!-- Live Telemetry & IST Clock Mini Pill (Visible on Large Desktops) -->
           <div class="hidden 2xl:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700/80 text-[11px] text-slate-600 dark:text-slate-300 shadow-xs whitespace-nowrap">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <div id="os-forex-ticker" class="flex items-center gap-1.5">
               <span class="font-bold text-emerald-600 dark:text-emerald-400">USD/INR</span>
               <span class="mono font-semibold">₹96.02</span>
@@ -927,7 +920,7 @@
       <!-- Hero Headline with Dynamic Typewriter Rotation Animation -->
       <div class="space-y-3 max-w-lg sm:max-w-xl lg:max-w-[540px] min-h-[110px] sm:min-h-[130px] mx-auto px-2 flex flex-col justify-center">
         <h1 class="text-2xl sm:text-4xl lg:text-[36px] font-black tracking-tight text-[#0c2340] dark:text-white leading-[1.22] drop-shadow-sm text-center">
-          <span id="hero-typewriter-text">Recover the Lost 0.1% GMV Across India's Payment Rails</span><span class="typewriter-cursor"></span>
+          <span id="hero-typewriter-text">Recover the Lost 0.1% GMV Across India's Payment Rails</span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-md mx-auto font-normal leading-relaxed text-center">
           Autonomous, deterministic, and policy-governed. Transforming 18 payment failure topologies across <strong class="font-bold text-[#0c2340] dark:text-white">Juspay, PhonePe, CRED, Cashfree,</strong> and <strong class="font-bold text-[#0c2340] dark:text-white">Razorpay</strong> into recovered revenue in <strong class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">&lt;18.4ms</strong> using Weibull temporal hazard models and AWS Cedar zero-trust policies.
@@ -954,7 +947,6 @@
         <!-- Card 1: Recovery Rate -->
         <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
           <div class="flex items-center gap-2 text-xs font-bold text-sky-500 uppercase tracking-wider">
-            <span class="text-sky-500 text-sm"></span>
             <span>LIVE RECOVERY RATE</span>
           </div>
           <div class="text-3xl sm:text-4xl font-black text-emerald-500 dark:text-emerald-400 pt-1">78.39%</div>
@@ -964,7 +956,6 @@
         <!-- Card 2: CAS Mutex Gate -->
         <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
           <div class="flex items-center gap-2 text-xs font-bold text-sky-500 uppercase tracking-wider">
-            <span class="text-sky-500 text-sm"></span>
             <span>C2S MUTEX GATE</span>
           </div>
           <div class="text-3xl sm:text-4xl font-black text-sky-500 dark:text-sky-400 pt-1">0.23ms</div>
@@ -974,7 +965,6 @@
         <!-- Card 3: Regulatory Guard -->
         <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
           <div class="flex items-center gap-2 text-xs font-bold text-emerald-500 uppercase tracking-wider">
-            <span class="text-emerald-500 text-sm"></span>
             <span>REGULATORY GUARD</span>
           </div>
           <div class="text-3xl sm:text-4xl font-black text-emerald-500 dark:text-emerald-400 pt-1">100% Safe</div>
@@ -983,15 +973,23 @@
 
         <!-- Card 4: Verified Invariants -->
         <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
-          <div class="flex items-center gap-2 text-xs font-bold text-purple-500 uppercase tracking-wider">
-            <span class="text-purple-500 text-sm"></span>
+          <div class="flex items-center gap-2 text-xs font-bold text-sky-500 uppercase tracking-wider">
             <span>VERIFIED INVARIANTS</span>
           </div>
-          <div class="text-3xl sm:text-4xl font-black text-purple-500 dark:text-purple-400 pt-1">569 Tests</div>
+          <div class="text-3xl sm:text-4xl font-black text-sky-500 dark:text-sky-400 pt-1">569 Tests</div>
           <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">569 tests collected, all passing</div>
         </div>
 
       </div>
+    </section>
+
+    <section id="product-view" class="px-4 sm:px-8 pb-12 max-w-6xl mx-auto w-full">
+      <figure class="space-y-3">
+        <img src="/assets/product_control_plane.jpg?v=3.0" width="1356" height="847" loading="lazy" decoding="async"
+             alt="OmniRevive-OS control plane overview: live yield, recovered GMV, fast-loop and deep-loop engines, decision trace"
+             class="w-full h-auto rounded-xl border border-slate-800">
+        <figcaption class="text-sm text-slate-500 dark:text-slate-400">The control plane overview as it runs today, on the built-in simulated payment stream. Figures on screen are demo data.</figcaption>
+      </figure>
     </section>
 
     <!-- =========================================================================
@@ -1372,7 +1370,7 @@
 
       <!-- Top Summary Cloud Metrics in Cedar Section -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
           <div class="w-11 h-11 rounded-xl bg-orange-50 dark:bg-[#2a1714] border border-orange-200 dark:border-[#d97757]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
             <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
               <path d="M12 2C12.5 2 12.9 2.4 12.9 2.9V8.6L16.9 4.6C17.3 4.2 18 4.2 18.4 4.6C18.8 5 18.8 5.7 18.4 6.1L14.4 10.1H20.1C20.6 10.1 21 10.5 21 11C21 11.5 20.6 11.9 20.1 11.9H14.4L18.4 15.9C18.8 16.3 18.8 17 18.4 17.4C18 17.8 17.3 17.8 16.9 17.4L12.9 13.4V19.1C12.9 19.6 12.5 20 12 20C11.5 20 11.1 19.6 11.1 19.1V13.4L7.1 17.4C6.7 17.8 6 17.8 5.6 17.4C5.2 17 5.2 16.3 5.6 15.9L9.6 11.9H3.9C3.4 11.9 3 11.5 3 11C3 10.5 3.4 10.1 3.9 10.1H9.6L5.6 6.1C5.2 5.7 5.2 5 5.6 4.6C6 4.2 6.7 4.2 7.1 4.6L11.1 8.6V2.9C11.1 2.4 11.5 2 12 2Z" fill="#D97757"/>
@@ -1385,7 +1383,7 @@
           </div>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
           <div class="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-[#161c33] border border-indigo-200 dark:border-[#6366f1]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
             <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L4 5.5V11c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V5.5L12 2z" fill="#4338ca" fill-opacity="0.2" stroke="#6366f1" stroke-width="1.75"/>
@@ -1399,7 +1397,7 @@
           </div>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
           <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-[#261021] border border-rose-200 dark:border-[#ec4899]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
             <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
               <path d="M12 2.5L20 7.2V16.8L12 21.5L4 16.8V7.2L12 2.5Z" fill="#be185d" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1.75"/>
@@ -1418,7 +1416,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         <!-- Left: Active Cedar Policy Source Code -->
-        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] rounded-3xl p-5 sm:p-6 space-y-3 flex flex-col shadow-lg">
+        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] rounded-3xl p-5 sm:p-6 space-y-3 flex flex-col shadow-lg">
           <div class="flex items-center justify-between">
             <span class="text-sm font-bold text-[#0c2340] dark:text-slate-200 flex items-center gap-2">
               
@@ -1462,7 +1460,7 @@ forbid (
         </div>
 
         <!-- Right: Interactive Cedar Authorization Playground -->
-        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1e293b] rounded-3xl p-5 sm:p-6 space-y-4 flex flex-col shadow-lg">
+        <div class="bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] rounded-3xl p-5 sm:p-6 space-y-4 flex flex-col shadow-lg">
           <div class="flex items-center justify-between">
             <span class="text-sm font-bold text-[#0c2340] dark:text-slate-200 flex items-center gap-2">
               
@@ -1474,7 +1472,7 @@ forbid (
           <!-- Scenario Dropdown -->
           <div>
             <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1.5">Select Security Test Case:</label>
-            <select id="landing-cedar-test-select" onchange="applyLandingCedarCase(this.value)" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
+            <select id="landing-cedar-test-select" onchange="applyLandingCedarCase(this.value)" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
               <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True)  ALLOW</option>
               <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker  DENY</option>
               <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000)  ALLOW</option>
@@ -1485,22 +1483,22 @@ forbid (
           <div class="grid grid-cols-2 gap-3 text-xs mono">
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Principal:</label>
-              <input id="landing-cedar-principal" type="text" value="Role::SRE_Admin" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-principal" type="text" value="Role::SRE_Admin" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Action:</label>
-              <input id="landing-cedar-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-xs mono">
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Resource:</label>
-              <input id="landing-cedar-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">MFA Verified:</label>
-              <select id="landing-cedar-mfa" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
+              <select id="landing-cedar-mfa" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
                 <option value="true">true</option>
                 <option value="false">false</option>
               </select>
@@ -1514,7 +1512,7 @@ forbid (
           </button>
 
           <!-- Result Card -->
-          <div id="landing-cedar-result-box" class="p-3 rounded-xl bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-[#1e293b] text-xs font-mono shadow-sm">
+          <div id="landing-cedar-result-box" class="p-3 rounded-xl bg-slate-50 dark:bg-[#030712] border border-slate-200 dark:border-[#1f2c40] text-xs font-mono shadow-sm">
             <div class="flex items-center justify-between mb-1">
               <span class="text-[11px] text-slate-600 dark:text-slate-400 font-semibold">Cedar Policy Decision:</span>
               <span id="landing-cedar-badge" class="px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-allow shadow-sm">ALLOW</span>
@@ -1642,7 +1640,6 @@ forbid (
           <div class="p-5 rounded-3xl bg-[#030712] border border-slate-800 shadow-2xl space-y-3 font-mono">
             <div class="flex items-center justify-between pb-2 border-b border-slate-800 text-[11px]">
               <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
                 <span class="text-slate-300 font-bold">ORCHESTRATION TERMINAL</span>
               </div>
               <span class="text-[10px] text-slate-500">CAS-0.23ms · SHA-256 Merkle</span>
@@ -1681,7 +1678,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>Razorpay</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               </div>
               <div class="text-[10px] text-slate-400 font-mono">99.99% Core</div>
             </div>
@@ -1698,7 +1694,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>Juspay</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               </div>
               <div class="text-[10px] text-emerald-400 font-mono font-bold">18.4ms Switch</div>
             </div>
@@ -1715,7 +1710,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>PhonePe</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
               </div>
               <div class="text-[10px] text-purple-300 font-mono">UPI 2.0 Dynamic</div>
             </div>
@@ -1734,7 +1728,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>CRED</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
               </div>
               <div class="text-[10px] text-slate-400 font-mono">High-Ticket &amp; Pay</div>
             </div>
@@ -1750,7 +1743,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>Cashfree</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
               </div>
               <div class="text-[10px] text-amber-300 font-mono">Auto-Collect Payouts</div>
             </div>
@@ -1766,7 +1758,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>Stripe</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
               </div>
               <div class="text-[10px] text-indigo-300 font-mono">Global Forex &amp; Cards</div>
             </div>
@@ -1783,7 +1774,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>NPCI Switch</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               </div>
               <div class="text-[10px] text-emerald-400 font-mono font-bold">18 Banks Radar</div>
             </div>
@@ -1804,7 +1794,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>HDFC Bank</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
               </div>
               <div class="text-[10px] text-sky-300 font-mono">Core Switch</div>
             </div>
@@ -1822,7 +1811,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>ICICI Bank</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
               </div>
               <div class="text-[10px] text-rose-300 font-mono">iMobile API</div>
             </div>
@@ -1841,7 +1829,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>SBI</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
               </div>
               <div class="text-[10px] text-sky-300 font-mono">Core Gateway</div>
             </div>
@@ -1859,7 +1846,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>AWS Cedar</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
               </div>
               <div class="text-[10px] text-amber-300 font-mono">Zero-Trust Guard</div>
             </div>
@@ -1873,7 +1859,6 @@ forbid (
             <div>
               <div class="font-extrabold text-sm text-white flex items-center gap-1.5">
                 <span>Qdrant</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
               </div>
               <div class="text-[10px] text-rose-300 font-mono">Vector DB</div>
             </div>
@@ -1919,11 +1904,6 @@ forbid (
             <div class="flex items-center gap-2.5">
               <!-- Animated Waveform Bars -->
               <div class="flex items-end gap-1 h-5">
-                <span class="w-1 bg-purple-400 rounded-full voice-wave-bar-1"></span>
-                <span class="w-1 bg-purple-400 rounded-full voice-wave-bar-2"></span>
-                <span class="w-1 bg-purple-400 rounded-full voice-wave-bar-3"></span>
-                <span class="w-1 bg-purple-400 rounded-full voice-wave-bar-4"></span>
-                <span class="w-1 bg-purple-400 rounded-full voice-wave-bar-5"></span>
               </div>
               <span id="landing-voice-status" class="font-bold text-white">Active Voice Synthesis (Telugu / te-IN)</span>
             </div>
@@ -1990,7 +1970,6 @@ forbid (
           <!-- Mockup Header -->
           <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <span class="font-bold text-white uppercase tracking-wider">Live GMV Recovery Calculator</span>
             </div>
             <span class="text-[10px] text-slate-400 mono">ROI_SIMULATOR_v1</span>
@@ -2080,35 +2059,30 @@ forbid (
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 pt-1">
           
           <div class="p-4 rounded-2xl bg-white dark:bg-[#060e1d] border border-sky-100 dark:border-slate-800 shadow-sm dark:shadow-md space-y-1">
-            <div class="text-[10px] text-[#0c6cf2] dark:text-sky-400 font-mono font-bold">01</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Risk model</div>
             <div class="text-xl font-black text-[#0c2340] dark:text-white">94 / 100</div>
             <div class="text-[10px] text-slate-500 dark:text-slate-500">Calibrated risk score</div>
           </div>
 
           <div class="p-4 rounded-2xl bg-white dark:bg-[#060e1d] border border-sky-100 dark:border-slate-800 shadow-sm dark:shadow-md space-y-1">
-            <div class="text-[10px] text-[#0c6cf2] dark:text-sky-400 font-mono font-bold">02</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Graph</div>
             <div class="text-base font-bold text-[#0c2340] dark:text-white leading-tight">High-risk cluster</div>
             <div class="text-[10px] text-slate-500 dark:text-slate-500">11 linked identities</div>
           </div>
 
           <div class="p-4 rounded-2xl bg-white dark:bg-[#060e1d] border border-sky-100 dark:border-slate-800 shadow-sm dark:shadow-md space-y-1">
-            <div class="text-[10px] text-[#0c6cf2] dark:text-sky-400 font-mono font-bold">03</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Agent</div>
             <div class="text-base font-bold text-[#0c2340] dark:text-white leading-tight">Dispatch Verified</div>
             <div class="text-[10px] text-slate-500 dark:text-slate-500">Evidence-backed</div>
           </div>
 
           <div class="p-4 rounded-2xl bg-white dark:bg-[#060e1d] border border-sky-100 dark:border-slate-800 shadow-sm dark:shadow-md space-y-1">
-            <div class="text-[10px] text-[#0c6cf2] dark:text-sky-400 font-mono font-bold">04</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Policy</div>
             <div class="text-xl font-black text-emerald-600 dark:text-emerald-400">RS-204</div>
             <div class="text-[10px] text-slate-500 dark:text-slate-500">Rule triggered</div>
           </div>
 
           <div class="p-4 rounded-2xl bg-white dark:bg-[#060e1d] border border-sky-100 dark:border-slate-800 shadow-sm dark:shadow-md space-y-1">
-            <div class="text-[10px] text-[#0c6cf2] dark:text-sky-400 font-mono font-bold">05</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Final decision</div>
             <div class="text-xl font-black text-[#0c6cf2] dark:text-sky-400">DISPATCH</div>
             <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Enforced in 18.4 ms</div>
@@ -2148,7 +2122,6 @@ forbid (
                 <!-- Window Header Bar -->
                 <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/80 dark:border-slate-800/80">
                   <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-rose-500"></span>
                     <span class="text-[11px] font-bold text-slate-800 dark:text-slate-200 tracking-tight">Failed Payments</span>
                   </div>
                   <span class="text-[9px] font-mono text-slate-400 dark:text-slate-500">live stream</span>
@@ -2187,7 +2160,6 @@ forbid (
               <div class="flex sm:flex-col gap-2.5 justify-between sm:justify-start">
                 <!-- Auto Recovery Pill -->
                 <button onclick="event.stopPropagation(); openFeatureDetailModal('fast_loop');" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-300 text-[10.5px] font-bold flex items-center gap-2 shadow-xs shrink-0 transition cursor-pointer" title="Inspect Autonomous Fast-Loop Recovery Architecture">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
                   <span>Auto Recovery</span>
                 </button>
 
@@ -2301,7 +2273,6 @@ forbid (
           <!-- Column 1: Recovery Engines -->
           <div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span class="text-[#0c6cf2] dark:text-sky-400"></span>
               <span>Engines</span>
             </h3>
             <ul class="space-y-1">
@@ -2335,7 +2306,6 @@ forbid (
           <!-- Column 2: Banking & Rails -->
           <div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span class="text-emerald-600 dark:text-emerald-400"></span>
               <span>Rails</span>
             </h3>
             <ul class="space-y-1">
@@ -2369,7 +2339,6 @@ forbid (
           <!-- Column 3: Security & Governance -->
           <div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span class="text-purple-600 dark:text-purple-400"></span>
               <span>Security</span>
             </h3>
             <ul class="space-y-1">
@@ -2403,7 +2372,6 @@ forbid (
           <!-- Column 4: Discover & Documentation (SEO Crawlable) -->
           <div>
             <h3 class="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span class="text-amber-500 dark:text-amber-400"></span>
               <span>Discover</span>
             </h3>
             <ul class="space-y-1">
@@ -2489,7 +2457,7 @@ forbid (
     <!-- LEFT LOGO, SIDEBAR COLLAPSE TOGGLE & BREADCRUMBS -->
     <div class="flex items-center gap-2 sm:gap-3">
       <!-- Mobile Drawer Hamburger Toggle -->
-      <button onclick="toggleMobileMenu()" class="lg:hidden w-9 h-9 rounded-full bg-slate-100 dark:bg-[#081224] border border-slate-200 dark:border-[#1e293b] flex items-center justify-center text-[#0c2340] dark:text-slate-200 hover:text-[#0c55ea] transition cursor-pointer" aria-label="Open Navigation Menu">
+      <button onclick="toggleMobileMenu()" class="lg:hidden w-9 h-9 rounded-full bg-slate-100 dark:bg-[#081224] border border-slate-200 dark:border-[#1f2c40] flex items-center justify-center text-[#0c2340] dark:text-slate-200 hover:text-[#0c55ea] transition cursor-pointer" aria-label="Open Navigation Menu">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
@@ -2565,7 +2533,7 @@ forbid (
         </button>
 
         <!-- Dropdown Menu -->
-        <div id="scenarios-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#0c182c] border border-slate-200 dark:border-[#1e293b] rounded-2xl shadow-2xl z-50 p-2 space-y-1.5 backdrop-blur-md">
+        <div id="scenarios-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-[#0c182c] border border-slate-200 dark:border-[#1f2c40] rounded-2xl shadow-2xl z-50 p-2 space-y-1.5 backdrop-blur-md">
           
           <!-- Interactive Demos Section -->
           <div class="px-2 pt-1 pb-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
@@ -2596,7 +2564,7 @@ forbid (
             </div>
           </button>
 
-          <div class="border-t border-slate-200 dark:border-[#1e293b] my-1"></div>
+          <div class="border-t border-slate-200 dark:border-[#1f2c40] my-1"></div>
 
           <!-- Payment Failure Scenarios -->
           <div class="px-2 pt-0.5 pb-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
@@ -2657,7 +2625,6 @@ forbid (
 
         <!-- Live SRE Status Pill -->
         <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 mono flex items-center gap-1 leading-none">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
           <span>LIVE</span>
         </span>
       </button>
@@ -3054,7 +3021,6 @@ forbid (
             </div>
             <div class="text-2xl sm:text-[26px] font-extrabold text-white mt-2 mono metric-value-glow tracking-tight" id="kpi-net-recovery">78.39%</div>
             <div class="flex items-center gap-1.5 mt-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               <span class="text-[10px] text-emerald-400 font-semibold mono">Live Simulation</span>
             </div>
           </div>
@@ -3146,14 +3112,12 @@ forbid (
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b border-[#142442] pb-3">
             <div>
               <div class="text-sm font-bold text-white flex items-center gap-2">
-                <span class="text-sky-400 font-bold"></span>
                 <span>Payment Rail Health Simulator & Signal Ingestion Layer</span>
               </div>
               <p class="text-xs text-slate-400 mt-0.5">Pluggable rail health signal layer designed to ingest authorized NPCI & Bank gateway webhooks to modulate Weibull hazard curves</p>
             </div>
             <div class="flex items-center gap-2">
               <span class="px-2.5 py-1 rounded-full text-xs font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 mono flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                 <span>Signal Ingestion: ACTIVE</span>
               </span>
               <button onclick="refreshNPCITelemetryGrid()" class="px-2.5 py-1 bg-[#081224] hover:bg-[#0c1b36] border border-[#142442] text-xs font-semibold text-sky-400 rounded-lg mono transition">
@@ -3293,7 +3257,7 @@ forbid (
       <!-- VIEW: SEPARATE FAST-LOOP PAGE -->
       <!-- ========================================================================= -->
       <div id="view-fast_loop" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3314,7 +3278,7 @@ forbid (
       <!-- VIEW: SEPARATE DEEP-LOOP PAGE (WITH AUDIO SYNTHESIZER & WAVEFORM) -->
       <!-- ========================================================================= -->
       <div id="view-deep_loop" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3325,7 +3289,7 @@ forbid (
             <p class="text-xs text-slate-400 mt-0.5">Conversational Hinglish objection resolution, structured invoice mutation proposals, and auto-debit PTP locks</p>
           </div>
           <div class="flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-medium text-slate-300 bg-[#1e293b] border border-[#334155] mono">Web Audio Speech Synthesizer</span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium text-slate-300 bg-[#1f2c40] border border-[#35445a] mono">Web Audio Speech Synthesizer</span>
           </div>
         </div>
 
@@ -3340,7 +3304,6 @@ forbid (
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18v3m-3 0h6"/>
                   </svg>
-                  <span class="absolute bottom-1 right-1 w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
                 </div>
               </div>
               <div>
@@ -3353,7 +3316,6 @@ forbid (
                     <span>Amazon Bedrock (Claude 3.5)</span>
                   </span>
                   <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 mono flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
                     LIVE SRE AUDIO
                   </span>
                 </div>
@@ -3362,7 +3324,7 @@ forbid (
 
             <!-- Security & Audit Indicators (Top Right) -->
             <div class="flex items-center gap-2 flex-wrap sm:justify-end">
-              <span id="voice-bar-hash-chip" class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 dark:bg-[#071326] text-emerald-600 dark:text-emerald-400 border border-slate-300 dark:border-[#1e293b] mono flex items-center gap-1.5">
+              <span id="voice-bar-hash-chip" class="px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-100 dark:bg-[#071326] text-emerald-600 dark:text-emerald-400 border border-slate-300 dark:border-[#1f2c40] mono flex items-center gap-1.5">
                 <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 <span>SHA-256 Verified</span>
               </span>
@@ -3376,7 +3338,6 @@ forbid (
           <!-- Live Duplex Call Active Banner (Hands-Free Loop) -->
           <div id="live-call-status-banner" class="hidden p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-xs flex items-center justify-between transition-all">
             <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
               <span class="font-bold text-emerald-700 dark:text-emerald-300">Live Hands-Free Duplex Call Active</span>
               <span class="text-slate-500 dark:text-slate-400 text-[11px] hidden sm:inline">— Speak naturally. AI listens, detects silence pauses, and speaks in real-time.</span>
             </div>
@@ -3396,12 +3357,7 @@ forbid (
                 </span>
               </div>
               <!-- Waveform Bars -->
-              <div class="flex items-center gap-1 h-6 px-2 bg-white dark:bg-[#050c18] rounded-md border border-slate-300 dark:border-[#1e293b] shrink-0" id="audio-wave-bars">
-                <span class="w-1 h-2 bg-emerald-500 rounded-full wave-bar transition-all"></span>
-                <span class="w-1 h-3.5 bg-emerald-400 rounded-full wave-bar transition-all"></span>
-                <span class="w-1 h-5 bg-emerald-300 rounded-full wave-bar transition-all"></span>
-                <span class="w-1 h-3 bg-emerald-400 rounded-full wave-bar transition-all"></span>
-                <span class="w-1 h-2 bg-emerald-500 rounded-full wave-bar transition-all"></span>
+              <div class="flex items-center gap-1 h-6 px-2 bg-white dark:bg-[#050c18] rounded-md border border-slate-300 dark:border-[#1f2c40] shrink-0" id="audio-wave-bars">
               </div>
             </div>
 
@@ -3423,7 +3379,7 @@ forbid (
 
                 <!-- Neural Voice Model Selector with Next-Gen Models Registry -->
                 <div class="relative inline-flex items-center">
-                  <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="max-w-[240px] sm:max-w-xs truncate px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1e293b] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
+                  <select id="neural-voice-select" onchange="changeNeuralVoice(this.value)" class="max-w-[240px] sm:max-w-xs truncate px-2 py-1 rounded-md text-[11px] font-semibold bg-white dark:bg-[#142442] hover:bg-slate-50 dark:hover:bg-[#1c3258] text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-[#1f2c40] focus:ring-1 focus:ring-emerald-500 focus:outline-hidden transition cursor-pointer shadow-xs">
                     <optgroup label=" Autonomous Dialect Switching">
                       <option value="auto" selected>Auto-Adaptive Neural AI (Telugu / Hindi / English)</option>
                     </optgroup>
@@ -3465,7 +3421,6 @@ forbid (
                 </span>
 
                 <span id="acoustic-telemetry-badge" class="inline-flex px-2 py-1 rounded-md text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-500/10 border border-indigo-500/30 mono items-center gap-1.5 shrink-0" title="Active Acoustic Engine Pipeline Telemetry">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                   <span id="acoustic-pipeline-label">ASR: Conformer-600M | TTS: Indic-Parler &lt;65ms</span>
                 </span>
               </div>
@@ -3508,7 +3463,7 @@ forbid (
       <!-- VIEW: RED-TEAM ADVERSARIAL ATTACK LAB -->
       <!-- ========================================================================= -->
       <div id="view-red_team" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3610,7 +3565,7 @@ forbid (
             <span>Red-Team Defense Telemetry Console</span>
             <span class="text-[10px] mono text-slate-400">Zero-Trust Verification</span>
           </div>
-          <div class="p-3 bg-[#060a12] rounded-lg border border-[#1e293b] font-mono text-xs text-emerald-400 max-h-48 overflow-y-auto space-y-1" id="red-team-console">
+          <div class="p-3 bg-[#060a12] rounded-lg border border-[#1f2c40] font-mono text-xs text-emerald-400 max-h-48 overflow-y-auto space-y-1" id="red-team-console">
             <div>[READY] Red-Team Adversarial Sandbox Initialized. Select any exploit vector above to test defensive boundaries.</div>
           </div>
         </div>
@@ -3620,7 +3575,7 @@ forbid (
       <!-- VIEW: SEPARATE BENCHMARK 100-CASE PAGE -->
       <!-- ========================================================================= -->
       <div id="view-benchmark" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3724,7 +3679,7 @@ forbid (
       <!-- VIEW: SEPARATE AUDIT LEDGER PAGE -->
       <!-- ========================================================================= -->
       <div id="view-audit_ledger" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3941,39 +3896,38 @@ forbid (
           </div>
 
           <!-- 3D Interactive Financial Rail Topology Canvas -->
-          <div class="p-4 rounded-lg bg-[#090e17] border border-[#1e293b] space-y-2">
+          <div class="p-4 rounded-lg bg-[#090e17] border border-[#1f2c40] space-y-2">
             <div class="flex justify-between items-center">
               <div class="text-xs font-bold text-sky-400 uppercase tracking-wider mono flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
                 <span>Live 3D Distributed Gateway Topology & Routing Mesh</span>
               </div>
               <span class="text-[10px] text-slate-400 mono">Interactive Mouse-Reactive 3D Constellation</span>
             </div>
-            <div class="relative w-full h-56 rounded-lg overflow-hidden border border-[#1e293b] bg-[#060a12]">
+            <div class="relative w-full h-56 rounded-lg overflow-hidden border border-[#1f2c40] bg-[#060a12]">
               <canvas id="fintech-topology-canvas" class="w-full h-full block"></canvas>
-              <div class="absolute bottom-2 left-3 text-[10px] text-slate-400 mono bg-[#0b1120]/90 px-2 py-1 rounded border border-[#1e293b]">
+              <div class="absolute bottom-2 left-3 text-[10px] text-slate-400 mono bg-[#0b1120]/90 px-2 py-1 rounded border border-[#1f2c40]">
                 Hover cursor to rotate 3D node vectors | 6 Nodes Active | Latency: 0.07ms
               </div>
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-4 gap-3.5 text-xs">
-            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1e293b]">
+            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1f2c40]">
               <div class="text-slate-400 font-medium">HDFC Bank Outages</div>
               <div class="text-xl font-bold text-emerald-400 mono mt-1">91.4% Recovery</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Peak Hazard Window: +45m</div>
             </div>
-            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1e293b]">
+            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1f2c40]">
               <div class="text-slate-400 font-medium">SBI Outages</div>
               <div class="text-xl font-bold text-emerald-400 mono mt-1">84.2% Recovery</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Peak Hazard Window: +60m</div>
             </div>
-            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1e293b]">
+            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1f2c40]">
               <div class="text-slate-400 font-medium">ICICI Netbanking</div>
               <div class="text-xl font-bold text-emerald-400 mono mt-1">93.1% Recovery</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Peak Hazard Window: +30m</div>
             </div>
-            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1e293b]">
+            <div class="p-3.5 rounded-lg bg-[#090e17] border border-[#1f2c40]">
               <div class="text-slate-400 font-medium">Axis Bank Degradation</div>
               <div class="text-xl font-bold text-emerald-400 mono mt-1">87.5% Recovery</div>
               <div class="text-[10px] text-slate-400 mt-0.5">Peak Hazard Window: +45m</div>
@@ -3986,7 +3940,7 @@ forbid (
       <!-- VIEW: NPCI SWITCH TELEMETRY RADAR (PHASE 1 & 8) -->
       <!-- ========================================================================= -->
       <div id="view-npci_switch" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3998,7 +3952,6 @@ forbid (
           </div>
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-1 rounded-full text-xs font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 mono flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
               <span>NPCI Switch: REALTIME</span>
             </span>
             <button onclick="refreshFullNPCISwitchView()" class="h-8 px-3 rounded-lg bg-[#08284d] hover:bg-[#0c3a6e] text-sky-300 text-xs font-semibold mono transition">
@@ -4069,7 +4022,7 @@ forbid (
       <!-- VIEW: ENTERPRISE BULK BATCH CSV INGESTION (PHASE 2 & 10) -->
       <!-- ========================================================================= -->
       <div id="view-bulk_recovery" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4214,7 +4167,7 @@ forbid (
       <!-- VIEW: CARD NETWORK TOKEN LIFECYCLE (PHASE 1 & 4) -->
       <!-- ========================================================================= -->
       <div id="view-card_tokens" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4321,7 +4274,7 @@ forbid (
       <!-- VIEW: ENTERPRISE FINANCIAL YIELD & ROI ANALYTICS (PHASE 2 & 10) -->
       <!-- ========================================================================= -->
       <div id="view-financial_yield" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4387,7 +4340,7 @@ forbid (
       <!-- VIEW: WEIBULL ANALYTICS & RECOVERY HAZARD SIMULATOR (PHASE 6 & 11) -->
       <!-- ========================================================================= -->
       <div id="view-analytics" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4481,7 +4434,7 @@ forbid (
       <!-- VIEW: CONFIGURATION & POLICY ENGINE SETTINGS -->
       <!-- ========================================================================= -->
       <div id="view-configuration" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4662,7 +4615,7 @@ forbid (
       <!-- VIEW: DOCUMENTATION & VIDEO ARCHITECTURE PLAYBOOK -->
       <!-- ========================================================================= -->
       <div id="view-docs" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4731,7 +4684,6 @@ forbid (
         <div class="custom-card p-5 space-y-4">
           <div class="flex justify-between items-center pb-2 border-b border-[#142442]">
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
-              <span class="text-sky-400"></span>
               <span>Empirical Research, Tier-1 Case Studies & Formal Prior Art</span>
             </h3>
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#0c55ea]/20 border border-[#0c55ea]/40 text-[#38bdf8] mono">
@@ -4799,7 +4751,7 @@ forbid (
 
       <!-- VIEW: CFO EXECUTIVE APPROVAL QUEUE -->
       <div id="view-cfo_approvals" class="hidden space-y-5">
-        <div class="p-4 rounded-xl bg-[#0f172a] border border-[#1e293b] flex justify-between items-center">
+        <div class="p-4 rounded-xl bg-[#111b2d] border border-[#1f2c40] flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <span> CFO Executive Approval Queue (Zero-Trust Signoff)</span>
@@ -4837,7 +4789,6 @@ forbid (
         <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0c1b33] via-[#111f3d] to-[#1c1236] border border-[#1e3a6a] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
           <div>
             <div class="flex items-center gap-2.5">
-              <span class="text-xl"></span>
               <h2 class="text-base sm:text-lg font-extrabold text-white tracking-tight">
                 AI Evaluation & LLM-as-a-Judge Observability Dashboard
               </h2>
@@ -4868,7 +4819,6 @@ forbid (
           <div class="custom-card p-4 space-y-3.5 border-t-2 border-t-cyan-500">
             <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
               <div class="flex items-center gap-2">
-                <span class="text-cyan-400 font-bold"></span>
                 <span class="text-xs font-bold text-white uppercase tracking-wider">Ragas Metrics</span>
               </div>
               <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 mono">RAGAS v0.2</span>
@@ -4902,7 +4852,6 @@ forbid (
           <div class="custom-card p-4 space-y-3.5 border-t-2 border-t-purple-500">
             <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
               <div class="flex items-center gap-2">
-                <span class="text-purple-400 font-bold"></span>
                 <span class="text-xs font-bold text-white uppercase tracking-wider">DeepEval Robustness</span>
               </div>
               <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30 mono">DEEPEVAL v1.4</span>
@@ -4936,7 +4885,6 @@ forbid (
           <div class="custom-card p-4 space-y-3.5 border-t-2 border-t-emerald-500">
             <div class="flex items-center justify-between border-b border-slate-700/40 pb-2">
               <div class="flex items-center gap-2">
-                <span class="text-emerald-400 font-bold"></span>
                 <span class="text-xs font-bold text-white uppercase tracking-wider">LangGraph / CrewAI Trace</span>
               </div>
               <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 mono">AGENTIC TRACE</span>
@@ -4979,7 +4927,6 @@ forbid (
               <p class="text-xs text-slate-400 mt-0.5">Live empirical inspection of customer objection vs agent response scores</p>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
               <span class="text-[11px] text-emerald-400 mono font-semibold">Continuous Guard Active</span>
             </div>
           </div>
@@ -5180,15 +5127,15 @@ forbid (
           <div class="flex items-center justify-between mb-1">
             <label class="block text-[11px] text-slate-300 font-bold">Customer Objection / Speech Input (Telugu / Hindi / English)</label>
             <div class="flex items-center gap-1.5">
-              <button type="button" onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-purple-900/60 text-purple-300 border border-purple-800 flex items-center gap-1.5 transition-all cursor-pointer" title="Click to speak hands-free via microphone">
+              <button type="button" onclick="toggleMicrophoneSTT()" class="mic-stt-btn px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1f2c40] hover:bg-purple-900/60 text-purple-300 border border-purple-800 flex items-center gap-1.5 transition-all cursor-pointer" title="Click to speak hands-free via microphone">
                 <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
                 <span>Speak</span>
               </button>
-              <button type="button" onclick="replayLastSpeech()" class="px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-emerald-950/60 text-emerald-300 border border-emerald-800 flex items-center gap-1.5 transition-all cursor-pointer">
+              <button type="button" onclick="replayLastSpeech()" class="px-2.5 py-1 rounded text-[10.5px] font-bold bg-[#1f2c40] hover:bg-emerald-950/60 text-emerald-300 border border-emerald-800 flex items-center gap-1.5 transition-all cursor-pointer">
                 <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
                 <span>Replay</span>
               </button>
-              <button type="button" onclick="stopSpeaking()" class="px-2 py-1 rounded text-[10.5px] font-bold bg-[#1e293b] hover:bg-rose-950/60 text-rose-300 border border-rose-800 flex items-center gap-1 transition-all cursor-pointer" title="Stop audio">
+              <button type="button" onclick="stopSpeaking()" class="px-2 py-1 rounded text-[10.5px] font-bold bg-[#1f2c40] hover:bg-rose-950/60 text-rose-300 border border-rose-800 flex items-center gap-1 transition-all cursor-pointer" title="Stop audio">
                 <svg class="w-3.5 h-3.5 text-rose-400" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
                 <span>Stop</span>
               </button>
@@ -5503,23 +5450,18 @@ forbid (
 
           <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-[10px] text-slate-300 w-full pt-1">
             <div class="flex items-center gap-1.5 font-medium">
-              <span class="w-2 h-2 rounded-full bg-[#2563eb]"></span>
               <span>Bank Outage (35%)</span>
             </div>
             <div class="flex items-center gap-1.5 font-medium">
-              <span class="w-2 h-2 rounded-full bg-[#8b5cf6]"></span>
               <span>Soft Declines (25%)</span>
             </div>
             <div class="flex items-center gap-1.5 font-medium">
-              <span class="w-2 h-2 rounded-full bg-[#f97316]"></span>
               <span>Expired Tokens (20%)</span>
             </div>
             <div class="flex items-center gap-1.5 font-medium">
-              <span class="w-2 h-2 rounded-full bg-[#06b6d4]"></span>
               <span>Abandoned 2FA (10%)</span>
             </div>
             <div class="flex items-center gap-1.5 col-span-2 font-medium">
-              <span class="w-2 h-2 rounded-full bg-[#ef4444]"></span>
               <span>Velocity Spikes (10%)</span>
             </div>
           </div>
@@ -7157,7 +7099,6 @@ forbid (
                   <span class="text-amber-300 mono font-bold">${m.field_to_mutate || 'Tax Line'}</span>
                   <span class="text-slate-400 text-[11px]">from</span>
                   <span class="text-rose-400 line-through mono text-[11px]">${m.old_value || 'UNREGISTERED'}</span>
-                  <span class="text-slate-400 text-[11px]"></span>
                   <span class="text-emerald-400 font-bold mono">${m.new_value || '29AABCU9603R1Z2'}</span>
                 </div>
                 <div class="flex items-center gap-2 flex-wrap">
@@ -7523,7 +7464,7 @@ forbid (
 
           // Node Label
           ctx.font = `${Math.max(9, Math.round(11 * p.scale))}px Inter, sans-serif`;
-          ctx.fillStyle = "#e2e8f0";
+          ctx.fillStyle = "#cfdbe6";
           ctx.fillText(p.name, p.sx + p.size + 4, p.sy + 3);
         });
 
@@ -7742,7 +7683,7 @@ forbid (
       ctx.fill();
 
       // Axis Labels
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = "#8a9fb4";
       ctx.font = "10px Inter, monospace";
       ctx.fillText("0m", 35, h - 10);
       ctx.fillText(`+${Math.round(lambda)}m`, 40 + (lambda / maxTime) * (w - 60) - 10, h - 10);
@@ -8334,13 +8275,13 @@ forbid (
       
       if (!isDark) {
         toast.style.background = "#ffffff";
-        toast.style.color = "#0f172a";
+        toast.style.color = "#111b2d";
         toast.style.borderColor = type === "success" ? "#10b981" : type === "warning" ? "#f59e0b" : type === "error" ? "#f43f5e" : "#0ea5e9";
         toast.style.borderWidth = "1.5px";
         toast.style.boxShadow = "0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08)";
       } else {
-        toast.style.background = "#0f172a";
-        toast.style.color = "#f8fafc";
+        toast.style.background = "#111b2d";
+        toast.style.color = "#f1f6fa";
         toast.style.borderColor = type === "success" ? "rgba(16, 185, 129, 0.4)" : type === "warning" ? "rgba(245, 158, 11, 0.4)" : type === "error" ? "rgba(244, 63, 94, 0.4)" : "rgba(14, 165, 233, 0.4)";
         toast.style.borderWidth = "1.5px";
         toast.style.boxShadow = "0 20px 25px -5px rgba(0, 0, 0, 0.5)";
@@ -8364,7 +8305,7 @@ forbid (
 
       toast.innerHTML = `
         <span style="background: ${badgeBg}; color: #ffffff;" class="w-6 h-6 rounded-full flex items-center justify-center font-black text-xs shrink-0 shadow-sm">${icon}</span>
-        <span style="color: ${!isDark ? '#0f172a' : '#f8fafc'}; font-size: 12px;" class="leading-snug flex-1 font-bold">${message}</span>
+        <span style="color: ${!isDark ? '#111b2d' : '#f1f6fa'}; font-size: 12px;" class="leading-snug flex-1 font-bold">${message}</span>
       `;
 
       toastContainer.appendChild(toast);
@@ -9129,12 +9070,9 @@ forbid (
       <div class="bg-[#202c33] px-3 py-2 flex items-center gap-2 border-t border-[#2a3942] select-none">
         <div class="flex-1 bg-[#2a3942] rounded-full px-3.5 py-1.5 flex items-center justify-between text-[#8696a0]">
           <div class="flex items-center gap-2">
-            <span class="text-sm"></span>
             <span class="text-xs text-[#8696a0]">Message</span>
           </div>
           <div class="flex items-center gap-2.5 text-[#8696a0]">
-            <span class="text-xs hover:text-white cursor-pointer"></span>
-            <span class="text-xs hover:text-white cursor-pointer"></span>
           </div>
         </div>
         <div class="w-8 h-8 rounded-full bg-[#00a884] flex items-center justify-center text-white text-xs cursor-pointer shadow-md">
@@ -9196,7 +9134,6 @@ forbid (
       <!-- Footer -->
       <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 flex justify-between items-center text-[11px] text-slate-400">
         <span class="flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>SMTP MIME Multipart Engine • SHA-256 Ledger Anchored</span>
         </span>
         <button onclick="closeDispatchedEmailModal()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg text-xs transition cursor-pointer">
@@ -9217,7 +9154,6 @@ forbid (
           <div class="flex items-center gap-1.5 mac-traffic-lights group mr-1">
             <button onclick="closeAwsCedarModal()" title="Close (Esc)" aria-label="Close" class="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">✕</button>
             <button onclick="closeAwsCedarModal()" title="Minimize" aria-label="Minimize" class="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123] flex items-center justify-center text-[7px] text-black/0 group-hover:text-black/80 transition-colors font-bold cursor-pointer leading-none">—</button>
-            <span class="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]"></span>
           </div>
           <div class="w-10 h-10 rounded-xl bg-[#232f3e] border border-[#FF9900]/50 p-1 flex items-center justify-center shadow-md shrink-0">
             <img src="aws_logo.png" onerror="this.src='/assets/aws_logo.png'" alt="AWS" class="w-full h-full object-contain rounded">
@@ -9244,7 +9180,7 @@ forbid (
         <!-- Top Cloud Summary Metric Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <!-- Card 1: Anthropic Claude 3.5 Sonnet (Official Logo) -->
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#2a1714] border border-[#d97757]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="Anthropic Claude 3.5">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C12.5 2 12.9 2.4 12.9 2.9V8.6L16.9 4.6C17.3 4.2 18 4.2 18.4 4.6C18.8 5 18.8 5.7 18.4 6.1L14.4 10.1H20.1C20.6 10.1 21 10.5 21 11C21 11.5 20.6 11.9 20.1 11.9H14.4L18.4 15.9C18.8 16.3 18.8 17 18.4 17.4C18 17.8 17.3 17.8 16.9 17.4L12.9 13.4V19.1C12.9 19.6 12.5 20 12 20C11.5 20 11.1 19.6 11.1 19.1V13.4L7.1 17.4C6.7 17.8 6 17.8 5.6 17.4C5.2 17 5.2 16.3 5.6 15.9L9.6 11.9H3.9C3.4 11.9 3 11.5 3 11C3 10.5 3.4 10.1 3.9 10.1H9.6L5.6 6.1C5.2 5.7 5.2 5 5.6 4.6C6 4.2 6.7 4.2 7.1 4.6L11.1 8.6V2.9C11.1 2.4 11.5 2 12 2Z" fill="#D97757"/>
@@ -9258,7 +9194,7 @@ forbid (
           </div>
 
           <!-- Card 2: AWS Cedar Zero-Trust Engine (Official Logo) -->
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#161c33] border border-[#6366f1]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="AWS Cedar Zero-Trust">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L4 5.5V11c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V5.5L12 2z" fill="#4338ca" fill-opacity="0.3" stroke="#818cf8" stroke-width="1.75" stroke-linejoin="round"/>
@@ -9273,7 +9209,7 @@ forbid (
           </div>
 
           <!-- Card 3: AWS EventBridge & Lambda (Official Logo) -->
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1e293b] flex items-center gap-3 shadow-sm">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-[#0e172a] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
             <div class="w-10 h-10 rounded-xl bg-[#261021] border border-[#ec4899]/40 flex items-center justify-center shrink-0 shadow-sm p-2" title="AWS EventBridge">
               <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2.5L20 7.2V16.8L12 21.5L4 16.8V7.2L12 2.5Z" fill="#be185d" fill-opacity="0.25" stroke="#f43f5e" stroke-width="1.75" stroke-linejoin="round"/>
@@ -9293,7 +9229,7 @@ forbid (
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           
           <!-- Left: Active Cedar Policy Source Code -->
-          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1e293b] rounded-xl p-3.5 space-y-2 flex flex-col shadow-sm">
+          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1f2c40] rounded-xl p-3.5 space-y-2 flex flex-col shadow-sm">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                 
@@ -9334,7 +9270,7 @@ forbid (
           </div>
 
           <!-- Right: Interactive Cedar Authorization Playground -->
-          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1e293b] rounded-xl p-3.5 space-y-3 flex flex-col shadow-sm">
+          <div class="bg-slate-50 dark:bg-[#070d19] border border-slate-200 dark:border-[#1f2c40] rounded-xl p-3.5 space-y-3 flex flex-col shadow-sm">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold text-slate-900 dark:text-slate-200 flex items-center gap-1.5">
                 
@@ -9346,7 +9282,7 @@ forbid (
             <!-- Scenario Dropdown -->
             <div>
               <label class="block text-[10.5px] font-bold text-slate-700 dark:text-slate-300 mb-1">Select Security Test Case:</label>
-              <select id="cedar-test-case-select" onchange="applyCedarTestCase(this.value)" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
+              <select id="cedar-test-case-select" onchange="applyCedarTestCase(this.value)" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
                 <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True)  ALLOW</option>
                 <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker  DENY</option>
                 <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000)  ALLOW</option>
@@ -9357,22 +9293,22 @@ forbid (
             <div class="grid grid-cols-2 gap-2 text-[11px] mono">
               <div>
                 <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Principal:</label>
-                <input id="cedar-input-principal" type="text" value="Role::SRE_Admin" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+                <input id="cedar-input-principal" type="text" value="Role::SRE_Admin" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
               <div>
                 <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Action:</label>
-                <input id="cedar-input-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+                <input id="cedar-input-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
             </div>
 
             <div class="grid grid-cols-2 gap-2 text-[11px] mono">
               <div>
                 <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">Resource:</label>
-                <input id="cedar-input-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+                <input id="cedar-input-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
               </div>
               <div>
                 <label class="block text-slate-600 dark:text-slate-400 text-[10px] font-semibold">MFA Verified:</label>
-                <select id="cedar-input-mfa" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1e293b] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
+                <select id="cedar-input-mfa" class="w-full bg-white dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded px-2 py-1 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
                   <option value="true">true</option>
                   <option value="false">false</option>
                 </select>
@@ -9386,7 +9322,7 @@ forbid (
             </button>
 
             <!-- Result Card -->
-            <div id="cedar-test-result-box" class="p-2.5 rounded-lg bg-white dark:bg-[#030712] border border-slate-200 dark:border-[#1e293b] text-xs font-mono shadow-sm">
+            <div id="cedar-test-result-box" class="p-2.5 rounded-lg bg-white dark:bg-[#030712] border border-slate-200 dark:border-[#1f2c40] text-xs font-mono shadow-sm">
               <div class="flex items-center justify-between mb-1">
                 <span class="text-[10.5px] text-slate-600 dark:text-slate-400 font-semibold">Cedar Policy Decision:</span>
                 <span id="cedar-result-badge" class="px-2.5 py-0.5 rounded text-[11px] font-extrabold cedar-badge-allow shadow-sm">ALLOW</span>
@@ -9403,9 +9339,8 @@ forbid (
       </div>
 
       <!-- Footer -->
-      <div class="bg-slate-50 dark:bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-slate-200 dark:border-[#1e293b] flex justify-between items-center text-[11px] text-slate-600 dark:text-slate-400">
+      <div class="bg-slate-50 dark:bg-[#070d19] px-4 sm:px-6 py-2.5 border-t border-slate-200 dark:border-[#1f2c40] flex justify-between items-center text-[11px] text-slate-600 dark:text-slate-400">
         <span class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="font-medium">OmniRevive Control Plane • Enterprise Multi-Rail Pipeline • Production Hardened 2026</span>
         </span>
         <button onclick="closeAwsCedarModal()" class="px-3.5 py-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold rounded-lg text-xs transition cursor-pointer shadow-sm">
@@ -9420,31 +9355,26 @@ forbid (
   <nav id="mobile-bottom-nav" class="fixed bottom-0 left-0 right-0 h-16 bg-[#0c2340] border-t border-[#132f54] z-40 flex items-center justify-around px-2 lg:hidden shadow-2xl backdrop-blur-md">
     <!-- Overview Tab -->
     <button onclick="switchNavTab('overview')" class="flex flex-col items-center justify-center gap-1 text-slate-300 hover:text-white px-2 py-1">
-      <span class="text-base"></span>
       <span class="text-[10px] font-medium">Overview</span>
     </button>
 
     <!-- Fast Loop -->
     <button onclick="switchNavTab('fast_loop')" class="flex flex-col items-center justify-center gap-1 text-slate-300 hover:text-white px-2 py-1">
-      <span class="text-base"></span>
       <span class="text-[10px] font-medium">Fast Loop</span>
     </button>
 
     <!-- NPCI Switch -->
     <button onclick="switchNavTab('npci_switch')" class="flex flex-col items-center justify-center gap-1 text-sky-400 hover:text-white px-2 py-1">
-      <span class="text-base"></span>
       <span class="text-[10px] font-medium">Radar</span>
     </button>
 
     <!-- Voice Deep Loop -->
     <button onclick="switchNavTab('deep_loop')" class="flex flex-col items-center justify-center gap-1 text-purple-400 hover:text-white px-2 py-1">
-      <span class="text-base"></span>
       <span class="text-[10px] font-medium">Voice</span>
     </button>
 
     <!-- Menu Toggle -->
     <button onclick="toggleMobileMenu()" class="flex flex-col items-center justify-center gap-1 text-slate-300 hover:text-white px-2 py-1">
-      <span class="text-base"></span>
       <span class="text-[10px] font-medium">All Views</span>
     </button>
   </nav>
@@ -9629,7 +9559,6 @@ forbid (
         <div class="flex gap-2.5 items-start">
           <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
-            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
           </div>
           <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2">
             <div class="copilot-msg-header flex items-center justify-between text-[10px] pb-1">
@@ -9679,7 +9608,6 @@ forbid (
         <div class="flex gap-2.5 items-start">
           <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
-            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border border-[var(--assistant-background)]"></span>
           </div>
           <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2.5">
             <div class="copilot-msg-header flex items-center justify-between text-[10px] pb-1.5">
@@ -9961,7 +9889,6 @@ forbid (
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
           </div>
           <div class="copilot-message-bubble p-3 px-4 rounded-2xl rounded-tl-sm border text-[11px] text-sky-600 dark:text-sky-400 font-medium animate-pulse flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-sky-500 animate-ping"></span>
             <span>Razor Copilot is analyzing: "<em>${q}</em>"...</span>
           </div>
         </div>
@@ -10598,8 +10525,6 @@ forbid (
   <div id="ai-copilot-trigger-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
     <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#38bdf8] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 border border-white/40 cursor-pointer backdrop-blur-md" aria-label="Open AI Copilot Chat">
       <span class="absolute -top-1 -right-1 flex h-4 w-4">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-400 border-2 border-white"></span>
       </span>
       <!-- Enlarged Front-Facing Razor Copilot Avatar Image -->
       <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-sky-300 to-white shadow-md shrink-0">
@@ -10631,13 +10556,11 @@ forbid (
           <!-- Avatar with green glowing ring and online indicator dot -->
           <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-500 shadow-lg shadow-emerald-500/20 shrink-0">
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Razor Humanoid Copilot" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
-            <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[var(--assistant-background)] ring-1 ring-emerald-500 shadow-sm animate-pulse"></span>
           </div>
           <div>
             <div class="copilot-title-text font-extrabold text-sm sm:text-base flex items-center gap-1.5 flex-wrap leading-tight">
               <span>Razor Humanoid Copilot</span>
               <span class="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40">AI</span>
-              <span class="text-amber-400 text-xs"></span>
             </div>
             <div class="copilot-subtitle-text text-[10px] font-medium">Autonomous Payment Recovery Intelligence</div>
           </div>
@@ -10678,7 +10601,6 @@ forbid (
         <div class="flex gap-2.5 items-start">
           <div class="relative w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 to-sky-400 shrink-0 shadow-sm mt-0.5">
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
-            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-sky-400 rounded-full border border-[var(--assistant-background)]"></span>
           </div>
           <div class="copilot-message-bubble flex-1 p-3 rounded-2xl rounded-tl-sm border shadow-sm space-y-1.5">
             <div class="copilot-msg-header flex items-center justify-between text-[10px] border-b pb-1">
@@ -10709,7 +10631,6 @@ forbid (
           <!-- Card 1: What's happening today? -->
           <button onclick="triggerCopilotSuggestion('whats_happening_today')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-teal-500 dark:text-teal-400 group-hover:scale-110 transition-transform shrink-0"></span>
               <span class="copilot-card-title text-[11px] font-semibold truncate">What's happening today?</span>
             </div>
             <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
@@ -10718,7 +10639,6 @@ forbid (
           <!-- Card 2: Find failed payments -->
           <button onclick="triggerCopilotSuggestion('find_failed_payments')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-sky-500 dark:text-sky-400 group-hover:scale-110 transition-transform shrink-0"></span>
               <span class="copilot-card-title text-[11px] font-semibold truncate">Find failed payments</span>
             </div>
             <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
@@ -10727,7 +10647,6 @@ forbid (
           <!-- Card 3: Show revenue at risk -->
           <button onclick="triggerCopilotSuggestion('show_revenue_at_risk')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform shrink-0"></span>
               <span class="copilot-card-title text-[11px] font-semibold truncate">Show revenue at risk</span>
             </div>
             <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
@@ -10736,7 +10655,6 @@ forbid (
           <!-- Card 4: Analyze recovery rate -->
           <button onclick="triggerCopilotSuggestion('analyze_recovery_rate')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-cyan-500 dark:text-cyan-400 group-hover:scale-110 transition-transform shrink-0"></span>
               <span class="copilot-card-title text-[11px] font-semibold truncate">Analyze recovery rate</span>
             </div>
             <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
@@ -10745,7 +10663,6 @@ forbid (
           <!-- Card 5: Explain this metric -->
           <button onclick="triggerCopilotSuggestion('explain_this_metric')" class="copilot-suggest-card w-full px-2.5 py-2 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between group shadow-sm">
             <div class="flex items-center gap-1.5 truncate">
-              <span class="text-base text-yellow-500 dark:text-yellow-400 group-hover:scale-110 transition-transform shrink-0"></span>
               <span class="copilot-card-title text-[11px] font-semibold truncate">Explain this metric</span>
             </div>
             <span class="copilot-card-arrow group-hover:translate-x-0.5 transition-all text-sm font-bold shrink-0">›</span>
@@ -11115,7 +11032,6 @@ forbid (
                 
                 <div class="border-b border-slate-800/90 pb-2 flex items-center justify-between">
                   <span class="text-[10.5px] font-bold uppercase tracking-wider text-cyan-400 mono flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                      Systems Architecture Specification
                   </span>
                   <span class="text-[9.5px] text-emerald-400 mono bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">Verified Invariant</span>
@@ -11173,7 +11089,6 @@ forbid (
                           <div class="flex items-center justify-between gap-2">
                             <button onclick="event.stopPropagation(); window.runWorkbenchScenario('${rail.id}', '${sc.scenario}', ${sc.amount}, '${sc.label}')"
                                     class="px-2.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-sm">
-                              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                               <span>${sc.label}</span>
                             </button>
                             <span class="text-[9.5px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 mono font-semibold">
@@ -11349,7 +11264,6 @@ forbid (
       <!-- SLA & Key Metrics Banner -->
       <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
           <span class="text-slate-400">Deterministic SLA:</span>
           <strong id="modal-node-sla" class="text-white font-mono">3.2ms Window Computation</strong>
         </div>
@@ -11481,7 +11395,6 @@ forbid (
       <div class="p-2 max-h-72 overflow-y-auto space-y-1 text-xs">
         <button onclick="executePaletteAction('simulate_hdfc_504')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Simulate HDFC 504 Timeout Failure</div>
               <div class="text-[10.5px] text-slate-400">Fires live Weibull Hazard model recovery with +45m peak inflection</div>
@@ -11492,7 +11405,6 @@ forbid (
 
         <button onclick="executePaletteAction('open_copilot')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Open Razor Humanoid AI SRE Copilot</div>
               <div class="text-[10.5px] text-slate-400">Interact with autonomous payment recovery intelligence drawer</div>
@@ -11503,7 +11415,6 @@ forbid (
 
         <button onclick="executePaletteAction('open_cedar')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Inspect AWS Cedar Zero-Trust Security Policies</div>
               <div class="text-[10.5px] text-slate-400">View cryptographic SHA-256 policy verification radar</div>
@@ -11514,7 +11425,6 @@ forbid (
 
         <button onclick="executePaletteAction('launch_control_plane')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Switch to Live Control Plane Workspace</div>
               <div class="text-[10.5px] text-slate-400">Full desktop view with fast-loop retries and B2B voice resolution</div>
@@ -11525,7 +11435,6 @@ forbid (
 
         <button onclick="executePaletteAction('toggle_theme')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Toggle Theme (Carbon Dark / Light Mode)</div>
               <div class="text-[10.5px] text-slate-400">Switch between high-contrast fintech themes</div>
@@ -11536,7 +11445,6 @@ forbid (
 
         <button onclick="executePaletteAction('toggle_sound')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold"></span>
             <div>
               <div class="font-bold text-white group-hover:text-sky-400">Toggle UI Micro-Interaction Sounds</div>
               <div class="text-[10.5px] text-slate-400">Enable or mute futuristic button click & hover audio feedback</div>
@@ -11619,7 +11527,6 @@ forbid (
   <!-- Cookie & Telemetry Privacy Banner (Item 5) -->
   <div id="cookie-consent-banner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md p-4 rounded-2xl bg-[#060d1d]/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl z-50 transition-all duration-300 transform translate-y-0 text-xs text-slate-300 flex flex-col gap-3">
     <div class="flex items-start gap-2.5">
-      <span class="text-base shrink-0"></span>
       <div>
         <p class="font-bold text-white leading-tight">Privacy &amp; Telemetry Consent</p>
         <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">

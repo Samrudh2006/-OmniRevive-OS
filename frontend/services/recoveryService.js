@@ -15,7 +15,7 @@ export async function triggerFastLoopPipeline() {
 
   document.querySelectorAll("#fast-loop-btn").forEach(btn => {
     btn.disabled = true;
-    btn.innerText = "⚡ Executing Recovery Pipeline...";
+    btn.innerText = " Executing Recovery Pipeline...";
   });
 
   try {
@@ -52,13 +52,13 @@ export async function triggerFastLoopPipeline() {
     }
 
     refreshAuditLedger();
-    showToast(`⚡ Recovery Pipeline Executed for ${payId}`, "success");
+    showToast(` Recovery Pipeline Executed for ${payId}`, "success");
   } catch (err) {
     showToast("Pipeline Notice: " + err.message, "warning");
   } finally {
     document.querySelectorAll("#fast-loop-btn").forEach(btn => {
       btn.disabled = false;
-      btn.innerText = "🚀 Ingest Webhook & Trigger Recovery Pipeline";
+      btn.innerText = " Ingest Webhook & Trigger Recovery Pipeline";
     });
   }
 }
@@ -101,7 +101,7 @@ export async function inspectCardTokenAction() {
     if (descEl) descEl.innerText = desc;
     if (nextEl) nextEl.innerText = nextActionText;
 
-    showToast(`💳 Token [${tokId}] Inspected: ${action}`, "success");
+    showToast(` Token [${tokId}] Inspected: ${action}`, "success");
   } catch (err) {
     console.error("Token inspection error", err);
     showToast("Token inspection error: " + err.message, "error");
@@ -123,7 +123,7 @@ export function generateAndLoadSampleCsv() {
   ];
 
   processBatchJsonItems(sampleRows);
-  showToast("⚡ Loaded sample batch CSV (10 transactions)!", "success");
+  showToast(" Loaded sample batch CSV (10 transactions)!", "success");
 }
 
 export async function handleBulkCsvFileSelected(e) {
@@ -155,7 +155,7 @@ export async function handleBulkCsvFileSelected(e) {
     }
 
     await processBatchJsonItems(items);
-    showToast(`⚡ Processed ${items.length} CSV transactions in batch!`, "success");
+    showToast(` Processed ${items.length} CSV transactions in batch!`, "success");
   };
   reader.readAsText(file);
 }
