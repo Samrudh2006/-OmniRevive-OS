@@ -40,6 +40,9 @@ class InvoiceStore:
 
     GSTIN_REGEX = re.compile(r"^[0-3][0-9][A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$")
 
+    # Identity, audit trail and timestamps are never client-mutable.
+    MUTABLE_FIELDS = frozenset({"customer_name", "customer_email", "customer_phone", "amount", "tax_amount", "gstin", "status", "due_date", "items"})
+
     def __init__(self, db_path: Optional[str] = None):
         self.db_path = db_path or settings.DATABASE_PATH
         self._invoices: Dict[str, InvoiceRecord] = {}
@@ -254,6 +257,8 @@ class InvoiceStore:
         reason: str = "Voice agent customer instruction",
         operator: str = "AI_AGENT"
     ) -> Optional[InvoiceRecord]:
+        if field not in self.MUTABLE_FIELDS:
+            raise ValueError(f"Field '{field}' cannot be mutated. Allowed: {sorted(self.MUTABLE_FIELDS)}")
         inv = self.get_invoice(invoice_id)
         if not inv:
             inv = InvoiceRecord(
@@ -274,6 +279,12 @@ class InvoiceStore:
                 raise ValueError(f"Statutory Validation Failed: '{new_value}' is not a compliant 15-character Indian GSTIN format.")
             new_value = val_str
 
+        # Validate the new value against the schema BEFORE touching the record (a bad type must not corrupt it).
+        try:
+            candidate = InvoiceRecord.model_validate({**inv.model_dump(), field: new_value})
+        except Exception as exc:
+            raise ValueError(f"Invalid value for '{field}': {new_value!r}") from exc
+        new_value = getattr(candidate, field)
         old_val = getattr(inv, field, None)
         setattr(inv, field, new_value)
         inv.updated_at = time.time()
