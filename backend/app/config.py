@@ -18,7 +18,9 @@ class Settings(BaseSettings):
     DEFAULT_GATEWAY_PROVIDER: str = "universal_multi_rail"
     RAZORPAY_KEY_ID: str = "rzp_test_mock12345"
     RAZORPAY_KEY_SECRET: str = "mock_secret_key_12345"
-    RAZORPAY_WEBHOOK_SECRET: str = "whsec_mock_signature_test"
+    # No guessable default: a published fallback secret would let anyone forge webhooks. Set RAZORPAY_WEBHOOK_SECRET in the
+    # environment; otherwise a random per-process value is used and every unsigned/forged webhook is rejected.
+    RAZORPAY_WEBHOOK_SECRET: str = secrets.token_urlsafe(32)
 
     # Local Open-Source AI Engine (Zero External API Keys Required)
     AI_PROVIDER: str = "LOCAL_OPENSOURCE" # "LOCAL_OPENSOURCE" | "OLLAMA"

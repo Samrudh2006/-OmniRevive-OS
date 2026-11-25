@@ -34,7 +34,7 @@ class SlidingWindowRateLimiter(BaseHTTPMiddleware):
         api_key = request.headers.get("X-API-Key")
         if api_key:
             api_key_clean = api_key.strip()
-            sre_key = getattr(settings, "API_AUTH_KEY", "rzp_sec_live_recovery_agent_88")
+            sre_key = settings.API_AUTH_KEY
             cfo_key = settings.CFO_AUTH_KEY
             if hmac.compare_digest(api_key_clean, sre_key) or hmac.compare_digest(api_key_clean, cfo_key):
                 return f"key_{hashlib.sha256(api_key_clean.encode('utf-8')).hexdigest()[:12]}"
