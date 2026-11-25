@@ -8,7 +8,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://omnirevive-os.antideploy.com/architecture">
   <meta property="og:title" content="OmniRevive-OS System Architecture & Dual-Speed Control Plane">
-  <meta property="og:description" content="Deep engineering architecture: Fast-Loop sub-50ms failover, AWS Cedar zero-trust policies, and SHA-256 Merkle audit trees.">
+  <meta property="og:description" content="Deep engineering architecture: Fast-Loop failover, AWS Cedar zero-trust policies, and SHA-256 Merkle audit trees.">
   <meta property="og:url" content="https://omnirevive-os.antideploy.com/architecture">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="OmniRevive-OS">
@@ -108,15 +108,15 @@
       <span>Verified Tests: 483 / 483</span>
     </div>
 
-    <p>OmniRevive-OS is structured as a <strong>Dual-Speed Autonomous Revenue Recovery Control Plane</strong> engineered to handle both sub-50ms synchronous consumer transaction failovers and long-running, multi-day B2B accounts receivable disputes.</p>
+    <p>OmniRevive-OS is structured as a <strong>Dual-Speed Autonomous Revenue Recovery Control Plane</strong> engineered to handle both synchronous consumer transaction failovers and long-running, multi-day B2B accounts receivable disputes.</p>
 
     <h2>High-Level System Topology</h2>
     <pre>
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                            OMNIREVIVE-OS CONTROL PLANE                       │
 ├───────────────────────────────────────┬─────────────────────────────────────┤
-│   FAST-LOOP ENGINE (< 50ms)           │   DEEP-LOOP AR ENGINE (Multi-Day)   │
-│   • Webhook Replay Filter (< 2ms)     │   • Trilingual Voice Agent (FSM)    │
+│   FAST-LOOP ENGINE                    │   DEEP-LOOP AR ENGINE (Multi-Day)   │
+│   • Webhook Replay Filter            │   • Trilingual Voice Agent (FSM)    │
 │   • Qdrant Semantic Vector Memory     │   • GSTIN / TDS Discrepancy Solver  │
 │   • Weibull Hazard Survival Peak      │   • Promise-to-Pay (PTP) Lock-In    │
 │   • Dynamic Multi-Rail Failover       │   • Executive CFO Dual-Key Signoff  │

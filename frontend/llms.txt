@@ -1,9 +1,9 @@
 # OmniRevive-OS
 
-> OmniRevive-OS is an autonomous AI-powered revenue recovery control plane for fintech payment failures and B2B dispute resolution. It features sub-50ms Fast-Loop autonomous gateway failover, Weibull hazard curve retry modeling, Deep-Loop neural voice agents, Redis Compare-And-Swap (CAS) distributed idempotency, AWS Cedar zero-trust security gatekeeping, and cryptographic SHA-256 Merkle audit ledgers.
+> OmniRevive-OS is an autonomous AI-powered revenue recovery control plane for fintech payment failures and B2B dispute resolution. It features Fast-Loop autonomous gateway failover, Weibull hazard curve retry modeling, Deep-Loop neural voice agents, Redis Compare-And-Swap (CAS) distributed idempotency, AWS Cedar zero-trust security gatekeeping, and cryptographic SHA-256 Merkle audit ledgers.
 
 ## Key Capabilities & Core Architecture
-- **Dual-Speed Control Plane**: Sub-50ms Fast-Loop for instant gateway failover & Smart Retries alongside Deep-Loop neural voice negotiation for enterprise B2B disputes.
+- **Dual-Speed Control Plane**: Fast-Loop for instant gateway failover & Smart Retries alongside Deep-Loop neural voice negotiation for enterprise B2B disputes.
 - **Mathematical Determinism**: Weibull hazard rate survival modeling calibrated on NPCI UPI switch health telemetry.
 - **Strict Idempotency**: Redis atomic Compare-And-Swap (CAS) distributed mutex preventing double-debit mutations.
 - **Institutional Compliance**: TRAI quiet hours (9 PM - 9 AM IST) enforcement, RBI financial safety bounds, and AWS Cedar formal policy gatekeeper.

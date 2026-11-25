@@ -5,8 +5,8 @@
 ## System Architecture
 
 ### 1. Dual-Speed Control Plane Architecture
-1. **Sub-50ms Fast-Loop Recovery Engine**:
-   - **Diagnostic Latency**: P99 < 12ms.
+1. **Fast-Loop Recovery Engine**:
+   - **Latency**: not benchmarked.
    - **Autonomous Gateway Failover**: Real-time health scoring across banking switches (HDFC, ICICI, Axis, SBI).
    - **Dynamic UPI Intent Deep-Linking**: Instant fallback to alternate customer PSPs (GPay, PhonePe, Paytm, CRED).
    - **Weibull Hazard Survival Modeling**: Calibrated hazard curves scheduling smart retries at the empirical peak clearance interval (+45 minutes for network congestion).
@@ -24,11 +24,10 @@
 
 ### 3. Empirical Recovery Benchmarks
 - **Test Suite**: 100-case held-out production test bench covering 7 major failure categories (Insufficient Funds, Gateway Outages, Bank Throttling, Expired VPA, 2FA Timeout, Network Glitch, Dispute Mismatch).
-- **OmniRevive-OS Net Recovery Rate**: **78.39%**.
-- **Industry Baseline Recovery Rate**: **42.24%**.
-- **Net Recovery Uplift**: **+36.15%**.
+- **Demo cohort recovery rate (simulated sample data)**: **78.39%**.
+- **Held-out 100-case benchmark net recovery (simulated data)**: **42.24%**.
 - **Double-Debit / Idempotency Violations in the 50-thread test**: **0**.
-- **TRAI Regulatory Compliance**: **100%**.
+- **TRAI quiet-hour violations in the simulated benchmark**: **0** (not a compliance certification).
 
 ## Key API Endpoints
 - `POST /api/v1/recovery/simulate`: Ingests and executes the 6-stage autonomous recovery pipeline on failed transactions.
