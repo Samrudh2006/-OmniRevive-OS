@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import secrets
 from typing import Optional
 
 class Settings(BaseSettings):
@@ -28,8 +29,10 @@ class Settings(BaseSettings):
 
     # Security & Execution Modes
     SAFE_DEMO_MODE: bool = True
-    API_AUTH_KEY: str = "rzp_sec_live_recovery_key_99"
-    CFO_AUTH_KEY: str = "cfo_sec_live_recovery_key_99"
+    # No built-in default secret: set API_AUTH_KEY / CFO_AUTH_KEY in the environment.
+    # Without them a random per-process key is generated, so nothing is guessable from the repo.
+    API_AUTH_KEY: str = secrets.token_urlsafe(32)
+    CFO_AUTH_KEY: str = secrets.token_urlsafe(32)
     CANONICAL_DOMAIN: str = "https://omnirevive-os.antideploy.com"
     CORS_ALLOWED_ORIGINS: list[str] = [
         "http://localhost:8000",

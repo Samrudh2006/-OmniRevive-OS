@@ -46,7 +46,7 @@ class AuthenticationService:
         """
         provided_token = cls.extract_token_or_key(request)
         configured_sre_key = settings.API_AUTH_KEY
-        configured_cfo_key = getattr(settings, "CFO_AUTH_KEY", "cfo_sec_live_recovery_key_99")
+        configured_cfo_key = settings.CFO_AUTH_KEY
 
         # Valid credentials provided with constant-time comparison (no wildcard startswith)
         if provided_token:

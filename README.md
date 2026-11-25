@@ -13,11 +13,12 @@
 
 ### *The #1 Open-Source AI Revenue Recovery & Multi-Rail Autonomous Fintech Control Plane*
 
+[![CI](https://github.com/Samrudh2006/-OmniRevive-OS/actions/workflows/ci.yml/badge.svg)](https://github.com/Samrudh2006/-OmniRevive-OS/actions/workflows/ci.yml)
 [![Release v1.1.0](https://img.shields.io/badge/Release-v1.1.0--Production-0c55ea.svg?style=for-the-badge&logo=rocket)](https://github.com/Samrudh2006/-OmniRevive-OS)
-[![Pytest Suite](https://img.shields.io/badge/Pytest-483%20Passed%20%7C%20100%25-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/-OmniRevive-OS)
+[![Pytest Suite](https://img.shields.io/badge/Pytest-569%20Passed%20%7C%20100%25-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/-OmniRevive-OS)
 [![Multi-Rail](https://img.shields.io/badge/Multi--Rail-Juspay%20%7C%20PhonePe%20%7C%20CRED%20%7C%20Cashfree%20%7C%20Razorpay%20%7C%20Stripe-0c6cf2.svg?style=for-the-badge&logo=buffer)](https://github.com/Samrudh2006/-OmniRevive-OS)
 [![Flutter Mobile](https://img.shields.io/badge/Flutter-3.x%20Mobile%20Ready-02569B.svg?style=for-the-badge&logo=flutter)](mobile_flutter/)
-[![Android APK](https://img.shields.io/badge/Android-APK%2014.1MB%20Download-34d399.svg?style=for-the-badge&logo=android)](omnirevive-os-v1.1.apk)
+[![Android APK](https://img.shields.io/badge/Android-APK%2014MB%20Download-34d399.svg?style=for-the-badge&logo=android)](mobile/razorrevive-os.apk)
 
 [![AWS Cedar](https://img.shields.io/badge/Zero--Trust-AWS%20Cedar%20Policy%20Engine-ff9900.svg?style=flat-square&logo=amazonaws)](backend/app/policy_engine.py)
 [![Qdrant Vector DB](https://img.shields.io/badge/Qdrant-Semantic%20Memory%20Layer-7c3aed.svg?style=flat-square&logo=qdrant)](backend/app/diagnostic_engine.py)
@@ -282,7 +283,7 @@ uvicorn backend.app.main:app --port 8000 --reload
 ```
 Open **`http://localhost:8000`** in your browser.
 
-### 3. Run Automated Pytest Suite (483 Tests, 100% Pass)
+### 3. Run Automated Pytest Suite (569 Tests, 100% Pass)
 ```bash
 pytest -v
 ```
@@ -353,7 +354,7 @@ python cli.py chat
 │       └── main.css                 # Razorpay Light & Dark Obsidian CSS System
 ├── mobile_flutter/                  # Standalone Flutter 3.x Mobile Project
 ├── benchmarks/                      # 100-Case Ground-Truth Benchmark Suite
-├── tests/                           # 483 Automated Unit, FSM & Adversarial Tests (100% Pass)
+├── tests/                           # 569 Automated Unit, FSM & Adversarial Tests (100% Pass)
 ├── docs/                            # Whitepapers, Deployment Guides & Architecture
 ├── omnirevive-os-v1.1.apk           # Release Android APK Package (14.1 MB)
 ├── cli.py                           # Enterprise Command-Line Interface Suite
