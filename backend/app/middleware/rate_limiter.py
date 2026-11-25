@@ -2,12 +2,17 @@ import os
 import time
 import hmac
 import hashlib
+import ipaddress
 import threading
 from typing import Dict, List, Tuple
 from fastapi import Request, HTTPException, status
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response, JSONResponse
 from backend.app.config import settings
+
+# Only addresses a platform proxy would use internally are skipped (NOT ip.is_private, which also covers
+# documentation ranges such as 198.51.100.0/24).
+_PROXY_NETWORKS = [ipaddress.ip_network(n) for n in ("127.0.0.0/8", "::1/128", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "169.254.0.0/16", "fc00::/7", "fe80::/10")]
 
 class SlidingWindowRateLimiter(BaseHTTPMiddleware):
     """
@@ -46,9 +51,17 @@ class SlidingWindowRateLimiter(BaseHTTPMiddleware):
         trusted_proxies = {"127.0.0.1", "::1", "localhost"}
         forwarded = request.headers.get("X-Forwarded-For")
         if forwarded and (client_ip in trusted_proxies or client_ip.startswith("10.") or client_ip.startswith("172.") or client_ip.startswith("192.168.")):
-            forwarded_ip = forwarded.split(",")[0].strip()
-            if forwarded_ip:
-                return f"fwd_{forwarded_ip}"
+            # The LEFT side of X-Forwarded-For is client-controlled (an attacker can rotate it to dodge the limit).
+            # Our proxy appends the address it actually saw on the RIGHT, so walk from the right and take the
+            # first hop that is not a private/loopback proxy address.
+            for hop in reversed([h.strip() for h in forwarded.split(",") if h.strip()]):
+                try:
+                    ip = ipaddress.ip_address(hop)
+                except ValueError:
+                    continue
+                if any(ip in net for net in _PROXY_NETWORKS):
+                    continue
+                return f"fwd_{ip}"
 
         return f"ip_{client_ip}"
 
