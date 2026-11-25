@@ -161,7 +161,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         answer = (
             "🛡️ **Atomic CAS Mutex Locks & Zero Double-Debits Guarantee**:\n\n"
             "During concurrent webhook storms (e.g., 50 simultaneous retry webhooks):\n"
-            "1. Thread 1 acquires an atomic in-memory Compare-And-Swap (CAS) mutex on `merchant_id:payment_id` within **0.23ms**.\n"
+            "1. Thread 1 acquires an atomic in-memory Compare-And-Swap (CAS) mutex on `merchant_id:payment_id` immediately (simulated demo timing, not a benchmark).\n"
             "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n"
             "3. Every state transition is cryptographically written to an immutable **SHA-256 hash-chained SQLite WAL ledger**."
         )
@@ -173,7 +173,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
             "• **Success Rate**: 77/100 transactions successfully recovered.\n"
             "• **Double Debits**: Exactly 0 violations (100% mutex efficiency).\n"
             "• **Regulatory Violations**: 0 TRAI quiet hour breaches.\n"
-            "• **Decision Latency**: 0.23ms policy gate / 18.4ms mean pipeline orchestration."
+            "• **Decision Latency**: simulated demo timings, not measured benchmarks."
         )
     elif any(k in q for k in ["trai", "rbi", "dpdp", "compliance", "law", "discount", "quiet", "privacy"]):
         answer = (
@@ -210,7 +210,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
         answer = (
             "💳 **CRED Pay & Ultra High-Ticket Concurrency Architecture**:\n\n"
             "Built for premium transactions (>₹50,000 credit card repayments and member settlements):\n"
-            "• **0.23ms Atomic CAS Mutex**: Strictly guarantees **0 Double-Debits** under concurrent retry storms across 50+ threads.\n"
+            "• **Atomic CAS Mutex (simulated demo)**: Strictly guarantees **0 Double-Debits** under concurrent retry storms across 50+ threads.\n"
             "• **Dynamic Discount Clamping**: Enforces strict mathematical limits (min(10%, ₹500)) to prevent fee waiver exploitation.\n"
             "• **Member Tier Routing**: Flags transactions for `CRED_BLACK_ELITE` priority SLAs and encrypted cryptographic audit logging."
         )
