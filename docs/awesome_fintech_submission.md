@@ -21,7 +21,7 @@ Submitting OmniRevive-OS to curated GitHub "Awesome" lists gives it immediate hi
 Adds **OmniRevive-OS**, a production-grade FastAPI application built for payment gateway revenue recovery.
 
 Features:
-- Sub-millisecond error classification across 18 NPCI/Razorpay error codes
+- Rule-based error classification across 18 NPCI/Razorpay error codes
 - Adaptive Weibull hazard retry scheduling using SciPy survival analysis
 - Formal AWS Cedar zero-trust policy engine enforcing quiet hours and discount caps
 - Distributed atomic CAS idempotency mutexes over Redis and SQLite WAL

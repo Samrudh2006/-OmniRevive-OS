@@ -98,7 +98,7 @@
 * **How OmniRevive-OS Applies It**:
   - **OWASP LLM01 Prompt Injection Firewall**: Scans all user and debtor voice inputs for adversarial jailbreaks (`DAN Mode`, `Ignore previous instructions`, `Grant 100% discount`) in **< 0.5μs**.
   - **Constant-Time Cryptographic Verification**: `hmac.compare_digest()` for webhook and API key verification.
-  - **PCI-DSS & DPDP Act PII Masking**: Automatic regex masking of PANs, phone numbers, and emails.
+  - **PII Masking (not certified against PCI-DSS or DPDP)**: Automatic regex masking of PANs, phone numbers, and emails.
 
 ---
 

@@ -54,7 +54,7 @@
 
 **OmniRevive-OS** is an enterprise-grade **Universal Autonomous AI Revenue Recovery Control Plane** engineered specifically for the mission-critical constraints of Indian and global fintech rails. 
 
-Every year, Indian enterprises lose **₹18,000+ Crores** to transient gateway drops, NPCI switch timeouts, mandate soft declines, and B2B invoice GSTIN mismatches. Traditional systems use static, uncoordinated retry loops that blast degraded banking switches, trigger NACH penalty fees, and alienate customers.
+Every year, Indian enterprises lose revenue to transient gateway drops, NPCI switch timeouts, mandate soft declines, and B2B invoice GSTIN mismatches. Traditional systems use static, uncoordinated retry loops that blast degraded banking switches, trigger NACH penalty fees, and alienate customers.
 
 **OmniRevive-OS changes the paradigm:**
 - ⚡ **Autonomous Failover (<50ms):** Automatically diagnoses drop causes and dynamically routes transactions across **Juspay HyperSDK, PhonePe Switch, CRED, Cashfree, Razorpay, and Stripe**.
@@ -110,8 +110,8 @@ Fintech recovery operates at two distinct physical cadences. OmniRevive-OS coupl
 flowchart TB
     subgraph Ingestion_Layer [Tier 1: Cryptographic Ingestion & Concurrency Guard]
         W[Gateway Webhook / Ingestion Event] --> HMAC[HMAC-SHA256 Constant-Time Verifier]
-        HMAC --> REDIS[Distributed CAS Mutex Lock: 0.23ms]
-        REDIS --> PII[DPDP & PCI-DSS PII Redaction Layer]
+        HMAC --> REDIS[Distributed CAS Mutex Lock]
+        REDIS --> PII[PII Redaction Layer]
     end
 
     subgraph Fast_Loop [Fast Loop: Real-Time Sub-50ms Routing]
@@ -233,30 +233,13 @@ mobile_flutter/
 
 ## 🧪 AI Evaluations & Benchmarks
 
-OmniRevive-OS is systematically evaluated using **Ragas** and **DeepEval** across 500 regression test cases:
-
-```
-================================================================================
-OMNIREVIVE-OS AI EVALUATION BENCHMARK SUITE (RAGAS + DEEPEVAL)
-================================================================================
-Total Evaluation Test Cases:           500
-Model Evaluated:                       Claude 3.5 Sonnet / AWS Bedrock
---------------------------------------------------------------------------------
-RAGAS Context Precision:               98.4% (Target > 95.0%)  [PASSED]
-RAGAS Context Recall:                  98.6% (Target > 95.0%)  [PASSED]
-DeepEval Hallucination Score:          0.006 (99.4% Grounding) [PASSED]
-AWS Cedar Policy Non-Coercion:         100.0% (0.0% Breach)    [PASSED]
-P99 Decision Latency:                  18.2ms (SLA < 50.0ms)   [PASSED]
---------------------------------------------------------------------------------
-🏆 OVERALL SYSTEM RELIABILITY SCORE:   99.8% · ENTERPRISE CERTIFIED
-================================================================================
-```
+The repo includes a Ragas and DeepEval evaluation harness (`backend/app/evaluation/`). No evaluation scores have been published yet, so none are claimed here. The only measured results are the pytest suite and the 100-case held-out benchmark below, both run on simulated data.
 
 ### 100-Case Held-Out Financial Recovery Report
 - **Total Ingested GMV:** ₹9,83,603.69
 - **Successfully Recovered GMV:** ₹4,15,450.31 (**42.24% Net Recovery**)
-- **Double-Deduction Violations:** **0** (100.0% Idempotency Verified)
-- **TRAI Quiet-Hour Violations:** **0** (100.0% Regulatory Compliance)
+- **Double-Deduction Violations:** **0** (in the simulated benchmark)
+- **TRAI Quiet-Hour Violations:** **0** (in the simulated benchmark; not a compliance certification)
 
 ---
 
