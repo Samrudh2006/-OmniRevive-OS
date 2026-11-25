@@ -254,8 +254,8 @@ async def calculate_merchant_roi(
             },
             "efficiency_metrics": {
                 "recovery_uplift_pct": "+36.15% (78.39% vs 42.24%)",
-                "payback_period_days": 4.2,
-                "roi_multiple": "18.4x"
+                "payback_period_days": "illustrative (not computed)",
+                "roi_multiple": "illustrative (not computed)"
             }
         },
         "trace_id": trace_id,
