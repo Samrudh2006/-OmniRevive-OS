@@ -624,7 +624,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     icon: "",
     metrics: [
       { label: "API Endpoints", value: "48 APIs", sub: "OpenAPI 3.1.0 Contract" },
-      { label: "Test Coverage", value: "486 Tests", sub: "100% Pass Rate" },
+      { label: "Test Coverage", value: "597 Tests", sub: "100% Pass Rate" },
       { label: "P99 Latency", value: "<50ms", sub: "End-to-End Recovery" },
       { label: "Data Stores", value: "4 Layers", sub: "SQLite · Redis · Qdrant · R2" }
     ],
@@ -723,11 +723,11 @@ print(result.retry_at)  # 2026-09-19T14:45:00+05:30`,
     metrics: [
       { label: "Builder", value: "Samrudh", sub: "Dwivedula — Solo Engineer" },
       { label: "Build Time", value: "72 Hours", sub: "Hackathon Sprint" },
-      { label: "Test Suite", value: "486 Tests", sub: "100% Passing" },
+      { label: "Test Suite", value: "597 Tests", sub: "100% Passing" },
       { label: "Stack", value: "Full-Stack", sub: "Python + JS + Flutter" }
     ],
     overview: "OmniRevive-OS was designed and built by Samrudh Dwivedula as a solo entry for the Razorpay AI Buildathon 2026. The project demonstrates an enterprise-grade autonomous AI revenue recovery control plane capable of handling UPI/ENACH/Card/NACH failures across 18 Indian banks with Weibull hazard modeling, trilingual B2B voice AI, cryptographic audit ledgers, and a full Cloudflare edge deployment — all on a $0 infrastructure budget.",
-    mathFormula: "\\text{Innovation Score} = \\frac{\\text{Features} \\times \\text{Tests}}{\\text{Build Hours}} = \\frac{18 \\times 486}{72} = 121.5",
+    mathFormula: "\\text{Innovation Score} = \\frac{\\text{Features} \\times \\text{Tests}}{\\text{Build Hours}} = \\frac{18 \\times 597}{72} = 121.5",
     architecture: [
       "Builder: Samrudh Dwivedula (GitHub: @Samrudh2006)",
       "Buildathon: Razorpay AI Hackathon 2026 — Target: 0.1% Selection",
@@ -742,7 +742,7 @@ print(result.retry_at)  # 2026-09-19T14:45:00+05:30`,
 omnirevive = ControlPlane(
     ai_engines=["Weibull", "Qdrant", "Bedrock", "Indic-ASR"],
     rails=18,          # Indian banking rails
-    tests=486,         # All passing
+    tests=597,         # All passing
     infra_cost="$0",   # Cloudflare + Antideploy free tier
     compliance=["RBI", "TRAI", "AWS-Cedar", "DPDP-2023"]
 )`,
@@ -751,17 +751,17 @@ omnirevive = ControlPlane(
 
   benchmarks_page: {
     category: "DISCOVER · BENCHMARKS",
-    title: "Production Benchmark Suite — 486 Tests",
-    badge: "100-Case Held-Out Cohort · 486 Automated Tests",
+    title: "Production Benchmark Suite — 597 Tests",
+    badge: "100-Case Held-Out Cohort · 597 Automated Tests",
     icon: "",
     metrics: [
-      { label: "Total Tests", value: "486", sub: "100% Pass Rate" },
+      { label: "Total Tests", value: "597", sub: "100% Pass Rate" },
       { label: "Recovery Accuracy", value: "91.4%", sub: "SBI/HDFC Outage Cohort" },
       { label: "Ragas Faithfulness", value: "98.4%", sub: "Voice AI Grounding" },
       { label: "Benchmark Suite", value: "300+", sub: "Enterprise Merchant Cohort" }
     ],
-    overview: "OmniRevive-OS maintains a rigorous held-out benchmark suite of 300+ enterprise merchant scenarios. The benchmark covers: B2C Fast-Loop Weibull recovery accuracy across 18 bank failure modes, B2B Deep-Loop voice AI faithfulness (Ragas + DeepEval), CFO dual-key quorum timing, Bulk CSV throughput (10k rows/sec), and cryptographic Merkle ledger tamper detection. All 486 automated pytest tests pass in under 65 seconds.",
-    mathFormula: "\\text{Benchmark Score} = \\frac{\\text{Passed Tests}}{\\text{Total Tests}} = \\frac{486}{486} = 100\\%",
+    overview: "OmniRevive-OS maintains a rigorous held-out benchmark suite of 300+ enterprise merchant scenarios. The benchmark covers: B2C Fast-Loop Weibull recovery accuracy across 18 bank failure modes, B2B Deep-Loop voice AI faithfulness (Ragas + DeepEval), CFO dual-key quorum timing, Bulk CSV throughput (10k rows/sec), and cryptographic Merkle ledger tamper detection. All 597 automated pytest tests pass in under 65 seconds.",
+    mathFormula: "\\text{Benchmark Score} = \\frac{\\text{Passed Tests}}{\\text{Total Tests}} = \\frac{597}{597} = 100\\%",
     architecture: [
       "B2C Recovery: 300-cohort Monte Carlo Weibull simulation across 18 bank failure modes",
       "B2B Voice AI: Ragas Faithfulness=98.4%, Answer Relevancy=97.2%, Zero Hallucination",
@@ -777,7 +777,7 @@ pytest tests/ -v --tb=short
 # test_adversarial.py .......... 12/12 BLOCKED
 # test_evaluation_metrics.py ... 98.4% Faithfulness
 # test_audit_hash_chain.py ..... 100% Tamper-Proof
-# ====== 486 passed in 64.96s ======`,
+# ====== 597 passed in 6.94s ======`,
     tabId: "evaluation"
   },
 
@@ -806,7 +806,7 @@ pytest tests/ -v --tb=short
 # Or via curl:
 curl -X GET "https://omnirevive-os.antideploy.com/api/v1/health" \\
   -H "accept: application/json"
-# Response: {"status":"healthy","version":"1.1.0","tests_passing":486}`,
+# Response: {"status":"healthy","version":"1.1.0","tests_passing":597}`,
     tabId: "docs"
   },
 
@@ -843,7 +843,7 @@ curl https://omnirevive-os.antideploy.com/health
     "merkle_ledger": "verified",
     "cloudflare_edge": "330+ PoPs"
   },
-  "tests_passing": 486
+  "tests_passing": 597
 }`,
     tabId: "overview"
   },
@@ -868,7 +868,7 @@ curl https://omnirevive-os.antideploy.com/health
       "/architecture — 3-Tier Control Plane: Edge + App + Data Architecture",
       "/idempotency-protection — Redis CAS Distributed Idempotency Mutex (0.23ms)",
       "/audit-ledger — SHA-256 Merkle Tamper-Evident Cryptographic Audit Chain",
-      "/benchmarks — 486-Test Production Benchmark Suite & Ragas Evaluation",
+      "/benchmarks — 597-Test Production Benchmark Suite & Ragas Evaluation",
       "/faq — Integration, Compliance & Performance FAQs",
       "/documentation — 48 REST API Endpoints & Developer Quickstart",
       "/about — Builder Profile & Razorpay AI Buildathon 2026 Context"

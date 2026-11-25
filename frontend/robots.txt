@@ -54,3 +54,4 @@ Disallow: /docs
 
 # Sitemap location & AI LLM Discovery
 Sitemap: https://omnirevive-os.antideploy.com/sitemap.xml
+# llms-txt: https://omnirevive-os.antideploy.com/llms.txt
