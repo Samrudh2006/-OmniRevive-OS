@@ -166,23 +166,14 @@ class DistributedIdempotencyStore:
                 )
             return True
         except sqlite3.IntegrityError:
-            cursor = conn.cursor()
-            cursor.execute("SELECT created_at, status FROM idempotency_keys WHERE idempotency_key = ?", (key,))
-            row = cursor.fetchone()
-            if row:
-                created_at, status = row[0], row[1]
-                # If already durably completed, NEVER re-execute, regardless of elapsed time
-                if status == "COMPLETED":
-                    return False
-                # If lease expired without completion (simulated crash during processing), allow reclamation
-                if (now - created_at) > ttl_seconds:
-                    with conn:
-                        conn.execute(
-                            "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED' WHERE idempotency_key = ?",
-                            (now, payload_hash, key)
-                        )
-                    return True
-            return False
+            # Atomic reclaim: only one caller can win an expired, non-completed lease.
+            with conn:
+                cur = conn.execute(
+                    "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED' "
+                    "WHERE idempotency_key = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
+                    (now, payload_hash, key, now, ttl_seconds)
+                )
+                return cur.rowcount == 1
 
     def mark_completed(self, key: str, result_payload: Optional[dict] = None) -> bool:
         """
