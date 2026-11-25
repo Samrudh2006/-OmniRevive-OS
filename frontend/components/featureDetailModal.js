@@ -101,7 +101,7 @@ res = b2b_voice_engine.process_customer_turn(req)
       { label: "ARR Recovery Uplift", value: "+14.2%", sub: "Net Revenue Uplift" },
       { label: "Recovered Value", value: "₹12.4M", sub: "30-Day Simulated Cohort" },
       { label: "Dunning Cost Cut", value: "-68.5%", sub: "Automated AI Outreach" },
-      { label: "ROI Multiple", value: "18.4x", sub: "Platform Yield Multiplier" }
+      { label: "ROI Calculator", value: "Interactive", sub: "Uses the numbers you enter" }
     ],
     overview: "Financial Yield Forecaster calculates the exact monetary value recovered by OmniRevive-OS compared to standard gateway dunning. Using stochastic Monte-Carlo simulations over 300+ enterprise merchant cohorts, it projects 30-day, 60-day, and 90-day Net Revenue Retention (NRR) uplift.",
     mathFormula: "\\text{Yield}_{\\text{ARR}} = \\sum_{k=1}^M V_k \\times \\left( P_{\\text{Weibull}}(k) \\times (1 - C_{\\text{gateway}}) \\right)",
@@ -116,7 +116,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     standard_recovery = cohort_volume_inr * 0.35  # Standard gateway 35%
     omnirevive_recovery = cohort_volume_inr * 0.492 # OmniRevive 49.2%
     net_arr_uplift = omnirevive_recovery - standard_recovery
-    return {"net_arr_uplift": net_arr_uplift, "roi_multiplier": 18.4}`,
+    return {"net_arr_uplift": net_arr_uplift, "roi_multiplier": None}`,
     tabId: "financial_yield"
   },
 
@@ -213,7 +213,7 @@ res = b2b_voice_engine.process_customer_turn(req)
       { label: "Uptime", value: "No SLA", sub: "Demo deployment" },
       { label: "Routing Fee", value: "Optimized", sub: "Lowest Interbank Rate" }
     ],
-    overview: "Multi-Rail Router is a universal payment gateway orchestrator interfacing with Razorpay, Juspay, PhonePe, CRED, Cashfree, and Stripe. When a transaction fails on one rail, Multi-Rail Router dynamically reroutes it to the highest-yielding secondary rail in under 18.4 milliseconds.",
+    overview: "Multi-Rail Router is a universal payment gateway orchestrator interfacing with Razorpay, Juspay, PhonePe, CRED, Cashfree, and Stripe. When a transaction fails on one rail, Multi-Rail Router dynamically reroutes it to the highest-yielding secondary rail automatically.",
     mathFormula: "\\text{SelectedRail} = \\arg\\max_{r \\in R} \\left( \\text{SuccessRate}(r) \\times \\text{Yield}(r) - \\text{Fee}(r) \\right)",
     architecture: [
       "1. Real-time health check probes across all 6 connected gateway SDKs",
