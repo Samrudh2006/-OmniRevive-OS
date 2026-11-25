@@ -53,7 +53,7 @@ html, body {
   --modal-shadow: 0 25px 50px -12px rgba(12, 35, 64, 0.25);
   --panel-background: #ffffff;
 
-  /* Razor Humanoid AI Assistant Semantic Tokens (Light Theme) */
+  /* OmniRevive AI Assistant Semantic Tokens (Light Theme) */
   --assistant-background: #ffffff;
   --assistant-surface: #ffffff;
   --assistant-surface-secondary: #f0f6ff;
@@ -153,7 +153,7 @@ html.dark {
   --modal-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   --panel-background: #060d1d;
 
-  /* Razor Humanoid AI Assistant Semantic Tokens (Dark Theme) */
+  /* OmniRevive AI Assistant Semantic Tokens (Dark Theme) */
   --assistant-background: #061224;
   --assistant-surface: #0a1b35;
   --assistant-surface-secondary: #0d2142;
@@ -1320,7 +1320,7 @@ html.light .mac-kbd {
 
 
 /* ==============================================================================
-   RAZOR HUMANOID AI COPILOT DRAWER THEME ENGINE
+   OMNIREVIVE AI COPILOT DRAWER THEME ENGINE
    Full dynamic Light and Dark mode inheritance using semantic tokens
    ============================================================================== */
 

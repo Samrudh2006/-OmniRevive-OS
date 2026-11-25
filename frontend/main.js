@@ -1586,6 +1586,22 @@ window.speakCopilotResponse = speakCopilotResponse;
 window.handleCopilotCustomQuery = handleCopilotCustomQuery;
 window.openFeatureDetailModal = openFeatureDetailModal;
 window.closeFeatureDetailModal = closeFeatureDetailModal;
+// Command palette actions (os-command-palette-modal buttons call this)
+function executePaletteAction(action) {
+  const osPalette = document.getElementById("os-command-palette-modal");
+  if (osPalette && !osPalette.classList.contains("hidden")) toggleCommandPalette();
+  const go = (id, fn) => { try { fn && fn(); } catch (e) {} const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  switch (action) {
+    case "simulate_hdfc_504": go("showcase-sandbox", () => window.selectLandingScenario && window.selectLandingScenario("hdfc_504")); break;
+    case "open_cedar": go("showcase-cedar-security"); break;
+    case "open_copilot": toggleAiCopilotDrawer(); break;
+    case "launch_control_plane": if (typeof window.launchControlPlane === "function") window.launchControlPlane(); break;
+    case "toggle_theme": toggleThemeMode(); break;
+    case "toggle_sound": toggleUiSounds(); break;
+    default: break;
+  }
+}
+
 window.toggleCommandPalette = toggleCommandPalette;
 window.closeCommandPalette = closeCommandPalette;
 window.executePaletteAction = executePaletteAction;

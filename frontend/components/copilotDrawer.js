@@ -1,6 +1,6 @@
 /**
  * OmniRevive-OS AI Copilot & SRE Assistant Drawer Component
- * Matches Razor Humanoid Copilot specifications exactly:
+ * Matches OmniRevive Copilot specifications exactly:
  * - Single Focused Mode Card (replaces view in-place, eliminating messy stacked chat history)
  * - Mode Switcher: Ask, Investigate, Explain, Explore
  * - Dynamic 2x3 Suggested Action Cards specific to each mode
@@ -233,7 +233,7 @@ export function renderCopilotHeroCard(mode) {
       <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2">
         <div class="copilot-msg-header flex items-center justify-between text-[10px] pb-1">
           <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
-            <span>Razor SRE Copilot</span>
+            <span>OmniRevive SRE Copilot</span>
             <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">${data.badge}</span>
           </span>
           <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 flex items-center gap-1.5 font-semibold cursor-pointer active:scale-95 transition-transform" aria-label="Speak Copilot Response">
@@ -595,7 +595,7 @@ export async function handleCopilotCustomQuery(e) {
       </div>
       <div class="copilot-message-bubble p-3 px-4 rounded-2xl rounded-tl-sm border text-[11px] text-sky-600 dark:text-sky-400 font-medium animate-pulse flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-sky-500 animate-ping"></span>
-        <span>Razor Copilot is analyzing: "<em>${q}</em>"...</span>
+        <span>OmniRevive Copilot is analyzing: "<em>${q}</em>"...</span>
       </div>
     </div>
   `;

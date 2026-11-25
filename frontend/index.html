@@ -157,7 +157,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles/main.css?v=2.9">
-  <link rel="stylesheet" href="/static/styles/refresh.css?v=3.5">
+  <link rel="stylesheet" href="/static/styles/refresh.css?v=3.6">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -1409,7 +1409,7 @@ forbid (
           <!-- Scenario Dropdown -->
           <div>
             <label class="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1.5">Select Security Test Case:</label>
-            <select id="landing-cedar-test-select" onchange="applyLandingCedarCase(this.value)" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
+            <select id="landing-cedar-test-select" aria-label="Scenario" onchange="applyLandingCedarCase(this.value)" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 font-semibold mono outline-none focus:border-indigo-500 shadow-sm">
               <option value="sre_allow">Scenario 1: SRE Admin Trips SBI Circuit Breaker (MFA: True)  ALLOW</option>
               <option value="dev_deny">Scenario 2: Unauthorized Junior Dev Trips Circuit Breaker  DENY</option>
               <option value="gstin_allow">Scenario 3: Bedrock Agent Mutates GSTIN (&lt; INR 5,00,000)  ALLOW</option>
@@ -1420,22 +1420,22 @@ forbid (
           <div class="grid grid-cols-2 gap-3 text-xs mono">
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Principal:</label>
-              <input id="landing-cedar-principal" type="text" value="Role::SRE_Admin" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-principal" aria-label="Principal" type="text" value="Role::SRE_Admin" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Action:</label>
-              <input id="landing-cedar-action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-action" aria-label="Action" type="text" value="Action::TripCircuitBreaker" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3 text-xs mono">
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">Resource:</label>
-              <input id="landing-cedar-resource" type="text" value="BankingSwitch::SBI" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
+              <input id="landing-cedar-resource" aria-label="Resource" type="text" value="BankingSwitch::SBI" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none focus:border-indigo-500 shadow-sm">
             </div>
             <div>
               <label class="block text-slate-600 dark:text-slate-400 text-[10.5px] font-semibold mb-1">MFA Verified:</label>
-              <select id="landing-cedar-mfa" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
+              <select id="landing-cedar-mfa" aria-label="MFA state" class="w-full bg-slate-50 dark:bg-[#030712] border border-slate-300 dark:border-[#1f2c40] rounded-lg px-2.5 py-1.5 text-slate-900 dark:text-slate-200 font-semibold outline-none shadow-sm">
                 <option value="true">true</option>
                 <option value="false">false</option>
               </select>
@@ -1481,19 +1481,19 @@ forbid (
 
       <!-- Scenario Selector Chips -->
       <div class="flex flex-wrap items-center gap-2">
-        <button id="sb-chip-hdfc_504" onclick="selectLandingScenario('hdfc_504')" class="sb-scenario-chip active" aria-selected="true">
+        <button id="sb-chip-hdfc_504" onclick="selectLandingScenario('hdfc_504')" class="sb-scenario-chip active" aria-pressed="true">
           
           <span>HDFC Timeout 504</span>
         </button>
-        <button id="sb-chip-upi_u16" onclick="selectLandingScenario('upi_u16')" class="sb-scenario-chip" aria-selected="false">
+        <button id="sb-chip-upi_u16" onclick="selectLandingScenario('upi_u16')" class="sb-scenario-chip" aria-pressed="false">
           
           <span>UPI U16 Insufficient Funds</span>
         </button>
-        <button id="sb-chip-card_token" onclick="selectLandingScenario('card_token')" class="sb-scenario-chip" aria-selected="false">
+        <button id="sb-chip-card_token" onclick="selectLandingScenario('card_token')" class="sb-scenario-chip" aria-pressed="false">
           
           <span>Card Token Expired</span>
         </button>
-        <button id="sb-chip-high_val_invoice" onclick="selectLandingScenario('high_val_invoice')" class="sb-scenario-chip" aria-selected="false">
+        <button id="sb-chip-high_val_invoice" onclick="selectLandingScenario('high_val_invoice')" class="sb-scenario-chip" aria-pressed="false">
           
           <span>₹85k GST Invoice Dispute</span>
         </button>
@@ -1920,7 +1920,7 @@ forbid (
                 <span class="text-slate-300">Monthly Processing Volume (GMV)</span>
                 <span class="text-sky-400 font-mono text-sm" id="roi-gmv-display">₹10 Cr</span>
               </div>
-              <input type="range" id="roi-gmv-slider" min="1" max="100" value="10" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500" oninput="updateLandingRoiCalculator()">
+              <input type="range" id="roi-gmv-slider" aria-label="Monthly GMV" min="1" max="100" value="10" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-500" oninput="updateLandingRoiCalculator()">
               <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono">
                 <span>₹1 Cr</span>
                 <span>₹100 Cr</span>
@@ -1933,7 +1933,7 @@ forbid (
                 <span class="text-slate-300">Average Payment Failure Rate</span>
                 <span class="text-rose-400 font-mono text-sm" id="roi-failure-display">12%</span>
               </div>
-              <input type="range" id="roi-failure-slider" min="5" max="30" value="12" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500" oninput="updateLandingRoiCalculator()">
+              <input type="range" id="roi-failure-slider" aria-label="Failure rate" min="5" max="30" value="12" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500" oninput="updateLandingRoiCalculator()">
               <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono">
                 <span>5%</span>
                 <span>30%</span>
@@ -8648,7 +8648,7 @@ forbid (
       { id: "benchmark", title: " Run 100-Batch Benchmark Simulation", category: "Actions", action: () => runBenchmarkAction() },
       { id: "whatsapp", title: " Preview WhatsApp 1-Click Recovery & UPI QR", category: "Actions", action: () => openWhatsAppPreviewModal() },
       { id: "email", title: " Preview Dispatched Tax Invoice Email", category: "Actions", action: () => openDispatchedEmailModal() },
-      { id: "copilot", title: " Open Razor Humanoid AI Copilot Drawer", category: "Actions", action: () => toggleAiCopilotDrawer() },
+      { id: "copilot", title: " Open OmniRevive Copilot Drawer", category: "Actions", action: () => toggleAiCopilotDrawer() },
       { id: "scenario_a", title: " Scenario A: Bank Outage 504 (Weibull +45m Retry)", category: "Scenarios", action: () => selectScenario('A') },
       { id: "scenario_b", title: " Scenario B: Soft Decline (1-Click UPI Payment Link)", category: "Scenarios", action: () => selectScenario('B') },
       { id: "scenario_c", title: " Scenario C: B2B GSTIN Mutation Proposal & PTP", category: "Scenarios", action: () => selectScenario('C') },
@@ -9507,7 +9507,7 @@ forbid (
           <div class="flex-1 copilot-message-bubble p-3.5 rounded-2xl rounded-tl-sm border shadow-sm space-y-2">
             <div class="copilot-msg-header flex items-center justify-between text-[10px] pb-1">
               <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                <span>Razor SRE Copilot</span>
+                <span>OmniRevive SRE Copilot</span>
                 <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">${data.badge}</span>
               </span>
               <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 flex items-center gap-1 font-semibold cursor-pointer">
@@ -9833,7 +9833,7 @@ forbid (
             <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Avatar" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
           </div>
           <div class="copilot-message-bubble p-3 px-4 rounded-2xl rounded-tl-sm border text-[11px] text-sky-600 dark:text-sky-400 font-medium animate-pulse flex items-center gap-2">
-            <span>Razor Copilot is analyzing: "<em>${q}</em>"...</span>
+            <span>OmniRevive Copilot is analyzing: "<em>${q}</em>"...</span>
           </div>
         </div>
       `;
@@ -10463,16 +10463,16 @@ forbid (
   </div>
   </div> <!-- End #app-workspace-shell -->
 
-  <!-- FLOATING RAZOR CYBER-HUMANOID AI COPILOT WIDGET (BOTTOM RIGHT) -->
+  <!-- FLOATING OMNIREVIVE AI COPILOT WIDGET (BOTTOM RIGHT) -->
   <!-- ========================================================================= -->
   <!-- Floating Trigger Pill (Elevated on mobile above bottom nav bar: bottom-20 lg:bottom-6) -->
   <div id="ai-copilot-trigger-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-[9999]" style="z-index: 9999 !important;">
-    <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#2bb5e6] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 border border-white/40 cursor-pointer backdrop-blur-md" aria-label="Open AI Copilot Chat">
+    <button onclick="toggleAiCopilotDrawer()" id="ai-copilot-trigger" class="relative group px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0c55ea] via-[#0284c7] to-[#2bb5e6] text-white text-xs sm:text-sm font-extrabold shadow-2xl flex items-center gap-2.5 sm:gap-3 border border-white/40 cursor-pointer backdrop-blur-md" aria-label="Ask in Chat AI, open OmniRevive copilot">
       <span class="absolute -top-1 -right-1 flex h-4 w-4">
       </span>
-      <!-- Enlarged Front-Facing Razor Copilot Avatar Image -->
+      <!-- Enlarged Front-Facing OmniRevive Copilot Avatar Image -->
       <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-sky-300 to-white shadow-md shrink-0">
-        <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Razor Copilot" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
+        <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="OmniRevive Copilot" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
       </div>
       <div class="flex flex-col text-left leading-none pr-1">
         <div class="flex items-center gap-1.5">
@@ -10485,7 +10485,7 @@ forbid (
             <span class="copilot-wave-bar" style="height: 8px;"></span>
           </span>
         </div>
-        <span class="text-[9px] sm:text-[10px] text-sky-100 font-medium hidden xs:block mt-0.5">Razor SRE Copilot</span>
+        <span class="text-[9px] sm:text-[10px] text-sky-100 font-medium hidden xs:block mt-0.5">OmniRevive SRE Copilot</span>
       </div>
     </button>
   </div>
@@ -10499,11 +10499,11 @@ forbid (
         <div class="flex items-center gap-2.5">
           <!-- Avatar with green glowing ring and online indicator dot -->
           <div class="relative w-11 h-11 rounded-full p-0.5 bg-gradient-to-tr from-emerald-400 via-teal-300 to-cyan-500 shadow-lg shadow-emerald-500/20 shrink-0">
-            <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="Razor Humanoid Copilot" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
+            <img src="/copilot_avatar.jpg" onerror="this.onerror=null; this.src='/assets/copilot_avatar.jpg'; this.onerror=function(){this.src=window.COPILOT_AVATAR_FALLBACK;};" alt="OmniRevive Copilot" class="w-full h-full rounded-full object-cover copilot-avatar-img" loading="eager" decoding="async">
           </div>
           <div>
             <div class="copilot-title-text font-extrabold text-sm sm:text-base flex items-center gap-1.5 flex-wrap leading-tight">
-              <span>Razor Humanoid Copilot</span>
+              <span>OmniRevive Copilot</span>
               <span class="px-1.5 py-0.2 rounded-full text-[9px] font-black bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/40">AI</span>
             </div>
             <div class="copilot-subtitle-text text-[10px] font-medium">Autonomous Payment Recovery Intelligence</div>
@@ -10549,7 +10549,7 @@ forbid (
           <div class="copilot-message-bubble flex-1 p-3 rounded-2xl rounded-tl-sm border shadow-sm space-y-1.5">
             <div class="copilot-msg-header flex items-center justify-between text-[10px] border-b pb-1">
               <span class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1">
-                <span>Razor SRE Copilot</span>
+                <span>OmniRevive SRE Copilot</span>
                 <span class="copilot-badge-pill px-1.5 py-0.2 rounded text-[8.5px] font-mono">SRE Intelligence</span>
               </span>
               <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:opacity-80 flex items-center gap-1 font-semibold cursor-pointer">
@@ -11350,7 +11350,7 @@ forbid (
         <button onclick="executePaletteAction('open_copilot')" class="w-full px-3 py-2 rounded-xl flex items-center justify-between hover:bg-white/10 transition-colors cursor-pointer text-left group">
           <div class="flex items-center gap-2.5">
             <div>
-              <div class="font-bold text-white group-hover:text-sky-400">Open Razor Humanoid AI SRE Copilot</div>
+              <div class="font-bold text-white group-hover:text-sky-400">Open OmniRevive SRE Copilot</div>
               <div class="text-[10.5px] text-slate-400">Interact with autonomous payment recovery intelligence drawer</div>
             </div>
           </div>

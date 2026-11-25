@@ -396,10 +396,10 @@ if (invoiceValue > 50000) {
     buttons.forEach(btn => {
       if (btn.id === `sb-chip-${scenarioKey}`) {
         btn.classList.add("active");
-        btn.setAttribute("aria-selected", "true");
+        btn.setAttribute("aria-pressed", "true");
       } else {
         btn.classList.remove("active");
-        btn.setAttribute("aria-selected", "false");
+        btn.setAttribute("aria-pressed", "false");
       }
     });
 
