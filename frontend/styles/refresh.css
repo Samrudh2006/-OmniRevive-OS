@@ -63,3 +63,7 @@ html.dark .ico-moon{display:none!important}
 .text-sky-400,.dark\:text-sky-400:is(.dark *),.group:hover .group-hover\:text-sky-400,.dark\:group-hover\:text-sky-400:is(.dark .group:hover *){color:#2bb5e6}
 .bg-sky-400,.dark\:bg-sky-400:is(.dark *){background-color:#2bb5e6}
 .border-sky-400,.dark\:border-sky-400:is(.dark *){border-color:#2bb5e6}
+
+/* one scroll container: the page (html). body must not be a second scroller, it breaks touch scrolling */
+html{overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:auto}
+body{overflow-x:clip!important;overflow-y:visible!important;overscroll-behavior:auto!important;height:auto}
