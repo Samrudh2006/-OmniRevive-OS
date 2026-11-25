@@ -2,7 +2,7 @@ import time
 import uuid
 from typing import Optional
 from pydantic import BaseModel
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import Query, APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 
 from backend.app.b2b.invoice_store import invoice_store
@@ -51,7 +51,7 @@ async def send_invoice_email_endpoint(req: EmailDispatchRequest, request: Reques
     }
 
 @router.get("/api/v1/communication/recent", tags=["Communication Dispatch"], summary="List Recent Sent Communications")
-async def list_recent_communications(request: Request, limit: int = 20):
+async def list_recent_communications(request: Request, limit: int = Query(20, ge=1, le=200)):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
     items = dispatch_engine.list_recent(limit=limit)
     return {

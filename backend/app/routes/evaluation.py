@@ -6,7 +6,7 @@ Provides Ragas, DeepEval, and LangGraph/CrewAI evaluation telemetry endpoints.
 import time
 import uuid
 from typing import Dict, Any, Optional
-from fastapi import APIRouter, Request
+from fastapi import Query, APIRouter, Request
 from pydantic import BaseModel
 from backend.app.evaluation.eval_engine import eval_engine
 
@@ -108,7 +108,7 @@ async def run_evaluation_suite(payload: RunSuitePayload, request: Request):
     }
 
 @router.get("/api/v1/eval/traces", tags=["AI Evaluation & Observability"], summary="Get Itemized Evaluation Traces")
-async def get_evaluation_traces(limit: int = 15, request: Request = None):
+async def get_evaluation_traces(limit: int = Query(15, ge=1, le=200), request: Request = None):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else "tr_eval"
     traces = [(t.model_dump() if hasattr(t, "model_dump") else t.dict()) for t in eval_engine.benchmark_history[:limit]]
     return {

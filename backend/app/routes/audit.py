@@ -1,7 +1,7 @@
 import time
 import uuid
 from typing import Optional
-from fastapi import APIRouter, Request
+from fastapi import Query, APIRouter, Request
 from backend.app.audit_store import audit_store
 from backend.app.services.auth_service import AuthenticationService as auth_service
 
@@ -20,7 +20,7 @@ async def verify_audit_chain(request: Request):
     }
 
 @router.get("/api/v1/audit/events", tags=["Cryptographic Audit Ledger"], summary="Fetch Sequenced Audit Blocks")
-async def get_audit_ledger(request: Request, limit: int = 50, merchant_id: Optional[str] = None):
+async def get_audit_ledger(request: Request, limit: int = Query(50, ge=1, le=500), merchant_id: Optional[str] = None):
     auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
     events = audit_store.get_events(limit=limit, merchant_id=merchant_id)

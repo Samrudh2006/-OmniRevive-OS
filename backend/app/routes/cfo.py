@@ -1,7 +1,7 @@
 import time
 import uuid
 from typing import Optional, List
-from fastapi import APIRouter, Request, HTTPException, status
+from fastapi import Query, APIRouter, Request, HTTPException, status
 from pydantic import BaseModel, Field
 from backend.app.schemas import CFOApprovalItem
 from backend.app.services.cfo_service import cfo_service
@@ -14,7 +14,7 @@ class CFOActionPayload(BaseModel):
     notes: Optional[str] = Field(default="Approved after manual risk review", description="Executive notes")
 
 @router.get("/queue", summary="Fetch Pending & Historical CFO Approval Requests")
-async def list_cfo_queue(request: Request, status: Optional[str] = None, limit: int = 50):
+async def list_cfo_queue(request: Request, status: Optional[str] = None, limit: int = Query(50, ge=1, le=500)):
     """
     Returns high-value transactions and statutory invoice disputes requiring executive CFO review.
     Enforces Zero-Trust boundary rules and audit trail visibility.

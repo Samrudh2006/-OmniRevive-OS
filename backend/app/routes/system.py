@@ -2,7 +2,7 @@ import os
 import time
 import uuid
 from typing import Dict, Any, Optional
-from fastapi import APIRouter, Request, Response
+from fastapi import Query, APIRouter, Request, Response
 from fastapi.responses import JSONResponse
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
@@ -165,7 +165,7 @@ async def get_policy_rules(request: Request):
     }
 
 @router.get("/api/v1/logs/recent", tags=["System & Telemetry"], summary="Live Ring-Buffer System Logs")
-async def get_recent_logs(request: Request, limit: int = 50):
+async def get_recent_logs(request: Request, limit: int = Query(50, ge=1, le=500)):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else "tr_logs"
     return {
         "success": True,

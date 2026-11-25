@@ -5,7 +5,7 @@ import uuid
 import time
 import urllib.parse
 from typing import Dict, Any, Optional, List
-from fastapi import APIRouter, HTTPException, Header, Request, BackgroundTasks, status, UploadFile, File
+from fastapi import Query, APIRouter, HTTPException, Header, Request, BackgroundTasks, status, UploadFile, File
 from pydantic import BaseModel, Field
 
 from backend.app.schemas import BulkRecoveryItem
@@ -420,7 +420,7 @@ def mint_cbdc_token(req: CBDCMintRequest):
 
 
 @router.get("/api/v1/streaming/surge-stream", summary="High-Throughput Inter-Bank Surge Simulator")
-def run_surge_stream(rate_tps: int = 1000, duration_sec: float = 1.0):
+def run_surge_stream(rate_tps: int = Query(1000, ge=1, le=10000), duration_sec: float = Query(1.0, gt=0, le=10.0)):
     """
     Simulates high-throughput inter-bank clearing traffic (up to 10,000 TPS) with backpressure management.
     """

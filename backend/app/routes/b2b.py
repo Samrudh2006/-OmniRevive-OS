@@ -256,6 +256,8 @@ async def synthesize_neural_voice(
         raise HTTPException(status_code=400, detail="Text parameter cannot be empty.")
     
     clean_text = input_text.strip()
+    if len(clean_text) > 5000:
+        raise HTTPException(status_code=413, detail="Text too long: maximum 5000 characters per synthesis request.")
     v_lower = (target_voice or "").lower()
 
     # Map model selections to high-performance edge neural voices
