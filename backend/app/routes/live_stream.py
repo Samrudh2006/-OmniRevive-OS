@@ -13,8 +13,12 @@ import httpx
 from typing import AsyncGenerator
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
+from backend.app.services.circuit_breaker import CircuitBreaker, CircuitOpenError, retry_async
 
 router = APIRouter(prefix="/api/v1/telemetry", tags=["Live Telemetry & Financial Feeds"])
+
+_FOREX_BREAKER = CircuitBreaker("forex-upstream", failure_threshold=3, reset_seconds=60.0)
+_RAIL_BREAKERS: dict = {}
 
 # In-memory cached forex rates
 _FOREX_CACHE = {
@@ -41,41 +45,37 @@ async def get_live_forex_rates():
     if now - _FOREX_CACHE["timestamp"] < 300 and _FOREX_CACHE["source"] == "live":
         return _FOREX_CACHE
 
-    try:
+    async def _fetch():
         async with httpx.AsyncClient(timeout=4.0) as client:
             resp = await client.get("https://open.er-api.com/v6/latest/USD")
-            if resp.status_code == 200:
-                data = resp.json()
-                rates = data.get("rates", {})
-                usd_inr = round(rates.get("INR", 86.42), 2)
-                eur = rates.get("EUR", 0.96)
-                gbp = rates.get("GBP", 0.79)
-                aed = rates.get("AED", 3.6725)
-                
-                eur_inr = round(usd_inr / eur, 2) if eur else 89.85
-                gbp_inr = round(usd_inr / gbp, 2) if gbp else 108.70
-                aed_inr = round(usd_inr / aed, 2) if aed else 23.53
+            resp.raise_for_status()
+            return resp.json()
 
-                _FOREX_CACHE = {
-                    "timestamp": now,
-                    "rates": {
-                        "USD_INR": usd_inr,
-                        "EUR_INR": eur_inr,
-                        "GBP_INR": gbp_inr,
-                        "AED_INR": aed_inr,
-                    },
-                    "source": "live",
-                    "provider": "open.er-api.com"
-                }
-                return _FOREX_CACHE
-    except Exception as exc:
+    try:
+        data = await _FOREX_BREAKER.call(lambda: retry_async(_fetch, attempts=2, base_delay=0.2))
+        rates = data.get("rates", {})
+        usd_inr = round(rates.get("INR", 86.42), 2)
+        eur = rates.get("EUR", 0.96)
+        gbp = rates.get("GBP", 0.79)
+        aed = rates.get("AED", 3.6725)
+        _FOREX_CACHE = {
+            "timestamp": now,
+            "rates": {
+                "USD_INR": usd_inr,
+                "EUR_INR": round(usd_inr / eur, 2) if eur else 89.85,
+                "GBP_INR": round(usd_inr / gbp, 2) if gbp else 108.70,
+                "AED_INR": round(usd_inr / aed, 2) if aed else 23.53,
+            },
+            "source": "live",
+            "provider": "open.er-api.com"
+        }
+        return _FOREX_CACHE
+    except (CircuitOpenError, Exception):
         pass
 
-    # Resilient fallback with subtle dynamic drift
-    drift = (random.random() - 0.5) * 0.08
-    _FOREX_CACHE["rates"]["USD_INR"] = round(86.42 + drift, 2)
-    _FOREX_CACHE["timestamp"] = now
-    return _FOREX_CACHE
+    # Upstream unavailable: serve the last known (or static default) rates, clearly labelled as not live.
+    # No synthetic drift: a fallback value must never look like a fresh market quote.
+    return {**_FOREX_CACHE, "source": "fallback" if _FOREX_CACHE.get("source") != "live" else "stale", "stale_since": _FOREX_CACHE.get("timestamp")}
 
 
 @router.get("/bank-pings")
@@ -90,28 +90,27 @@ async def get_real_bank_pings():
         "NPCI Gateway": "https://www.npci.org.in"
     }
 
-    results = []
+    async def ping(client, name, url):
+        breaker = _RAIL_BREAKERS.setdefault(name, CircuitBreaker(f"rail-{name}", failure_threshold=3, reset_seconds=30.0))
+        t0 = time.perf_counter()
+
+        async def _get():
+            return await client.get(url)
+
+        try:
+            resp = await breaker.call(_get)
+            latency_ms = round((time.perf_counter() - t0) * 1000, 2)
+            return {"rail": name, "latency_ms": latency_ms, "status": "Degraded" if latency_ms > 120 else "Operational",
+                    "http_status": resp.status_code, "measured": True}
+        except CircuitOpenError:
+            return {"rail": name, "latency_ms": None, "status": "Unreachable", "http_status": None, "measured": False, "note": "circuit open, recent probes failed"}
+        except Exception:
+            return {"rail": name, "latency_ms": None, "status": "Unreachable", "http_status": None, "measured": False}
+
+    # Probe rails concurrently: worst case is one timeout (2.5s) instead of the sum of four.
+    # Failed probes are reported as unreachable; no latency is invented.
     async with httpx.AsyncClient(timeout=2.5, follow_redirects=True) as client:
-        for name, url in endpoints.items():
-            t0 = time.perf_counter()
-            status = "Operational"
-            try:
-                resp = await client.get(url)
-                latency_ms = round((time.perf_counter() - t0) * 1000, 2)
-                code = resp.status_code
-            except Exception:
-                latency_ms = round(random.uniform(18.0, 42.0), 2)
-                code = 200
-
-            if latency_ms > 120:
-                status = "Degraded"
-
-            results.append({
-                "rail": name,
-                "latency_ms": latency_ms,
-                "status": status,
-                "http_status": code
-            })
+        results = list(await asyncio.gather(*(ping(client, n, u) for n, u in endpoints.items())))
 
     return {"timestamp": time.time(), "rails": results}
 
