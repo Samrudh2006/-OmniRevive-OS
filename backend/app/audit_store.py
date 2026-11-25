@@ -88,6 +88,9 @@ class CryptographicAuditLedger:
         now = time.time()
 
         with conn:
+            # Take the write lock BEFORE reading the chain head. Without it, concurrent writers read the same
+            # prev_hash and fork the chain (reported as tampering). BEGIN IMMEDIATE serialises them.
+            conn.execute("BEGIN IMMEDIATE")
             prev_hash = self._get_latest_hash(conn)
             
             canonical_payload = {
