@@ -40,7 +40,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Webhook / NPCI Signal",
       nx: 0.10, ny: 0.50,
       color: "#38bdf8",
-      icon: "⚡",
+      icon: "",
       latency: "0.4ms",
       throughput: "1,240 tx/s",
       status: "HEALTHY"
@@ -51,7 +51,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Policy Guardrail & Invariants",
       nx: 0.28, ny: 0.50,
       color: "#10b981",
-      icon: "🛡️",
+      icon: "",
       latency: "1.2ms",
       throughput: "1,240 tx/s",
       status: "ENFORCING"
@@ -62,7 +62,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Survival Probability +45m",
       nx: 0.48, ny: 0.28,
       color: "#a855f7",
-      icon: "📈",
+      icon: "",
       latency: "0.8ms",
       throughput: "380 tx/s",
       status: "OPTIMAL"
@@ -73,7 +73,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Channel Suitability Vector",
       nx: 0.48, ny: 0.72,
       color: "#0284c7",
-      icon: "🔀",
+      icon: "",
       latency: "1.5ms",
       throughput: "860 tx/s",
       status: "ACTIVE"
@@ -84,7 +84,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "1-Click App Switcher",
       nx: 0.72, ny: 0.20,
       color: "#10b981",
-      icon: "📲",
+      icon: "",
       latency: "180ms",
       throughput: "510 tx/s",
       status: "STANDBY"
@@ -95,7 +95,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Interactive Invoice Drawer",
       nx: 0.72, ny: 0.50,
       color: "#22c55e",
-      icon: "💬",
+      icon: "",
       latency: "240ms",
       throughput: "240 tx/s",
       status: "ACTIVE"
@@ -106,7 +106,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "Neerja / Shruti Neural FSM",
       nx: 0.72, ny: 0.80,
       color: "#8b5cf6",
-      icon: "🎙️",
+      icon: "",
       latency: "12ms",
       throughput: "110 tx/s",
       status: "READY"
@@ -117,7 +117,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       subtitle: "SHA-256 Ledger Consensus",
       nx: 0.92, ny: 0.50,
       color: "#10b981",
-      icon: "💎",
+      icon: "",
       latency: "2.1ms",
       throughput: "860 tx/s",
       status: "IMMUTABLE"

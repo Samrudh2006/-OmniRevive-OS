@@ -41,7 +41,7 @@ class ServerReachMatrix {
     if (!this.data) {
       container.innerHTML = `
         <div class="p-4 text-center text-xs text-slate-400 font-mono animate-pulse">
-          ⚡ Initializing Global Load Balancer &amp; Server Reach Matrix...
+           Initializing Global Load Balancer &amp; Server Reach Matrix...
         </div>
       `;
       return;
@@ -57,7 +57,7 @@ class ServerReachMatrix {
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-base shadow-sm shadow-cyan-500/20">
-              🌐
+              
             </div>
             <div>
               <div class="flex items-center gap-2">
@@ -76,15 +76,15 @@ class ServerReachMatrix {
           <div class="flex items-center gap-2">
             <button onclick="window._serverReachMatrixInstance?.pingAllNodes()" 
                     class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 shadow-sm">
-              <span>🔄</span> <span>Ping All Nodes</span>
+              <span></span> <span>Ping All Nodes</span>
             </button>
             <button onclick="window._serverReachMatrixInstance?.rebalanceWeights('OPTIMIZE')" 
                     class="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/40 text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-sm shadow-cyan-500/10">
-              <span>⚡</span> <span>Rebalance Weights</span>
+              <span></span> <span>Rebalance Weights</span>
             </button>
             <button onclick="window._serverReachMatrixInstance?.rebalanceWeights('FAILOVER_SBI')" 
                     class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shadow-sm">
-              <span>⚠️</span> <span>Simulate SBI 504 Failover</span>
+              <span></span> <span>Simulate SBI 504 Failover</span>
             </button>
           </div>
         </div>

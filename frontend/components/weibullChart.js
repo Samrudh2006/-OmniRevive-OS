@@ -16,22 +16,22 @@ export function renderWeibullSvgCurve() {
     pathEl.setAttribute("d", "M 0 110 Q 120 10 220 30 T 500 80");
     peakPt.setAttribute("cx", "180");
     peakPt.setAttribute("cy", "20");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +45m (91.4% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +45m (91.4% Recovery)";
   } else if (bank === "SBI") {
     pathEl.setAttribute("d", "M 0 110 Q 180 20 280 40 T 500 90");
     peakPt.setAttribute("cx", "250");
     peakPt.setAttribute("cy", "28");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +60m (84.2% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +60m (84.2% Recovery)";
   } else if (bank === "ICICI") {
     pathEl.setAttribute("d", "M 0 110 Q 80 8 160 22 T 500 75");
     peakPt.setAttribute("cx", "125");
     peakPt.setAttribute("cy", "14");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +30m (93.1% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +30m (93.1% Recovery)";
   } else if (bank === "AXIS") {
     pathEl.setAttribute("d", "M 0 110 Q 130 15 230 35 T 500 85");
     peakPt.setAttribute("cx", "180");
     peakPt.setAttribute("cy", "24");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +45m (87.5% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +45m (87.5% Recovery)";
   }
 }
 

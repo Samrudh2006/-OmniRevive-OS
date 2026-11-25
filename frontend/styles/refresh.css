@@ -1,0 +1,43 @@
+/* Design refresh: solid brand fills, flat surfaces, borders instead of glows. */
+:root { --brand: #38bdf8; --ink: #070e1c; --line: #1f2c40; }
+
+/* Buttons: solid brand fill, no gradient, no glow */
+.rzp-btn-primary, button.rzp-btn-primary {
+  background: var(--brand) !important; background-image: none !important;
+  color: var(--ink) !important; border: 1px solid #0ea5e9 !important;
+  box-shadow: none !important; font-weight: 600 !important;
+}
+.rzp-btn-primary:hover { background: #7dd3fc !important; transform: none !important; box-shadow: none !important; }
+.rzp-btn-primary * { color: inherit !important; }
+
+/* Flat surfaces: no frosted glass, no coloured or stock shadows */
+*, *::before, *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+header, .sticky-header { -webkit-backdrop-filter: blur(8px) !important; backdrop-filter: blur(8px) !important; }
+[class*="shadow-"], .shadow, .rzp-card, .rzp-card:hover, [class*="drop-shadow"] { box-shadow: none !important; filter: none !important; }
+html.dark [class*="shadow-"] { box-shadow: none !important; }
+
+/* No filled purple/indigo controls, no gradient buttons or section washes */
+button[class*="bg-gradient"], a[class*="bg-gradient"],
+button[class*="bg-purple"], button[class*="bg-violet"], button[class*="bg-indigo"] {
+  background-image: none !important; background-color: var(--brand) !important; color: var(--ink) !important;
+}
+section[class*="bg-gradient"], div[class*="bg-gradient-to"][class*="from-"]:not(.hero-art) { background-image: none !important; }
+
+/* Icons: plain, no tinted tiles */
+.w-10.h-10.rounded-2xl, .w-11.h-11.rounded-xl, .w-12.h-12.rounded-xl, .w-9.h-9.rounded-lg {
+  background: transparent !important; background-image: none !important; border-color: transparent !important;
+}
+
+/* One neutral tag style */
+.tag-neutral { padding: 2px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 11px; font-weight: 500; color: #b3c4d4; background: transparent; font-family: inherit; }
+
+/* Labels use the text face; the coding face is for code and data only */
+.font-mono:not(pre):not(code):not(td):not(th):not(kbd):not(pre *):not(code *):not(table *),
+.mono:not(pre):not(code):not(td):not(th):not(pre *):not(code *):not(table *) {
+  font-family: "IBM Plex Sans", system-ui, sans-serif !important; letter-spacing: 0 !important;
+}
+body, button, input, select, textarea { font-family: "IBM Plex Sans", system-ui, sans-serif; }
+pre, code, kbd, samp, table .mono, td.font-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+/* Buttons made from former anchors keep link look */
+button.footer-nav-link { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }

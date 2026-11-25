@@ -9,7 +9,7 @@ const FEATURE_MATTER = {
     category: "RECOVERY ENGINES",
     title: "Fast-Loop Weibull Ingestion Engine",
     badge: "B2C Mandate Recovery · 45m Recovery Curve",
-    icon: "⚡",
+    icon: "",
     metrics: [
       { label: "Recovery Peak", value: "91.4%", sub: "SBI/HDFC Outage Window" },
       { label: "Idempotency Mutex", value: "0.23ms", sub: "Redis CAS Atomic Lock" },
@@ -39,7 +39,7 @@ const FEATURE_MATTER = {
     category: "RECOVERY ENGINES",
     title: "Deep-Loop Autonomous Voice AI FSM",
     badge: "B2B Enterprise Invoices · 22 Indic Languages",
-    icon: "🎙️",
+    icon: "",
     metrics: [
       { label: "Ragas Faithfulness", value: "98.4%", sub: "Zero Hallucination" },
       { label: "Duplex Latency", value: "110ms", sub: "Indic-Conformer + Parler" },
@@ -68,7 +68,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "RECOVERY ENGINES",
     title: "High-Throughput Bulk CSV Batch Processor",
     badge: "Parallel Batch Ingestion · 10,000 Ingests/sec",
-    icon: "📄",
+    icon: "",
     metrics: [
       { label: "Throughput", value: "10k/sec", sub: "Parallel Chunk Ingestion" },
       { label: "Memory Overhead", value: "12MB", sub: "Streamed Buffer Processing" },
@@ -96,7 +96,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "RECOVERY ENGINES",
     title: "Predictive Financial Yield & ARR Forecaster",
     badge: "Monte-Carlo Simulation · Net Revenue Retention",
-    icon: "💰",
+    icon: "",
     metrics: [
       { label: "ARR Recovery Uplift", value: "+14.2%", sub: "Net Revenue Uplift" },
       { label: "Recovered Value", value: "₹12.4M", sub: "30-Day Simulated Cohort" },
@@ -124,7 +124,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Live NPCI Switch Radar & Banking Telemetry",
     badge: "18 Core Banks · Sub-Second Circuit Breaker",
-    icon: "📡",
+    icon: "",
     metrics: [
       { label: "Monitored Switches", value: "18/18", sub: "HDFC, SBI, ICICI, Axis" },
       { label: "Circuit Breaker", value: "Active", sub: "Auto-Trip on >15% 504s" },
@@ -150,7 +150,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Network Card Tokenization & Cryptogram Manager",
     badge: "PCI-DSS Level 1 · Visa / Mastercard / RuPay",
-    icon: "💳",
+    icon: "",
     metrics: [
       { label: "PCI-DSS Level", value: "Level 1", sub: "Zero Plaintext PAN" },
       { label: "Token Refresh", value: "Auto", sub: "Pre-Expiry Lifecycle Scan" },
@@ -177,7 +177,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Promise-To-Pay (PTP) Commitment Scheduling Matrix",
     badge: "Verbal Lock · Quiet Hours Compliant",
-    icon: "📅",
+    icon: "",
     metrics: [
       { label: "PTP Fulfillment", value: "94.2%", sub: "On-Time Customer Clearance" },
       { label: "Lock Duration", value: "48 Hours", sub: "Dunning Freeze Window" },
@@ -206,7 +206,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Universal Multi-Rail Gateway Router",
     badge: "Sub-18.4ms Switch · 6 Supported Gateways",
-    icon: "🌐",
+    icon: "",
     metrics: [
       { label: "Gateways", value: "6 Active", sub: "Razorpay, Juspay, PhonePe, CRED, Cashfree, Stripe" },
       { label: "Switch Speed", value: "<18.4ms", sub: "Sub-Second Fallback" },
@@ -233,7 +233,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "ZERO-TRUST & AUDIT",
     title: "AWS Cedar Cryptographic Zero-Trust Policy Engine",
     badge: "Amazon Cedar Syntax · Mathematically Verified",
-    icon: "⚖️",
+    icon: "",
     metrics: [
       { label: "Policy Language", value: "Cedar", sub: "Formal Verification" },
       { label: "Discount Limit", value: "≤10% / ≤₹500", sub: "Hard Clamping" },
@@ -263,7 +263,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "ZERO-TRUST & AUDIT",
     title: "Cryptographic SHA-256 Merkle Audit Ledger",
     badge: "Immutable Chain · Tamper-Proof Cryptography",
-    icon: "🔒",
+    icon: "",
     metrics: [
       { label: "Hash Algorithm", value: "SHA-256", sub: "Cryptographic Hash Chain" },
       { label: "Tamper Detection", value: "100%", sub: "Instant Block Check" },
@@ -289,7 +289,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "ZERO-TRUST & AUDIT",
     title: "Ragas & DeepEval Live AI Benchmark Suite",
     badge: "Automated LLM Benchmarks · RBI Compliance",
-    icon: "📊",
+    icon: "",
     metrics: [
       { label: "Faithfulness", value: "98.4%", sub: "Grounding & Accuracy" },
       { label: "Answer Relevancy", value: "97.2%", sub: "Domain Intent Match" },
@@ -316,7 +316,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "ZERO-TRUST & AUDIT",
     title: "Red-Team Adversarial Security Attack Lab",
     badge: "12 Exploit Vectors · Defensive Resilience",
-    icon: "🛡️",
+    icon: "",
     metrics: [
       { label: "Exploit Vectors", value: "12 Tests", sub: "HMAC, Replay, Rejections" },
       { label: "Attacks Blocked", value: "12/12", sub: "100% Defensive Success" },
@@ -344,7 +344,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "RECOVERY GOVERNANCE",
     title: "CFO Dual-Key Approval & Dual-Officer Quorum",
     badge: "Multi-Sig Governance · High-Value Invoices",
-    icon: "🏛️",
+    icon: "",
     metrics: [
       { label: "Dual-Key Policy", value: ">₹1,00,000", sub: "Quorum Enforced" },
       { label: "Authorization", value: "<12.4s", sub: "Signed Push Notification" },
@@ -372,7 +372,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "BANKING & SIMULATION",
     title: "Interactive Multi-Bank SRE Sandbox Lab",
     badge: "18 Failure Topologies · Real-Time Chaos Injection",
-    icon: "🧪",
+    icon: "",
     metrics: [
       { label: "Chaos Scenarios", value: "18 Modes", sub: "HDFC, SBI, ICICI, UPI" },
       { label: "Simulation Speed", value: "Realtime", sub: "Full Circuit Emulation" },
@@ -401,7 +401,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "INFRASTRUCTURE & SECURITY",
     title: "Cloudflare 25 Edge Services Architecture",
     badge: "330+ Global Edge Cities · Zero-Trust SRE",
-    icon: "☁️",
+    icon: "",
     metrics: [
       { label: "Edge PoPs", value: "330+ Cities", sub: "<50ms Worldwide" },
       { label: "DDoS Mitigation", value: "321 Tbps", sub: "Unmetered Protection" },
@@ -433,7 +433,7 @@ export default {
     category: "DEVELOPER & API",
     title: "OpenAPI Specification & Enterprise SDKs",
     badge: "RESTful · WebSocket · Flutter & React Native",
-    icon: "📚",
+    icon: "",
     metrics: [
       { label: "Endpoints", value: "48 APIs", sub: "Fully Documented" },
       { label: "Contract Version", value: "v1.1.0", sub: "Strict Semantic Versioning" },
@@ -460,7 +460,7 @@ export default {
     category: "REGULATORY COMPLIANCE",
     title: "RBI & TRAI Non-Coercive Financial Governance",
     badge: "100% Compliant · RBI CoFT · TRAI Quiet Hours",
-    icon: "⚖️",
+    icon: "",
     metrics: [
       { label: "TRAI Hours", value: "09:00-21:00", sub: "Strict Outreach Windows" },
       { label: "RBI CoFT", value: "Card-on-File", sub: "Zero Raw PAN Storage" },
@@ -488,7 +488,7 @@ export default {
     category: "LEGAL & ENTERPRISE SLA",
     title: "Enterprise Service Level Agreement & Terms",
     badge: "99.999% SLA · ISO/IEC 27001 · SOC 2 Type II",
-    icon: "📜",
+    icon: "",
     metrics: [
       { label: "High Availability", value: "99.999%", sub: "Multi-Cloud Fallback" },
       { label: "CAS Mutex Lock", value: "0.23ms", sub: "Zero-Double-Debit SLA" },
@@ -517,7 +517,7 @@ export default {
     category: "DISCOVER · HOW IT WORKS",
     title: "AI-Powered Revenue Recovery — Deep Dive",
     badge: "Weibull Hazard Model · 49.2% Recovery Rate",
-    icon: "🤖",
+    icon: "",
     metrics: [
       { label: "Recovery Rate", value: "49.2%", sub: "vs 35% Standard Gateway" },
       { label: "AI Models", value: "3 Engines", sub: "Weibull · Qdrant · Bedrock" },
@@ -551,7 +551,7 @@ result = omnirevive.recover(
     category: "DISCOVER · FAILURE ANALYSIS",
     title: "Payment Failure Recovery — Stage-by-Stage",
     badge: "6 Failure Stages · 18 Bank Error Codes",
-    icon: "💳",
+    icon: "",
     metrics: [
       { label: "Failure Codes", value: "18 Types", sub: "UPI, ENACH, CARD, NACH" },
       { label: "Stage Recovery", value: "91.4%", sub: "at Weibull Peak Window" },
@@ -589,7 +589,7 @@ result = omnirevive.recover(
     category: "DISCOVER · B2B VOICE AI",
     title: "B2B Dispute Resolution — Voice AI Playbook",
     badge: "Telugu · Hindi · English · 22 Indic Languages",
-    icon: "🎙️",
+    icon: "",
     metrics: [
       { label: "Languages", value: "22 Indic", sub: "ai4bharat Conformer-600M" },
       { label: "Duplex Latency", value: "110ms", sub: "ASR + LLM + TTS" },
@@ -621,7 +621,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "DISCOVER · SYSTEM DESIGN",
     title: "Control Plane System Architecture",
     badge: "3-Tier Microservices · Redis · Qdrant · FastAPI",
-    icon: "🏗️",
+    icon: "",
     metrics: [
       { label: "API Endpoints", value: "48 APIs", sub: "OpenAPI 3.1.0 Contract" },
       { label: "Test Coverage", value: "486 Tests", sub: "100% Pass Rate" },
@@ -685,7 +685,7 @@ curl -X POST "https://omnirevive-os.antideploy.com/api/v1/webhook" \\
     category: "DISCOVER · DEVELOPER DOCS",
     title: "Developer Documentation & API Quickstart",
     badge: "48 Endpoints · OpenAPI 3.1.0 · Swagger UI",
-    icon: "📚",
+    icon: "",
     metrics: [
       { label: "REST Endpoints", value: "48 APIs", sub: "Fully Documented" },
       { label: "SDKs", value: "Python + Dart", sub: "Auto-Generated Types" },
@@ -719,7 +719,7 @@ print(result.retry_at)  # 2026-09-19T14:45:00+05:30`,
     category: "DISCOVER · ABOUT",
     title: "About OmniRevive-OS & The Builder",
     badge: "Razorpay AI Buildathon 2026 · Solo Build",
-    icon: "👤",
+    icon: "",
     metrics: [
       { label: "Builder", value: "Samrudh", sub: "Dwivedula — Solo Engineer" },
       { label: "Build Time", value: "72 Hours", sub: "Hackathon Sprint" },
@@ -753,7 +753,7 @@ omnirevive = ControlPlane(
     category: "DISCOVER · BENCHMARKS",
     title: "Production Benchmark Suite — 486 Tests",
     badge: "100-Case Held-Out Cohort · 486 Automated Tests",
-    icon: "📊",
+    icon: "",
     metrics: [
       { label: "Total Tests", value: "486", sub: "100% Pass Rate" },
       { label: "Recovery Accuracy", value: "91.4%", sub: "SBI/HDFC Outage Cohort" },
@@ -785,7 +785,7 @@ pytest tests/ -v --tb=short
     category: "DEVELOPER · OPENAPI",
     title: "Swagger UI & OpenAPI Interactive Spec",
     badge: "48 Live Endpoints · Try It Now",
-    icon: "🔌",
+    icon: "",
     metrics: [
       { label: "API Version", value: "v1.1.0", sub: "Semantic Versioning" },
       { label: "Live Endpoints", value: "48 APIs", sub: "REST + WebSocket + SSE" },
@@ -814,7 +814,7 @@ curl -X GET "https://omnirevive-os.antideploy.com/api/v1/health" \\
     category: "INFRASTRUCTURE · SRE",
     title: "Live SRE Health & System Observability",
     badge: "99.999% Uptime · Sub-Second Monitoring",
-    icon: "🟢",
+    icon: "",
     metrics: [
       { label: "API Status", value: "Healthy", sub: "All 48 Endpoints Alive" },
       { label: "Recovery Engine", value: "Active", sub: "Weibull Pipeline Running" },
@@ -852,7 +852,7 @@ curl https://omnirevive-os.antideploy.com/health
     category: "DISCOVER · SITEMAP",
     title: "OmniRevive-OS — Complete Site Map",
     badge: "10 Knowledge Pages · SEO Indexed",
-    icon: "🗺️",
+    icon: "",
     metrics: [
       { label: "Knowledge Pages", value: "10", sub: "Google + AI Crawlable" },
       { label: "Sitemap Format", value: "XML", sub: "sitemap.xml Standard" },
@@ -948,7 +948,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Overview Matter -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-sky-600 dark:text-sky-400">📖</span> Technical Overview & Business Impact
+            <span class="text-sky-600 dark:text-sky-400"></span> Technical Overview & Business Impact
           </h3>
           <p class="modal-surface-card text-xs leading-relaxed p-4 rounded-2xl">
             ${data.overview}
@@ -970,7 +970,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Architecture Workflow -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-amber-600 dark:text-amber-400">⚙️</span> Architectural Execution Pipeline
+            <span class="text-amber-600 dark:text-amber-400"></span> Architectural Execution Pipeline
           </h3>
           <div class="modal-surface-card space-y-1.5 p-4 rounded-2xl text-xs">
             ${data.architecture.map(item => `
@@ -985,7 +985,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Live Code Snippet -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-purple-600 dark:text-purple-400">💻</span> Production Code & Kernel Implementation
+            <span class="text-purple-600 dark:text-purple-400"></span> Production Code & Kernel Implementation
           </h3>
           <pre class="modal-code-card p-4 rounded-2xl text-[11px] text-emerald-700 dark:text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
         </div>
@@ -999,7 +999,7 @@ export function openFeatureDetailModal(featureKey) {
         </div>
         <div class="flex items-center gap-2">
           <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
-            <span>🚀 Open Interactive Workspace Tab</span>
+            <span> Open Interactive Workspace Tab</span>
           </button>
           <button onclick="closeFeatureDetailModal()" class="modal-btn-close px-4 py-2.5 rounded-xl font-semibold text-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
             Close

@@ -15,7 +15,7 @@ export const landingGateway = {
       subsystem: "Mathematical Failure Decay Engine",
       sla: "3.2ms Window Computation",
       badge: "Mathematical Invariant",
-      icon: "📈",
+      icon: "",
       description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
       handledCodes: ["GATEWAY_504", "NPCI_TIMEOUT_91", "HDFC_DOWN_500", "BANK_SWITCH_DEGRADE"],
       codeSnippet: `// Weibull Hazard Rate Function
@@ -31,7 +31,7 @@ function calculateOptimalRetry(beta = 1.42, alpha = 45.0) {
       subsystem: "Real-Time Switch Health Ingestion",
       sla: "Sub-50ms Polling & Telemetry",
       badge: "Multi-Rail Invariant",
-      icon: "📡",
+      icon: "",
       description: "Live synthetic health probes and webhook telemetry monitoring 18 major Indian bank switches (HDFC, ICICI, SBI, Axis, Kotak) to prevent failed transaction routing during switch degradation.",
       handledCodes: ["NPCI_U16", "NPCI_U69", "UPI_LIMIT_EXCEEDED", "REMITTER_DOWN"],
       codeSnippet: `// NPCI Switch Health Resolver
@@ -48,7 +48,7 @@ const switchHealth = await npciRadar.evaluateSwitchCluster({
       subsystem: "Deterministic Compliance Engine",
       sla: "0.28ms Sub-Millisecond Evaluation",
       badge: "Zero-Trust Invariant",
-      icon: "⚖️",
+      icon: "",
       description: "Formally verified zero-trust rules enforce TRAI quiet hours (21:00-09:00 IST), maximum discount clamping (<=10%, <=500 INR), and non-coercive regulatory compliance. AI recommendations never bypass policy.",
       handledCodes: ["POLICY_QUIET_HOURS", "DISCOUNT_EXCEEDED", "MAX_ATTEMPTS_BREACH", "COERCIVE_OUTREACH"],
       codeSnippet: `// AWS Cedar Deterministic Policy Rule
@@ -68,7 +68,7 @@ permit(
       subsystem: "Deep-Loop Conversational AI",
       sla: "180ms Turn Response (Telugu / Hindi / English)",
       badge: "Trilingual Engine",
-      icon: "🎙️",
+      icon: "",
       description: "Autonomous multi-turn voice negotiation engine that extracts customer dispute intents, dynamically updates GSTIN invoice errors, and secures binding Promise-to-Pay (PTP) commitments.",
       handledCodes: ["INVOICE_DISPUTE_GST", "BILLING_MISMATCH", "PAYMENT_DEFERRED", "PARTIAL_DISPUTE"],
       codeSnippet: `// Trilingual Dialogue State Machine
@@ -86,7 +86,7 @@ const fsmState = await voiceAgent.processTurn({
       subsystem: "Zero Double-Debit Protection",
       sla: "0.23ms Atomic Mutex Gate",
       badge: "Concurrency Invariant",
-      icon: "🔒",
+      icon: "",
       description: "Compare-And-Swap (CAS) distributed lock ensures high-frequency webhooks across 10,000 req/sec never trigger concurrent duplicate charges or double-debited accounts.",
       handledCodes: ["CONCURRENT_WEBHOOK", "DUPLICATE_RETRY", "RACE_CONDITION", "IDEMPOTENCY_COLLISION"],
       codeSnippet: `// Redis CAS Atomic Mutex Acquisition
@@ -104,7 +104,7 @@ if (!lockAcquired) throw new DuplicateExecutionError();`,
       subsystem: "Card-on-File Cryptographic Refresh",
       sla: "1.4ms Token Health Assessment",
       badge: "PCI-DSS Invariant",
-      icon: "💳",
+      icon: "",
       description: "Monitors RBI-mandated network token lifecycles (Visa, Mastercard, RuPay) and automatically triggers fresh cryptograms prior to recurring mandate execution to prevent recurring subscription drops.",
       handledCodes: ["COF_CRYPT_EXPIRED", "TOKEN_DEACTIVATED", "CARD_SUSPENDED", "MANDATE_FAIL_RB03"],
       codeSnippet: `// Network Token Cryptogram Validator
@@ -121,7 +121,7 @@ const tokenStatus = await cardTokenEngine.evaluateLifecycle({
       subsystem: "Cryptographic Evidence Trail",
       sla: "Sequential Block Sealing",
       badge: "Cryptographic Invariant",
-      icon: "📜",
+      icon: "",
       description: "Every webhook diagnosis, policy evaluation, discount mutation, and recovery execution is cryptographically hashed into a tamper-proof sequential Merkle chain for auditors and CFOs.",
       handledCodes: ["AUDIT_PROOF_GEN", "CHAIN_INTEGRITY_CHECK", "REGULATORY_EXPORT", "TAMPER_DETECT"],
       codeSnippet: `// Sequential Merkle Audit Block Sealing
@@ -139,7 +139,7 @@ const block = merkleLedger.sealBlock({
       subsystem: "High-Value Tax & Mutation Gate",
       sla: "Asynchronous Webhook & SMS Approval",
       badge: "Financial Governance",
-      icon: "🏛️",
+      icon: "",
       description: "Automatic circuit breaker for tax ledger mutations and discount waivers exceeding ₹50,000 INR, requiring dual-key cryptographic sign-off before financial commitment.",
       handledCodes: ["HIGH_VALUE_GATE", "CFO_APPROVAL_REQUIRED", "TAX_MUTATION_HOLD", "DISCOUNT_OVERRIDE"],
       codeSnippet: `// CFO Executive Dual-Key Gatekeeper
@@ -411,7 +411,7 @@ if (invoiceValue > 50000) {
 
     const term = document.getElementById("landing-sandbox-terminal");
     if (term) {
-      term.innerHTML = `<span class="text-slate-500">> Ready to simulate: ${data.title}</span>\n<span class="text-sky-400">> Click '⚡ Run Instant AI Recovery Simulation' to trigger live orchestration pipeline...</span>`;
+      term.innerHTML = `<span class="text-slate-500">> Ready to simulate: ${data.title}</span>\n<span class="text-sky-400">> Click ' Run Instant AI Recovery Simulation' to trigger live orchestration pipeline...</span>`;
     }
   },
 
@@ -428,14 +428,14 @@ if (invoiceValue > 50000) {
 
     term.innerHTML = `<span class="text-emerald-400 font-bold">> [${new Date().toLocaleTimeString()}] INGESTION: Razorpay webhook payload received (HMAC SHA-256 VALIDATED)...</span>\n`;
 
-    const stageLabels = ["⚡ 1. Ingested ✓", "🔒 2. Mutex Lock ✓", "📈 3. Weibull Math ✓", "⚖️ 4. Cedar Policy ✓", "🚀 5. Dispatched ✓"];
+    const stageLabels = [" 1. Ingested ✓", " 2. Mutex Lock ✓", " 3. Weibull Math ✓", " 4. Cedar Policy ✓", " 5. Dispatched ✓"];
 
     const logs = [
       { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
       { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
       { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
       { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
-      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! 🚀`, delay: 1650, step: 4 }
+      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! `, delay: 1650, step: 4 }
     ];
 
     logs.forEach(log => {
@@ -785,7 +785,7 @@ if (invoiceValue > 50000) {
         if (progressEl) progressEl.style.width = b.pct;
 
         if (idx === benchmarks.length - 1) {
-          term.innerHTML += `\n<span class="text-sky-300 font-bold">> 🏆 ALL BENCHMARK INVARIANTS SATISFIED: 99.8% System Reliability Score.</span>\n`;
+          term.innerHTML += `\n<span class="text-sky-300 font-bold">>  ALL BENCHMARK INVARIANTS SATISFIED: 99.8% System Reliability Score.</span>\n`;
           if (statusPill) {
             statusPill.textContent = "PASSED · 99.8% RELIABILITY";
             statusPill.className = "px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono";

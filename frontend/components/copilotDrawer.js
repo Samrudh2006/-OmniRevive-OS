@@ -22,26 +22,26 @@ export const COPILOT_AVATAR_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://
 const COPILOT_MODES_DATA = {
   Ask: {
     heroHtml: `
-      <div>Hey Samrudh! 👋</div>
+      <div>Hey Samrudh! </div>
       <div>I'm your <strong>OmniRevive SRE Copilot</strong>. I can help you analyze payments, investigate failures, explain decisions, and guide you through the platform.</div>
       <div class="copilot-msg-subtext font-medium pt-0.5">What would you like to do today?</div>
     `,
     badge: "SRE Intelligence",
     suggestedTitle: "Suggested for this page",
-    suggestedIcon: "🎯",
+    suggestedIcon: "",
     cards: [
-      { id: "whats_happening_today", icon: "📊", iconColor: "text-teal-500 dark:text-teal-400", title: "What's happening today?" },
-      { id: "find_failed_payments", icon: "🔍", iconColor: "text-sky-600 dark:text-sky-400", title: "Find failed payments" },
-      { id: "show_revenue_at_risk", icon: "⚠️", iconColor: "text-amber-600 dark:text-amber-400", title: "Show revenue at risk" },
-      { id: "analyze_recovery_rate", icon: "📈", iconColor: "text-cyan-600 dark:text-cyan-400", title: "Analyze recovery rate" },
-      { id: "explain_this_metric", icon: "💡", iconColor: "text-yellow-600 dark:text-yellow-400", title: "Explain this metric" },
-      { id: "start_guided_tour", icon: "▶️", iconColor: "text-blue-600 dark:text-blue-400", title: "Start guided tour" }
+      { id: "whats_happening_today", icon: "", iconColor: "text-teal-500 dark:text-teal-400", title: "What's happening today?" },
+      { id: "find_failed_payments", icon: "", iconColor: "text-sky-600 dark:text-sky-400", title: "Find failed payments" },
+      { id: "show_revenue_at_risk", icon: "", iconColor: "text-amber-600 dark:text-amber-400", title: "Show revenue at risk" },
+      { id: "analyze_recovery_rate", icon: "", iconColor: "text-cyan-600 dark:text-cyan-400", title: "Analyze recovery rate" },
+      { id: "explain_this_metric", icon: "", iconColor: "text-yellow-600 dark:text-yellow-400", title: "Explain this metric" },
+      { id: "start_guided_tour", icon: "▶", iconColor: "text-blue-600 dark:text-blue-400", title: "Start guided tour" }
     ]
   },
   Investigate: {
     heroHtml: `
       <div class="font-bold text-sky-600 dark:text-sky-400 flex items-center gap-1.5 pb-0.5">
-        <span>🔍</span> <span>Autonomous SRE Investigation Desk</span>
+        <span></span> <span>Autonomous SRE Investigation Desk</span>
       </div>
       <div class="copilot-msg-content leading-relaxed">
         Live telemetry scan across <strong>HDFC, SBI, Axis, PhonePe & Juspay</strong> rails:
@@ -55,20 +55,20 @@ const COPILOT_MODES_DATA = {
     `,
     badge: "Investigation Desk",
     suggestedTitle: "SRE Diagnostic Actions",
-    suggestedIcon: "🔍",
+    suggestedIcon: "",
     cards: [
-      { id: "find_failed_payments", icon: "⚡", iconColor: "text-rose-600 dark:text-rose-400", title: "Diagnose HDFC 504 Outage" },
-      { id: "trace_pay_hdfc", icon: "🔍", iconColor: "text-sky-600 dark:text-sky-400", title: "Trace pay_hdfc_99812" },
-      { id: "inspect_cas_mutex", icon: "🛡️", iconColor: "text-emerald-600 dark:text-emerald-400", title: "Inspect CAS Mutex Locks" },
-      { id: "whats_happening_today", icon: "📊", iconColor: "text-teal-600 dark:text-teal-400", title: "Bank Switch Latency Radar" },
-      { id: "cfo_dispute_queue", icon: "📑", iconColor: "text-amber-600 dark:text-amber-400", title: "B2B CFO Dispute Queue" },
-      { id: "storm_50_threads", icon: "🔄", iconColor: "text-purple-600 dark:text-purple-400", title: "Run 50-Thread Storm Test" }
+      { id: "find_failed_payments", icon: "", iconColor: "text-rose-600 dark:text-rose-400", title: "Diagnose HDFC 504 Outage" },
+      { id: "trace_pay_hdfc", icon: "", iconColor: "text-sky-600 dark:text-sky-400", title: "Trace pay_hdfc_99812" },
+      { id: "inspect_cas_mutex", icon: "", iconColor: "text-emerald-600 dark:text-emerald-400", title: "Inspect CAS Mutex Locks" },
+      { id: "whats_happening_today", icon: "", iconColor: "text-teal-600 dark:text-teal-400", title: "Bank Switch Latency Radar" },
+      { id: "cfo_dispute_queue", icon: "", iconColor: "text-amber-600 dark:text-amber-400", title: "B2B CFO Dispute Queue" },
+      { id: "storm_50_threads", icon: "", iconColor: "text-purple-600 dark:text-purple-400", title: "Run 50-Thread Storm Test" }
     ]
   },
   Explain: {
     heroHtml: `
       <div class="font-bold text-amber-600 dark:text-yellow-400 flex items-center gap-1.5 pb-0.5">
-        <span>💡</span> <span>SRE Metric & Architectural Deep Dive</span>
+        <span></span> <span>SRE Metric & Architectural Deep Dive</span>
       </div>
       <div class="copilot-msg-content leading-relaxed">
         Select any mathematical derivation or control plane layer to inspect its live operation:
@@ -82,20 +82,20 @@ const COPILOT_MODES_DATA = {
     `,
     badge: "Metric Deep Dive",
     suggestedTitle: "Metric & Architecture Deep Dives",
-    suggestedIcon: "💡",
+    suggestedIcon: "",
     cards: [
-      { id: "explain_this_metric", icon: "📐", iconColor: "text-amber-600 dark:text-yellow-400", title: "Weibull Hazard Formula" },
-      { id: "inspect_cas_mutex", icon: "🛡️", iconColor: "text-emerald-600 dark:text-emerald-400", title: "Atomic CAS Mutex Logic" },
-      { id: "explain_3tier", icon: "🏛️", iconColor: "text-sky-600 dark:text-sky-400", title: "3-Tier Isolation Boundary" },
-      { id: "explain_merkle", icon: "📜", iconColor: "text-teal-600 dark:text-teal-400", title: "SHA-256 Merkle Ledger" },
-      { id: "explain_trai", icon: "⚖️", iconColor: "text-amber-600 dark:text-amber-400", title: "TRAI & DPDP Guardrails" },
-      { id: "explain_competitors", icon: "🏆", iconColor: "text-cyan-600 dark:text-cyan-400", title: "vs. Stripe / Netflix" }
+      { id: "explain_this_metric", icon: "", iconColor: "text-amber-600 dark:text-yellow-400", title: "Weibull Hazard Formula" },
+      { id: "inspect_cas_mutex", icon: "", iconColor: "text-emerald-600 dark:text-emerald-400", title: "Atomic CAS Mutex Logic" },
+      { id: "explain_3tier", icon: "", iconColor: "text-sky-600 dark:text-sky-400", title: "3-Tier Isolation Boundary" },
+      { id: "explain_merkle", icon: "", iconColor: "text-teal-600 dark:text-teal-400", title: "SHA-256 Merkle Ledger" },
+      { id: "explain_trai", icon: "", iconColor: "text-amber-600 dark:text-amber-400", title: "TRAI & DPDP Guardrails" },
+      { id: "explain_competitors", icon: "", iconColor: "text-cyan-600 dark:text-cyan-400", title: "vs. Stripe / Netflix" }
     ]
   },
   Explore: {
     heroHtml: `
       <div class="font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5 pb-0.5">
-        <span>🧭</span> <span>Interactive Platform Exploration</span>
+        <span></span> <span>Interactive Platform Exploration</span>
       </div>
       <div class="copilot-msg-content leading-relaxed">
         Welcome to OmniRevive-OS! Direct access to all live test environments:
@@ -109,14 +109,14 @@ const COPILOT_MODES_DATA = {
     `,
     badge: "Platform Tour",
     suggestedTitle: "Quick Platform Navigation",
-    suggestedIcon: "🧭",
+    suggestedIcon: "",
     cards: [
-      { id: "start_guided_tour", icon: "⚡", iconColor: "text-sky-600 dark:text-sky-400", title: "Live Chaos Failure Sandbox" },
-      { id: "explore_voice", icon: "🎙️", iconColor: "text-purple-600 dark:text-purple-400", title: "Deep Loop Voice AI Studio" },
-      { id: "explore_trail", icon: "📜", iconColor: "text-emerald-600 dark:text-emerald-400", title: "SHA-256 Decision Trail" },
-      { id: "explore_roi", icon: "📊", iconColor: "text-teal-600 dark:text-teal-400", title: "Live ROI Calculator" },
-      { id: "explore_multirail", icon: "💳", iconColor: "text-cyan-600 dark:text-cyan-400", title: "Multi-Rail Gateway Matrix" },
-      { id: "explore_mobile", icon: "📱", iconColor: "text-blue-600 dark:text-blue-400", title: "Mobile Flutter Suite" }
+      { id: "start_guided_tour", icon: "", iconColor: "text-sky-600 dark:text-sky-400", title: "Live Chaos Failure Sandbox" },
+      { id: "explore_voice", icon: "", iconColor: "text-purple-600 dark:text-purple-400", title: "Deep Loop Voice AI Studio" },
+      { id: "explore_trail", icon: "", iconColor: "text-emerald-600 dark:text-emerald-400", title: "SHA-256 Decision Trail" },
+      { id: "explore_roi", icon: "", iconColor: "text-teal-600 dark:text-teal-400", title: "Live ROI Calculator" },
+      { id: "explore_multirail", icon: "", iconColor: "text-cyan-600 dark:text-cyan-400", title: "Multi-Rail Gateway Matrix" },
+      { id: "explore_mobile", icon: "", iconColor: "text-blue-600 dark:text-blue-400", title: "Mobile Flutter Suite" }
     ]
   }
 };
@@ -310,7 +310,7 @@ export function triggerCopilotSuggestion(actionKey) {
 
   switch (actionKey) {
     case "whats_happening_today":
-      queryTitle = "📊 Telemetry: What's happening today?";
+      queryTitle = " Telemetry: What's happening today?";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-teal-600 dark:text-teal-400 font-bold">Real-Time Control Plane Status (Today's Telemetry)</div>
@@ -325,7 +325,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "find_failed_payments":
-      queryTitle = "🔍 Diagnostic: Intercepted Payment Failures";
+      queryTitle = " Diagnostic: Intercepted Payment Failures";
       answerHtml = `
         <div class="space-y-2">
           <div class="text-sky-600 dark:text-sky-400 font-bold">Recent Intercepted Payment Failures</div>
@@ -344,7 +344,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "show_revenue_at_risk":
-      queryTitle = "⚠️ Financial Risk: Current Volume at Risk";
+      queryTitle = " Financial Risk: Current Volume at Risk";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-amber-600 dark:text-amber-400 font-bold">Revenue at Risk Assessment (Current Cohort)</div>
@@ -358,7 +358,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "analyze_recovery_rate":
-      queryTitle = "📈 Benchmark: Net Recovery Yield Analysis";
+      queryTitle = " Benchmark: Net Recovery Yield Analysis";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-cyan-600 dark:text-cyan-400 font-bold">Cohort Recovery Rate Empirical Analysis</div>
@@ -374,7 +374,7 @@ export function triggerCopilotSuggestion(actionKey) {
 
     case "explain_this_metric":
     case "explain_weibull":
-      queryTitle = "💡 Deep Dive: Weibull Hazard Survival Model";
+      queryTitle = " Deep Dive: Weibull Hazard Survival Model";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-amber-600 dark:text-yellow-400 font-bold">Weibull Hazard Function h(t)</div>
@@ -390,7 +390,7 @@ export function triggerCopilotSuggestion(actionKey) {
 
     case "start_guided_tour":
     case "explore_sandbox":
-      queryTitle = "▶️ Tour: Live Chaos Failure Sandbox";
+      queryTitle = "▶ Tour: Live Chaos Failure Sandbox";
       answerHtml = `
         <div class="space-y-2">
           <div class="text-blue-600 dark:text-blue-400 font-bold">Live Chaos Failure Sandbox</div>
@@ -402,7 +402,7 @@ export function triggerCopilotSuggestion(actionKey) {
           </div>
           <div class="pt-1">
             <a href="#showcase-sandbox" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0c66ee] hover:bg-[#0952c2] text-white font-bold text-xs shadow-md transition-all">
-              <span>⚡ Jump to Live Chaos Sandbox →</span>
+              <span> Jump to Live Chaos Sandbox →</span>
             </a>
           </div>
         </div>
@@ -410,7 +410,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "explore_voice":
-      queryTitle = "🎙️ Tour: Deep Loop Voice AI Studio";
+      queryTitle = " Tour: Deep Loop Voice AI Studio";
       answerHtml = `
         <div class="space-y-2">
           <div class="text-purple-600 dark:text-purple-400 font-bold">Deep Loop Voice AI Studio</div>
@@ -424,7 +424,7 @@ export function triggerCopilotSuggestion(actionKey) {
           </div>
           <div class="pt-1">
             <a href="#showcase-voice-studio" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all">
-              <span>🎙️ Open Voice AI Studio →</span>
+              <span> Open Voice AI Studio →</span>
             </a>
           </div>
         </div>
@@ -433,7 +433,7 @@ export function triggerCopilotSuggestion(actionKey) {
 
     case "explore_trail":
     case "explain_merkle":
-      queryTitle = "📜 Tour: Cryptographic Decision Trail";
+      queryTitle = " Tour: Cryptographic Decision Trail";
       answerHtml = `
         <div class="space-y-2">
           <div class="text-emerald-600 dark:text-emerald-400 font-bold">SHA-256 Merkle Decision Trail</div>
@@ -445,7 +445,7 @@ export function triggerCopilotSuggestion(actionKey) {
           </div>
           <div class="pt-1">
             <a href="#showcase-decision-trail" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all">
-              <span>📜 Inspect SHA-256 Audit Trail →</span>
+              <span> Inspect SHA-256 Audit Trail →</span>
             </a>
           </div>
         </div>
@@ -453,7 +453,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "explore_roi":
-      queryTitle = "📊 Tour: Revenue Recovery Calculator";
+      queryTitle = " Tour: Revenue Recovery Calculator";
       answerHtml = `
         <div class="space-y-2">
           <div class="text-teal-600 dark:text-teal-400 font-bold">Revenue Recovery Calculator</div>
@@ -462,7 +462,7 @@ export function triggerCopilotSuggestion(actionKey) {
           </div>
           <div class="pt-1">
             <a href="#showcase-workspace" onclick="toggleAiCopilotDrawer()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-md transition-all">
-              <span>📊 Open ROI Calculator →</span>
+              <span> Open ROI Calculator →</span>
             </a>
           </div>
         </div>
@@ -470,7 +470,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "inspect_cas_mutex":
-      queryTitle = "🛡️ Safety: Distributed Atomic CAS Mutex";
+      queryTitle = " Safety: Distributed Atomic CAS Mutex";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-emerald-600 dark:text-emerald-400 font-bold">Zero Double-Debit Concurrency Protection</div>
@@ -482,7 +482,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     case "trace_pay_hdfc":
-      queryTitle = "🔍 Trace Audit: pay_hdfc_99812";
+      queryTitle = " Trace Audit: pay_hdfc_99812";
       answerHtml = `
         <div class="space-y-1.5">
           <div class="text-sky-600 dark:text-sky-400 font-bold">Transaction Trace: pay_hdfc_99812 (₹85,000)</div>
@@ -495,7 +495,7 @@ export function triggerCopilotSuggestion(actionKey) {
       break;
 
     default:
-      queryTitle = "💡 Diagnostic Intelligence";
+      queryTitle = " Diagnostic Intelligence";
       answerHtml = `
         <div class="copilot-msg-content">
           OmniRevive-OS is actively maintaining 3-tier financial isolation with Weibull retries and trilingual voice negotiation.
@@ -524,7 +524,7 @@ export function renderFocusedHeroCard(title, bodyHtml) {
           </span>
           <div class="flex items-center gap-2 shrink-0">
             <button onclick="speakLastCopilotMessage(this)" class="text-sky-600 dark:text-sky-400 hover:text-sky-500 font-semibold cursor-pointer">
-              🔊 Speak
+               Speak
             </button>
             <button onclick="resetCopilotHeroCard()" class="copilot-back-btn px-2 py-0.5 rounded-md font-semibold transition cursor-pointer">
               ↩ Back
@@ -540,7 +540,7 @@ export function renderFocusedHeroCard(title, bodyHtml) {
 }
 
 export function copilotAttachFilePrompt() {
-  showToast("📎 Active Transaction & Trace Context attached to query.", "info");
+  showToast(" Active Transaction & Trace Context attached to query.", "info");
   const input = document.getElementById("copilot-user-input");
   if (input) {
     input.placeholder = "Query with context (e.g. 'Audit trace pay_hdfc_99812')...";
@@ -562,7 +562,7 @@ export function speakLastCopilotMessage(buttonEl) {
     const textToSpeak = contentEl ? contentEl.innerText : (buttonEl.parentElement?.nextElementSibling?.innerText || "");
     if (textToSpeak) {
       UnifiedVoiceEngine.speak(textToSpeak);
-      showToast("🔊 Speaking Copilot response in Natural Neural Voice...", "info");
+      showToast(" Speaking Copilot response in Natural Neural Voice...", "info");
     }
   } catch (err) {
     console.error("Error reading copilot message", err);
@@ -573,7 +573,7 @@ export function speakCopilotResponse() {
   const box = document.getElementById("copilot-response-text");
   if (!box) return;
   UnifiedVoiceEngine.speak(box.innerText);
-  showToast("🔊 Speaking in Natural AI SRE Voice...", "info");
+  showToast(" Speaking in Natural AI SRE Voice...", "info");
 }
 
 export async function handleCopilotCustomQuery(e) {
@@ -627,33 +627,33 @@ export async function handleCopilotCustomQuery(e) {
 function getLocalCopilotFallback(queryText) {
   const text = queryText.toLowerCase();
   if (text.includes("b2b") || text.includes("voice") || text.includes("gst") || text.includes("ptp") || text.includes("dispute") || text.includes("invoice")) {
-    return "🎙️ **Autonomous B2B Hinglish Voice & Promise-to-Pay (PTP) Engine**:\n\n" +
+    return " **Autonomous B2B Hinglish Voice & Promise-to-Pay (PTP) Engine**:\n\n" +
            "When high-ticket commercial invoices (>₹50,000) encounter payment failure:\n" +
            "1. **Hinglish Acoustic NLP**: Isolate billing objections and extract 15-character GSTIN.\n" +
            "2. **CFO Approval Gate**: Places immutable MutationProposal in CFO queue.\n" +
            "3. **PTP Calendar Lock**: Locks auto-debit commitment for Friday 11:00 AM IST.\n" +
            "4. **Reminder Suppression**: Pauses nudges until PTP window.";
   } else if (text.includes("sbi") || text.includes("hdfc") || text.includes("504") || text.includes("weibull") || text.includes("hazard") || text.includes("retry") || text.includes("downtime") || text.includes("outage")) {
-    return "⚡ **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n" +
+    return " **Fast-Loop Telemetry & Weibull Hazard Retries**:\n\n" +
            "Traditional gateways retry failed bank charges instantly, causing cascading 504 timeouts.\n\n" +
            "OmniRevive-OS uses a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
            "1. Calculates recovery half-life dynamics from live NPCI switch signals.\n" +
            "2. Shifts the retry window to the mathematical peak at **+45 minutes**.\n" +
            "3. Boosts cohort recovery yield from 42.24% baseline to **78.39%**.";
   } else if (text.includes("whatsapp") || text.includes("qr") || text.includes("upi") || text.includes("soft") || text.includes("balance")) {
-    return "📱 **1-Click WhatsApp Recovery & Dynamic Dense UPI QR**:\n\n" +
+    return " **1-Click WhatsApp Recovery & Dynamic Dense UPI QR**:\n\n" +
            "For consumer soft declines (e.g., card insufficient balance):\n" +
            "1. Halts expensive card reprocessing loops.\n" +
            "2. Instantly generates a verified WhatsApp template with a pre-filled UPI Intent link (`upi://pay?...`) and dynamic QR code.\n" +
            "3. Consumer completes payment on Google Pay, PhonePe, or Paytm in under 3 seconds.";
   } else if (text.includes("mutex") || text.includes("storm") || text.includes("double") || text.includes("concurrency") || text.includes("lock")) {
-    return "🛡️ **Distributed Atomic CAS Mutex & Zero Double-Debits**:\n\n" +
+    return " **Distributed Atomic CAS Mutex & Zero Double-Debits**:\n\n" +
            "During concurrent webhook storms:\n" +
            "1. Thread 1 acquires in-memory atomic CAS lock in 0.23ms.\n" +
            "2. Threads 2 through 50 are instantly rejected with **HTTP 409 Conflict**.\n" +
            "3. Guaranteed **0 double-debit collisions** under extreme network chaos.";
   } else {
-    return `🤖 **OmniRevive Copilot Architectural Intelligence**:\n\n` +
+    return ` **OmniRevive Copilot Architectural Intelligence**:\n\n` +
            "OmniRevive-OS is actively operating as a **3-Tier Deterministic Control Plane**:\n" +
            "• **Fast-Loop**: Webhook ingestion with Weibull hazard-adjusted retries (+45m on bank downtime).\n" +
            "• **Deep-Loop**: Conversational Hinglish B2B voice resolution with atomic invoice mutation & PTP locks.\n" +

@@ -39,7 +39,7 @@ export const evalDashboard = {
         this.latestData = res.data;
         this.renderMetrics(res.data);
         if (manual) {
-          showToast("✨ AI Evaluation metrics refreshed", "success");
+          showToast(" AI Evaluation metrics refreshed", "success");
         }
       }
       this.loadRecentTraces();
@@ -65,7 +65,7 @@ export const evalDashboard = {
       `;
     }
 
-    showToast("🧪 Dispatched 25-Turn Adversarial & FSM Evaluation Harness...", "info");
+    showToast(" Dispatched 25-Turn Adversarial & FSM Evaluation Harness...", "info");
 
     try {
       const payload = {
@@ -82,7 +82,7 @@ export const evalDashboard = {
         this.renderTraces(res.data.recent_traces);
 
         showToast(
-          `✅ Evaluation Suite Completed (${res.execution_duration_ms}ms) • 100% Passed`,
+          `✓ Evaluation Suite Completed (${res.execution_duration_ms}ms) • 100% Passed`,
           "success"
         );
 
@@ -94,16 +94,16 @@ export const evalDashboard = {
           });
         }
       } else {
-        showToast("⚠️ Evaluation suite returned warnings", "warning");
+        showToast(" Evaluation suite returned warnings", "warning");
       }
     } catch (err) {
       console.error("[EVAL_SUITE_ERROR]", err);
-      showToast("❌ Failed to execute evaluation suite: " + (err.message || err), "error");
+      showToast("✕ Failed to execute evaluation suite: " + (err.message || err), "error");
     } finally {
       this.isEvaluating = false;
       if (runBtn) {
         runBtn.disabled = false;
-        runBtn.innerHTML = originalText || `<span>⚡ Run 25-Turn Eval Suite</span>`;
+        runBtn.innerHTML = originalText || `<span> Run 25-Turn Eval Suite</span>`;
       }
     }
   },
