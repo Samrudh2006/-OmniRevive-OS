@@ -26,7 +26,7 @@ def _init_voice_cache():
         ("te-IN-ShrutiNeural", "నమస్కారం అండి, మీ ఎనభై ఐదు వేల రూపాయల ఇన్‌వాయిస్ చెల్లింపులో జీఎస్టీ నంబర్ సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్ లింక్ వాట్సాప్ ద్వారా పంపించాము."): "telugu_demo.mp3",
         ("te-IN-ShrutiNeural", '"నమస్కారం అండి, మీ ₹85,000 ఇన్‌వాయిస్ చెల్లింపులో GSTIN సరిపోలకపోవడం వల్ల హోల్డ్ అయింది. మేము సరిదిద్దిన ఇన్‌వాయిస్‌ను వాట్సాప్ లింక్ ద్వారా పంపించాము..."'): "telugu_demo.mp3",
         ("hi-IN-SwaraNeural", "नमस्ते, आपके बयालीस हजार पांच सौ रुपये के भुगतान में एचडीएफसी स्विच टाइमआउट हुआ था। हमारी एआई प्रणाली ने वैकल्पिक यूपीआई रेल तैयार की है।"): "hindi_demo.mp3",
-        ("hi-IN-SwaraNeural", '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने 0.23ms में वैकल्पिक UPI रेल तैयार की है..."'): "hindi_demo.mp3",
+        ("hi-IN-SwaraNeural", '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने कुछ ही पल में वैकल्पिक UPI रेल तैयार की है..."'): "hindi_demo.mp3",
         ("en-IN-NeerjaExpressiveNeural", "Hello finance team, we have identified a soft decline on your mandate. Re-routing recovery link via dynamic UPI."): "english_demo.mp3",
         ("en-IN-NeerjaExpressiveNeural", '"Hi OmniRevive, we are updating our ERP vendor registration. Please re-route the payment link via Dynamic UPI."'): "english_demo.mp3"
     }

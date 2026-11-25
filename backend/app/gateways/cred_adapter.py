@@ -10,7 +10,7 @@ class CredPayAdapter(PaymentGateway):
     """
     CRED Pay & High-Ticket Settlement Gateway Adapter.
     Tailored for CRED's high-ticket members (credit card repayments, CRED Pay merchant checkouts,
-    and P2P settlements). Enforces 0.23ms CAS Mutex locks to eliminate double-debits during
+    and P2P settlements). Enforces CAS Mutex locks to eliminate double-debits during
     concurrent payment storms and enforces mathematical discount caps (<10% or ₹500).
     """
 

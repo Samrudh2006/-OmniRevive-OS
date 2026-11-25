@@ -163,7 +163,7 @@ class MultiRailRouter(PaymentGateway):
                             "label": "Simulate High-Ticket Routing (>₹50k)",
                             "badge": "Adaptive Context",
                             "amount": 85000.0,
-                            "desc": "Dispatches ₹85k transaction; Omnitrix detects high-ticket threshold and routes to CRED Pay with 0.23ms CAS Mutex."
+                            "desc": "Dispatches ₹85k transaction; Omnitrix detects high-ticket threshold and routes to CRED Pay with a CAS Mutex (simulated)."
                         },
                         {
                             "scenario": "test_intl_routing",
@@ -258,14 +258,14 @@ class MultiRailRouter(PaymentGateway):
                     "tier": "Tier-1 Heavyweight",
                     "metrics": {
                         "throughput": "20,000 TPS",
-                        "decision_latency": "0.23ms",
+                        "decision_latency": "simulated (demo)",
                         "failover_sla": "100.0% Mutex",
                         "concurrency": "0 Double-Debits CAS"
                     },
                     "core_feature": "Atomic CAS Mutex (0 Double-Debits), P2P Credit Recovery & Discount Clamping (min(10%, ₹500))",
                     "deep_dive": {
                         "problem": "High-ticket credit card bills (>₹50,000) trigger race conditions during webhook retry storms, resulting in catastrophic double-debits.",
-                        "architecture": "0.23ms Compare-And-Swap (CAS) in-memory mutex backed by cryptographic hash-chained SQLite WAL ledgers.",
+                        "architecture": "Compare-And-Swap (CAS) in-memory mutex backed by cryptographic hash-chained SQLite WAL ledgers.",
                         "algorithm": "Atomic Test-and-Set with HTTP 409 Conflict Rejection + Strict Mathematical Incentive Clamping: Discount = min(10%, ₹500).",
                         "pipeline_flow": "Payment Attempt ➔ Atomic CAS Mutex ➔ If Locked: HTTP 409 ➔ If Free: Settle & Audit Hash Chain",
                         "code_snippet": "if not cas_lock.acquire(key): raise HTTPException(409, 'Double debit blocked')",
@@ -277,7 +277,7 @@ class MultiRailRouter(PaymentGateway):
                             "label": "Simulate 10x Concurrent CAS Race (0 Double-Debits)",
                             "badge": "Mutex Proof",
                             "amount": 95000.0,
-                            "desc": "Fires concurrent debit storm; verifies 0.23ms CAS Mutex locks transaction 1 and rejects 9 duplicates with HTTP 409."
+                            "desc": "Fires concurrent debit storm; verifies CAS Mutex locks transaction 1 and rejects 9 duplicates with HTTP 409."
                         },
                         {
                             "scenario": "test_clamping",

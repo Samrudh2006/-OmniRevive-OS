@@ -100,7 +100,7 @@ def simulate_multi_rail_recovery(req: SimulateRecoveryRequest):
                     "ticket_amount_inr": req.amount,
                     "concurrent_webhook_workers": 10,
                     "cas_test_and_set": {
-                        "thread_1": "ACQUIRED_LOCK (0.23ms) ➔ 200 OK Settled",
+                        "thread_1": "ACQUIRED_LOCK ➔ 200 OK Settled",
                         "thread_2_to_10": "REJECTED (HTTP 409 Conflict: Mutex Held) ➔ 0 Double-Debits"
                     },
                     "double_debits_prevented": 9,
@@ -232,7 +232,7 @@ def simulate_multi_rail_recovery(req: SimulateRecoveryRequest):
                         "current_npci_health": "NOMINAL (99.85%)"
                     },
                     "optimal_rail_dispatched": "CRED_PAY",
-                    "decision_reasoning": "Ticket > ₹50,000 requires 0.23ms CAS Mutex to eliminate double-debit risk.",
+                    "decision_reasoning": "Ticket > ₹50,000 requires CAS Mutex to eliminate double-debit risk.",
                     "http_status": 200,
                     "invariants_verified": ["CONTEXT_AWARE_OPTIMAL_DISPATCH"]
                 },

@@ -122,7 +122,7 @@ FAILURE_MODES = [
     ("UPI_U16_INSUFFICIENT_FUNDS", "WhatsApp UPI Deep Link Dispatched", "1-Click WhatsApp"),
     ("B2B_INVOICE_GST_DISPUTE", "Hinglish Autonomous Voice Negotiation", "Deep-Loop Voice"),
     ("CARD_NETWORK_TOKEN_EXPIRED", "Cryptographic Network Token Re-Minted", "Card Lifecycle"),
-    ("CAS_CONCURRENCY_STORM", "Atomic CAS Mutex Lock Acquired (0.23ms)", "Zero Double-Debit")
+    ("CAS_CONCURRENCY_STORM", "Atomic CAS Mutex Lock Acquired (simulated)", "Zero Double-Debit")
 ]
 
 async def transaction_event_generator() -> AsyncGenerator[str, None]:
