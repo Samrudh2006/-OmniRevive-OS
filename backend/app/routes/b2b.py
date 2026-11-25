@@ -141,10 +141,10 @@ async def get_invoice_details(invoice_id: str, request: Request):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     inv = invoice_store.get_invoice(invoice_id)
     if not inv:
-        inv = invoice_store.get_invoice("inv_enterprise_998")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Invoice {invoice_id} not found")
     return {
         "success": True,
-        "data": inv.model_dump() if inv else {},
+        "data": inv.model_dump(),
         "trace_id": trace_id,
         "timestamp": time.time()
     }
@@ -153,6 +153,9 @@ async def get_invoice_details(invoice_id: str, request: Request):
 async def mutate_invoice_endpoint(invoice_id: str, req: InvoiceMutationRequest, request: Request):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     _, actor, _ = auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
+    # The store auto-creates placeholder invoices for internal flows; the public API must not mint invoices.
+    if not invoice_store.get_invoice(invoice_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Invoice {invoice_id} not found")
     try:
         inv = invoice_store.mutate_invoice_field(
             invoice_id=invoice_id,
