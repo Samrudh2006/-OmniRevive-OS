@@ -5,12 +5,16 @@ from typing import Optional
 from pydantic import BaseModel, Field
 from fastapi import APIRouter, Request, HTTPException
 from backend.app.copilot.action_agent import action_router
+from backend.app.services.circuit_breaker import CircuitBreaker
 from backend.app.services.auth_service import AuthenticationService as auth_service
 
 router = APIRouter()
 
+# Skip slow local-LLM probes for a while after repeated failures (e.g. no Ollama on the host).
+local_ai_breaker = CircuitBreaker("local_ai", failure_threshold=2, reset_seconds=60.0)
+
 class CopilotChatRequest(BaseModel):
-    query: str = Field(..., description="Natural language question or operator instruction for Razor Copilot")
+    query: str = Field(..., max_length=2000, description="Natural language question or operator instruction for Razor Copilot")
 
 @router.post("/api/v1/copilot/chat", tags=["AI Copilot & SRE Assistant"], summary="Hybrid Ollama LLM + Domain Neural Index Chat")
 async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
@@ -54,60 +58,65 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
     local_ai_response = None
     local_ai_source = None
 
-    # Step A: Query Local Ollama API (http://localhost:11434)
-    try:
-        async with httpx.AsyncClient(timeout=4.0) as client:
-            # Auto-detect available models from Ollama tags
-            active_model = "llama3"
-            try:
-                tags_resp = await client.get("http://localhost:11434/api/tags")
-                if tags_resp.status_code == 200:
-                    models = tags_resp.json().get("models", [])
-                    if models:
-                        active_model = models[0].get("name", "llama3")
-            except Exception:
-                pass
+    if local_ai_breaker.allow():
+        # Step A: Query Local Ollama API (http://localhost:11434)
+        try:
+            async with httpx.AsyncClient(timeout=4.0) as client:
+                # Auto-detect available models from Ollama tags
+                active_model = "llama3"
+                try:
+                    tags_resp = await client.get("http://localhost:11434/api/tags")
+                    if tags_resp.status_code == 200:
+                        models = tags_resp.json().get("models", [])
+                        if models:
+                            active_model = models[0].get("name", "llama3")
+                except Exception:
+                    pass
 
-            resp = await client.post(
-                "http://localhost:11434/api/generate",
-                json={
-                    "model": active_model,
-                    "prompt": f"System: {system_prompt}\n\nUser: {query}\n\nCopilot Response:",
-                    "stream": False
-                }
-            )
-            if resp.status_code == 200:
-                out = resp.json().get("response", "").strip()
-                if out:
-                    local_ai_response = out
-                    local_ai_source = f"local_ollama ({active_model})"
-    except Exception:
-        local_ai_response = None
+                resp = await client.post(
+                    "http://localhost:11434/api/generate",
+                    json={
+                        "model": active_model,
+                        "prompt": f"System: {system_prompt}\n\nUser: {query}\n\nCopilot Response:",
+                        "stream": False
+                    }
+                )
+                if resp.status_code == 200:
+                    out = resp.json().get("response", "").strip()
+                    if out:
+                        local_ai_response = out
+                        local_ai_source = f"local_ollama ({active_model})"
+        except Exception:
+            local_ai_response = None
 
-    # Step B: Query Local OpenAI-compatible endpoint (LM Studio / LocalAI / llama.cpp on port 1234 or 8080)
-    if not local_ai_response:
-        for local_endpoint in ["http://localhost:1234/v1/chat/completions", "http://localhost:11434/v1/chat/completions"]:
-            try:
-                async with httpx.AsyncClient(timeout=3.0) as client:
-                    resp = await client.post(
-                        local_endpoint,
-                        json={
-                            "messages": [
-                                {"role": "system", "content": system_prompt},
-                                {"role": "user", "content": query}
-                            ],
-                            "temperature": 0.3,
-                            "max_tokens": 512
-                        }
-                    )
-                    if resp.status_code == 200:
-                        choices = resp.json().get("choices", [])
-                        if choices:
-                            local_ai_response = choices[0].get("message", {}).get("content", "").strip()
-                            local_ai_source = "local_ai_studio"
-                            break
-            except Exception:
-                continue
+        # Step B: Query Local OpenAI-compatible endpoint (LM Studio / LocalAI / llama.cpp on port 1234 or 8080)
+        if not local_ai_response:
+            for local_endpoint in ["http://localhost:1234/v1/chat/completions", "http://localhost:11434/v1/chat/completions"]:
+                try:
+                    async with httpx.AsyncClient(timeout=3.0) as client:
+                        resp = await client.post(
+                            local_endpoint,
+                            json={
+                                "messages": [
+                                    {"role": "system", "content": system_prompt},
+                                    {"role": "user", "content": query}
+                                ],
+                                "temperature": 0.3,
+                                "max_tokens": 512
+                            }
+                        )
+                        if resp.status_code == 200:
+                            choices = resp.json().get("choices", [])
+                            if choices:
+                                local_ai_response = choices[0].get("message", {}).get("content", "").strip()
+                                local_ai_source = "local_ai_studio"
+                                break
+                except Exception:
+                    continue
+        if local_ai_response:
+            local_ai_breaker.record_success()
+        else:
+            local_ai_breaker.record_failure()
 
     if local_ai_response:
         return {
