@@ -1,5 +1,5 @@
 /* Design refresh: solid brand fills, flat surfaces, borders instead of glows. */
-:root { --brand: #38bdf8; --ink: #070e1c; --line: #1f2c40; }
+:root { --brand: #2bb5e6; --ink: #070e1c; --line: #1f2c40; }
 
 /* Buttons: solid brand fill, no gradient, no glow */
 .rzp-btn-primary, button.rzp-btn-primary {
@@ -49,3 +49,17 @@ button.footer-nav-link { background: none; border: 0; padding: 0; text-align: le
 .w-6.h-6.rounded-md, .w-6.h-6.rounded-lg, .w-8.h-8.rounded-xl, .w-8.h-8.rounded-lg, .w-9.h-9.rounded-xl, .w-10.h-10.rounded-xl {
   background: transparent !important; background-image: none !important; border-color: transparent !important;
 }
+
+/* theme toggle icon: sun shows in dark (switch to light), moon shows in light */
+button[onclick="toggleThemeMode()"]{color:#0f172a}
+html.dark button[onclick="toggleThemeMode()"]{color:#e2e8f0}
+.theme-ico,#theme-icon{display:inline-flex;align-items:center;justify-content:center;line-height:0}
+.theme-ico svg,#theme-icon svg{display:block;width:18px;height:18px}
+html.light .ico-sun{display:none!important}
+html.dark .ico-moon{display:none!important}
+
+/* house accent, replaces the stock sky-400 shade */
+:root{--accent:#2bb5e6}
+.text-sky-400,.dark\:text-sky-400:is(.dark *),.group:hover .group-hover\:text-sky-400,.dark\:group-hover\:text-sky-400:is(.dark .group:hover *){color:#2bb5e6}
+.bg-sky-400,.dark\:bg-sky-400:is(.dark *){background-color:#2bb5e6}
+.border-sky-400,.dark\:border-sky-400:is(.dark *){border-color:#2bb5e6}

@@ -110,8 +110,8 @@ export function renderWeibullCanvasChart() {
     grad.addColorStop(0, "rgba(2, 132, 199, 0.25)");
     grad.addColorStop(1, "rgba(2, 132, 199, 0.01)");
   } else {
-    grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
-    grad.addColorStop(1, "rgba(56, 189, 248, 0.02)");
+    grad.addColorStop(0, "rgba(43,181,230, 0.4)");
+    grad.addColorStop(1, "rgba(43,181,230, 0.02)");
   }
 
   ctx.beginPath();
@@ -135,7 +135,7 @@ export function renderWeibullCanvasChart() {
     if (idx === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   });
-  ctx.strokeStyle = isLight ? "#0284c7" : "#38bdf8";
+  ctx.strokeStyle = isLight ? "#0284c7" : "#2bb5e6";
   ctx.lineWidth = 2.5;
   ctx.stroke();
 

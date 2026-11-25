@@ -39,7 +39,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       title: "Failure Ingestion",
       subtitle: "Webhook / NPCI Signal",
       nx: 0.10, ny: 0.50,
-      color: "#38bdf8",
+      color: "#2bb5e6",
       icon: "",
       latency: "0.4ms",
       throughput: "1,240 tx/s",
@@ -228,7 +228,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
         ctx.strokeStyle = "rgba(245, 158, 11, 0.8)";
         ctx.lineWidth = 2.2;
       } else {
-        ctx.strokeStyle = "rgba(56, 189, 248, 0.25)";
+        ctx.strokeStyle = "rgba(43,181,230, 0.25)";
         ctx.lineWidth = 1.6;
       }
       ctx.stroke();
@@ -265,7 +265,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
 
       ctx.beginPath();
       ctx.arc(px, py, pkt.size, 0, Math.PI * 2);
-      ctx.fillStyle = chaosState === "HMAC_TAMPER" ? "#f43f5e" : (chaosState === "SBI_504" ? "#fbbf24" : "#38bdf8");
+      ctx.fillStyle = chaosState === "HMAC_TAMPER" ? "#f43f5e" : (chaosState === "SBI_504" ? "#fbbf24" : "#2bb5e6");
       ctx.shadowColor = ctx.fillStyle;
       ctx.shadowBlur = 8;
       ctx.fill();
@@ -313,7 +313,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
 
       // Node Subtitle / Metric
       ctx.font = "400 9px 'JetBrains Mono', monospace";
-      ctx.fillStyle = isHovered ? "#38bdf8" : "#64748b";
+      ctx.fillStyle = isHovered ? "#2bb5e6" : "#64748b";
       ctx.textBaseline = "top";
       ctx.fillText(n.latency, x, y + 22);
     });
@@ -344,7 +344,7 @@ export function initGraphifyDag(canvasId = "graphify-canvas") {
       ctx.font = "400 9.5px 'Plus Jakarta Sans', sans-serif";
       ctx.fillText(activeNode.subtitle, tx + 10, ty + 33);
 
-      ctx.fillStyle = "#38bdf8";
+      ctx.fillStyle = "#2bb5e6";
       ctx.font = "500 9px 'JetBrains Mono', monospace";
       ctx.fillText(`P99: ${activeNode.latency} • ${activeNode.throughput}`, tx + 10, ty + 48);
     }

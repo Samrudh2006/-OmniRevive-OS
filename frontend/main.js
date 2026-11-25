@@ -1117,7 +1117,7 @@ function renderTourOverlay(targetEl, step, index) {
     overlay.id = "guided-tour-overlay";
     overlay.className = "fixed inset-0 pointer-events-none z-[99998] transition-all duration-300";
     overlay.innerHTML = `
-      <div id="tour-spotlight-box" class="absolute rounded-2xl pointer-events-none transition-all duration-300 border-2 border-sky-400 shadow-[0_0_0_9999px_rgba(3,7,18,0.85),0_0_35px_rgba(56,189,248,0.7)] animate-pulse"></div>
+      <div id="tour-spotlight-box" class="absolute rounded-2xl pointer-events-none transition-all duration-300 border-2 border-sky-400 shadow-[0_0_0_9999px_rgba(3,7,18,0.85),0_0_35px_rgba(43,181,230,0.7)] animate-pulse"></div>
       <div id="tour-popover-card" class="absolute pointer-events-auto w-auto max-w-[92vw] sm:max-w-md rounded-2xl bg-white/95 dark:bg-[#0c182c]/95 backdrop-blur-xl border-2 border-sky-500/70 shadow-2xl p-4 sm:p-5 space-y-3.5 text-slate-900 dark:text-slate-100 transition-all duration-300 z-10">
         <div class="flex items-center justify-between border-b border-slate-200 dark:border-blue-900/50 pb-2.5">
           <div class="flex items-center gap-2">
@@ -1309,7 +1309,7 @@ export function triggerCelebrationConfetti() {
       particleCount: 75,
       spread: 80,
       origin: { y: 0.6 },
-      colors: ["#0c55ea", "#10b981", "#38bdf8", "#8b5cf6", "#f59e0b"]
+      colors: ["#0c55ea", "#10b981", "#2bb5e6", "#8b5cf6", "#f59e0b"]
     });
   }
 }

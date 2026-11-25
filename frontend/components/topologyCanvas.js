@@ -29,7 +29,7 @@ export function initFintech3DTopology() {
   });
 
   const nodes = [
-    { name: "Razorpay Core", x: 0, y: 0, z: 0, color: "#38bdf8", size: 9, pulse: 0 },
+    { name: "Razorpay Core", x: 0, y: 0, z: 0, color: "#2bb5e6", size: 9, pulse: 0 },
     { name: "HDFC Gateway (504)", x: -140, y: -50, z: 40, color: "#f59e0b", size: 6, pulse: 1 },
     { name: "SBI Switch", x: 130, y: -60, z: -30, color: "#10b981", size: 6, pulse: 2 },
     { name: "ICICI Rail", x: 140, y: 60, z: 50, color: "#06b6d4", size: 6, pulse: 3 },
@@ -41,7 +41,7 @@ export function initFintech3DTopology() {
     { from: 0, to: 1, progress: 0.1, speed: 0.008, color: "#f59e0b" },
     { from: 0, to: 2, progress: 0.5, speed: 0.012, color: "#10b981" },
     { from: 0, to: 3, progress: 0.8, speed: 0.010, color: "#06b6d4" },
-    { from: 0, to: 5, progress: 0.3, speed: 0.015, color: "#38bdf8" }
+    { from: 0, to: 5, progress: 0.3, speed: 0.015, color: "#2bb5e6" }
   ];
 
   let angleY = 0;
@@ -105,7 +105,7 @@ export function initFintech3DTopology() {
       ctx.beginPath();
       ctx.moveTo(p0.sx, p0.sy);
       ctx.lineTo(p.sx, p.sy);
-      ctx.strokeStyle = "rgba(56, 189, 248, 0.22)";
+      ctx.strokeStyle = "rgba(43,181,230, 0.22)";
       ctx.lineWidth = Math.max(1, p.scale * 1.5);
       ctx.stroke();
     }

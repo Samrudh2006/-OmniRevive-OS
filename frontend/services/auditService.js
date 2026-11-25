@@ -52,7 +52,7 @@ export async function refreshAuditLedger() {
             <td class="p-2.5 text-slate-700 dark:text-slate-300">${escapeHtml(dateStr)}, ${escapeHtml(timeStr)}</td>
             <td class="p-2.5 text-slate-700 dark:text-slate-300 font-medium">${escapeHtml(e.event_type)}</td>
             <td class="p-2.5 text-slate-900 dark:text-white font-medium">${escapeHtml(e.payment_id)}</td>
-            <td class="p-2.5 text-[#0c55ea] dark:text-[#38bdf8] font-mono">${escapeHtml(traceShort)}</td>
+            <td class="p-2.5 text-[#0c55ea] dark:text-[#2bb5e6] font-mono">${escapeHtml(traceShort)}</td>
             <td class="p-2.5 text-slate-900 dark:text-white">${escapeHtml(e.decision?.strategy || e.decision?.recommended_strategy || 'POISSON_RETRY')}</td>
             <td class="p-2.5 text-slate-600 dark:text-slate-300">${escapeHtml(e.decision?.confidence || 0.95)}</td>
             <td class="p-2.5"><span class="text-[#047857] dark:text-[#10b981] font-bold">${escapeHtml(e.policy_verdict)}</span></td>
