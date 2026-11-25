@@ -253,7 +253,7 @@ async def calculate_merchant_roi(
                 "retained_annual_subscribers": int((recovered_gmv / 2499.0) * 0.85)
             },
             "efficiency_metrics": {
-                "recovery_uplift_pct": "+36.15% (78.39% vs 42.24%)",
+                "recovery_uplift_pct": "illustrative (+36.15%, 78.39% vs 42.24%; not measured)",
                 "payback_period_days": "illustrative (not computed)",
                 "roi_multiple": "illustrative (not computed)"
             }
