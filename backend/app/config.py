@@ -43,6 +43,8 @@ class Settings(BaseSettings):
         "https://razorrevive-os.onrender.com"
     ]
     REDIS_URL: Optional[str] = None
+    # Inbound request timeout (seconds). 0 disables. Streaming endpoints are exempt.
+    REQUEST_TIMEOUT_SECONDS: float = 30.0
 
     MAX_RETRY_ATTEMPTS: int = 3
     MAX_DISCOUNT_PERCENT: float = 10.0

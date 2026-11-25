@@ -16,6 +16,7 @@ except ImportError:
 
 from backend.app.config import settings
 from backend.app.middleware.rate_limiter import SlidingWindowRateLimiter
+from backend.app.middleware.resilience import RequestResilienceMiddleware
 
 # Shared Telemetry Services and Metrics Singletons
 from backend.app.services.telemetry_service import (
@@ -237,6 +238,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(SlidingWindowRateLimiter)
+# Outermost: times every request (including 429s from the limiter) and records error-rate metrics
+app.add_middleware(RequestResilienceMiddleware)
 
 # Static Asset Serving & Dashboard Root
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend"))
