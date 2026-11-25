@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Privacy Policy | OmniRevive-OS Control Plane</title>
-  <meta name="description" content="OmniRevive-OS Privacy Policy — Strict data localization in AWS Mumbai/Hyderabad, zero PII retention in vector memory, DPDP Act 2023 compliance, and cryptographic audit security.">
+  <meta name="description" content="OmniRevive-OS privacy notice: open-source demo on simulated data, not audited or certified for production personal data.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://omnirevive-os.antideploy.com/privacy">
   
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://omnirevive-os.antideploy.com/privacy">
   <meta property="og:title" content="Privacy Policy | OmniRevive-OS Control Plane">
-  <meta property="og:description" content="Strict zero-trust data protection standards, sovereign AWS Indian data residency, and zero-PII vector memory guarantees.">
+  <meta property="og:description" content="Privacy notice for the OmniRevive-OS open-source demo, which runs on simulated data.">
   <meta property="og:image" content="https://omnirevive-os.antideploy.com/assets/aws_logo.png">
   <meta property="og:site_name" content="OmniRevive-OS">
   <meta property="og:locale" content="en_IN">
@@ -20,7 +20,7 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Privacy Policy | OmniRevive-OS Control Plane">
-  <meta name="twitter:description" content="Sovereign Indian data residency, DPDP Act 2023 compliance, and zero plaintext PII vector storage.">
+  <meta name="twitter:description" content="Privacy notice for the OmniRevive-OS open-source demo.">
   <meta name="twitter:image" content="https://omnirevive-os.antideploy.com/assets/aws_logo.png">
 
   <!-- Favicon -->
@@ -36,7 +36,7 @@
         "@id": "https://omnirevive-os.antideploy.com/privacy#webpage",
         "url": "https://omnirevive-os.antideploy.com/privacy",
         "name": "Privacy Policy | OmniRevive-OS",
-        "description": "OmniRevive-OS privacy policy governing zero-trust data localization, DPDP Act 2023 compliance, and cryptographic audit security.",
+        "description": "OmniRevive-OS privacy notice for the open-source demo, which runs on simulated data.",
         "isPartOf": {
           "@type": "WebSite",
           "@id": "https://omnirevive-os.antideploy.com/#website",
@@ -87,33 +87,33 @@
 
   <main class="space-y-8 text-slate-300 text-sm">
     <header>
-      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Privacy Policy & Sovereign Data Protection</h1>
+      <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Privacy Policy</h1>
       <p class="text-xs text-slate-400 mt-1 mono">Effective Date: October 9, 2026 · Version 1.2.0-Production</p>
     </header>
 
     <section class="space-y-3">
       <h2 class="text-xl font-bold text-white">1. Executive Overview</h2>
-      <p>OmniRevive-OS is an autonomous revenue recovery control plane engineered under strict zero-trust principles. We adhere to the Digital Personal Data Protection Act (DPDP) 2023, RBI Data Localization Directives, and GDPR standards.</p>
+      <p>OmniRevive-OS is an open-source project (github.com/Samrudh2006/-OmniRevive-OS). The hosted site is a demonstration that runs on simulated data. It has not been audited or certified against DPDP 2023, RBI data localization directives or GDPR, and it should not be given real customer or card data.</p>
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-xl font-bold text-white">2. Zero-PII Vector Memory Guarantee</h2>
-      <p>All transaction events ingested via webhook are cryptographically masked before semantic similarity evaluation in Qdrant Vector DB. Customer Phone Numbers, Virtual Payment Addresses (VPAs), PAN, and Credit Card Primary Account Numbers (PANs) are salted with SHA-256 HMAC tokens and never stored in plaintext vector memory.</p>
+      <h2 class="text-xl font-bold text-white">2. Vector Memory</h2>
+      <p>Past failure cases are compared by semantic similarity using a Qdrant vector store that the demo runs in memory, with a NumPy fallback. The demo data is synthetic. Review the source code before sending any real personal data through it.</p>
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-xl font-bold text-white">3. Data Localization & Sovereign Infrastructure</h2>
-      <p>All payment diagnostic data, state mutexes, and voice FSM audio buffers are processed within sovereign Indian data centers: AWS Mumbai (<code class="mono text-sky-400">ap-south-1</code>) and AWS Hyderabad (<code class="mono text-sky-400">ap-south-2</code>). No payment data is transmitted outside Indian jurisdiction.</p>
+      <h2 class="text-xl font-bold text-white">3. Hosting</h2>
+      <p>The demo is hosted on third-party platforms (Render and Antideploy) that choose their own data centre locations. We make no claim about where it runs. The repository includes an AWS Mumbai and Hyderabad edge-routing simulation, which is part of the demo and not a statement about the live hosting.</p>
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-xl font-bold text-white">4. Voice AI Data Retention</h2>
-      <p>Deep-Loop voice agent interactions (Telugu, Hindi, and English) are synthesized ephemerally. Audio recordings are held in volatile in-memory buffers during the negotiation turn and permanently destroyed once the Promise-to-Pay (PTP) hash is recorded in the Merkle audit ledger.</p>
+      <h2 class="text-xl font-bold text-white">4. Voice Demo</h2>
+      <p>The Deep-Loop voice demo (Telugu, Hindi and English) uses scripted scenarios. If you run it yourself with real voice or telephony providers, their own retention terms apply.</p>
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-xl font-bold text-white">5. Cryptographic Ledger Integrity</h2>
-      <p>Transaction state transformations are sealed into a tamper-evident SHA-256 Merkle chain. This ledger contains only mathematical proofs, event timestamps, and policy decisions, providing verifiable compliance without exposing raw financial credentials.</p>
+      <h2 class="text-xl font-bold text-white">5. Audit Ledger</h2>
+      <p>Audit events in the demo are hashed into a SHA-256 Merkle tree (RFC 6962 style) so inclusion proofs can be checked. The proof module is in backend/app/merkle_proof.py.</p>
     </section>
   </main>
 
