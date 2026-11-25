@@ -71,6 +71,8 @@ class RequestResilienceMiddleware(BaseHTTPMiddleware):
             )
         route = _route_label(request)
         status = response.status_code
+        if status == 429 and route == "unmatched":
+            route = "rate_limited_pre_routing"  # limiter answers before routing, so no route template exists
         HTTP_REQUESTS_TOTAL.labels(method=request.method, route=route, status_class=f"{status // 100}xx").inc()
         HTTP_LATENCY_SECONDS.labels(route=route).observe(time.perf_counter() - started)
         if status >= 500:

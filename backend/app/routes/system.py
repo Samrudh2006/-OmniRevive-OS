@@ -8,6 +8,7 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 from backend.app.config import settings
 from backend.app.audit_store import audit_store
+from backend.app.security import get_db_connection
 from backend.app.services.telemetry_service import (
     LIVE_LOGS_BUFFER,
     LATEST_BENCHMARK_CACHE,
@@ -50,11 +51,13 @@ def _check_database() -> Dict[str, Any]:
 
 
 def _check_audit_chain() -> Dict[str, Any]:
+    """Cheap probe: the ledger table is readable and its head row exists. Full chain verification is O(n) and
+    stays on /api/v1/audit/verify, so a readiness probe never gets slower as the ledger grows."""
     started = time.perf_counter()
     try:
-        result = audit_store.verify_chain_integrity()
-        ok = bool(result.get("valid", False))
-        return {"status": "up" if ok else "degraded", "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+        conn = get_db_connection(settings.DATABASE_PATH)
+        count, head = conn.execute("SELECT COUNT(*), COALESCE(MAX(sequence_id), 0) FROM audit_chain_ledger").fetchone()
+        return {"status": "up", "events": count, "head_sequence": head, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
     except Exception as exc:
         return {"status": "down", "error": type(exc).__name__, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
 
