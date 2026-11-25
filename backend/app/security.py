@@ -26,6 +26,8 @@ def get_db_connection(db_path: str) -> sqlite3.Connection:
         conn = sqlite3.connect(db_path, check_same_thread=False, timeout=10.0)
         conn.execute("PRAGMA journal_mode = WAL;")
         conn.execute("PRAGMA synchronous = NORMAL;")
+        conn.execute("PRAGMA busy_timeout = 10000;")  # wait for a competing writer instead of failing with "database is locked"
+        conn.execute("PRAGMA foreign_keys = ON;")
         setattr(_local, f"conn_{db_path}", conn)
     return getattr(_local, f"conn_{db_path}")
 
