@@ -28,6 +28,9 @@ ENV PYTHONUNBUFFERED=1
 COPY backend ./backend
 COPY frontend ./frontend
 COPY benchmarks ./benchmarks
+COPY aws ./aws
+COPY autonomous_ai_company_os ./autonomous_ai_company_os
+COPY docs ./docs
 
 # Ensure write permissions for SQLite WAL audit store
 RUN chown -R appuser:appuser /app
