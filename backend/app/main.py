@@ -137,7 +137,7 @@ async def add_security_headers(request: Request, call_next):
     else:
         response.headers["X-Frame-Options"] = "DENY"
     response.headers["X-XSS-Protection"] = "1; mode=block"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "geolocation=(), camera=(), microphone=(self), payment=(self)"
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin-allow-popups"
@@ -157,6 +157,9 @@ async def add_security_headers(request: Request, call_next):
     ]
     response.headers["Content-Security-Policy"] = "; ".join(csp_directives)
     response.headers["X-Trace-ID"] = trace_id
+    _p = request.url.path
+    if not (_p == "/" or _p.startswith(("/assets", "/static", "/pages", "/docs", "/copilot_avatar", "/aws_logo", "/robots.txt", "/sitemap.xml", "/llms", "/.well-known"))):
+        response.headers["Cross-Origin-Resource-Policy"] = "same-site"
     if request.url.path.startswith("/assets") or request.url.path.startswith("/static"):
         if "v=" in str(request.query_params):
             response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
@@ -165,10 +168,16 @@ async def add_security_headers(request: Request, call_next):
     return response
 
 # Standardized Error Handling Middleware & Exception Handlers
-@app.exception_handler(HTTPException)
-async def http_exception_handler(request: Request, exc: HTTPException):
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+@app.exception_handler(StarletteHTTPException)
+async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     log_system_event("WARN", "HTTP", f"HTTP {exc.status_code}: {exc.detail}", trace_id=trace_id)
+    if exc.status_code == 404 and "text/html" in request.headers.get("accept", "") and not request.url.path.startswith(("/api", "/v1", "/communication")):
+        _nf = os.path.join(frontend_dir, "404.html")
+        if os.path.exists(_nf):
+            return FileResponse(_nf, status_code=404, media_type="text/html; charset=utf-8", headers={"X-Trace-ID": trace_id})
     return JSONResponse(
         status_code=exc.status_code,
         content={
