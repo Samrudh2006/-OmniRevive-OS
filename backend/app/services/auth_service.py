@@ -50,9 +50,9 @@ class AuthenticationService:
 
         # Valid credentials provided with constant-time comparison (no wildcard startswith)
         if provided_token:
-            if hmac.compare_digest(provided_token, configured_cfo_key):
+            if hmac.compare_digest(provided_token.encode("utf-8"), configured_cfo_key.encode("utf-8")):
                 return True, "Role::CFO", "PRODUCTION"
-            if hmac.compare_digest(provided_token, configured_sre_key):
+            if hmac.compare_digest(provided_token.encode("utf-8"), configured_sre_key.encode("utf-8")):
                 role = "Role::Finance_Officer" if required_role == "Role::Finance_Officer" else "Role::SRE_Admin"
                 return True, role, "PRODUCTION"
             # Invalid credentials explicitly provided -> reject with 403 Forbidden even in demo mode
