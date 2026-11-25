@@ -43,7 +43,7 @@ import {
 import {
   initLiveTelemetryStream,
   toggleCommandPalette
-} from "./services/liveStreamClient.js?v=2.1.0";
+} from "./services/liveStreamClient.js?v=2.1.1";
 
 import {
   fetchCFOQueue,

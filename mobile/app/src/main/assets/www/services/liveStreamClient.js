@@ -64,26 +64,22 @@ async function initBankPingerLoop() {
         const data = await resp.json();
         const rails = data.rails || [];
         
-        // Update HDFC Chip
-        const hdfc = rails.find(r => r.rail.includes("Razorpay") || r.rail.includes("HDFC"));
-        const hdfcEl = document.getElementById("os-rail-hdfc");
-        if (hdfcEl) {
-          if (hdfc && hdfc.status === "Healthy") {
-            hdfcEl.className = "px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mono font-bold transition-all";
-            hdfcEl.innerText = `HDFC: ${Math.round(hdfc.latency_ms)}ms`;
-          } else {
-            hdfcEl.className = "px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 mono font-bold transition-all";
-            hdfcEl.innerText = "HDFC: 504";
-          }
-        }
+        const railUp = r => r && (r.status === "Operational" || r.status === "Degraded") && r.latency_ms != null;
+        const setChip = (el, label, r, fallbackClass) => {
+          if (!el) return;
+          const ok = railUp(r);
+          el.className = ok
+            ? "px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mono font-bold transition-all"
+            : "px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 mono font-bold transition-all";
+          el.innerText = ok ? `${label}: ${Math.round(r.latency_ms)}ms` : `${label}: n/a`;
+        };
 
-        // Update SBI Chip
-        const sbi = rails.find(r => r.rail.includes("PhonePe") || r.rail.includes("SBI"));
-        const sbiEl = document.getElementById("os-rail-sbi");
-        if (sbiEl) {
-          const lat = sbi ? `${Math.round(sbi.latency_ms)}ms` : "99.8%";
-          sbiEl.innerText = `SBI: ${lat}`;
-        }
+        // Rail chips use the real rail names returned by the probe
+        const razorpay = rails.find(r => r.rail.includes("Razorpay"));
+        setChip(document.getElementById("os-rail-hdfc"), "Razorpay", razorpay);
+
+        const phonepe = rails.find(r => r.rail.includes("PhonePe"));
+        setChip(document.getElementById("os-rail-sbi"), "PhonePe", phonepe);
 
         // CAS Mutex Lock Latency
         const casEl = document.getElementById("os-rail-cas");
