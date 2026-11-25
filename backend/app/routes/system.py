@@ -273,7 +273,7 @@ Disallow: /api/v1/internal/
 
 # Sitemap & AI Search LLM Discovery
 Sitemap: {base_url}/sitemap.xml
-llms-txt: {base_url}/llms.txt
+# llms-txt: {base_url}/llms.txt
 """
     return Response(content=content, media_type="text/plain")
 
