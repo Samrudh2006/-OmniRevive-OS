@@ -378,5 +378,5 @@ python cli.py chat
 ---
 
 <div align="center">
-  <sub>Built with mathematical rigor for the Razorpay AI Buildathon 2026.</sub>
+  <sub>Built with mathematical rigor for the Hack With Aditya Hackathon 2026.</sub>
 </div>
