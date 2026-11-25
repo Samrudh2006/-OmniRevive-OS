@@ -1,3 +1,4 @@
+import threading
 import time
 import logging
 from typing import Dict, Any, List, Optional, Set
@@ -55,6 +56,7 @@ class B2BReceivablesStateMachine:
             pass
 
     def __init__(self, db_path: Optional[str] = None):
+        self._transition_lock = threading.RLock()
         self.db_path = db_path
         self._active_states: Dict[str, str] = {}
         self._transition_history: Dict[str, List[B2BStateTransition]] = {}
@@ -121,6 +123,18 @@ class B2BReceivablesStateMachine:
         actor: str = "SYSTEM_AUTOMATION",
         metadata: Optional[Dict[str, Any]] = None
     ) -> B2BStateTransition:
+        # Serialise transitions: read-validate-write must be atomic or two racers can both pass validation.
+        with self._transition_lock:
+            return self._transition_locked(invoice_id, to_state, trigger_event, actor, metadata)
+
+    def _transition_locked(
+        self,
+        invoice_id: str,
+        to_state: str,
+        trigger_event: str,
+        actor: str = "SYSTEM_AUTOMATION",
+        metadata: Optional[Dict[str, Any]] = None
+    ) -> B2BStateTransition:
         """
         Executes a validated state transition with durable SQLite WAL persistence. Raises ValueError on invalid transition.
         """
@@ -146,11 +160,6 @@ class B2BReceivablesStateMachine:
             metadata=metadata or {}
         )
 
-        self._active_states[invoice_id] = to_state
-        if invoice_id not in self._transition_history:
-            self._transition_history[invoice_id] = []
-        self._transition_history[invoice_id].append(transition_record)
-
         # Durable SQLite persistence
         try:
             import json
@@ -166,7 +175,14 @@ class B2BReceivablesStateMachine:
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, (invoice_id, current_state, to_state, trigger_event, actor, now, json.dumps(metadata or {})))
         except Exception as e:
+            # Do not advance in-memory state when the durable write failed, or memory and DB diverge.
             logger.error(f"[B2B_FSM_PERSISTENCE_ERROR] Failed to persist state for {invoice_id}: {e}")
+            raise RuntimeError(f"Could not persist transition for {invoice_id}") from e
+
+        self._active_states[invoice_id] = to_state
+        if invoice_id not in self._transition_history:
+            self._transition_history[invoice_id] = []
+        self._transition_history[invoice_id].append(transition_record)
 
         logger.info(f"[B2B_FSM] Invoice {invoice_id}: {current_state} -> {to_state} via {trigger_event}")
         return transition_record
