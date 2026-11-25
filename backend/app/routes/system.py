@@ -3,6 +3,7 @@ import time
 import uuid
 from typing import Dict, Any, Optional
 from fastapi import APIRouter, Request, Response
+from fastapi.responses import JSONResponse
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 from backend.app.config import settings
@@ -31,6 +32,71 @@ async def healthcheck(request: Request):
         "trace_id": trace_id,
         "timestamp": time.time()
     }
+
+def _check_database() -> Dict[str, Any]:
+    """Round-trip a trivial query on the primary SQLite store, with latency."""
+    import sqlite3
+    started = time.perf_counter()
+    try:
+        conn = sqlite3.connect(settings.DATABASE_PATH, timeout=2.0)
+        try:
+            conn.execute("SELECT 1").fetchone()
+            journal = conn.execute("PRAGMA journal_mode").fetchone()[0]
+        finally:
+            conn.close()
+        return {"status": "up", "journal_mode": journal, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+    except Exception as exc:  # pragma: no cover - exercised via monkeypatch in tests
+        return {"status": "down", "error": type(exc).__name__, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+
+
+def _check_audit_chain() -> Dict[str, Any]:
+    started = time.perf_counter()
+    try:
+        result = audit_store.verify_chain_integrity()
+        ok = bool(result.get("valid", False))
+        return {"status": "up" if ok else "degraded", "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+    except Exception as exc:
+        return {"status": "down", "error": type(exc).__name__, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+
+
+def _check_redis() -> Dict[str, Any]:
+    """Redis is optional: report 'not_configured' rather than failing readiness."""
+    if not settings.REDIS_URL:
+        return {"status": "not_configured"}
+    started = time.perf_counter()
+    try:
+        import redis
+        client = redis.Redis.from_url(settings.REDIS_URL, socket_timeout=0.5, socket_connect_timeout=0.5)
+        client.ping()
+        return {"status": "up", "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+    except Exception as exc:
+        return {"status": "degraded", "error": type(exc).__name__, "latency_ms": round((time.perf_counter() - started) * 1000, 2)}
+
+
+@router.get("/health/ready", tags=["System & Telemetry"], summary="Readiness Probe With Dependency Checks")
+@router.get("/api/v1/health/ready", tags=["System & Telemetry"], summary="Readiness Probe API Alias")
+async def readiness(request: Request):
+    """
+    Readiness probe. 503 when a required dependency (database, audit chain) is down;
+    optional dependencies (Redis) only mark the response 'degraded'.
+    """
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    checks = {
+        "database": _check_database(),
+        "audit_chain": _check_audit_chain(),
+        "redis": _check_redis(),
+    }
+    required_ok = all(checks[k]["status"] == "up" for k in ("database", "audit_chain"))
+    optional_ok = checks["redis"]["status"] in ("up", "not_configured")
+    status_label = "ready" if required_ok and optional_ok else ("degraded" if required_ok else "not_ready")
+    body = {
+        "success": required_ok,
+        "data": {"status": status_label, "checks": checks, "service": "OmniRevive-OS"},
+        "trace_id": trace_id,
+        "timestamp": time.time(),
+    }
+    return JSONResponse(content=body, status_code=200 if required_ok else 503)
+
 
 @router.get("/metrics", tags=["System & Telemetry"], summary="Prometheus SRE Metrics Exposition")
 async def prometheus_metrics():

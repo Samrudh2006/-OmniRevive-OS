@@ -66,7 +66,7 @@ class SlidingWindowRateLimiter(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         # Exclude static assets and health checks from rate limiting
         path = request.url.path
-        if path.startswith("/static") or path.startswith("/assets") or path in ["/health", "/api/v1/health", "/metrics", "/"]:
+        if path.startswith("/static") or path.startswith("/assets") or path in ["/health", "/api/v1/health", "/health/ready", "/api/v1/health/ready", "/metrics", "/"]:
             return await call_next(request)
 
         client_id = self._get_client_id(request)
