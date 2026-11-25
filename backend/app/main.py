@@ -2,6 +2,7 @@ import os
 import uuid
 import time
 import logging
+import re
 from typing import Dict, Any, Optional, List
 
 from fastapi import FastAPI, HTTPException, Request, status, Response
@@ -128,7 +129,10 @@ Universal Autonomous AI Revenue Recovery Control Plane with Zero-Trust Guardrail
 # Enterprise Security Headers Middleware
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
-    trace_id = request.headers.get("X-Trace-ID", f"tr_{uuid.uuid4().hex[:12]}")
+    trace_id = request.headers.get("X-Trace-ID", "")
+    if not re.fullmatch(r"[A-Za-z0-9_.\-]{1,64}", trace_id):
+        # Reject oversized or odd client values so they cannot forge log lines.
+        trace_id = f"tr_{uuid.uuid4().hex[:12]}"
     request.state.trace_id = trace_id
     
     response: Response = await call_next(request)
