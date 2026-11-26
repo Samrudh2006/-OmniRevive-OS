@@ -906,15 +906,15 @@ export function openFeatureDetailModal(featureKey) {
     <!-- Modal Box Shell (Uses semantic active theme tokens) -->
     <div id="feature-detail-modal-box" class="relative z-10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 my-auto max-h-[90vh] flex flex-col overflow-hidden bg-white dark:bg-[#060d1d] border border-slate-200 dark:border-slate-800 shadow-2xl" role="dialog" aria-modal="true" onclick="event.stopPropagation()">
       
-      <!-- Background Glowing Orbs -->
-      <div class="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none"></div>
+      <!-- Background Glowing Orbs (Dark mode only, behind content) -->
+      <div class="hidden dark:block absolute -top-32 -left-32 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl pointer-events-none -z-10"></div>
+      <div class="hidden dark:block absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none -z-10"></div>
 
       <!-- Modal Header -->
-      <div class="flex items-start justify-between gap-4 border-b border-border/40 pb-5 modal-header-region">
+      <div class="relative z-10 flex items-start justify-between gap-4 border-b border-border/40 pb-5 modal-header-region">
         <div class="flex items-center gap-3.5">
-          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-2xl shadow-inner shrink-0">
-            ${data.icon}
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-2xl text-[#0c55ea] dark:text-sky-400 shadow-inner shrink-0">
+            ${data.icon || `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`}
           </div>
           <div>
             <div class="flex items-center gap-2">
