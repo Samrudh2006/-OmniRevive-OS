@@ -249,14 +249,14 @@ export function toggleThemeMode() {
   if (isDark) {
     html.classList.remove("dark");
     html.classList.add("light");
-    
+
     if (text) text.textContent = "Dark";
     appState.setTheme("light");
     showToast("Switched to High-Contrast Light Mode", "info");
   } else {
     html.classList.remove("light");
     html.classList.add("dark");
-    
+
     if (text) text.textContent = "Light";
     appState.setTheme("dark");
     showToast("Switched to Deep Navy Dark Mode", "info");
@@ -284,11 +284,11 @@ export function applyThemePalette(paletteName, silent = false) {
   localStorage.setItem("omnirevive_palette", paletteName);
 
   if (paletteName === "cyber-obsidian") {
-    
+
     if (labelEl) labelEl.innerText = "Cyber Obsidian";
     if (!silent) showToast("Activated Cyber Obsidian Theme", "info");
   } else if (paletteName === "stripe-velvet") {
-    
+
     if (labelEl) labelEl.innerText = "Stripe Velvet";
     if (!silent) showToast("Activated Stripe Velvet Theme", "info");
   } else if (paletteName === "vercel-carbon") {
@@ -452,13 +452,13 @@ export function updateOverviewBankGrid() {
         const borderClass = isOutage
           ? "border-rose-900/60 bg-[#1c080b]"
           : isDegraded
-          ? "border-amber-900/60 bg-[#1e1208]"
-          : "border-[#142442] bg-[#081224]";
+            ? "border-amber-900/60 bg-[#1e1208]"
+            : "border-[#142442] bg-[#081224]";
         const badgeClass = isOutage
           ? "bg-[#380b10] text-rose-400 border border-rose-800"
           : isDegraded
-          ? "bg-[#25131d] text-amber-400 border border-amber-900/60"
-          : "bg-[#063b22] text-[#10b981] border border-[#0e5c36]";
+            ? "bg-[#25131d] text-amber-400 border border-amber-900/60"
+            : "bg-[#063b22] text-[#10b981] border border-[#0e5c36]";
         const valColor = isOutage ? "text-rose-400" : isDegraded ? "text-amber-400" : "text-emerald-400";
         const latColor = isOutage ? "text-rose-300" : isDegraded ? "text-amber-300" : "text-sky-300";
 
@@ -576,7 +576,7 @@ export async function injectSimulatedNPCIStatus() {
         incidents: state !== "HEALTHY" ? [`Injected ${state} condition`] : []
       })
     });
-  } catch (e) {}
+  } catch (e) { }
 
   updateOverviewBankGrid();
   refreshFullNPCISwitchView();
@@ -606,12 +606,12 @@ export async function refreshFullNPCISwitchView() {
             typeof s.avg_latency_ms === "number"
               ? s.avg_latency_ms
               : typeof s.latency_ms === "number"
-              ? s.latency_ms
-              : 180.0;
+                ? s.latency_ms
+                : 180.0;
         }
       });
     }
-  } catch (e) {}
+  } catch (e) { }
 
   const allBanks = Object.keys(BANK_SWITCH_STATES);
   container.innerHTML = allBanks
@@ -622,13 +622,13 @@ export async function refreshFullNPCISwitchView() {
       const borderClass = isOutage
         ? "border-rose-900/60 bg-[#1c080b]"
         : isDegraded
-        ? "border-amber-900/60 bg-[#1e1208]"
-        : "border-[#142442] bg-[#081224]";
+          ? "border-amber-900/60 bg-[#1e1208]"
+          : "border-[#142442] bg-[#081224]";
       const badgeClass = isOutage
         ? "bg-[#380b10] text-rose-400 border border-rose-800"
         : isDegraded
-        ? "bg-[#25131d] text-amber-400 border border-amber-900/60"
-        : "bg-[#063b22] text-[#10b981] border border-[#0e5c36]";
+          ? "bg-[#25131d] text-amber-400 border border-amber-900/60"
+          : "bg-[#063b22] text-[#10b981] border border-[#0e5c36]";
       const valColor = isOutage ? "text-rose-400" : isDegraded ? "text-amber-400" : "text-emerald-400";
       const barColor = isOutage ? "bg-rose-500" : isDegraded ? "bg-amber-500" : "bg-emerald-500";
 
@@ -1275,19 +1275,17 @@ export function filterCommandPalette(query) {
   listContainer.innerHTML = filteredCmdkList
     .map(
       (c, idx) => `
-      <div onclick="executePaletteCommand(${idx})" class="p-2.5 px-3 rounded-xl flex items-center justify-between cursor-pointer transition-all ${
-        idx === cmdkSelectedIndex
+      <div onclick="executePaletteCommand(${idx})" class="p-2.5 px-3 rounded-xl flex items-center justify-between cursor-pointer transition-all ${idx === cmdkSelectedIndex
           ? "bg-[#0c55ea] text-white font-bold shadow-md"
           : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#142442]"
-      }">
+        }">
         <div class="flex items-center gap-2.5 text-xs">
           <span class="text-sm">${c.icon}</span>
           <span>${c.label}</span>
         </div>
-        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase mono ${
-          idx === cmdkSelectedIndex
-            ? "bg-white/20 text-white"
-            : "bg-slate-200 dark:bg-[#0c182c] text-slate-500 dark:text-slate-400"
+        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase mono ${idx === cmdkSelectedIndex
+          ? "bg-white/20 text-white"
+          : "bg-slate-200 dark:bg-[#0c182c] text-slate-500 dark:text-slate-400"
         }">ACTION</span>
       </div>
     `
@@ -1501,59 +1499,79 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedTheme === "dark") {
     document.documentElement.classList.remove("light");
     document.documentElement.classList.add("dark");
-    
+
     if (text) text.textContent = "Light";
   } else {
     document.documentElement.classList.remove("dark");
     document.documentElement.classList.add("light");
-    
+
     if (text) text.textContent = "Dark";
   }
 
   const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
   applyThemePalette(savedPalette, true);
-
-  mountComponents();
-  landingGateway.init();
-  evalDashboard.init();
-  updateOverviewBankGrid();
-  refreshAuditLedger();
-  refreshFullNPCISwitchView();
-  renderWeibullCurve();
-  initFintech3DTopology();
-  updateLiveRoiCalculator();
-  animateAllKpis();
-  refreshCfoQueueUI();
-  try { initLiveTelemetryStream(); } catch(e) { console.warn("Live telemetry init error:", e); }
-
-  setInterval(refreshAuditLedger, 5000);
-  setInterval(refreshFullNPCISwitchView, 10000);
-  setInterval(refreshCfoQueueUI, 15000);
+  requestAnimationFrame(() => setTimeout(() => landingGateway.init(), 80));
+  const triggerBoot = () => bootDeferredControlPlane();
+  window.addEventListener("pointerdown", triggerBoot, { once: true, passive: true });
+  window.addEventListener("keydown", triggerBoot, { once: true, passive: true });
+  setTimeout(triggerBoot, 12000);
 });
+
+let _deferredBootDone = false;
+function inflateWorkspaceShell() {
+  const mount = document.getElementById("workspace-shell-mount");
+  const tmpl = document.getElementById("tmpl-app-workspace-shell");
+  if (mount && tmpl && !document.getElementById("app-workspace-shell")) {
+    mount.replaceWith(tmpl.content.cloneNode(true));
+  }
+}
+function bootDeferredControlPlane() {
+  inflateWorkspaceShell();
+  if (_deferredBootDone) return;
+  _deferredBootDone = true;
+  const tasks = [
+    () => mountComponents(),
+    () => evalDashboard.init(),
+    () => updateOverviewBankGrid(),
+    () => refreshAuditLedger(),
+    () => refreshFullNPCISwitchView(),
+    () => renderWeibullCurve(),
+    () => initFintech3DTopology(),
+    () => updateLiveRoiCalculator(),
+    () => animateAllKpis(),
+    () => refreshCfoQueueUI(),
+    () => { try { initLiveTelemetryStream(); } catch (e) { console.warn("Live telemetry init error:", e); } },
+  ];
+  let idx = 0;
+  function runNext() {
+    if (idx < tasks.length) {
+      try { tasks[idx++](); } catch (e) { console.warn("Deferred init error:", e); }
+      setTimeout(runNext, 0);
+    } else {
+      setInterval(refreshAuditLedger, 5000);
+      setInterval(refreshFullNPCISwitchView, 10000);
+      setInterval(refreshCfoQueueUI, 15000);
+    }
+  }
+  runNext();
+}
 
 // Immediate execution if script is loaded after DOMContentLoaded
 if (document.readyState === "complete" || document.readyState === "interactive") {
   const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
   applyThemePalette(savedPalette, true);
-  mountComponents();
-  landingGateway.init();
-  evalDashboard.init();
-  updateOverviewBankGrid();
-  refreshAuditLedger();
-  refreshFullNPCISwitchView();
-  renderWeibullCurve();
-  initFintech3DTopology();
-  updateLiveRoiCalculator();
-  animateAllKpis();
-  refreshCfoQueueUI();
-  try { initLiveTelemetryStream(); } catch(e) { console.warn("Live telemetry init error:", e); }
+  requestAnimationFrame(() => setTimeout(() => landingGateway.init(), 80));
+  const triggerBoot = () => bootDeferredControlPlane();
+  window.addEventListener("pointerdown", triggerBoot, { once: true, passive: true });
+  window.addEventListener("keydown", triggerBoot, { once: true, passive: true });
+  setTimeout(triggerBoot, 12000);
 }
 
 window.toggleThemePaletteMenu = toggleThemePaletteMenu;
 window.applyThemePalette = applyThemePalette;
 window.evalDashboard = evalDashboard;
 window.landingGateway = landingGateway;
-window.launchControlPlane = (tab) => landingGateway.launchControlPlane(tab);
+window.launchControlPlane = (tab) => { bootDeferredControlPlane(); return landingGateway.launchControlPlane(tab); };
 window.returnToShowcase = () => landingGateway.returnToShowcase();
 window.selectDecisionTrailStep = (idx) => landingGateway.selectDecisionTrailStep(idx);
 window.selectShowcaseTab = (key) => landingGateway.selectShowcaseTab(key);
@@ -1590,7 +1608,7 @@ window.closeFeatureDetailModal = closeFeatureDetailModal;
 function executePaletteAction(action) {
   const osPalette = document.getElementById("os-command-palette-modal");
   if (osPalette && !osPalette.classList.contains("hidden")) toggleCommandPalette();
-  const go = (id, fn) => { try { fn && fn(); } catch (e) {} const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  const go = (id, fn) => { try { fn && fn(); } catch (e) { } const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
   switch (action) {
     case "simulate_hdfc_504": go("showcase-sandbox", () => window.selectLandingScenario && window.selectLandingScenario("hdfc_504")); break;
     case "open_cedar": go("showcase-cedar-security"); break;
@@ -1608,12 +1626,12 @@ window.executePaletteAction = executePaletteAction;
 window.toggleUiSounds = toggleUiSounds;
 window.playUiSound = playUiSound;
 
-// Initialize Live Real Telemetry, Forex Stream, and UI Sound Effects Engine
-initLiveTelemetryStream();
-initGlobalUiSounds();
+// Initialize UI Sound Effects Engine on first interaction or idle
+window.addEventListener("pointerdown", () => initGlobalUiSounds(), { once: true, passive: true });
+setTimeout(() => initGlobalUiSounds(), 12000);
 
 // Interactive OmniBot Mascot Speech & Toast
-window.triggerOmniBotSpeech = function() {
+window.triggerOmniBotSpeech = function () {
   const speechBubble = document.getElementById("omnibot-speech-bubble");
   const speechText = document.getElementById("omnibot-speech-text");
   const quotes = [

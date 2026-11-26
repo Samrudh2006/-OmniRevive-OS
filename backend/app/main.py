@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, Request, status, Response
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 try:
     import structlog
@@ -244,6 +245,7 @@ app.add_middleware(
 app.add_middleware(SlidingWindowRateLimiter)
 # Outermost: times every request (including 429s from the limiter) and records error-rate metrics
 app.add_middleware(RequestResilienceMiddleware)
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # Static Asset Serving & Dashboard Root
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend"))
