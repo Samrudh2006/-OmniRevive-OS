@@ -3738,3 +3738,30 @@ html.dark #rr-toast-container > div span:first-child {
 
 
 
+
+/* Stronger borders: shared tokens for cards, inputs, pills, section dividers, footer line */
+html.light .border-slate-200,
+html.light .border-slate-200\/80,
+html.light .border-sky-100,
+html.light .border-sky-200\/80,
+html.light .border-slate-300,
+html.light .border-\[\#142442\],
+html.light .border-\[\#142442\]\/60,
+html.light .border-\[\#132f54\],
+html.light .border-\[\#1f2c40\],
+html.light .border-\[\#1e3a6a\],
+html.light .border-\[\#1b345f\],
+html.light .border-\[\#2a4365\],
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-700 {
+  border-color: #8aa2ba !important;
+}
+html:not(.light) .dark\:border-slate-800\/80,
+html:not(.light) .dark\:border-slate-800\/60,
+html:not(.light) .border-slate-800\/80,
+html:not(.light) .border-\[\#142442\],
+html:not(.light) .border-\[\#1f2c40\],
+html:not(.light) .dark\:border-\[\#1f2c40\] {
+  border-color: #3a4d6b !important;
+}
