@@ -817,7 +817,7 @@
       </div>
 
       <!-- 4 Live Metric Pods (Glassmorphic Cards Matching Reference Images) -->
-      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-10 text-left">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 text-left max-w-4xl">
         
         <!-- Card 1: Recovery Rate -->
         <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
@@ -826,15 +826,6 @@
           </div>
           <div class="text-3xl sm:text-4xl font-black text-emerald-500 dark:text-emerald-400 pt-1">78.39%</div>
           <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Simulated sample data</div>
-        </div>
-
-        <!-- Card 2: CAS Mutex Gate -->
-        <div class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
-          <div class="flex items-center gap-2 text-xs font-bold text-sky-500 uppercase tracking-wider">
-            <span>CAS MUTEX GATE</span>
-          </div>
-          <div class="text-3xl sm:text-4xl font-black text-sky-500 dark:text-sky-400 pt-1">Atomic</div>
-          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Idempotency lock per payment</div>
         </div>
 
         <!-- Card 3: Regulatory Guard -->
@@ -863,7 +854,7 @@
         <img src="/assets/product_control_plane.jpg?v=3.3" width="1400" height="875" loading="lazy" decoding="async"
              alt="OmniRevive-OS control plane overview: live yield, recovered GMV, fast-loop and deep-loop engines, decision trace"
              class="w-full h-auto rounded-xl border border-slate-800">
-        <figcaption class="text-sm text-slate-500 dark:text-slate-400">The control plane overview as it runs today, on the built-in simulated payment stream. Figures on screen are demo data. The 78.39% recovery rate comes from the repo's held-out 100-case benchmark (42.24% baseline); the 600+ tests were counted with pytest on 26 Nov 2026. Latency and gate figures are sandbox demo values, not production measurements.</figcaption>
+        <figcaption class="text-sm text-slate-500 dark:text-slate-400">Simulated payment stream. Figures on screen are demo data, not production measurements.</figcaption>
       </figure>
     </section>
 
@@ -1075,50 +1066,6 @@
         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md">
           The four rules below are read from policies.cedar and checked before every mutation. Pick a scenario in the evaluator to see an allow and a deny.
         </p>
-      </div>
-
-      <!-- Top Summary Cloud Metrics in Cedar Section -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
-          <div class="w-11 h-11 rounded-xl bg-orange-50 dark:bg-[#2a1714] border border-orange-200 dark:border-[#d97757]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
-            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C12.5 2 12.9 2.4 12.9 2.9V8.6L16.9 4.6C17.3 4.2 18 4.2 18.4 4.6C18.8 5 18.8 5.7 18.4 6.1L14.4 10.1H20.1C20.6 10.1 21 10.5 21 11C21 11.5 20.6 11.9 20.1 11.9H14.4L18.4 15.9C18.8 16.3 18.8 17 18.4 17.4C18 17.8 17.3 17.8 16.9 17.4L12.9 13.4V19.1C12.9 19.6 12.5 20 12 20C11.5 20 11.1 19.6 11.1 19.1V13.4L7.1 17.4C6.7 17.8 6 17.8 5.6 17.4C5.2 17 5.2 16.3 5.6 15.9L9.6 11.9H3.9C3.4 11.9 3 11.5 3 11C3 10.5 3.4 10.1 3.9 10.1H9.6L5.6 6.1C5.2 5.7 5.2 5 5.6 4.6C6 4.2 6.7 4.2 7.1 4.6L11.1 8.6V2.9C11.1 2.4 11.5 2 12 2Z" fill="#D97757"/>
-            </svg>
-          </div>
-          <div>
-            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Foundation AI Model</div>
-            <div class="text-sm font-extrabold text-[#0c2340] dark:text-white mono">Claude 3.5 Sonnet v2</div>
-            <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">ap-south-1 (Mumbai Region)</div>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
-          <div class="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-[#161c33] border border-indigo-200 dark:border-[#6366f1]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
-            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L4 5.5V11c0 5.25 3.4 10.15 8 11.5 4.6-1.35 8-6.25 8-11.5V5.5L12 2z" fill="#4338ca" fill-opacity="0.2" stroke="#6366f1" stroke-width="1.75"/>
-              <path d="M9 11.5L11 13.5L15.5 9" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div>
-            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Policy engine</div>
-            <div class="text-sm font-extrabold text-indigo-700 dark:text-indigo-300 mono">AWS Cedar v3.0 (Active Strict)</div>
-            <div class="text-[10px] text-slate-500 dark:text-slate-400 mono font-semibold">SHA: a207d935b0a9...</div>
-          </div>
-        </div>
-
-        <div class="p-4 rounded-2xl bg-white dark:bg-[#071326] border border-slate-200 dark:border-[#1f2c40] flex items-center gap-3 shadow-sm">
-          <div class="w-11 h-11 rounded-xl bg-rose-50 dark:bg-[#261021] border border-rose-200 dark:border-[#ec4899]/40 flex items-center justify-center shrink-0 shadow-sm p-2.5">
-            <svg class="w-full h-full" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2.5L20 7.2V16.8L12 21.5L4 16.8V7.2L12 2.5Z" fill="#be185d" fill-opacity="0.2" stroke="#f43f5e" stroke-width="1.75"/>
-              <circle cx="12" cy="12" r="2.5" fill="#f43f5e"/>
-            </svg>
-          </div>
-          <div>
-            <div class="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">Event Stream &amp; Retry Rail</div>
-            <div class="text-sm font-extrabold text-rose-700 dark:text-rose-300 mono">AWS EventBridge + Lambda</div>
-            <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Weibull Mode Shift Active</div>
-          </div>
-        </div>
       </div>
 
       <!-- 2-Column Cedar Policy Inspector & Interactive Playground Directly on Landing Page -->
