@@ -923,7 +923,7 @@
                   <path d="M25 2 H31 V8" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-white"/>
                 </svg>
               </div>
-              <span class="tag-neutral">3.2ms SLA</span>
+              <span class="tag-neutral">Hazard model</span>
             </div>
             <div>
               <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Weibull Dynamic Retries</div>
@@ -1010,7 +1010,7 @@
                   <circle cx="18" cy="4" r="2.5" fill="#d97706" class="dark:fill-amber-300"/>
                 </svg>
               </div>
-              <span class="tag-neutral">0.28ms Gate</span>
+              <span class="tag-neutral">Policy gate</span>
             </div>
             <div>
               <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">AWS Cedar Zero-Trust</div>
@@ -1780,7 +1780,7 @@ forbid (
               </div>
               <span id="landing-voice-status" class="font-bold text-white">Active Voice Synthesis (Telugu / te-IN)</span>
             </div>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30">180ms Turn</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-400 border border-purple-500/30">Voice agent</span>
           </div>
 
           <!-- Transcript Bubble with Play Audio CTA -->
@@ -1843,7 +1843,7 @@ forbid (
           <!-- Mockup Header -->
           <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
             <div class="flex items-center gap-2">
-              <span class="font-bold text-white uppercase tracking-wider">Live GMV Recovery Calculator</span>
+              <span class="font-bold text-white uppercase tracking-wider">GMV Recovery Estimator</span>
             </div>
             <span class="text-[10px] text-slate-400 mono">ROI_SIMULATOR_v1</span>
           </div>
@@ -1881,19 +1881,19 @@ forbid (
           <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800/80">
             <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
               <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Annual Revenue Recovered</div>
-              <div class="text-2xl font-black text-emerald-400" id="roi-recovered-display">₹93.6 L</div>
-              <div class="text-[10px] text-emerald-500/70 font-mono">Assumes 78% AI recovery rate</div>
+              <div class="text-2xl font-black text-emerald-400" id="roi-recovered-display">₹6.1 Cr</div>
+              <div class="text-[10px] text-emerald-500/70 font-mono">Assumes 42% recovery (simulated 100-case benchmark)</div>
             </div>
             <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
               <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Customer Accounts Saved</div>
-              <div class="text-2xl font-black text-sky-400" id="roi-accounts-display">18,720</div>
-              <div class="text-[10px] text-sky-500/70 font-mono">Reduced churn / drop-offs</div>
+              <div class="text-2xl font-black text-sky-400" id="roi-accounts-display">1,21,651</div>
+              <div class="text-[10px] text-sky-500/70 font-mono">At an assumed ₹500 average ticket</div>
             </div>
           </div>
 
           <!-- Mockup Footer -->
           <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-[10px] text-slate-400 font-mono">
-            <span>Payback Velocity: <strong class="text-purple-400">Under 14 Days</strong></span>
+            <span>Illustrative estimate, not a forecast</span>
             <span class="text-emerald-400 font-bold">Instant ROI Generation</span>
           </div>
 
@@ -5550,7 +5550,7 @@ forbid (
       weibull_retries: {
         title: "Weibull Hazard Dynamic Retries",
         subsystem: "Mathematical Failure Decay Engine",
-        sla: "3.2ms Window Computation",
+        sla: "Retry window computed per failure",
         badge: "Mathematical Invariant",
         description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
         handledCodes: ["GATEWAY_504", "NPCI_TIMEOUT_91", "HDFC_DOWN_500", "BANK_SWITCH_DEGRADE"],
@@ -5572,7 +5572,7 @@ forbid (
       cedar_policy: {
         title: "AWS Cedar Zero-Trust Policy Gatekeeper",
         subsystem: "Deterministic Compliance Engine",
-        sla: "0.28ms Sub-Millisecond Evaluation",
+        sla: "Policy check before every mutation",
         badge: "Zero-Trust Invariant",
         description: "Formally verified zero-trust rules enforce TRAI quiet hours (21:00-09:00 IST), maximum discount clamping (<=10%, <=500 INR), and non-coercive regulatory compliance. AI recommendations never bypass policy.",
         handledCodes: ["POLICY_QUIET_HOURS", "DISCOUNT_EXCEEDED", "MAX_ATTEMPTS_BREACH", "COERCIVE_OUTREACH"],
@@ -5583,7 +5583,7 @@ forbid (
       voice_fsm: {
         title: "Trilingual B2B Voice Dialogue FSM",
         subsystem: "Deep-Loop Conversational AI",
-        sla: "180ms Turn Response (Telugu / Hindi / English)",
+        sla: "Telugu / Hindi / English",
         badge: "Trilingual Engine",
         description: "Autonomous multi-turn voice negotiation engine that extracts customer dispute intents, dynamically updates GSTIN invoice errors, and secures binding Promise-to-Pay (PTP) commitments.",
         handledCodes: ["INVOICE_DISPUTE_GST", "BILLING_MISMATCH", "PAYMENT_DEFERRED", "PARTIAL_DISPUTE"],
@@ -11145,7 +11145,7 @@ forbid (
       <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="flex items-center gap-2">
           <span class="text-slate-400">Deterministic SLA:</span>
-          <strong id="modal-node-sla" class="text-white font-mono">3.2ms Window Computation</strong>
+          <strong id="modal-node-sla" class="text-white font-mono">Retry window computed per failure</strong>
         </div>
         <div class="flex items-center gap-2">
           <span class="text-slate-400">Verified Impact:</span>

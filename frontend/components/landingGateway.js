@@ -13,7 +13,7 @@ export const landingGateway = {
     weibull_retries: {
       title: "Weibull Hazard Dynamic Retries",
       subsystem: "Mathematical Failure Decay Engine",
-      sla: "3.2ms Window Computation",
+      sla: "Retry window computed per failure",
       badge: "Mathematical Invariant",
       icon: "",
       description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
@@ -46,7 +46,7 @@ const switchHealth = await npciRadar.evaluateSwitchCluster({
     cedar_policy: {
       title: "AWS Cedar Zero-Trust Policy Gatekeeper",
       subsystem: "Deterministic Compliance Engine",
-      sla: "0.28ms Sub-Millisecond Evaluation",
+      sla: "Policy check before every mutation",
       badge: "Zero-Trust Invariant",
       icon: "",
       description: "Formally verified zero-trust rules enforce TRAI quiet hours (21:00-09:00 IST), maximum discount clamping (<=10%, <=500 INR), and non-coercive regulatory compliance. AI recommendations never bypass policy.",
@@ -66,7 +66,7 @@ permit(
     voice_fsm: {
       title: "Trilingual B2B Voice Dialogue FSM",
       subsystem: "Deep-Loop Conversational AI",
-      sla: "180ms Turn Response (Telugu / Hindi / English)",
+      sla: "Telugu / Hindi / English",
       badge: "Trilingual Engine",
       icon: "",
       description: "Autonomous multi-turn voice negotiation engine that extracts customer dispute intents, dynamically updates GSTIN invoice errors, and secures binding Promise-to-Pay (PTP) commitments.",
@@ -903,11 +903,11 @@ if (invoiceValue > 50000) {
     // Calculations:
     // Monthly GMV in INR = gmvCr * 10,000,000
     // Monthly Failed Amount = Monthly GMV * (failPct / 100)
-    // OmniRevive Recovery Rate = 78% of failed amount
+    // Recovery rate = 42.24% (simulated 100-case benchmark)
     // Annual Recovered = Monthly Recovered * 12
     const monthlyGmv = gmvCr * 10000000;
     const monthlyFailed = monthlyGmv * (failPct / 100);
-    const monthlyRecovered = monthlyFailed * 0.78;
+    const monthlyRecovered = monthlyFailed * 0.4224;
     const annualRecovered = monthlyRecovered * 12;
 
     // Formatting for Annual Recovered
