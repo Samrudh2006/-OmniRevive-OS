@@ -14,3 +14,10 @@ def test_oversized_fields_rejected():
 def test_normal_payload_not_422():
     r = c.post("/api/v1/telemetry/npci-switch/update", json={"bank_code": "HDFC", "state": "DEGRADED"})
     assert r.status_code != 422
+
+
+def test_email_dispatch_fields_validated():
+    assert c.post("/api/v1/communication/email/send", json={"recipient_email": "not-an-email"}).status_code == 422
+    assert c.post("/api/v1/communication/email/send", json={"custom_note": BIG}).status_code == 422
+    assert c.post("/api/v1/communication/email/send", json={"subject": BIG}).status_code == 422
+    assert c.post("/api/v1/communication/email/send", json={"recipient_email": "a@b.co"}).status_code == 200

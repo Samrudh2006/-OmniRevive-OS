@@ -1,7 +1,7 @@
 import time
 import uuid
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi import Query, APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 
@@ -12,10 +12,10 @@ from backend.app.audit_store import audit_store
 router = APIRouter()
 
 class EmailDispatchRequest(BaseModel):
-    invoice_id: str = "inv_enterprise_998"
-    recipient_email: Optional[str] = None
-    subject: Optional[str] = None
-    custom_note: Optional[str] = None
+    invoice_id: str = Field(default="inv_enterprise_998", max_length=128)
+    recipient_email: Optional[str] = Field(default=None, max_length=254, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+    subject: Optional[str] = Field(default=None, max_length=200)
+    custom_note: Optional[str] = Field(default=None, max_length=2000)
 
 @router.post("/api/v1/communication/email/send", tags=["Communication Dispatch"], summary="Dispatch Authentic Corporate Tax Invoice Email")
 async def send_invoice_email_endpoint(req: EmailDispatchRequest, request: Request):
