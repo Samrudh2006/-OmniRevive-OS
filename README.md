@@ -11,14 +11,14 @@
                                                                       
 ```
 
-### *The #1 Open-Source AI Revenue Recovery & Multi-Rail Autonomous Fintech Control Plane*
+### *An open-source AI revenue recovery control plane for failed Indian payments (hackathon project)*
 
 [![CI](https://github.com/Samrudh2006/-OmniRevive-OS/actions/workflows/ci.yml/badge.svg)](https://github.com/Samrudh2006/-OmniRevive-OS/actions/workflows/ci.yml)
-[![Release v1.1.0](https://img.shields.io/badge/Release-v1.1.0--Production-0c55ea.svg?style=for-the-badge&logo=rocket)](https://github.com/Samrudh2006/-OmniRevive-OS)
-[![Pytest Suite](https://img.shields.io/badge/Pytest-600%2B%20Passed%20%7C%20100%25-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/-OmniRevive-OS)
+[![Release v1.1.0](https://img.shields.io/badge/Release-v1.1.0-0c55ea.svg?style=for-the-badge&logo=rocket)](https://github.com/Samrudh2006/-OmniRevive-OS)
+[![Pytest Suite](https://img.shields.io/badge/Pytest-600%2B%20Tests-00d285.svg?style=for-the-badge&logo=pytest)](https://github.com/Samrudh2006/-OmniRevive-OS)
 [![Multi-Rail](https://img.shields.io/badge/Multi--Rail-Juspay%20%7C%20PhonePe%20%7C%20CRED%20%7C%20Cashfree%20%7C%20Razorpay%20%7C%20Stripe-0c6cf2.svg?style=for-the-badge&logo=buffer)](https://github.com/Samrudh2006/-OmniRevive-OS)
 [![Flutter Mobile](https://img.shields.io/badge/Flutter-3.x%20Mobile%20Ready-02569B.svg?style=for-the-badge&logo=flutter)](mobile_flutter/)
-[![Android APK](https://img.shields.io/badge/Android-APK%2014MB%20Download-34d399.svg?style=for-the-badge&logo=android)](mobile/razorrevive-os.apk)
+[![Android APK](https://img.shields.io/badge/Android-APK%20Download-34d399.svg?style=for-the-badge&logo=android)](mobile/razorrevive-os.apk)
 
 [![AWS Cedar](https://img.shields.io/badge/Zero--Trust-AWS%20Cedar%20Policy%20Engine-ff9900.svg?style=flat-square&logo=amazonaws)](backend/app/policy_engine.py)
 [![Qdrant Vector DB](https://img.shields.io/badge/Qdrant-Semantic%20Memory%20Layer-7c3aed.svg?style=flat-square&logo=qdrant)](backend/app/diagnostic_engine.py)
@@ -52,16 +52,16 @@
 
 ## 🌟 Executive Summary
 
-**OmniRevive-OS** is an enterprise-grade **Universal Autonomous AI Revenue Recovery Control Plane** engineered specifically for the mission-critical constraints of Indian and global fintech rails. 
+**OmniRevive-OS** is a hackathon-built **autonomous AI revenue recovery control plane** for failed payments on Indian fintech rails. It runs in a safe demo mode by default (`SAFE_DEMO_MODE`), so gateways, NPCI switches and messaging are simulated unless you configure real credentials.
 
 Every year, Indian enterprises lose revenue to transient gateway drops, NPCI switch timeouts, mandate soft declines, and B2B invoice GSTIN mismatches. Traditional systems use static, uncoordinated retry loops that blast degraded banking switches, trigger NACH penalty fees, and alienate customers.
 
 **OmniRevive-OS changes the paradigm:**
-- ⚡ **Autonomous Failover (<50ms):** Automatically diagnoses drop causes and dynamically routes transactions across **Juspay HyperSDK, PhonePe Switch, CRED, Cashfree, Razorpay, and Stripe**.
-- 🛡️ **Mathematical Precision:** Fits continuous **SciPy Weibull Hazard Survival Models** to schedule retries at the exact empirical recovery peak (+45m) rather than naive backoffs.
+- ⚡ **Autonomous Failover:** Diagnoses the failure cause and routes recovery across adapters for **Juspay, PhonePe, CRED, Cashfree, Razorpay and Stripe** (`backend/app/gateways/`). The adapters run against mock gateways in demo mode.
+- 🛡️ **Weibull retry timing:** Uses a **SciPy Weibull hazard model** (`recovery_optimizer.py`) to pick a retry time instead of a fixed backoff.
 - 🎙️ **Trilingual Autonomous Voice AI:** Employs an interactive voice negotiation FSM in **Telugu (`te-IN`), Hindi (`hi-IN`), and Indian English (`en-IN`)** to resolve disputed B2B payments and lock Promise-to-Pay (PTP) commitments.
-- 🔒 **Zero-Trust Safety Invariants:** Enforces **AWS Cedar policies**, strict TRAI quiet hours (21:00–09:00 IST), and atomic **Redis CAS distributed mutexes** designed to prevent duplicate debits (0 in the 50-thread test).
-- 📱 **Cross-Platform Supremacy:** Dual-theme Web Control Plane (Razorpay Light & Dark Obsidian SRE), complete standalone **Flutter 3.x Mobile App**, and native release APK ready to deploy.
+- 🔒 **Zero-Trust Safety Invariants:** Enforces **AWS Cedar policies**, strict TRAI quiet hours (21:00–09:00 IST), and atomic **Redis CAS distributed mutexes** designed to prevent duplicate debits (0 duplicates in the repo's simulated 50-thread test).
+- 📱 **Web and mobile:** A light and dark web control plane (`frontend/`), a Flutter client (`mobile_flutter/`) and an Android project (`mobile/`).
 
 ---
 
@@ -164,22 +164,22 @@ Every decision, state mutation, and financial dispatch is cryptographically comm
 
 $$\text{Hash}_n = \text{SHA256}\Big(\text{Hash}_{n-1} \,\|\, \text{Timestamp} \,\|\, \text{Payload}_{\text{canonical}} \,\|\, \text{Actor}\Big)$$
 
-Any unauthorized alteration in the SQLite WAL store immediately breaks mathematical chain verification ($\mathcal{O}(1)$ tamper detection).
+Editing a stored record breaks the hash chain, and `GET /api/v1/audit/verify` (or `python cli.py verify-audit`) reports it.
 
 ---
 
 ## 🌐 Multi-Rail Integration Matrix
 
-OmniRevive-OS provides vendor-agnostic multi-rail connectivity out of the box:
+OmniRevive-OS has one adapter per rail. In demo mode they are simulated; no latency figures have been measured against live gateways, so none are claimed:
 
-| Payment Rail / Gateway | Supported Protocols | Failover Latency | Idempotency Guarantee | Primary Use Case |
-| :--- | :--- | :--- | :--- | :--- |
-| **Juspay HyperSDK** | Express Checkout, UPI In-App, Cards | **< 18ms** | Dual-Layer Redis Mutex | Consumer Checkout High-Frequency Rerouting |
-| **PhonePe Switch** | Dynamic QR, UPI Deep-Linking, Intent | **< 22ms** | CAS Header `X-Idempotency-Key` | Mobile P2M Rapid Recovery & Intent Fallback |
-| **CRED Pay** | CRED Coins, UPI, Flash Checkout | **< 25ms** | Nonce Verification | High-Ticket Premium Cardholder Settlement |
-| **Cashfree Payments** | Auto-Collect, Payouts, Subscription UPI | **< 28ms** | SHA-256 Payload Hash | Recurring e-Mandate & Subscription Churn |
-| **Razorpay** | Payment Links, Smart Collect, Invoices | **< 15ms** | Webhook HMAC Signatures | Enterprise B2B Accounts Receivable |
-| **Stripe Global** | Cards, ACH, SEPA Direct Debit | **< 35ms** | Stripe-Idempotency-Key | Cross-Border International Recovery |
+| Payment Rail / Gateway | Adapter | Intended use case |
+| :--- | :--- | :--- |
+| **Juspay HyperSDK** | `gateways/juspay_adapter.py` | Consumer Checkout High-Frequency Rerouting |
+| **PhonePe Switch** | `gateways/phonepe_adapter.py` | Mobile P2M Rapid Recovery & Intent Fallback |
+| **CRED Pay** | `gateways/cred_adapter.py` | High-Ticket Premium Cardholder Settlement |
+| **Cashfree Payments** | `gateways/cashfree_adapter.py` | Recurring e-Mandate & Subscription Churn |
+| **Razorpay** | `gateways/razorpay_adapter.py` | Enterprise B2B Accounts Receivable |
+| **Stripe Global** | `gateways/stripe_adapter.py` | Cross-Border International Recovery |
 
 ---
 
@@ -197,7 +197,7 @@ Enterprise accounts receivable in India demands regional linguistic intelligence
 
 </div>
 
-- 🔊 **Zero External API Costs:** Utilizes local 24kHz neural synthesis + Web Speech API with sub-50ms cached repeat latency.
+- 🔊 **Browser voice:** The web UI uses the browser Web Speech API for the voice demo.
 - 📊 **Real-Time Waveform Frequency Pulses:** Reactive HTML5/Canvas multi-band audio visualizer.
 
 ---
@@ -209,18 +209,18 @@ In addition to the responsive Web Control Plane, OmniRevive-OS features a dedica
 ```
 mobile_flutter/
 ├── lib/
-│   ├── main.dart                  # Multi-Theme Shell & Tab Router (Razorpay Blue / Obsidian)
+│   ├── main.dart                  # Multi-Theme Shell & Tab Router (light and dark themes)
 │   └── screens/
 │       ├── overview_screen.dart   # Live Recovery Rate Gauge & Invariant KPI Grid
 │       ├── rails_screen.dart      # Multi-Rail Switcher (Juspay, PhonePe, CRED, Cashfree, Razorpay, Stripe)
 │       ├── voice_screen.dart      # Trilingual Voice AI Visualizer & Playback Engine
 │       ├── cedar_screen.dart      # AWS Cedar Policy Engine Inspector
 │       └── audit_screen.dart      # Cryptographic SHA-256 Merkle Block Explorer
-└── pubspec.yaml                   # Production Dependencies (fl_chart, google_fonts, http)
+└── pubspec.yaml                   # Dependencies (fl_chart, google_fonts, http)
 ```
 
 ### Direct Download & Sideloading
-- 📦 **Downloadable APK:** [`omnirevive-os-v1.1.apk`](omnirevive-os-v1.1.apk) (14.1 MB Release Build)
+- 📦 **APK:** [`mobile/razorrevive-os.apk`](mobile/razorrevive-os.apk) (file name predates the OmniRevive-OS rename)
 - 🔨 **Build from Source:**
   ```bash
   cd mobile_flutter
@@ -228,6 +228,51 @@ mobile_flutter/
   flutter run
   flutter build apk --release
   ```
+
+---
+
+## 🧭 Architecture walkthrough
+
+A short guide so any team member can explain how the project fits together.
+
+### Modules (`backend/app/`)
+| Module | What it does |
+| :--- | :--- |
+| `main.py` | FastAPI app. Mounts `/static` (frontend), registers the routers in `routes/`, exposes `/health` and `/metrics`. |
+| `routes/` | HTTP endpoints. `recovery.py` (webhook, simulate failure, UPI QR, card-token inspect, bulk CSV/JSON), `b2b.py` (voice turn, promise-to-pay, invoices), `audit.py` (verify and list audit events), `telemetry.py`, `gateways.py`, `copilot.py` and others. |
+| `services/recovery_execution_service.py` | The core pipeline function, `execute_recovery_pipeline`. |
+| `diagnostic_engine.py` | Classifies the failure and proposes a diagnosis. Uses an in-memory Qdrant collection as advisory context. |
+| `recovery_optimizer.py` | Weibull hazard model that picks the retry time. |
+| `policy_engine.py` | Cedar-style policy check that approves or blocks an action (for example TRAI quiet hours). |
+| `gateways/` | One adapter per rail (Juspay, PhonePe, CRED, Cashfree, Razorpay, Stripe) plus a mock adapter and a multi-rail router. |
+| `audit_store.py` | SQLite ledger where each event stores a SHA-256 hash that includes the previous hash. |
+| `telemetry_npci.py` | Simulated NPCI switch status (7 switches) with circuit-breaker style health. |
+| `b2b/` | Accounts-receivable flow: invoice store, voice agent, promise-to-pay engine, state machine. |
+| `security.py` | Razorpay webhook signature check and idempotency store. |
+| `config.py` | Settings. `SAFE_DEMO_MODE` defaults to `True`. |
+
+### Data flow (fast loop)
+1. A failed-payment webhook reaches `POST /api/v1/webhooks/razorpay` (or `POST /api/v1/simulate/failure` in the demo). The signature is checked and duplicates are rejected through the idempotency store.
+2. `execute_recovery_pipeline` runs: diagnosis, then retry timing, then the policy check, then the gateway adapter, then an audit write. Phone numbers are masked in the trace.
+3. The result and a step-by-step decision trace go back to the caller and to the UI. Metrics and logs are recorded in `telemetry_service`.
+4. `GET /api/v1/audit/verify` re-checks the hash chain.
+
+### Data flow (deep loop, B2B)
+A voice or chat turn goes to `POST /api/v1/b2b/voice/turn`. The state machine in `b2b/` tracks the invoice conversation and records a promise-to-pay when one is agreed. Supported languages are Telugu, Hindi and English.
+
+### Frontend
+`frontend/index.html` is the landing page plus the control plane. Large scripts live in `frontend/js/app-inline-*.js`, modular code in `frontend/components/`, and styles in `frontend/styles/` (`main.src.css` is the readable source, `main.css` is the minified file that is served).
+
+### How to run
+```bash
+pip install -r requirements.txt
+uvicorn backend.app.main:app --port 8000 --reload   # open http://localhost:8000
+pytest -q                                           # 600+ tests
+python cli.py health                                # CLI health check
+```
+
+### What is simulated
+Gateway calls, NPCI switch status, messaging dispatch and the benchmark data are simulated in demo mode. Treat the numbers in this README as results from that simulation, not production measurements.
 
 ---
 
@@ -266,7 +311,7 @@ uvicorn backend.app.main:app --port 8000 --reload
 ```
 Open **`http://localhost:8000`** in your browser.
 
-### 3. Run Automated Pytest Suite (600+ Tests, 100% Pass)
+### 3. Run the Pytest Suite (600+ tests)
 ```bash
 pytest -v
 ```
@@ -279,7 +324,7 @@ python cli.py health
 # 2. Verify Cryptographic SHA-256 Hash Chain
 python cli.py verify-audit
 
-# 3. Execute 100-Case Production Benchmark
+# 3. Run the 100-case simulated benchmark
 python cli.py benchmark
 
 # 4. Simulate 50-Thread Concurrent Webhook Storm
@@ -334,14 +379,13 @@ python cli.py chat
 │   │   ├── landingGateway.js        # Showcase Controller, Audio Synth & FSM
 │   │   └── cedarModal.js            # Policy Engine Visualizer
 │   └── styles/
-│       └── main.css                 # Razorpay Light & Dark Obsidian CSS System
+│       └── main.css                 # Light and dark theme CSS
 ├── mobile_flutter/                  # Standalone Flutter 3.x Mobile Project
 ├── benchmarks/                      # 100-Case Ground-Truth Benchmark Suite
-├── tests/                           # 600+ Automated Unit, FSM & Adversarial Tests (100% Pass)
+├── tests/                           # 600+ automated tests
 ├── docs/                            # Whitepapers, Deployment Guides & Architecture
-├── omnirevive-os-v1.1.apk           # Release Android APK Package (14.1 MB)
 ├── cli.py                           # Enterprise Command-Line Interface Suite
-├── ARCHITECTURE.md                  # Comprehensive Engineering Architecture Document
+├── ARCHITECTURE.md                  # Longer architecture notes
 ├── LICENSE                          # MIT Open-Source License
 └── README.md                        # Master Documentation
 ```
@@ -353,8 +397,8 @@ python cli.py chat
 - **Project Name:** OmniRevive-OS
 - **Track:** Track 03 — AI Revenue Recovery
 - **Author:** Samrudh Dwivedula ([@Samrudh2006](https://github.com/Samrudh2006))
-- **Primary Production Deployment:** [https://omnirevive-os.antideploy.com](https://omnirevive-os.antideploy.com)
-- **Secondary Production Mirror:** [https://razorrevive-os.onrender.com](https://razorrevive-os.onrender.com)
+- **Deployment (Antideploy):** [https://omnirevive-os.antideploy.com](https://omnirevive-os.antideploy.com)
+- **Mirror (Render):** [https://razorrevive-os.onrender.com](https://razorrevive-os.onrender.com)
 - **Official GitHub Repository:** [https://github.com/Samrudh2006/-OmniRevive-OS](https://github.com/Samrudh2006/-OmniRevive-OS)
 - **Live Video Walkthrough:** [YouTube Video Link](https://youtu.be/IBo7D1vHhd8)
 
