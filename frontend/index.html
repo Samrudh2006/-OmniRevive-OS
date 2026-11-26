@@ -877,11 +877,11 @@
           The Autonomous Recovery Constellation
         </h2>
         <p class="text-sm text-slate-600 dark:text-slate-300">
-          Eight engines. <strong class="text-[#0c6cf2] dark:text-sky-400">Open any card to read how it works in this repo.</strong>
+          Four core engines. <strong class="text-[#0c6cf2] dark:text-sky-400">Open any card to read how it works in this repo.</strong>
         </p>
       </div>
 
-      <!-- Orbital Node Grid (8 Interactive Satellites matching reference illustration) -->
+      <!-- Orbital Node Grid (4 interactive engine cards) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-4">
         
         <!-- Node 1: Weibull Dynamic Retries -->
@@ -979,92 +979,6 @@
           </div>
         </div>
 
-        <!-- Node 3: AWS Cedar Policy -->
-        <div onclick="openNodeDeepDive('cedar_policy')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
-          <!-- Background Illustrated Supreme Court / Capitol Dome Watermark -->
-          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
-            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
-              <!-- Parliament Dome & Pillars -->
-              <path d="M90 38 C90 18 135 18 135 38 Z" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
-              <rect x="80" y="38" width="65" height="6" rx="1" fill="#fcd34d" fill-opacity="0.7" class="dark:fill-[#b45309] dark:fill-opacity-90"/>
-              <rect x="86" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
-              <rect x="100" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
-              <rect x="114" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
-              <rect x="128" y="44" width="6" height="42" rx="1" fill="#fde68a" fill-opacity="0.6" class="dark:fill-[#78350f] dark:fill-opacity-80"/>
-              <rect x="76" y="86" width="73" height="10" rx="1" fill="#fcd34d" fill-opacity="0.7" class="dark:fill-[#b45309] dark:fill-opacity-90"/>
-              <circle cx="112" cy="15" r="3" fill="#f59e0b" class="dark:fill-amber-400"/>
-            </svg>
-          </div>
-
-          <div class="space-y-3 relative z-10">
-            <div class="flex items-start justify-between">
-              <!-- Illustrated Left Icon: Golden 3D Scales of Justice -->
-              <div class="w-10 h-10 flex items-center justify-center">
-                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
-                  <path d="M18 4 V29 M11 29 H25" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-amber-400"/>
-                  <path d="M9 8 H27" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-amber-400"/>
-                  <!-- Left Pan -->
-                  <path d="M9 8 L5 16 C5 18.5 9 18.5 9 16 L9 8 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.8" class="dark:fill-amber-950/80 dark:stroke-amber-400"/>
-                  <!-- Right Pan -->
-                  <path d="M27 8 L23 16 C23 18.5 27 18.5 27 16 L27 8 Z" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.8" class="dark:fill-amber-950/80 dark:stroke-amber-400"/>
-                  <circle cx="18" cy="4" r="2.5" fill="#d97706" class="dark:fill-amber-300"/>
-                </svg>
-              </div>
-              <span class="tag-neutral">Policy gate</span>
-            </div>
-            <div>
-              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">AWS Cedar Zero-Trust</div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Deterministic compliance enforcing TRAI hours &amp; discount limits.</div>
-            </div>
-          </div>
-          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
-            <span class="text-slate-400 dark:text-slate-500 font-medium">Policy Guard</span>
-            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
-          </div>
-        </div>
-
-        <!-- Node 4: Trilingual Voice FSM -->
-        <div onclick="openNodeDeepDive('voice_fsm')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
-          <!-- Background Illustrated Floating Speech Bubbles Watermark -->
-          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
-            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
-              <!-- Bubble 1 -->
-              <rect x="70" y="16" width="54" height="28" rx="14" fill="#e9d5ff" fill-opacity="0.65" class="dark:fill-[#581c87] dark:fill-opacity-80"/>
-              <circle cx="86" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
-              <circle cx="97" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
-              <circle cx="108" cy="30" r="3" fill="#9333ea" class="dark:fill-purple-300"/>
-              <!-- Bubble 2 -->
-              <rect x="110" y="48" width="45" height="26" rx="13" fill="#ddd6fe" fill-opacity="0.6" class="dark:fill-[#4c1d95] dark:fill-opacity-75"/>
-              <circle cx="123" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
-              <circle cx="132" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
-              <circle cx="141" cy="61" r="2.5" fill="#7e22ce" class="dark:fill-purple-300"/>
-            </svg>
-          </div>
-
-          <div class="space-y-3 relative z-10">
-            <div class="flex items-start justify-between">
-              <!-- Illustrated Left Icon: Studio Mic with Soundwave Bars -->
-              <div class="w-10 h-10 flex items-center justify-center">
-                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
-                  <rect x="14" y="4" width="8" height="15" rx="4" fill="#f3e8ff" stroke="#9333ea" stroke-width="2" class="dark:fill-purple-950/80 dark:stroke-purple-400"/>
-                  <path d="M9 13 C9 18 13 22 18 22 C23 22 27 18 27 13" stroke="#9333ea" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-400"/>
-                  <path d="M18 22 V29 M12 29 H24" stroke="#9333ea" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-400"/>
-                  <path d="M6 12 V16 M3 13 V15 M30 12 V16 M33 13 V15" stroke="#c084fc" stroke-width="2" stroke-linecap="round" class="dark:stroke-purple-300"/>
-                </svg>
-              </div>
-              <span class="tag-neutral">Trilingual</span>
-            </div>
-            <div>
-              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Trilingual Voice Agent</div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Autonomous B2B negotiation in Telugu, Hindi &amp; English with PTP locks.</div>
-            </div>
-          </div>
-          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
-            <span class="text-slate-400 dark:text-slate-500 font-medium">Conversational AI</span>
-            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
-          </div>
-        </div>
-
         <!-- Node 5: Redis CAS Mutex -->
         <div onclick="openNodeDeepDive('redis_cas')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
           <!-- Background Illustrated Tiered Cloud Database Servers Watermark -->
@@ -1101,86 +1015,6 @@
           </div>
           <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
             <span class="text-slate-400 dark:text-slate-500 font-medium">Atomic Lock</span>
-            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
-          </div>
-        </div>
-
-        <!-- Node 6: Card Token Lifecycle -->
-        <div onclick="openNodeDeepDive('card_tokens')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
-          <!-- Background Illustrated PCB Circuit Trace Bus Watermark -->
-          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
-            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
-              <path d="M55 45 H100 L125 70 H155" stroke="#0284c7" stroke-width="2" class="dark:stroke-sky-400"/>
-              <path d="M75 25 V45 L100 70 V90" stroke="#0284c7" stroke-width="2" class="dark:stroke-sky-400"/>
-              <circle cx="100" cy="45" r="3.5" fill="#0284c7" class="dark:fill-sky-300"/>
-              <circle cx="125" cy="70" r="3.5" fill="#0284c7" class="dark:fill-sky-300"/>
-              <path d="M110 15 L145 28 V65 C145 88 110 98 110 98 C110 98 75 88 75 65 V28 Z" fill="#bae6fd" fill-opacity="0.3" stroke="#2bb5e6" stroke-width="1.8" class="dark:fill-[#0c4a6e] dark:fill-opacity-50"/>
-            </svg>
-          </div>
-
-          <div class="space-y-3 relative z-10">
-            <div class="flex items-start justify-between">
-              <!-- Illustrated Left Icon: Blue Credit Card with Circular Sync Cycle Arrows -->
-              <div class="w-10 h-10 flex items-center justify-center">
-                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
-                  <rect x="3" y="10" width="20" height="15" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="1.8" class="dark:fill-sky-600 dark:stroke-sky-400"/>
-                  <rect x="3" y="14" width="20" height="3" fill="#0c4a6e" class="dark:fill-[#082f49]"/>
-                  <rect x="6" y="19" width="5" height="3" rx="0.5" fill="#bae6fd" class="dark:fill-sky-200"/>
-                  <!-- Rotating sync arrows -->
-                  <path d="M29 10 C32 12.5 33 15.5 33 18" stroke="#2bb5e6" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-sky-300"/>
-                  <path d="M30 8 L33.5 11 L29 14" stroke="#2bb5e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-sky-300"/>
-                  <path d="M29 26 C26 23.5 25 20.5 25 18" stroke="#2bb5e6" stroke-width="2.2" stroke-linecap="round" class="dark:stroke-sky-300"/>
-                  <path d="M28 28 L24.5 25 L29 22" stroke="#2bb5e6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="dark:stroke-sky-300"/>
-                </svg>
-              </div>
-              <span class="tag-neutral">COF Tokens</span>
-            </div>
-            <div>
-              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Card Token Lifecycle</div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Automatic cryptogram refresh &amp; RBI COF token fallback.</div>
-            </div>
-          </div>
-          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
-            <span class="text-slate-400 dark:text-slate-500 font-medium">Token Engine</span>
-            <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
-          </div>
-        </div>
-
-        <!-- Node 7: Merkle Ledger -->
-        <div onclick="openNodeDeepDive('merkle_ledger')" class="group relative rounded-2xl p-5 bg-white dark:bg-[#071326] border border-slate-200/90 dark:border-[#102a4d] hover:border-[#0c6cf2] dark:hover:border-sky-400 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer">
-          <!-- Background Illustrated Cryptographic Binary Matrix Watermark -->
-          <div class="absolute right-0 top-1 w-44 h-28 pointer-events-none z-0 overflow-hidden flex items-start justify-end opacity-40 dark:opacity-60">
-            <svg viewBox="0 0 160 100" class="w-full h-full" fill="none">
-              <text x="65" y="32" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">1010010101</text>
-              <text x="65" y="52" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">0111000110</text>
-              <text x="65" y="72" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea" class="dark:fill-purple-300">0100010111</text>
-              <path d="M125 25 L145 15 L145 35 L125 45 Z" fill="#c084fc" fill-opacity="0.5" class="dark:fill-purple-600 dark:fill-opacity-70"/>
-              <path d="M105 15 L125 25 L125 45 L105 35 Z" fill="#a855f7" fill-opacity="0.6" class="dark:fill-purple-500 dark:fill-opacity-80"/>
-              <path d="M105 15 L125 5 L145 15 L125 25 Z" fill="#e9d5ff" fill-opacity="0.7" class="dark:fill-purple-300 dark:fill-opacity-80"/>
-            </svg>
-          </div>
-
-          <div class="space-y-3 relative z-10">
-            <div class="flex items-start justify-between">
-              <!-- Illustrated Left Icon: Folder / Document with Security Shield -->
-              <div class="w-10 h-10 flex items-center justify-center">
-                <svg viewBox="0 0 36 36" class="w-9 h-9" fill="none">
-                  <rect x="5" y="6" width="18" height="22" rx="2.5" fill="#faf5ff" stroke="#9333ea" stroke-width="2" class="dark:fill-purple-950/80 dark:stroke-purple-400"/>
-                  <path d="M9 12 H17 M9 17 H19 M9 22 H15" stroke="#c084fc" stroke-width="1.8" stroke-linecap="round" class="dark:stroke-purple-300"/>
-                  <!-- Purple Security Shield -->
-                  <path d="M21 16 L29 13 V21 C29 25 25 28 21 30 C17 28 13 25 13 21 V13 L21 16 Z" fill="#a855f7" stroke="#7e22ce" stroke-width="2" class="dark:fill-purple-600 dark:stroke-purple-300"/>
-                  <path d="M18 21.5 L20 23.5 L24 19" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <span class="tag-neutral">SHA-256</span>
-            </div>
-            <div>
-              <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">Merkle Audit Ledger</div>
-              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Cryptographic sequential hashing of all recovery decisions.</div>
-            </div>
-          </div>
-          <div class="pt-3 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs relative z-10">
-            <span class="text-slate-400 dark:text-slate-500 font-medium">Audit Trail</span>
             <span class="text-[#0c6cf2] dark:text-sky-400 font-bold group-hover:underline flex items-center gap-1">Click to know more →</span>
           </div>
         </div>
