@@ -24,3 +24,11 @@ def test_concurrent_register_and_read_no_errors(tmp_path):
     recs = store.get_all_ptp_records()
     assert sorted(r["invoice_id"] for r in recs) == [f"INV-{i}" for i in range(6)]
     assert all(store.has_active_ptp_lock(r["invoice_id"]) for r in recs)
+
+
+def test_list_is_bounded(tmp_path):
+    store = PTPStore(db_path=str(tmp_path / "q.db"))
+    for i in range(12):
+        store.register_promise(f"I{i}", "+910000000000", time.time() + 3600, "w", 1.0)
+    assert len(store.get_all_ptp_records(limit=5)) == 5
+    assert len(store.get_all_ptp_records()) == 12

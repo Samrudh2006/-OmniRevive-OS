@@ -107,11 +107,11 @@ class PTPStore:
             return True
         return False
 
-    def get_all_ptp_records(self) -> List[Dict[str, Any]]:
+    def get_all_ptp_records(self, limit: int = 500) -> List[Dict[str, Any]]:
         self._init_db()
         conn = get_db_connection(self.db_path)
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM ptp_commitments ORDER BY created_at DESC")
+        cursor.execute("SELECT * FROM ptp_commitments ORDER BY created_at DESC LIMIT ?", (max(1, min(int(limit), 5000)),))
         rows = cursor.fetchall()
         records = []
         for r in rows:
