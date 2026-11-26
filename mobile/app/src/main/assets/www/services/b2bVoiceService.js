@@ -29,7 +29,7 @@ export async function triggerVoiceTurnAction() {
 
   document.querySelectorAll("#voice-turn-btn").forEach(btn => {
     btn.disabled = true;
-    btn.innerHTML = "<span>⚙️</span> <span>Processing Autonomous Voice Dialogue...</span>";
+    btn.innerHTML = "<span></span> <span>Processing Autonomous Voice Dialogue...</span>";
   });
 
   const chosenVoice = document.querySelector("#neural-voice-select")?.value || "auto";
@@ -89,7 +89,7 @@ export async function triggerVoiceTurnAction() {
       banner.classList.remove("hidden");
       const dispatchBtn = data.dispatch_id ? `
         <button onclick="window.openDispatchedEmailModal('${data.dispatch_id}')" class="px-2.5 py-1 bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold rounded-lg text-xs flex items-center gap-1.5 shadow transition-all cursor-pointer">
-          <span>📧</span> <span>View Dispatched Email</span>
+          <span></span> <span>View Dispatched Email</span>
         </button>
       ` : '';
 
@@ -103,7 +103,7 @@ export async function triggerVoiceTurnAction() {
               <span class="text-amber-300 mono font-bold">${m.field_to_mutate || 'Tax Line'}</span>
               <span class="text-slate-400 text-[11px]">from</span>
               <span class="text-rose-400 line-through mono text-[11px]">${m.old_value || 'UNREGISTERED'}</span>
-              <span class="text-slate-400 text-[11px]">➔</span>
+              <span class="text-slate-400 text-[11px]"></span>
               <span class="text-emerald-400 font-bold mono">${m.new_value || '29AABCU9603R1Z2'}</span>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
@@ -116,7 +116,7 @@ export async function triggerVoiceTurnAction() {
         banner.innerHTML = `
           <div class="flex items-center justify-between text-xs font-semibold">
             <div class="flex items-center gap-2 text-rose-400 font-bold">
-              <span>🚨</span>
+              <span></span>
               <span>LEGAL DISPUTE FLAGGED: Escalated to Senior Accounts Director & Human CFO</span>
             </div>
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950/60 text-rose-300 border border-rose-800 mono">CFO_ESCALATED</span>
@@ -126,7 +126,7 @@ export async function triggerVoiceTurnAction() {
         banner.innerHTML = `
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-semibold">
             <div class="flex items-center gap-2 text-sky-400">
-              <span>📅</span>
+              <span></span>
               <span class="text-white font-bold">Commitment Registered:</span>
               <span class="text-sky-300">PTP Lock active until Friday 11:00 AM IST (Reminders Suppressed)</span>
             </div>
@@ -166,7 +166,7 @@ export async function triggerVoiceTurnAction() {
     }
 
     speakText(data.agent_speech_response, null, data.recommended_voice);
-    showToast(`🎙️ Voice Turn Resolved: ${data.intent_detected}`, "success");
+    showToast(` Voice Turn Resolved: ${data.intent_detected}`, "success");
     refreshAuditLedger();
     loadPTPRecords();
   } catch (err) {
@@ -174,7 +174,7 @@ export async function triggerVoiceTurnAction() {
   } finally {
     document.querySelectorAll("#voice-turn-btn").forEach(btn => {
       btn.disabled = false;
-      btn.innerHTML = "<span>🎙️</span> <span>Process Autonomous Voice Dialogue Turn</span>";
+      btn.innerHTML = "<span></span> <span>Process Autonomous Voice Dialogue Turn</span>";
     });
   }
 }

@@ -267,7 +267,7 @@ h(t) = (β / λ) * (t / λ)^(β - 1)
     <h2>3. Dual-Loop Orchestration Architecture</h2>
     <div class="grid-2">
       <div class="card">
-        <h3>Fast-Loop (< 50ms)</h3>
+        <h3>Fast-Loop</h3>
         <p>Real-time autonomous failover for synchronous checkout drops. Automatically diagnoses error codes via Qdrant semantic vector memory and routes through alternate rails (Juspay HyperSDK, PhonePe Switch, Cashfree, Stripe, Razorpay).</p>
       </div>
       <div class="card">
@@ -281,7 +281,7 @@ h(t) = (β / λ) * (t / λ)^(β - 1)
     <ul>
       <li><strong>TRAI Quiet Hours (21:00 to 09:00 IST):</strong> No customer outreach, voice calls, or WhatsApp intent pushes are triggered during night hours. Pending retries are safely enqueued for 09:05 IST execution.</li>
       <li><strong>RBI CoFT (Card-on-File Tokenization):</strong> Cryptographic tokens are validated against network cryptograms (Visa, Mastercard, RuPay) before re-attempting card transactions.</li>
-      <li><strong>Zero Double-Debits:</strong> Redis Compare-And-Swap (CAS) distributed mutexes prevent duplicate charges across parallel webhook workers.</li>
+      <li><strong>Duplicate-debit protection:</strong> Redis Compare-And-Swap (CAS) distributed mutexes help prevent duplicate charges across parallel webhook workers.</li>
     </ul>
 
     <h2>Related Technical Guides</h2>

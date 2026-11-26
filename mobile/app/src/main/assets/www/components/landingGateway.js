@@ -13,9 +13,9 @@ export const landingGateway = {
     weibull_retries: {
       title: "Weibull Hazard Dynamic Retries",
       subsystem: "Mathematical Failure Decay Engine",
-      sla: "3.2ms Window Computation",
+      sla: "Retry window computed per failure",
       badge: "Mathematical Invariant",
-      icon: "📈",
+      icon: "",
       description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
       handledCodes: ["GATEWAY_504", "NPCI_TIMEOUT_91", "HDFC_DOWN_500", "BANK_SWITCH_DEGRADE"],
       codeSnippet: `// Weibull Hazard Rate Function
@@ -31,7 +31,7 @@ function calculateOptimalRetry(beta = 1.42, alpha = 45.0) {
       subsystem: "Real-Time Switch Health Ingestion",
       sla: "Sub-50ms Polling & Telemetry",
       badge: "Multi-Rail Invariant",
-      icon: "📡",
+      icon: "",
       description: "Live synthetic health probes and webhook telemetry monitoring 18 major Indian bank switches (HDFC, ICICI, SBI, Axis, Kotak) to prevent failed transaction routing during switch degradation.",
       handledCodes: ["NPCI_U16", "NPCI_U69", "UPI_LIMIT_EXCEEDED", "REMITTER_DOWN"],
       codeSnippet: `// NPCI Switch Health Resolver
@@ -40,15 +40,15 @@ const switchHealth = await npciRadar.evaluateSwitchCluster({
   degradationThreshold: 0.12,
   routeFallback: "DYNAMIC_UPI_LINK"
 });`,
-      metrics: "18 Bank Endpoints · 99.99% Uptime",
+      metrics: "18 Bank Endpoints · Simulated Rails",
       workspaceTab: "npci_switch"
     },
     cedar_policy: {
       title: "AWS Cedar Zero-Trust Policy Gatekeeper",
       subsystem: "Deterministic Compliance Engine",
-      sla: "0.28ms Sub-Millisecond Evaluation",
+      sla: "Policy check before every mutation",
       badge: "Zero-Trust Invariant",
-      icon: "⚖️",
+      icon: "",
       description: "Formally verified zero-trust rules enforce TRAI quiet hours (21:00-09:00 IST), maximum discount clamping (<=10%, <=500 INR), and non-coercive regulatory compliance. AI recommendations never bypass policy.",
       handledCodes: ["POLICY_QUIET_HOURS", "DISCOUNT_EXCEEDED", "MAX_ATTEMPTS_BREACH", "COERCIVE_OUTREACH"],
       codeSnippet: `// AWS Cedar Deterministic Policy Rule
@@ -66,9 +66,9 @@ permit(
     voice_fsm: {
       title: "Trilingual B2B Voice Dialogue FSM",
       subsystem: "Deep-Loop Conversational AI",
-      sla: "180ms Turn Response (Telugu / Hindi / English)",
+      sla: "Telugu / Hindi / English",
       badge: "Trilingual Engine",
-      icon: "🎙️",
+      icon: "",
       description: "Autonomous multi-turn voice negotiation engine that extracts customer dispute intents, dynamically updates GSTIN invoice errors, and secures binding Promise-to-Pay (PTP) commitments.",
       handledCodes: ["INVOICE_DISPUTE_GST", "BILLING_MISMATCH", "PAYMENT_DEFERRED", "PARTIAL_DISPUTE"],
       codeSnippet: `// Trilingual Dialogue State Machine
@@ -83,11 +83,11 @@ const fsmState = await voiceAgent.processTurn({
     },
     redis_cas: {
       title: "Redis CAS Distributed Idempotency Mutex",
-      subsystem: "Zero Double-Debit Protection",
-      sla: "0.23ms Atomic Mutex Gate",
+      subsystem: "Duplicate-Debit Protection",
+      sla: "Atomic Mutex Gate",
       badge: "Concurrency Invariant",
-      icon: "🔒",
-      description: "Compare-And-Swap (CAS) distributed lock ensures high-frequency webhooks across 10,000 req/sec never trigger concurrent duplicate charges or double-debited accounts.",
+      icon: "",
+      description: "Compare-And-Swap (CAS) distributed lock is designed to stop duplicate charges when webhooks arrive in bursts.",
       handledCodes: ["CONCURRENT_WEBHOOK", "DUPLICATE_RETRY", "RACE_CONDITION", "IDEMPOTENCY_COLLISION"],
       codeSnippet: `// Redis CAS Atomic Mutex Acquisition
 const lockAcquired = await redis.set(
@@ -96,7 +96,7 @@ const lockAcquired = await redis.set(
   "NX", "EX", 300 // 5-minute atomic lease
 );
 if (!lockAcquired) throw new DuplicateExecutionError();`,
-      metrics: "0 Double-Debits · 10k Req/sec Scale",
+      metrics: "Idempotency lock · 50-webhook test",
       workspaceTab: "overview"
     },
     card_tokens: {
@@ -104,7 +104,7 @@ if (!lockAcquired) throw new DuplicateExecutionError();`,
       subsystem: "Card-on-File Cryptographic Refresh",
       sla: "1.4ms Token Health Assessment",
       badge: "PCI-DSS Invariant",
-      icon: "💳",
+      icon: "",
       description: "Monitors RBI-mandated network token lifecycles (Visa, Mastercard, RuPay) and automatically triggers fresh cryptograms prior to recurring mandate execution to prevent recurring subscription drops.",
       handledCodes: ["COF_CRYPT_EXPIRED", "TOKEN_DEACTIVATED", "CARD_SUSPENDED", "MANDATE_FAIL_RB03"],
       codeSnippet: `// Network Token Cryptogram Validator
@@ -121,7 +121,7 @@ const tokenStatus = await cardTokenEngine.evaluateLifecycle({
       subsystem: "Cryptographic Evidence Trail",
       sla: "Sequential Block Sealing",
       badge: "Cryptographic Invariant",
-      icon: "📜",
+      icon: "",
       description: "Every webhook diagnosis, policy evaluation, discount mutation, and recovery execution is cryptographically hashed into a tamper-proof sequential Merkle chain for auditors and CFOs.",
       handledCodes: ["AUDIT_PROOF_GEN", "CHAIN_INTEGRITY_CHECK", "REGULATORY_EXPORT", "TAMPER_DETECT"],
       codeSnippet: `// Sequential Merkle Audit Block Sealing
@@ -139,7 +139,7 @@ const block = merkleLedger.sealBlock({
       subsystem: "High-Value Tax & Mutation Gate",
       sla: "Asynchronous Webhook & SMS Approval",
       badge: "Financial Governance",
-      icon: "🏛️",
+      icon: "",
       description: "Automatic circuit breaker for tax ledger mutations and discount waivers exceeding ₹50,000 INR, requiring dual-key cryptographic sign-off before financial commitment.",
       handledCodes: ["HIGH_VALUE_GATE", "CFO_APPROVAL_REQUIRED", "TAX_MUTATION_HOLD", "DISCOUNT_OVERRIDE"],
       codeSnippet: `// CFO Executive Dual-Key Gatekeeper
@@ -187,7 +187,7 @@ if (invoiceValue > 50000) {
       error: "COF_CRYPT_EXPIRED",
       confidence: "98.2%",
       decision: "Network Token Cryptogram Refreshed & Instant Re-dispatch",
-      window: "Instant (<18.4ms)",
+      window: "Instant",
       policy: "ALLOWED (RBI Card Tokenization Compliance Verified)"
     },
     high_val_invoice: {
@@ -350,10 +350,10 @@ if (invoiceValue > 50000) {
   inspectPipelineStage(idx) {
     const stageDetails = [
       "> [STAGE 1 INGESTION]: Razorpay webhook HMAC-SHA256 signature verified with constant-time compare in 0.04ms.",
-      "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired (0.23ms). 0 race condition collisions across 10,000 req/sec.",
+      "> [STAGE 2 MUTEX LOCK]: Redis Atomic CAS Key acquired. 0 race condition collisions across 10,000 req/sec.",
       "> [STAGE 3 WEIBULL MATH]: Continuous Poisson-Weibull temporal decay computed peak recovery inflection at T+45m.",
       "> [STAGE 4 CEDAR POLICY]: AWS Cedar evaluated 8 regulatory rules: Daytime window valid, discount <=10%, attempts 1 <= 3. Verdict: ALLOWED.",
-      "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed in 18.4ms. Cryptographic Merkle Block sealed to SHA-256 Ledger."
+      "> [STAGE 5 DISPATCHED]: Multi-rail fallback executed (simulated). Cryptographic Merkle Block sealed to SHA-256 Ledger."
     ];
     const term = document.getElementById("landing-sandbox-terminal");
     if (term && stageDetails[idx]) {
@@ -396,10 +396,10 @@ if (invoiceValue > 50000) {
     buttons.forEach(btn => {
       if (btn.id === `sb-chip-${scenarioKey}`) {
         btn.classList.add("active");
-        btn.setAttribute("aria-selected", "true");
+        btn.setAttribute("aria-pressed", "true");
       } else {
         btn.classList.remove("active");
-        btn.setAttribute("aria-selected", "false");
+        btn.setAttribute("aria-pressed", "false");
       }
     });
 
@@ -411,7 +411,7 @@ if (invoiceValue > 50000) {
 
     const term = document.getElementById("landing-sandbox-terminal");
     if (term) {
-      term.innerHTML = `<span class="text-slate-500">> Ready to simulate: ${data.title}</span>\n<span class="text-sky-400">> Click '⚡ Run Instant AI Recovery Simulation' to trigger live orchestration pipeline...</span>`;
+      term.innerHTML = `<span class="text-slate-500">> Ready to simulate: ${data.title}</span>\n<span class="text-sky-400">> Click ' Run Instant AI Recovery Simulation' to trigger live orchestration pipeline...</span>`;
     }
   },
 
@@ -428,14 +428,14 @@ if (invoiceValue > 50000) {
 
     term.innerHTML = `<span class="text-emerald-400 font-bold">> [${new Date().toLocaleTimeString()}] INGESTION: Razorpay webhook payload received (HMAC SHA-256 VALIDATED)...</span>\n`;
 
-    const stageLabels = ["⚡ 1. Ingested ✓", "🔒 2. Mutex Lock ✓", "📈 3. Weibull Math ✓", "⚖️ 4. Cedar Policy ✓", "🚀 5. Dispatched ✓"];
+    const stageLabels = [" 1. Ingested ✓", " 2. Mutex Lock ✓", " 3. Weibull Math ✓", " 4. Cedar Policy ✓", " 5. Dispatched ✓"];
 
     const logs = [
       { text: `> [${new Date().toLocaleTimeString()}] INGESTION: HMAC-SHA256 signature validated. Payload schema verified.`, delay: 100, step: 0 },
-      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired (0.23ms). 0 double-debit guarantee sealed.`, delay: 450, step: 1 },
+      { text: `> [${new Date().toLocaleTimeString()}] MUTEX: Redis CAS atomic lock acquired. idempotency lock held.`, delay: 450, step: 1 },
       { text: `> [${new Date().toLocaleTimeString()}] WEIBULL: Hazard rate curve calculated -> Peak probability inflection window at T+45min.`, delay: 850, step: 2 },
       { text: `> [${new Date().toLocaleTimeString()}] CEDAR POLICY: Evaluated 8 regulatory invariants -> VERDICT: ALLOW (100% Compliant).`, delay: 1250, step: 3 },
-      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed in 18.4ms. Merkle Block sealed! 🚀`, delay: 1650, step: 4 }
+      { text: `> [${new Date().toLocaleTimeString()}] ACTION DISPATCHED: Autonomous recovery pipeline executed (simulated). Merkle Block sealed! `, delay: 1650, step: 4 }
     ];
 
     logs.forEach(log => {
@@ -475,7 +475,7 @@ if (invoiceValue > 50000) {
         voice: "te-IN-ShrutiNeural"
       },
       hindi: {
-        text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने 0.23ms में वैकल्पिक UPI रेल तैयार की है..."',
+        text: '"नमस्ते, आपके ₹42,500 के भुगतान में HDFC स्विच टाइमआउट हुआ था। हमारी AI प्रणाली ने वैकल्पिक UPI रेल तैयार की है..."',
         rawText: 'नमस्ते, आपके बयालीस हजार पांच सौ रुपये के भुगतान में एचडीएफसी स्विच टाइमआउट हुआ था। हमारी एआई प्रणाली ने वैकल्पिक यूपीआई रेल तैयार की है।',
         intent: "Switch Timeout Fallback -> UPI Dynamic QR Auto-Dispatched",
         audioWave: "Active Voice Synthesis (Hindi / hi-IN)",
@@ -708,7 +708,7 @@ if (invoiceValue > 50000) {
     "Sub-Millisecond Zero-Trust AWS Cedar Policy Gatekeeper",
     "Trilingual Autonomous B2B Voice Dispute Resolution FSM",
     "Sequential SHA-256 Merkle Ledger Audit Trail Invariants",
-    "0.23ms CAS Mutex Gate for Real-Time Multi-Rail Recovery"
+    "CAS Mutex Gate for Real-Time Multi-Rail Recovery"
   ],
 
   initTypewriterEffect() {
@@ -725,6 +725,8 @@ if (invoiceValue > 50000) {
     this.typewriterCharIndex = this.typewriterPhrases[0].length;
     this.typewriterIsDeleting = false;
     el.textContent = this.typewriterPhrases[0];
+    // Headline stays fixed; the rotating text made it read mid-word on slow screens.
+    return;
 
     const tick = () => {
       const currentPhrase = this.typewriterPhrases[this.typewriterIndex];
@@ -785,7 +787,7 @@ if (invoiceValue > 50000) {
         if (progressEl) progressEl.style.width = b.pct;
 
         if (idx === benchmarks.length - 1) {
-          term.innerHTML += `\n<span class="text-sky-300 font-bold">> 🏆 ALL BENCHMARK INVARIANTS SATISFIED: 99.8% System Reliability Score.</span>\n`;
+          term.innerHTML += `\n<span class="text-sky-300 font-bold">>  ALL BENCHMARK INVARIANTS SATISFIED: 99.8% System Reliability Score.</span>\n`;
           if (statusPill) {
             statusPill.textContent = "PASSED · 99.8% RELIABILITY";
             statusPill.className = "px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono";
@@ -901,11 +903,11 @@ if (invoiceValue > 50000) {
     // Calculations:
     // Monthly GMV in INR = gmvCr * 10,000,000
     // Monthly Failed Amount = Monthly GMV * (failPct / 100)
-    // OmniRevive Recovery Rate = 78% of failed amount
+    // Recovery rate = 42.24% (simulated 100-case benchmark)
     // Annual Recovered = Monthly Recovered * 12
     const monthlyGmv = gmvCr * 10000000;
     const monthlyFailed = monthlyGmv * (failPct / 100);
-    const monthlyRecovered = monthlyFailed * 0.78;
+    const monthlyRecovered = monthlyFailed * 0.4224;
     const annualRecovered = monthlyRecovered * 12;
 
     // Formatting for Annual Recovered

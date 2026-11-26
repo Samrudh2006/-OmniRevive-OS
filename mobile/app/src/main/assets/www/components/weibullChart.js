@@ -16,22 +16,22 @@ export function renderWeibullSvgCurve() {
     pathEl.setAttribute("d", "M 0 110 Q 120 10 220 30 T 500 80");
     peakPt.setAttribute("cx", "180");
     peakPt.setAttribute("cy", "20");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +45m (91.4% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +45m (91.4% Recovery)";
   } else if (bank === "SBI") {
     pathEl.setAttribute("d", "M 0 110 Q 180 20 280 40 T 500 90");
     peakPt.setAttribute("cx", "250");
     peakPt.setAttribute("cy", "28");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +60m (84.2% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +60m (84.2% Recovery)";
   } else if (bank === "ICICI") {
     pathEl.setAttribute("d", "M 0 110 Q 80 8 160 22 T 500 75");
     peakPt.setAttribute("cx", "125");
     peakPt.setAttribute("cy", "14");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +30m (93.1% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +30m (93.1% Recovery)";
   } else if (bank === "AXIS") {
     pathEl.setAttribute("d", "M 0 110 Q 130 15 230 35 T 500 85");
     peakPt.setAttribute("cx", "180");
     peakPt.setAttribute("cy", "24");
-    if (optimalLabel) optimalLabel.innerText = "★ Optimal: +45m (87.5% Recovery)";
+    if (optimalLabel) optimalLabel.innerText = " Optimal: +45m (87.5% Recovery)";
   }
 }
 
@@ -64,6 +64,7 @@ export function renderWeibullCanvasChart() {
   if (yieldEl) yieldEl.textContent = `${Math.min(94.5, 75 + k * 6.5).toFixed(1)}%`;
 
   // Canvas Rendering
+  if (canvas.closest(".hidden")) return; // hidden tab: skip drawing (avoids forced layout at load)
   const ctx = canvas.getContext("2d");
   const w = canvas.parentElement.clientWidth || 400;
   const h = canvas.parentElement.clientHeight || 200;
@@ -110,8 +111,8 @@ export function renderWeibullCanvasChart() {
     grad.addColorStop(0, "rgba(2, 132, 199, 0.25)");
     grad.addColorStop(1, "rgba(2, 132, 199, 0.01)");
   } else {
-    grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
-    grad.addColorStop(1, "rgba(56, 189, 248, 0.02)");
+    grad.addColorStop(0, "rgba(43,181,230, 0.4)");
+    grad.addColorStop(1, "rgba(43,181,230, 0.02)");
   }
 
   ctx.beginPath();
@@ -135,7 +136,7 @@ export function renderWeibullCanvasChart() {
     if (idx === 0) ctx.moveTo(px, py);
     else ctx.lineTo(px, py);
   });
-  ctx.strokeStyle = isLight ? "#0284c7" : "#38bdf8";
+  ctx.strokeStyle = isLight ? "#0284c7" : "#2bb5e6";
   ctx.lineWidth = 2.5;
   ctx.stroke();
 

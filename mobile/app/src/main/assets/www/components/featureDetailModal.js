@@ -9,12 +9,12 @@ const FEATURE_MATTER = {
     category: "RECOVERY ENGINES",
     title: "Fast-Loop Weibull Ingestion Engine",
     badge: "B2C Mandate Recovery · 45m Recovery Curve",
-    icon: "⚡",
+    icon: "",
     metrics: [
-      { label: "Recovery Peak", value: "91.4%", sub: "SBI/HDFC Outage Window" },
-      { label: "Idempotency Mutex", value: "0.23ms", sub: "Redis CAS Atomic Lock" },
-      { label: "Switch Latency", value: "<18.4ms", sub: "Universal Gateway Switch" },
-      { label: "Retry Reduction", value: "87.6%", sub: "Zero Blind Retry Storms" }
+      { label: "Recovery Peak", value: "Sim.", sub: "Simulated SBI/HDFC outage window" },
+      { label: "Idempotency Mutex", value: "CAS", sub: "Redis atomic lock" },
+      { label: "Switch Latency", value: "6", sub: "Supported gateways" },
+      { label: "Retry Reduction", value: "Sim.", sub: "Retry-storm control (simulated)" }
     ],
     overview: "Fast-Loop is OmniRevive-OS's flagship B2C mandate recovery engine. Traditional payment gateways execute fixed exponential backoff retries (1m, 2m, 4m), which fail when bank core switches face severe 504 Gateway Timeouts. Fast-Loop calculates dynamic Weibull survival probability curves to defer retries until the bank's operational recovery peak (+45 minutes).",
     mathFormula: "h(t) = \\frac{k}{\\lambda} \\left( \\frac{t}{\\lambda} \\right)^{k-1}, \\quad \\text{Optimal Retry Window } t^* = \\arg\\max_t h(t)",
@@ -39,9 +39,9 @@ const FEATURE_MATTER = {
     category: "RECOVERY ENGINES",
     title: "Deep-Loop Autonomous Voice AI FSM",
     badge: "B2B Enterprise Invoices · 22 Indic Languages",
-    icon: "🎙️",
+    icon: "",
     metrics: [
-      { label: "Ragas Faithfulness", value: "98.4%", sub: "Zero Hallucination" },
+      { label: "Ragas Faithfulness", value: "Not run", sub: "Eval harness in repo, no published score" },
       { label: "Duplex Latency", value: "110ms", sub: "Indic-Conformer + Parler" },
       { label: "RBI Tone Safety", value: "100.0%", sub: "Zero Coercive Words" },
       { label: "PTP Conversion", value: "94.2%", sub: "Verbal Commitment Rate" }
@@ -68,7 +68,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "RECOVERY ENGINES",
     title: "High-Throughput Bulk CSV Batch Processor",
     badge: "Parallel Batch Ingestion · 10,000 Ingests/sec",
-    icon: "📄",
+    icon: "",
     metrics: [
       { label: "Throughput", value: "10k/sec", sub: "Parallel Chunk Ingestion" },
       { label: "Memory Overhead", value: "12MB", sub: "Streamed Buffer Processing" },
@@ -96,12 +96,12 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "RECOVERY ENGINES",
     title: "Predictive Financial Yield & ARR Forecaster",
     badge: "Monte-Carlo Simulation · Net Revenue Retention",
-    icon: "💰",
+    icon: "",
     metrics: [
       { label: "ARR Recovery Uplift", value: "+14.2%", sub: "Net Revenue Uplift" },
       { label: "Recovered Value", value: "₹12.4M", sub: "30-Day Simulated Cohort" },
       { label: "Dunning Cost Cut", value: "-68.5%", sub: "Automated AI Outreach" },
-      { label: "ROI Multiple", value: "18.4x", sub: "Platform Yield Multiplier" }
+      { label: "ROI Calculator", value: "Interactive", sub: "Uses the numbers you enter" }
     ],
     overview: "Financial Yield Forecaster calculates the exact monetary value recovered by OmniRevive-OS compared to standard gateway dunning. Using stochastic Monte-Carlo simulations over 300+ enterprise merchant cohorts, it projects 30-day, 60-day, and 90-day Net Revenue Retention (NRR) uplift.",
     mathFormula: "\\text{Yield}_{\\text{ARR}} = \\sum_{k=1}^M V_k \\times \\left( P_{\\text{Weibull}}(k) \\times (1 - C_{\\text{gateway}}) \\right)",
@@ -116,7 +116,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     standard_recovery = cohort_volume_inr * 0.35  # Standard gateway 35%
     omnirevive_recovery = cohort_volume_inr * 0.492 # OmniRevive 49.2%
     net_arr_uplift = omnirevive_recovery - standard_recovery
-    return {"net_arr_uplift": net_arr_uplift, "roi_multiplier": 18.4}`,
+    return {"net_arr_uplift": net_arr_uplift, "roi_multiplier": None}`,
     tabId: "financial_yield"
   },
 
@@ -124,12 +124,12 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Live NPCI Switch Radar & Banking Telemetry",
     badge: "18 Core Banks · Sub-Second Circuit Breaker",
-    icon: "📡",
+    icon: "",
     metrics: [
       { label: "Monitored Switches", value: "18/18", sub: "HDFC, SBI, ICICI, Axis" },
       { label: "Circuit Breaker", value: "Active", sub: "Auto-Trip on >15% 504s" },
-      { label: "Telemetry Latency", value: "<5ms", sub: "In-Memory Signal Scan" },
-      { label: "Routing Accuracy", value: "99.99%", sub: "Real-Time Rail Shift" }
+      { label: "Telemetry Latency", value: "In-memory", sub: "Signal scan" },
+      { label: "Routing Accuracy", value: "Sim.", sub: "Rail shift (simulated)" }
     ],
     overview: "NPCI Switch Radar monitors live banking network latencies and failure spikes across 18 major Indian banks. When a bank's core switch experiences a 504 Gateway Timeout or NPCI error code (`U69`, `Z8`), NPCI Switch Radar trips an automated circuit breaker to prevent retry storms and shifts traffic to secondary rails.",
     mathFormula: "\\text{TripCondition} = \\frac{\\sum_{i=1}^W \\mathbb{I}(\\text{status}_i = 504)}{W} > 0.15",
@@ -150,7 +150,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Network Card Tokenization & Cryptogram Manager",
     badge: "PCI-DSS Level 1 · Visa / Mastercard / RuPay",
-    icon: "💳",
+    icon: "",
     metrics: [
       { label: "PCI-DSS Level", value: "Level 1", sub: "Zero Plaintext PAN" },
       { label: "Token Refresh", value: "Auto", sub: "Pre-Expiry Lifecycle Scan" },
@@ -177,7 +177,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "PAYMENT RAILS",
     title: "Promise-To-Pay (PTP) Commitment Scheduling Matrix",
     badge: "Verbal Lock · Quiet Hours Compliant",
-    icon: "📅",
+    icon: "",
     metrics: [
       { label: "PTP Fulfillment", value: "94.2%", sub: "On-Time Customer Clearance" },
       { label: "Lock Duration", value: "48 Hours", sub: "Dunning Freeze Window" },
@@ -205,15 +205,15 @@ res = b2b_voice_engine.process_customer_turn(req)
   overview: {
     category: "PAYMENT RAILS",
     title: "Universal Multi-Rail Gateway Router",
-    badge: "Sub-18.4ms Switch · 6 Supported Gateways",
-    icon: "🌐",
+    badge: "6 Supported Gateways",
+    icon: "",
     metrics: [
       { label: "Gateways", value: "6 Active", sub: "Razorpay, Juspay, PhonePe, CRED, Cashfree, Stripe" },
-      { label: "Switch Speed", value: "<18.4ms", sub: "Sub-Second Fallback" },
-      { label: "Uptime", value: "99.99%", sub: "Distributed Control Plane" },
+      { label: "Fallback", value: "Auto", sub: "Multi-rail failover" },
+      { label: "Uptime", value: "No SLA", sub: "Demo deployment" },
       { label: "Routing Fee", value: "Optimized", sub: "Lowest Interbank Rate" }
     ],
-    overview: "Multi-Rail Router is a universal payment gateway orchestrator interfacing with Razorpay, Juspay, PhonePe, CRED, Cashfree, and Stripe. When a transaction fails on one rail, Multi-Rail Router dynamically reroutes it to the highest-yielding secondary rail in under 18.4 milliseconds.",
+    overview: "Multi-Rail Router is a universal payment gateway orchestrator interfacing with Razorpay, Juspay, PhonePe, CRED, Cashfree, and Stripe. When a transaction fails on one rail, Multi-Rail Router dynamically reroutes it to the highest-yielding secondary rail automatically.",
     mathFormula: "\\text{SelectedRail} = \\arg\\max_{r \\in R} \\left( \\text{SuccessRate}(r) \\times \\text{Yield}(r) - \\text{Fee}(r) \\right)",
     architecture: [
       "1. Real-time health check probes across all 6 connected gateway SDKs",
@@ -233,7 +233,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "ZERO-TRUST & AUDIT",
     title: "AWS Cedar Cryptographic Zero-Trust Policy Engine",
     badge: "Amazon Cedar Syntax · Mathematically Verified",
-    icon: "⚖️",
+    icon: "",
     metrics: [
       { label: "Policy Language", value: "Cedar", sub: "Formal Verification" },
       { label: "Discount Limit", value: "≤10% / ≤₹500", sub: "Hard Clamping" },
@@ -263,7 +263,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "ZERO-TRUST & AUDIT",
     title: "Cryptographic SHA-256 Merkle Audit Ledger",
     badge: "Immutable Chain · Tamper-Proof Cryptography",
-    icon: "🔒",
+    icon: "",
     metrics: [
       { label: "Hash Algorithm", value: "SHA-256", sub: "Cryptographic Hash Chain" },
       { label: "Tamper Detection", value: "100%", sub: "Instant Block Check" },
@@ -288,13 +288,13 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
   evaluation: {
     category: "ZERO-TRUST & AUDIT",
     title: "Ragas & DeepEval Live AI Benchmark Suite",
-    badge: "Automated LLM Benchmarks · RBI Compliance",
-    icon: "📊",
+    badge: "LLM evaluation harness · scores not published",
+    icon: "",
     metrics: [
-      { label: "Faithfulness", value: "98.4%", sub: "Grounding & Accuracy" },
-      { label: "Answer Relevancy", value: "97.2%", sub: "Domain Intent Match" },
-      { label: "Zero Hallucination", value: "100.0%", sub: "DeepEval Passed" },
-      { label: "RBI Tone Score", value: "1.00", sub: "100% Non-Coercive" }
+      { label: "Faithfulness", value: "Not run", sub: "No published score" },
+      { label: "Answer Relevancy", value: "Not run", sub: "No published score" },
+      { label: "Hallucination check", value: "Not run", sub: "No published score" },
+      { label: "Tone check", value: "Not run", sub: "No published score" }
     ],
     overview: "Ragas & DeepEval Suite evaluates the Voice AI Brain for factual accuracy, safety, and regulatory compliance. It continuously scores LLM outputs on Faithfulness, Answer Relevancy, Context Precision, and RBI Non-Coercion Compliance.",
     mathFormula: "\\text{Score}_{\\text{Faithfulness}} = \\frac{\\text{Verified Grounded Statements}}{\\text{Total Claims Made}} = 0.984",
@@ -316,7 +316,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "ZERO-TRUST & AUDIT",
     title: "Red-Team Adversarial Security Attack Lab",
     badge: "12 Exploit Vectors · Defensive Resilience",
-    icon: "🛡️",
+    icon: "",
     metrics: [
       { label: "Exploit Vectors", value: "12 Tests", sub: "HMAC, Replay, Rejections" },
       { label: "Attacks Blocked", value: "12/12", sub: "100% Defensive Success" },
@@ -344,7 +344,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "RECOVERY GOVERNANCE",
     title: "CFO Dual-Key Approval & Dual-Officer Quorum",
     badge: "Multi-Sig Governance · High-Value Invoices",
-    icon: "🏛️",
+    icon: "",
     metrics: [
       { label: "Dual-Key Policy", value: ">₹1,00,000", sub: "Quorum Enforced" },
       { label: "Authorization", value: "<12.4s", sub: "Signed Push Notification" },
@@ -372,7 +372,7 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     category: "BANKING & SIMULATION",
     title: "Interactive Multi-Bank SRE Sandbox Lab",
     badge: "18 Failure Topologies · Real-Time Chaos Injection",
-    icon: "🧪",
+    icon: "",
     metrics: [
       { label: "Chaos Scenarios", value: "18 Modes", sub: "HDFC, SBI, ICICI, UPI" },
       { label: "Simulation Speed", value: "Realtime", sub: "Full Circuit Emulation" },
@@ -384,9 +384,9 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
     architecture: [
       "1. Select simulation scenario (e.g. HDFC 504 Gateway Timeout)",
       "2. Engine generates high-fidelity simulated telemetry matching real bank response codes",
-      "3. OmniRevive autonomous recovery pipeline detects degradation within 0.23ms",
+      "3. OmniRevive autonomous recovery pipeline detects degradation",
       "4. Dynamic rerouting switches transaction to healthy fallback rails",
-      "5. Side-by-side terminal logs compare standard recovery vs OmniRevive 91.4% success"
+      "5. Side-by-side terminal logs compare standard recovery vs OmniRevive (simulated)"
     ],
     codeSnippet: `sandbox.inject_failure_scenario(
     scenario="HDFC_504_CORE_TIMEOUT",
@@ -400,10 +400,10 @@ when { context.discount_amount <= 500 && context.discount_pct <= 10.0 };`,
   cloudflare_sre: {
     category: "INFRASTRUCTURE & SECURITY",
     title: "Cloudflare 25 Edge Services Architecture",
-    badge: "330+ Global Edge Cities · Zero-Trust SRE",
-    icon: "☁️",
+    badge: "Cloudflare edge · Zero-Trust SRE",
+    icon: "",
     metrics: [
-      { label: "Edge PoPs", value: "330+ Cities", sub: "<50ms Worldwide" },
+      { label: "Edge PoPs", value: "Cloudflare", sub: "Edge network" },
       { label: "DDoS Mitigation", value: "321 Tbps", sub: "Unmetered Protection" },
       { label: "Turnstile Auth", value: "Invisible", sub: "Zero-Friction Bot Filter" },
       { label: "R2 Egress Fee", value: "$0.00", sub: "Zero-Egress Immutable Lake" }
@@ -433,7 +433,7 @@ export default {
     category: "DEVELOPER & API",
     title: "OpenAPI Specification & Enterprise SDKs",
     badge: "RESTful · WebSocket · Flutter & React Native",
-    icon: "📚",
+    icon: "",
     metrics: [
       { label: "Endpoints", value: "48 APIs", sub: "Fully Documented" },
       { label: "Contract Version", value: "v1.1.0", sub: "Strict Semantic Versioning" },
@@ -460,7 +460,7 @@ export default {
     category: "REGULATORY COMPLIANCE",
     title: "RBI & TRAI Non-Coercive Financial Governance",
     badge: "100% Compliant · RBI CoFT · TRAI Quiet Hours",
-    icon: "⚖️",
+    icon: "",
     metrics: [
       { label: "TRAI Hours", value: "09:00-21:00", sub: "Strict Outreach Windows" },
       { label: "RBI CoFT", value: "Card-on-File", sub: "Zero Raw PAN Storage" },
@@ -487,26 +487,26 @@ export default {
   terms_of_service: {
     category: "LEGAL & ENTERPRISE SLA",
     title: "Enterprise Service Level Agreement & Terms",
-    badge: "99.999% SLA · ISO/IEC 27001 · SOC 2 Type II",
-    icon: "📜",
+    badge: "Project terms · Demo, no SLA",
+    icon: "",
     metrics: [
-      { label: "High Availability", value: "99.999%", sub: "Multi-Cloud Fallback" },
-      { label: "CAS Mutex Lock", value: "0.23ms", sub: "Zero-Double-Debit SLA" },
-      { label: "Data Residency", value: "India Only", sub: "Mumbai/Hyderabad MeitY" },
-      { label: "Pen-Test Score", value: "Grade A+", sub: "Quarterly Audit Passed" }
+      { label: "Availability", value: "No SLA", sub: "Demo deployment" },
+      { label: "CAS Mutex Lock", value: "CAS", sub: "Atomic lock" },
+      { label: "Data", value: "Sample only", sub: "No real merchant data" },
+      { label: "Security audit", value: "None yet", sub: "Not independently audited" }
     ],
-    overview: "OmniRevive-OS provides enterprise merchants with a 99.999% uptime SLA backed by automated multi-rail routing across Razorpay, Cashfree, Juspay, PhonePe, and CRED. Data residency is strictly confined to Indian cloud availability zones in compliance with MeitY guidelines, and all database state is encrypted with AES-256-GCM.",
+    overview: "OmniRevive-OS is a demonstration project. It offers no uptime SLA, holds no certifications, and has not been independently audited. See the Terms page for what it does and does not promise.",
     mathFormula: "\\text{Availability} = \\frac{\\text{TotalTime} - \\text{Downtime}}{\\text{TotalTime}} \\ge 0.99999",
     architecture: [
       "1. Multi-tenant data segregation with isolated tenant encryption keys",
       "2. Continuous automated health check monitoring with sub-second failover",
       "3. Zero-knowledge cryptographic ledger verification for external financial auditors",
       "4. 24/7 dedicated SRE escalation bridge and enterprise incident response",
-      "5. Annual SOC 2 Type II and ISO/IEC 27001 independent compliance certification"
+      "5. No third-party compliance certification yet (not audited)"
     ],
     codeSnippet: `def evaluate_enterprise_sla():
     uptime_ratio = (total_seconds - incident_seconds) / total_seconds
-    assert uptime_ratio >= 0.99999, "SLA degraded below 5-nines!"
+    # No uptime SLA is offered for this demo
     return {"status": "OPERATIONAL", "sla_tier": "ENTERPRISE_GOLD"}`,
     tabId: "audit_ledger"
   },
@@ -517,7 +517,7 @@ export default {
     category: "DISCOVER · HOW IT WORKS",
     title: "AI-Powered Revenue Recovery — Deep Dive",
     badge: "Weibull Hazard Model · 49.2% Recovery Rate",
-    icon: "🤖",
+    icon: "",
     metrics: [
       { label: "Recovery Rate", value: "49.2%", sub: "vs 35% Standard Gateway" },
       { label: "AI Models", value: "3 Engines", sub: "Weibull · Qdrant · Bedrock" },
@@ -541,7 +541,7 @@ result = omnirevive.recover(
     failure_code="U69_NPCI_TIMEOUT"
 )
 # → Weibull optimal retry: +45min
-# → Qdrant precedent: 91.4% recovery for SBI 504s
+# → Qdrant precedent: simulated recovery curve for SBI 504s
 # → Bedrock message: "Hi! Your ₹1,499 payment failed briefly..."
 # → Status: RECOVERED in 47 minutes`,
     tabId: "fast_loop"
@@ -551,17 +551,17 @@ result = omnirevive.recover(
     category: "DISCOVER · FAILURE ANALYSIS",
     title: "Payment Failure Recovery — Stage-by-Stage",
     badge: "6 Failure Stages · 18 Bank Error Codes",
-    icon: "💳",
+    icon: "",
     metrics: [
       { label: "Failure Codes", value: "18 Types", sub: "UPI, ENACH, CARD, NACH" },
-      { label: "Stage Recovery", value: "91.4%", sub: "at Weibull Peak Window" },
-      { label: "Zero Retry Storm", value: "87.6%", sub: "Blind Retry Reduction" },
+      { label: "Stage Recovery", value: "Sim.", sub: "at Weibull peak window (simulated)" },
+      { label: "Zero Retry Storm", value: "Sim.", sub: "Blind retry reduction (simulated)" },
       { label: "Bank Coverage", value: "18/18", sub: "HDFC, SBI, ICICI, Axis..." }
     ],
     overview: "OmniRevive-OS classifies every payment failure into one of 6 stages — each with a distinct AI recovery action. Stage 1 (Soft Timeout) triggers an immediate Weibull-optimized retry. Stage 2 (Insufficient Funds) schedules a salary-cycle aligned follow-up. Stage 3 (Card Declined) triggers RBI CoFT token refresh. Stage 4 (UPI Timeout) activates NPCI switch radar. Stage 5 (GSTIN Mismatch) triggers Deep-Loop voice negotiation. Stage 6 (Hard Decline) escalates to CFO dual-key approval queue.",
     mathFormula: "\\text{Stage}(e) = \\begin{cases} 1 & e \\in \\{504, U69\\} \\\\ 2 & e = \\text{NSF} \\\\ 3 & e = \\text{TOKEN\\_INVALID} \\\\ 4 & e \\in \\text{NPCI\\_ERRORS} \\\\ 5 & e = \\text{GSTIN\\_MISMATCH} \\\\ 6 & e = \\text{HARD\\_DECLINE} \\end{cases}",
     architecture: [
-      "Stage 1 — Soft Timeout (U69/504): Weibull +45min retry → 91.4% recovery peak",
+      "Stage 1 — Soft Timeout (U69/504): Weibull +45min retry (simulated recovery peak)",
       "Stage 2 — Insufficient Funds: Salary-cycle aligned retry on 1st/10th of month",
       "Stage 3 — Card Token Invalid: RBI CoFT automatic cryptogram refresh workflow",
       "Stage 4 — NPCI Switch Congestion: NPCI Radar trips circuit breaker, reroutes rail",
@@ -589,7 +589,7 @@ result = omnirevive.recover(
     category: "DISCOVER · B2B VOICE AI",
     title: "B2B Dispute Resolution — Voice AI Playbook",
     badge: "Telugu · Hindi · English · 22 Indic Languages",
-    icon: "🎙️",
+    icon: "",
     metrics: [
       { label: "Languages", value: "22 Indic", sub: "ai4bharat Conformer-600M" },
       { label: "Duplex Latency", value: "110ms", sub: "ASR + LLM + TTS" },
@@ -621,10 +621,10 @@ res = b2b_voice_engine.process_customer_turn(req)
     category: "DISCOVER · SYSTEM DESIGN",
     title: "Control Plane System Architecture",
     badge: "3-Tier Microservices · Redis · Qdrant · FastAPI",
-    icon: "🏗️",
+    icon: "",
     metrics: [
       { label: "API Endpoints", value: "48 APIs", sub: "OpenAPI 3.1.0 Contract" },
-      { label: "Test Coverage", value: "486 Tests", sub: "100% Pass Rate" },
+      { label: "Test Coverage", value: "600+ Tests", sub: "100% Pass Rate" },
       { label: "P99 Latency", value: "<50ms", sub: "End-to-End Recovery" },
       { label: "Data Stores", value: "4 Layers", sub: "SQLite · Redis · Qdrant · R2" }
     ],
@@ -641,7 +641,7 @@ res = b2b_voice_engine.process_customer_turn(req)
     codeSnippet: `# FastAPI Application Architecture
 @app.post("/api/v1/recovery/fast-loop")
 async def trigger_fast_loop(req: RecoveryRequest):
-    # 1. Redis CAS idempotency check (0.23ms)
+    # 1. Redis CAS idempotency check
     await redis_cas.acquire_mutex(req.payment_id)
     # 2. Weibull retry scheduling
     retry_ts = weibull_engine.calculate_optimal_retry(req)
@@ -685,7 +685,7 @@ curl -X POST "https://omnirevive-os.antideploy.com/api/v1/webhook" \\
     category: "DISCOVER · DEVELOPER DOCS",
     title: "Developer Documentation & API Quickstart",
     badge: "48 Endpoints · OpenAPI 3.1.0 · Swagger UI",
-    icon: "📚",
+    icon: "",
     metrics: [
       { label: "REST Endpoints", value: "48 APIs", sub: "Fully Documented" },
       { label: "SDKs", value: "Python + Dart", sub: "Auto-Generated Types" },
@@ -719,15 +719,15 @@ print(result.retry_at)  # 2026-09-19T14:45:00+05:30`,
     category: "DISCOVER · ABOUT",
     title: "About OmniRevive-OS & The Builder",
     badge: "Razorpay AI Buildathon 2026 · Solo Build",
-    icon: "👤",
+    icon: "",
     metrics: [
       { label: "Builder", value: "Samrudh", sub: "Dwivedula — Solo Engineer" },
       { label: "Build Time", value: "72 Hours", sub: "Hackathon Sprint" },
-      { label: "Test Suite", value: "486 Tests", sub: "100% Passing" },
+      { label: "Test Suite", value: "600+ Tests", sub: "100% Passing" },
       { label: "Stack", value: "Full-Stack", sub: "Python + JS + Flutter" }
     ],
     overview: "OmniRevive-OS was designed and built by Samrudh Dwivedula as a solo entry for the Razorpay AI Buildathon 2026. The project demonstrates an enterprise-grade autonomous AI revenue recovery control plane capable of handling UPI/ENACH/Card/NACH failures across 18 Indian banks with Weibull hazard modeling, trilingual B2B voice AI, cryptographic audit ledgers, and a full Cloudflare edge deployment — all on a $0 infrastructure budget.",
-    mathFormula: "\\text{Innovation Score} = \\frac{\\text{Features} \\times \\text{Tests}}{\\text{Build Hours}} = \\frac{18 \\times 486}{72} = 121.5",
+    mathFormula: "\\text{Innovation Score} = \\frac{\\text{Features} \\times \\text{Tests}}{\\text{Build Hours}} = \\text{(illustrative)}",
     architecture: [
       "Builder: Samrudh Dwivedula (GitHub: @Samrudh2006)",
       "Buildathon: Razorpay AI Hackathon 2026 — Target: 0.1% Selection",
@@ -742,7 +742,7 @@ print(result.retry_at)  # 2026-09-19T14:45:00+05:30`,
 omnirevive = ControlPlane(
     ai_engines=["Weibull", "Qdrant", "Bedrock", "Indic-ASR"],
     rails=18,          # Indian banking rails
-    tests=486,         # All passing
+    tests=600,  # 600+,         # All passing
     infra_cost="$0",   # Cloudflare + Antideploy free tier
     compliance=["RBI", "TRAI", "AWS-Cedar", "DPDP-2023"]
 )`,
@@ -751,20 +751,20 @@ omnirevive = ControlPlane(
 
   benchmarks_page: {
     category: "DISCOVER · BENCHMARKS",
-    title: "Production Benchmark Suite — 486 Tests",
-    badge: "100-Case Held-Out Cohort · 486 Automated Tests",
-    icon: "📊",
+    title: "Production Benchmark Suite — 600+ Tests",
+    badge: "100-Case Held-Out Cohort · 600+ Automated Tests",
+    icon: "",
     metrics: [
-      { label: "Total Tests", value: "486", sub: "100% Pass Rate" },
-      { label: "Recovery Accuracy", value: "91.4%", sub: "SBI/HDFC Outage Cohort" },
-      { label: "Ragas Faithfulness", value: "98.4%", sub: "Voice AI Grounding" },
+      { label: "Total Tests", value: "600+", sub: "Collected, all passing" },
+      { label: "Recovery Accuracy", value: "Sim.", sub: "Simulated SBI/HDFC cohort" },
+      { label: "Ragas Faithfulness", value: "n/a", sub: "Not evaluated" },
       { label: "Benchmark Suite", value: "300+", sub: "Enterprise Merchant Cohort" }
     ],
-    overview: "OmniRevive-OS maintains a rigorous held-out benchmark suite of 300+ enterprise merchant scenarios. The benchmark covers: B2C Fast-Loop Weibull recovery accuracy across 18 bank failure modes, B2B Deep-Loop voice AI faithfulness (Ragas + DeepEval), CFO dual-key quorum timing, Bulk CSV throughput (10k rows/sec), and cryptographic Merkle ledger tamper detection. All 486 automated pytest tests pass in under 65 seconds.",
-    mathFormula: "\\text{Benchmark Score} = \\frac{\\text{Passed Tests}}{\\text{Total Tests}} = \\frac{486}{486} = 100\\%",
+    overview: "OmniRevive-OS includes a held-out benchmark suite (100 cases for the recovery benchmark). The benchmark covers: B2C Fast-Loop Weibull recovery accuracy across 18 bank failure modes, B2B Deep-Loop voice AI faithfulness (Ragas + DeepEval), CFO dual-key quorum timing, bulk CSV ingestion, and cryptographic Merkle ledger tamper detection. All 600+ automated pytest tests passed when counted on 26 Nov 2026.",
+    mathFormula: "\\text{Benchmark Score} = \\frac{\\text{Passed Tests}}{\\text{Total Tests}} = \\text{all collected tests pass}",
     architecture: [
       "B2C Recovery: 300-cohort Monte Carlo Weibull simulation across 18 bank failure modes",
-      "B2B Voice AI: Ragas Faithfulness=98.4%, Answer Relevancy=97.2%, Zero Hallucination",
+      "B2B Voice AI: Ragas and DeepEval harness in the repo (scores not published)",
       "Security: 12/12 adversarial attack vectors blocked (HMAC, Replay, Injection attacks)",
       "CFO Quorum: Ed25519 dual-key authorization verified in <12.4 seconds",
       "Bulk CSV: 10,000 rows/sec parallel ingestion with PII sanitization",
@@ -775,9 +775,9 @@ pytest tests/ -v --tb=short
 # Results:
 # test_benchmark_cohort_300.py .... 300 PASSED
 # test_adversarial.py .......... 12/12 BLOCKED
-# test_evaluation_metrics.py ... 98.4% Faithfulness
+# test_evaluation_metrics.py
 # test_audit_hash_chain.py ..... 100% Tamper-Proof
-# ====== 486 passed in 64.96s ======`,
+# ====== 600+ passed ======`,
     tabId: "evaluation"
   },
 
@@ -785,7 +785,7 @@ pytest tests/ -v --tb=short
     category: "DEVELOPER · OPENAPI",
     title: "Swagger UI & OpenAPI Interactive Spec",
     badge: "48 Live Endpoints · Try It Now",
-    icon: "🔌",
+    icon: "",
     metrics: [
       { label: "API Version", value: "v1.1.0", sub: "Semantic Versioning" },
       { label: "Live Endpoints", value: "48 APIs", sub: "REST + WebSocket + SSE" },
@@ -806,20 +806,20 @@ pytest tests/ -v --tb=short
 # Or via curl:
 curl -X GET "https://omnirevive-os.antideploy.com/api/v1/health" \\
   -H "accept: application/json"
-# Response: {"status":"healthy","version":"1.1.0","tests_passing":486}`,
+# Response: {"status":"healthy","version":"1.1.0","tests_passing":"600+"}`,
     tabId: "docs"
   },
 
   sre_health: {
     category: "INFRASTRUCTURE · SRE",
     title: "Live SRE Health & System Observability",
-    badge: "99.999% Uptime · Sub-Second Monitoring",
-    icon: "🟢",
+    badge: "Health endpoint · Merkle verification",
+    icon: "",
     metrics: [
       { label: "API Status", value: "Healthy", sub: "All 48 Endpoints Alive" },
       { label: "Recovery Engine", value: "Active", sub: "Weibull Pipeline Running" },
-      { label: "Merkle Ledger", value: "Verified", sub: "Chain Integrity 100%" },
-      { label: "CF Edge", value: "330+ PoPs", sub: "Global Anycast Active" }
+      { label: "Merkle Ledger", value: "Verified", sub: "Verified by /audit/verify" },
+      { label: "CF Edge", value: "Cloudflare", sub: "Edge network" }
     ],
     overview: "OmniRevive-OS continuously monitors its own health through a dedicated SRE observability stack. The /health endpoint returns real-time status of all subsystems: FastAPI application server, Redis CAS mutex, Qdrant vector store, Merkle audit ledger integrity, and Cloudflare edge connectivity. Automated circuit breakers trip within 0.23ms of detecting any degradation.",
     mathFormula: "\\text{SRE Health} = \\bigcap_{s \\in \\text{Systems}} \\text{Healthy}(s) \\Rightarrow \\text{Status} = \\text{GREEN}",
@@ -829,7 +829,7 @@ curl -X GET "https://omnirevive-os.antideploy.com/api/v1/health" \\
       "GET /api/v1/stream/live — Real-time SSE telemetry stream (18 bank rails)",
       "Cloudflare Health Checks: External probes every 60 seconds from 5 PoPs",
       "Automated Alerting: Circuit breaker trips when error rate exceeds 15% in 30s window",
-      "Uptime Target: 99.999% (< 5.26 minutes downtime/year)"
+      "No uptime SLA (demo deployment)"
     ],
     codeSnippet: `# Live health endpoint
 curl https://omnirevive-os.antideploy.com/health
@@ -839,11 +839,11 @@ curl https://omnirevive-os.antideploy.com/health
   "subsystems": {
     "fast_loop": "active",
     "weibull_engine": "active",
-    "redis_cas": "locked_0.23ms",
+    "redis_cas": "locked",
     "merkle_ledger": "verified",
     "cloudflare_edge": "330+ PoPs"
   },
-  "tests_passing": 486
+  "tests_passing": "600+"
 }`,
     tabId: "overview"
   },
@@ -852,7 +852,7 @@ curl https://omnirevive-os.antideploy.com/health
     category: "DISCOVER · SITEMAP",
     title: "OmniRevive-OS — Complete Site Map",
     badge: "10 Knowledge Pages · SEO Indexed",
-    icon: "🗺️",
+    icon: "",
     metrics: [
       { label: "Knowledge Pages", value: "10", sub: "Google + AI Crawlable" },
       { label: "Sitemap Format", value: "XML", sub: "sitemap.xml Standard" },
@@ -866,9 +866,9 @@ curl https://omnirevive-os.antideploy.com/health
       "/payment-failure-recovery — 6-Stage Failure Classification & Recovery Actions",
       "/b2b-dispute-resolution — Trilingual Voice AI B2B Dispute Negotiation System",
       "/architecture — 3-Tier Control Plane: Edge + App + Data Architecture",
-      "/idempotency-protection — Redis CAS Distributed Idempotency Mutex (0.23ms)",
+      "/idempotency-protection — Redis CAS Distributed Idempotency Mutex",
       "/audit-ledger — SHA-256 Merkle Tamper-Evident Cryptographic Audit Chain",
-      "/benchmarks — 486-Test Production Benchmark Suite & Ragas Evaluation",
+      "/benchmarks — 600+ Test Production Benchmark Suite & Ragas Evaluation",
       "/faq — Integration, Compliance & Performance FAQs",
       "/documentation — 48 REST API Endpoints & Developer Quickstart",
       "/about — Builder Profile & Razorpay AI Buildathon 2026 Context"
@@ -948,7 +948,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Overview Matter -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-sky-600 dark:text-sky-400">📖</span> Technical Overview & Business Impact
+            <span class="text-sky-600 dark:text-sky-400"></span> Technical Overview & Business Impact
           </h3>
           <p class="modal-surface-card text-xs leading-relaxed p-4 rounded-2xl">
             ${data.overview}
@@ -970,7 +970,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Architecture Workflow -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-amber-600 dark:text-amber-400">⚙️</span> Architectural Execution Pipeline
+            <span class="text-amber-600 dark:text-amber-400"></span> Architectural Execution Pipeline
           </h3>
           <div class="modal-surface-card space-y-1.5 p-4 rounded-2xl text-xs">
             ${data.architecture.map(item => `
@@ -985,7 +985,7 @@ export function openFeatureDetailModal(featureKey) {
         <!-- Live Code Snippet -->
         <div class="space-y-2">
           <h3 class="modal-section-heading text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
-            <span class="text-purple-600 dark:text-purple-400">💻</span> Production Code & Kernel Implementation
+            <span class="text-purple-600 dark:text-purple-400"></span> Production Code & Kernel Implementation
           </h3>
           <pre class="modal-code-card p-4 rounded-2xl text-[11px] text-emerald-700 dark:text-emerald-400 font-mono overflow-x-auto"><code>${data.codeSnippet}</code></pre>
         </div>
@@ -999,7 +999,7 @@ export function openFeatureDetailModal(featureKey) {
         </div>
         <div class="flex items-center gap-2">
           <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
-            <span>🚀 Open Interactive Workspace Tab</span>
+            <span> Open Interactive Workspace Tab</span>
           </button>
           <button onclick="closeFeatureDetailModal()" class="modal-btn-close px-4 py-2.5 rounded-xl font-semibold text-xs transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">
             Close

@@ -41,8 +41,9 @@ import {
 } from "./services/auditService.js?v=2.1.0";
 
 import {
-  initLiveTelemetryStream
-} from "./services/liveStreamClient.js?v=2.1.0";
+  initLiveTelemetryStream,
+  toggleCommandPalette
+} from "./services/liveStreamClient.js?v=2.1.1";
 
 import {
   fetchCFOQueue,
@@ -59,9 +60,9 @@ import {
   handleCfoReject
 } from "./components/cfoApprovalModal.js?v=2.1.0";
 
-import { initFintech3DTopology } from "./components/topologyCanvas.js?v=2.1.0";
-import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js?v=2.1.0";
-import { landingGateway } from "./components/landingGateway.js?v=2.1.0";
+import { initFintech3DTopology } from "./components/topologyCanvas.js?v=2.1.1";
+import { renderWeibullCurve, renderWeibullSvgCurve, renderWeibullCanvasChart } from "./components/weibullChart.js?v=2.1.1";
+import { landingGateway } from "./components/landingGateway.js?v=2.1.1";
 import {
   toggleAiCopilotDrawer,
   minimizeCopilotDrawer,
@@ -229,7 +230,7 @@ window.toggleDesktopSidebar = toggleDesktopSidebar;
 export function openDetailedBenchmarkSuite() {
   switchNavTab("benchmark");
   runBenchmarkAction();
-  showToast("📊 100-Case Benchmark Suite Activated!", "info");
+  showToast("100-Case Benchmark Suite Activated!", "info");
 }
 
 export function toggleMobileMenu() {
@@ -248,17 +249,17 @@ export function toggleThemeMode() {
   if (isDark) {
     html.classList.remove("dark");
     html.classList.add("light");
-    if (icon) icon.innerText = "🌙";
+    
     if (text) text.textContent = "Dark";
     appState.setTheme("light");
-    showToast("☀️ Switched to High-Contrast Light Mode", "info");
+    showToast("Switched to High-Contrast Light Mode", "info");
   } else {
     html.classList.remove("light");
     html.classList.add("dark");
-    if (icon) icon.innerText = "☀️";
+    
     if (text) text.textContent = "Light";
     appState.setTheme("dark");
-    showToast("🌙 Switched to Deep Navy Dark Mode", "info");
+    showToast("Switched to Deep Navy Dark Mode", "info");
   }
 
   setTimeout(renderWeibullCurve, 50);
@@ -272,7 +273,7 @@ export function toggleThemePaletteMenu() {
   }
 }
 
-export function applyThemePalette(paletteName) {
+export function applyThemePalette(paletteName, silent = false) {
   const html = document.documentElement;
   const iconEl = document.getElementById("theme-palette-icon");
   const labelEl = document.getElementById("theme-palette-label");
@@ -283,17 +284,17 @@ export function applyThemePalette(paletteName) {
   localStorage.setItem("omnirevive_palette", paletteName);
 
   if (paletteName === "cyber-obsidian") {
-    if (iconEl) iconEl.innerText = "🌌";
+    
     if (labelEl) labelEl.innerText = "Cyber Obsidian";
-    showToast("🌌 Activated Cyber Obsidian Theme", "info");
+    if (!silent) showToast("Activated Cyber Obsidian Theme", "info");
   } else if (paletteName === "stripe-velvet") {
-    if (iconEl) iconEl.innerText = "💳";
+    
     if (labelEl) labelEl.innerText = "Stripe Velvet";
-    showToast("💳 Activated Stripe Velvet Theme", "info");
+    if (!silent) showToast("Activated Stripe Velvet Theme", "info");
   } else if (paletteName === "vercel-carbon") {
     if (iconEl) iconEl.innerText = "▲";
     if (labelEl) labelEl.innerText = "Vercel Carbon";
-    showToast("▲ Activated Vercel Carbon Theme", "info");
+    if (!silent) showToast("▲ Activated Vercel Carbon Theme", "info");
   }
 
   setTimeout(renderWeibullCurve, 50);
@@ -318,7 +319,7 @@ export function selectScenario(type) {
     document.querySelectorAll("#fast-pay-id").forEach((el) => (el.value = "pay_SBI_504_OUTAGE"));
     triggerFastLoopPipeline();
     simulateBankDegradation("SBI");
-    showToast("⚡ [Scenario A] SBI Switch Outage Ingested: Shifted Weibull Retry to +45m (91.4% Window)", "warning");
+    showToast("[Scenario A] SBI Switch Outage Ingested: Shifted Weibull Retry to +45m (91.4% Window)", "warning");
   } else if (type === "B") {
     switchNavTab("overview");
     document.querySelectorAll("#fast-scenario-select").forEach((el) => (el.value = "INSUFFICIENT_FUNDS"));
@@ -326,7 +327,7 @@ export function selectScenario(type) {
     document.querySelectorAll("#fast-pay-id").forEach((el) => (el.value = "pay_B2C_SOFT_DECLINE"));
     triggerFastLoopPipeline();
     setTimeout(openWhatsAppPreviewModal, 400);
-    showToast("📱 [Scenario B] Soft Balance Decline: 1-Click WhatsApp Recovery & UPI QR Generated!", "success");
+    showToast("[Scenario B] Soft Balance Decline: 1-Click WhatsApp Recovery & UPI QR Generated!", "success");
   } else if (type === "C") {
     switchNavTab("deep_loop");
     const gstSpeech = "Invoice mein hamara GST galat hai, correct GSTIN 29AABCU9603R1Z2 daal kar bhejo";
@@ -347,15 +348,15 @@ export function selectScenario(type) {
     setTimeout(() => {
       triggerVoiceTurnAction();
     }, 200);
-    showToast("🎙️ [Scenario C] B2B GST Dispute: Voice Agent Proposed Mutation & Locked PTP", "info");
+    showToast("[Scenario C] B2B GST Dispute: Voice Agent Proposed Mutation & Locked PTP", "info");
   } else if (type === "D") {
     switchNavTab("ptp_calendar");
     loadPTPRecords();
-    showToast("📅 [Scenario D] Promise-to-Pay Registered: Reminders Suppressed until Friday 11:00 AM IST", "success");
+    showToast("[Scenario D] Promise-to-Pay Registered: Reminders Suppressed until Friday 11:00 AM IST", "success");
   } else if (type === "E") {
     switchNavTab("red_team");
     runLiveAttack(1);
-    showToast("🛡️ [Scenario E] 50-Webhook Storm Contained: 0 Double Debits (CAS Mutex Verified)", "error");
+    showToast("[Scenario E] 50-Webhook Storm Contained: 0 Double Debits (CAS Mutex Verified)", "error");
   }
 }
 
@@ -368,35 +369,35 @@ export async function runLiveAttack(vectorId) {
   const ts = new Date().toLocaleTimeString("en-GB");
 
   if (vectorId === 1) {
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">⚡ LAUNCHING 50-THREAD CONCURRENT WEBHOOK STORM...</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400"> LAUNCHING 50-THREAD CONCURRENT WEBHOOK STORM...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Ingested 50 concurrent requests for pay_CAS_RACE_998...</div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ CAS MUTEX ACQUIRED</span> for Thread 1 (Lock key: merchant_1:pay_CAS_RACE_998)</div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-amber-400">49 Duplicate Webhooks Safely Suppressed (409 Conflict Dropped)</span></div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-sky-400 font-bold">★ RESULT: 0 Double-Charges, Idempotency Violations = 0.</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-sky-400 font-bold"> RESULT: 0 Double-Charges, Idempotency Violations = 0.</span></div>`;
   } else if (vectorId === 2) {
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">🛡️ INJECTING FORGED HMAC SIGNATURE: sha256_fake_998231...</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400"> INJECTING FORGED HMAC SIGNATURE: sha256_fake_998231...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Validating cryptographic payload hash against WEBHOOK_SECRET...</div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">❌ HTTP 401 UNAUTHORIZED: HMAC SHA-256 signature mismatch</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">✕ HTTP 401 UNAUTHORIZED: HMAC SHA-256 signature mismatch</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ RESULT: Attack Contained, Webhook execution blocked.</span></div>`;
   } else if (vectorId === 3) {
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">⏳ REPLAYING STALE SIGNATURE: Timestamp drift = 7200s (&gt;300s threshold)...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Checking clock skew against RFC-3339 replay window...</div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">❌ HTTP 400 REPLAY_ATTACK: Timestamp expired by 6900s</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">✕ HTTP 400 REPLAY_ATTACK: Timestamp expired by 6900s</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ RESULT: Stale replay request rejected.</span></div>`;
   } else if (vectorId === 4) {
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">🛑 SIMULATING AUTOMATED OUTREACH AT 23:45 IST (TRAI QUIET HOURS)...</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400"> SIMULATING AUTOMATED OUTREACH AT 23:45 IST (TRAI QUIET HOURS)...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Evaluating TRAI Regulation Rule (Prohibited: 21:00 to 09:00 IST)...</div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-amber-400 font-bold">⚠️ POLICY ENFORCEMENT: Outreach suppressed. Message deferred to 09:05 AM IST.</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-amber-400 font-bold"> POLICY ENFORCEMENT: Outreach suppressed. Message deferred to 09:05 AM IST.</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ RESULT: 0 TRAI Regulatory Violations.</span></div>`;
   } else if (vectorId === 5) {
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">💰 AI PROPOSING 50% DISCOUNT (₹42,500) ON ₹85,000 INVOICE...</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400"> AI PROPOSING 50% DISCOUNT (₹42,500) ON ₹85,000 INVOICE...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Policy Engine evaluating boundary: min(10%, ₹500 INR)...</div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-amber-400 font-bold">⚠️ POLICY CEILING CLAMP: ₹42,500 clamped to ₹500 INR.</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-amber-400 font-bold"> POLICY CEILING CLAMP: ₹42,500 clamped to ₹500 INR.</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ RESULT: Financial budget protected from LLM hallucination.</span></div>`;
   } else if (vectorId === 6) {
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400">🔀 ATTEMPTING ILLEGAL FSM STATE JUMP: DRAFT ➔ RESOLVED...</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-rose-400"> ATTEMPTING ILLEGAL FSM STATE JUMP: DRAFT  RESOLVED...</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] Validating Transition Graph against B2B State Machine...</div>`;
-    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">❌ FSM ILLEGAL_TRANSITION: Cannot transition DRAFT to RESOLVED directly.</span></div>`;
+    consoleEl.innerHTML += `<div>[${ts}] <span class="text-red-400 font-bold">✕ FSM ILLEGAL_TRANSITION: Cannot transition DRAFT to RESOLVED directly.</span></div>`;
     consoleEl.innerHTML += `<div>[${ts}] <span class="text-emerald-400 font-bold">✓ RESULT: Enterprise receivables integrity enforced.</span></div>`;
   }
   consoleEl.scrollTop = consoleEl.scrollHeight;
@@ -428,7 +429,7 @@ export async function runBenchmarkAction() {
     document.querySelectorAll("#bm-safety-supp").forEach((el) => (el.innerText = s.safety_suppressions));
 
     triggerCelebrationConfetti();
-    showToast(`🏆 100-Batch Benchmark Completed! Recovery Rate: ${s.recovery_rate_pct.toFixed(2)}% • 0 Violations`, "success");
+    showToast(` 100-Batch Benchmark Completed! Recovery Rate: ${s.recovery_rate_pct.toFixed(2)}% • 0 Violations`, "success");
   } catch (err) {
     showToast("Benchmark Notice: " + err.message, "warning");
   } finally {
@@ -540,7 +541,7 @@ export async function simulateBankDegradation(bankCode = "SBI") {
   }).catch((err) => console.warn("Backend telemetry sync notice:", err));
 
   if (newState === "DEGRADED") {
-    showToast(`⚡ ${bankCode} Switch toggled to DEGRADED (Latency: ${newLatency}ms). Circuit Breaker TRIPPED: Dynamic Weibull shifted to +45m!`, "warning");
+    showToast(` ${bankCode} Switch toggled to DEGRADED (Latency: ${newLatency}ms). Circuit Breaker TRIPPED: Dynamic Weibull shifted to +45m!`, "warning");
   } else {
     showToast(`✓ ${bankCode} Switch restored to HEALTHY (SR: ${newSr}%). Circuit Breaker CLOSED: Normal routing resumed.`, "success");
   }
@@ -586,7 +587,7 @@ export async function injectSimulatedNPCIStatus() {
       <div class="text-slate-300">Success Rate: ${sr}% • Latency: ${latency}ms • Adaptive Weibull Hazard shifted automatically.</div>
     `;
   }
-  showToast(`⚡ NPCI Telemetry Injected: ${bankCode} is now ${state}`, state === "HEALTHY" ? "success" : "warning");
+  showToast(` NPCI Telemetry Injected: ${bankCode} is now ${state}`, state === "HEALTHY" ? "success" : "warning");
 }
 
 export async function refreshFullNPCISwitchView() {
@@ -657,7 +658,7 @@ export async function refreshFullNPCISwitchView() {
           </div>
 
           <button onclick="simulateBankDegradation('${k}')" class="w-full py-1.5 bg-[#142442] hover:bg-[#1e3a6a] text-sky-300 hover:text-white rounded-lg text-[10px] font-bold mono transition cursor-pointer">
-            ⚡ Toggle ${k} State
+             Toggle ${k} State
           </button>
         </div>
       `;
@@ -775,7 +776,7 @@ export function simulateUpiAppPayment(appName) {
         </div>
       `;
       triggerCelebrationConfetti();
-      showToast(`⚡ ${orderId} Recovered (${amt}) via ${appName}!`, "success");
+      showToast(` ${orderId} Recovered (${amt}) via ${appName}!`, "success");
     }, 700);
   }
 }
@@ -820,7 +821,7 @@ export function toggleWhatsAppQrCode() {
     }
   } else {
     qrContainer.classList.add("hidden");
-    if (toggleText) toggleText.textContent = "📱 Show Dynamic UPI QR Code";
+    if (toggleText) toggleText.textContent = " Show Dynamic UPI QR Code";
   }
 }
 
@@ -832,7 +833,7 @@ export function resetWhatsAppModalView() {
   if (successState) successState.classList.add("hidden");
   if (buttonsContainer) buttonsContainer.classList.remove("hidden");
   if (qrContainer) qrContainer.classList.add("hidden");
-  if (toggleText) toggleText.textContent = "📱 Show Dynamic UPI QR Code";
+  if (toggleText) toggleText.textContent = " Show Dynamic UPI QR Code";
 }
 
 export function copyUpiIntentUri() {
@@ -1086,7 +1087,7 @@ export function startGuidedTour() {
   currentTourIndex = 0;
   switchNavTab("overview");
   showTourStep(currentTourIndex);
-  showToast("🧭 Starting 60-Second Guided SRE Architecture Tour", "info");
+  showToast("Starting 60-Second Guided SRE Architecture Tour", "info");
 }
 
 function showTourStep(index) {
@@ -1116,7 +1117,7 @@ function renderTourOverlay(targetEl, step, index) {
     overlay.id = "guided-tour-overlay";
     overlay.className = "fixed inset-0 pointer-events-none z-[99998] transition-all duration-300";
     overlay.innerHTML = `
-      <div id="tour-spotlight-box" class="absolute rounded-2xl pointer-events-none transition-all duration-300 border-2 border-sky-400 shadow-[0_0_0_9999px_rgba(3,7,18,0.85),0_0_35px_rgba(56,189,248,0.7)] animate-pulse"></div>
+      <div id="tour-spotlight-box" class="absolute rounded-2xl pointer-events-none transition-all duration-300 border-2 border-sky-400 shadow-[0_0_0_9999px_rgba(3,7,18,0.85),0_0_35px_rgba(43,181,230,0.7)] animate-pulse"></div>
       <div id="tour-popover-card" class="absolute pointer-events-auto w-auto max-w-[92vw] sm:max-w-md rounded-2xl bg-white/95 dark:bg-[#0c182c]/95 backdrop-blur-xl border-2 border-sky-500/70 shadow-2xl p-4 sm:p-5 space-y-3.5 text-slate-900 dark:text-slate-100 transition-all duration-300 z-10">
         <div class="flex items-center justify-between border-b border-slate-200 dark:border-blue-900/50 pb-2.5">
           <div class="flex items-center gap-2">
@@ -1138,7 +1139,7 @@ function renderTourOverlay(targetEl, step, index) {
               ⬅ Back
             </button>
             <button onclick="nextTourStep()" id="tour-next-btn" class="px-4 py-1.5 rounded-xl bg-gradient-to-r from-[#0c55ea] to-[#0284c7] hover:from-[#0942b8] hover:to-[#0369a1] text-white text-xs font-extrabold shadow-lg transition-all active:scale-95 cursor-pointer">
-              ${index === TOUR_STEPS.length - 1 ? "Finish Tour 🎉" : "Next ➔"}
+              ${index === TOUR_STEPS.length - 1 ? "Finish Tour " : "Next "}
             </button>
           </div>
         </div>
@@ -1179,7 +1180,7 @@ function renderTourOverlay(targetEl, step, index) {
     else prevBtn.classList.remove("opacity-40", "pointer-events-none");
   }
   if (nextBtn) {
-    nextBtn.textContent = index === TOUR_STEPS.length - 1 ? "Finish Tour 🎉" : "Next ➔";
+    nextBtn.textContent = index === TOUR_STEPS.length - 1 ? "Finish Tour " : "Next ";
   }
 
   if (popover) {
@@ -1204,7 +1205,7 @@ export function nextTourStep() {
     showTourStep(currentTourIndex + 1);
   } else {
     exitGuidedTour();
-    showToast("🎉 Tour Completed! Explore live scenarios or run benchmarks!", "success");
+    showToast("Tour Completed! Explore live scenarios or run benchmarks!", "success");
   }
 }
 
@@ -1261,7 +1262,7 @@ export function filterCommandPalette(query) {
   if (filteredCmdkList.length === 0) {
     listContainer.innerHTML = `
       <div class="p-6 text-center text-slate-400 text-xs">
-        <span class="text-base">🔍</span> No matching commands found for "${query}"
+        <span class="text-base"></span> No matching commands found for "${query}"
       </div>
     `;
     return;
@@ -1308,7 +1309,7 @@ export function triggerCelebrationConfetti() {
       particleCount: 75,
       spread: 80,
       origin: { y: 0.6 },
-      colors: ["#0c55ea", "#10b981", "#38bdf8", "#8b5cf6", "#f59e0b"]
+      colors: ["#0c55ea", "#10b981", "#2bb5e6", "#8b5cf6", "#f59e0b"]
     });
   }
 }
@@ -1500,17 +1501,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedTheme === "dark") {
     document.documentElement.classList.remove("light");
     document.documentElement.classList.add("dark");
-    if (icon) icon.innerText = "☀️";
+    
     if (text) text.textContent = "Light";
   } else {
     document.documentElement.classList.remove("dark");
     document.documentElement.classList.add("light");
-    if (icon) icon.innerText = "🌙";
+    
     if (text) text.textContent = "Dark";
   }
 
   const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
-  applyThemePalette(savedPalette);
+  applyThemePalette(savedPalette, true);
 
   mountComponents();
   landingGateway.init();
@@ -1533,7 +1534,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Immediate execution if script is loaded after DOMContentLoaded
 if (document.readyState === "complete" || document.readyState === "interactive") {
   const savedPalette = localStorage.getItem("omnirevive_palette") || "cyber-obsidian";
-  applyThemePalette(savedPalette);
+  applyThemePalette(savedPalette, true);
   mountComponents();
   landingGateway.init();
   evalDashboard.init();
@@ -1585,6 +1586,22 @@ window.speakCopilotResponse = speakCopilotResponse;
 window.handleCopilotCustomQuery = handleCopilotCustomQuery;
 window.openFeatureDetailModal = openFeatureDetailModal;
 window.closeFeatureDetailModal = closeFeatureDetailModal;
+// Command palette actions (os-command-palette-modal buttons call this)
+function executePaletteAction(action) {
+  const osPalette = document.getElementById("os-command-palette-modal");
+  if (osPalette && !osPalette.classList.contains("hidden")) toggleCommandPalette();
+  const go = (id, fn) => { try { fn && fn(); } catch (e) {} const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  switch (action) {
+    case "simulate_hdfc_504": go("showcase-sandbox", () => window.selectLandingScenario && window.selectLandingScenario("hdfc_504")); break;
+    case "open_cedar": go("showcase-cedar-security"); break;
+    case "open_copilot": toggleAiCopilotDrawer(); break;
+    case "launch_control_plane": if (typeof window.launchControlPlane === "function") window.launchControlPlane(); break;
+    case "toggle_theme": toggleThemeMode(); break;
+    case "toggle_sound": toggleUiSounds(); break;
+    default: break;
+  }
+}
+
 window.toggleCommandPalette = toggleCommandPalette;
 window.closeCommandPalette = closeCommandPalette;
 window.executePaletteAction = executePaletteAction;
@@ -1600,11 +1617,11 @@ window.triggerOmniBotSpeech = function() {
   const speechBubble = document.getElementById("omnibot-speech-bubble");
   const speechText = document.getElementById("omnibot-speech-text");
   const quotes = [
-    "\"Steady. Smart. Systematic. 0.1% recovered every day! 🪙\"",
-    "\"All 18 payment switch rails verified & healthy. Zero double-debits! 🛡️\"",
-    "\"Weibull Hazard optimal: Retry window shifted +45m for 91.4% yield. 📈\"",
-    "\"AWS Cedar policy active: Every discount and token capped safely! 🔒\"",
-    "\"Autonomous FSM: Listening, negotiating, and resolving payments 24/7! ⚡\""
+    "\"Steady. Smart. Systematic. 0.1% recovered every day! \"",
+    "\"All 18 payment switch rails verified & healthy.\"",
+    "\"Weibull Hazard optimal: Retry window shifted +45m for 91.4% yield. \"",
+    "\"AWS Cedar policy active: Every discount and token capped safely! \"",
+    "\"Autonomous FSM: Listening, negotiating, and resolving payments 24/7! \""
   ];
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   if (speechText) speechText.textContent = randomQuote;
@@ -1613,7 +1630,7 @@ window.triggerOmniBotSpeech = function() {
     setTimeout(() => { speechBubble.style.transform = "scale(1)"; }, 220);
   }
   if (typeof showToast === "function") {
-    showToast("🤖 OmniBot: " + randomQuote.replace(/\"/g, ""), "info");
+    showToast("OmniBot: " + randomQuote.replace(/\"/g, ""), "info");
   }
 };
 

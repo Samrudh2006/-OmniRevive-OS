@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Idempotency Protection & CAS Distributed Mutex | OmniRevive-OS</title>
-  <meta name="description" content="Technical guide to zero double-debit guarantees in fintech recovery: Redis Compare-And-Swap (CAS) distributed mutex, token locking, and replay defense.">
+  <meta name="description" content="Technical guide to duplicate-debit protection in fintech recovery: Redis Compare-And-Swap (CAS) distributed mutex, token locking, and replay defense.">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://omnirevive-os.antideploy.com/idempotency-protection">
   <meta property="og:title" content="Payment Idempotency Protection & CAS Distributed Mutex | OmniRevive-OS">
-  <meta property="og:description" content="How OmniRevive-OS guarantees 0 double-debits across concurrent webhook retries using Redis CAS locks and SHA-256 idempotency tokens.">
+  <meta property="og:description" content="How OmniRevive-OS works to prevent double-debits across concurrent webhook retries using Redis CAS locks and SHA-256 idempotency tokens.">
   <meta property="og:url" content="https://omnirevive-os.antideploy.com/idempotency-protection">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="OmniRevive-OS">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Payment Idempotency Protection & CAS Distributed Mutex">
-  <meta name="twitter:description" content="Zero double-debits in automated revenue recovery systems.">
+  <meta name="twitter:description" content="Duplicate-debit protection in automated revenue recovery systems.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Payment Idempotency Protection & CAS Distributed Mutex",
-    "description": "Technical analysis of distributed concurrency control, atomic Compare-And-Swap (CAS) operations, and idempotency guarantees in fintech.",
+    "description": "Technical analysis of distributed concurrency control, atomic Compare-And-Swap (CAS) operations, and idempotency controls in fintech.",
     "author": { "@type": "Person", "name": "Samrudh Dwivedula", "url": "https://github.com/Samrudh2006" },
     "publisher": { "@type": "Organization", "name": "OmniRevive-OS", "url": "https://omnirevive-os.antideploy.com/" },
     "mainEntityOfPage": "https://omnirevive-os.antideploy.com/idempotency-protection"
@@ -95,7 +95,7 @@
     <h1>Payment Idempotency Protection & CAS Distributed Mutex</h1>
     <div class="meta-bar">
       <span>Topic: Distributed Systems & Concurrency Invariants</span>
-      <span>Double Debits: 0 (100.0% Verified)</span>
+      <span>Double Debits: 0 (50-thread test)</span>
       <span>Author: Samrudh Dwivedula</span>
     </div>
 
@@ -126,8 +126,8 @@ def acquire_recovery_lock(tx_id: str, client_id: str, ttl_seconds: int = 15) -> 
     <h2>Formal Verification in Production Benchmarks</h2>
     <p>Across our 100-case held-out production benchmark suite and 50-thread concurrent webhook storm stress tests, OmniRevive-OS achieved:</p>
     <ul>
-      <li><strong>0 Double-Deduction Violations (100.0% Idempotency Verification)</strong></li>
-      <li><strong>Average Lock Acquisition Latency:</strong> 1.42ms</li>
+      <li><strong>0 Double-Deduction Violations (50-thread test)</strong></li>
+      <li><strong>Lock acquisition latency:</strong> not benchmarked</li>
       <li><strong>Deadlock Prevention:</strong> 15-second automatic expiration TTL prevents stranded locks during container crashes.</li>
     </ul>
 

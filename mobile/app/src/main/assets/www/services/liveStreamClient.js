@@ -243,7 +243,7 @@ export function executePaletteAction(actionName) {
     case "toggle_sound":
       if (typeof window.toggleUiSounds === "function") {
         const state = window.toggleUiSounds();
-        if (typeof showToast === "function") showToast(state ? "🔊 UI Micro-Interaction Sounds ENABLED" : "🔇 UI Micro-Interaction Sounds MUTED", "info");
+        if (typeof showToast === "function") showToast(state ? " UI Micro-Interaction Sounds ENABLED" : " UI Micro-Interaction Sounds MUTED", "info");
       }
       break;
     case "launch_control_plane":

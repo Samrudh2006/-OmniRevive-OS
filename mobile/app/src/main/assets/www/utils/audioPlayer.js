@@ -141,7 +141,7 @@ export const UnifiedVoiceEngine = {
   setNeuralVoice(voiceId) {
     this.currentNeuralVoice = voiceId;
     this.updateVoiceBadge(voiceId, "Neural");
-    showToast(`🎙️ Voice Engine: ${this.getVoiceDisplayName(voiceId)}`, "info");
+    showToast(` Voice Engine: ${this.getVoiceDisplayName(voiceId)}`, "info");
   },
 
   updateVoiceBadge(voiceId, type = "Neural") {
@@ -152,8 +152,8 @@ export const UnifiedVoiceEngine = {
       const isHindi = voiceId && (voiceId.includes("Swara") || voiceId.includes("hi-IN"));
       const isKokoro = voiceId && voiceId.includes("Kokoro");
       const isIndic = voiceId && voiceId.includes("indic");
-      const langFlag = isTelugu ? "🇮🇳 TELUGU" : (isHindi ? "🇮🇳 HINDI" : (isKokoro ? "⚡ SUB-45MS" : (isIndic ? "🇮🇳 22 LANGS" : "✨ NEURAL")));
-      badge.innerHTML = `<span>✨ Voice: ${displayName}</span> <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">${langFlag}</span>`;
+      const langFlag = isTelugu ? "🇮🇳 TELUGU" : (isHindi ? "🇮🇳 HINDI" : (isKokoro ? " SUB-45MS" : (isIndic ? "🇮🇳 22 LANGS" : " NEURAL")));
+      badge.innerHTML = `<span> Voice: ${displayName}</span> <span class="px-1 py-0.2 text-[9px] bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded font-bold uppercase tracking-wider">${langFlag}</span>`;
     }
 
     const telemEl = document.getElementById("acoustic-pipeline-label");
@@ -176,7 +176,7 @@ export const UnifiedVoiceEngine = {
 
   cleanTextForHumanSpeech(text) {
     return (text || "")
-      .replace(/[🤖⚡📱🎙️🛡️📊🏛️💾💳🚀🔇🔊✓✕▶•\*\#\_\`\:\;]/g, " ")
+      .replace(/[✓✕▶•\*\#\_\`\:\;]/g, " ")
       .replace(/\[\d+\]/g, "")
       .replace(/https?:\/\/\S+/gi, "")
       .replace(/\s+/g, " ")
@@ -421,7 +421,7 @@ export const UnifiedVoiceEngine = {
   startLiveCall() {
     this.isLiveCallActive = true;
     this.updateLiveCallUI(true);
-    showToast("📞 Connected to Live AI Voice Call (Multilingual Dialects)", "success");
+    showToast(" Connected to Live AI Voice Call (Multilingual Dialects)", "success");
 
     const greeting = "Namaste sir! Main Razorpay Accounts Desk se Neerja bol rahi hoon Acme Enterprises invoice ke silsile mein. Meeru Telugu lo aina matladavachu, Hindi ya English kisi mein bhi!";
     this.speak(greeting, () => {
@@ -441,7 +441,7 @@ export const UnifiedVoiceEngine = {
     if (transcriptEl) {
       transcriptEl.innerText = "Call ended. Dialogue session saved to audit chain.";
     }
-    showToast("📞 Call ended cleanly.", "info");
+    showToast(" Call ended cleanly.", "info");
   },
 
   updateLiveCallUI(active) {
@@ -451,7 +451,7 @@ export const UnifiedVoiceEngine = {
         btn.classList.remove("bg-emerald-600", "hover:bg-emerald-500", "dark:bg-emerald-700");
         btn.classList.add("bg-rose-600", "hover:bg-rose-500", "animate-pulse");
         const btnText = btn.querySelector("#live-call-btn-text") || btn.querySelector("span:last-child");
-        if (btnText) btnText.innerText = "🔴 In Call";
+        if (btnText) btnText.innerText = " In Call";
       } else {
         btn.classList.remove("bg-rose-600", "hover:bg-rose-500", "animate-pulse");
         btn.classList.add("bg-emerald-600", "hover:bg-emerald-500", "dark:bg-emerald-700");
@@ -523,7 +523,7 @@ export const UnifiedVoiceEngine = {
     rec.onstart = () => {
       const transcriptEl = document.getElementById("voice-agent-speech-transcript");
       if (transcriptEl) {
-        transcriptEl.innerHTML = `<span class="text-emerald-400 font-semibold animate-pulse">🎙️ Listening to you... (Speak in Telugu, Hindi, or English)</span>`;
+        transcriptEl.innerHTML = `<span class="text-emerald-400 font-semibold animate-pulse"> Listening to you... (Speak in Telugu, Hindi, or English)</span>`;
       }
     };
 
@@ -602,7 +602,7 @@ export const UnifiedVoiceEngine = {
     this.isAiSpeakingOrLoading = true;
     const transcriptEl = document.getElementById("voice-agent-speech-transcript");
     if (transcriptEl) {
-      transcriptEl.innerHTML = `<span class="text-sky-400 font-semibold animate-pulse">⚡ Agent reasoning...</span>`;
+      transcriptEl.innerHTML = `<span class="text-sky-400 font-semibold animate-pulse"> Agent reasoning...</span>`;
     }
 
     try {
@@ -695,13 +695,13 @@ export function replayLastSpeech() {
     const cleanText = raw.replace(/^[^:]+:\s*"/, "").replace(/"$/, "").trim();
     if (cleanText && !cleanText.includes("Ready to synthesize") && !cleanText.includes("Listening")) {
       UnifiedVoiceEngine.speak(cleanText);
-      showToast("🔊 Replaying voice dialogue...", "info");
+      showToast(" Replaying voice dialogue...", "info");
       return;
     }
   }
   // Authentic spoken prompt if no transcript has been generated yet
   UnifiedVoiceEngine.speak("Namaste! Hamara autonomous B2B voice engine active hai. Invoice details verify kar rahe hain.");
-  showToast("🔊 Replaying autonomous voice dialogue...", "info");
+  showToast(" Replaying autonomous voice dialogue...", "info");
 }
 
 /**
@@ -730,7 +730,7 @@ export function toggleMicrophoneSTT() {
     document.querySelectorAll("#voice-speech-select").forEach((sel) => {
       sel.value = selectedSample;
     });
-    showToast("🎙️ Speak (STT) not supported — loaded sample objection. Click 'Execute' to hear AI response!", "info");
+    showToast(" Speak (STT) not supported — loaded sample objection. Click 'Execute' to hear AI response!", "info");
     // Auto-trigger AI turn with the loaded sample
     setTimeout(() => {
       if (typeof window.triggerVoiceTurnAction === "function") {
@@ -751,9 +751,9 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
+      btn.innerHTML = '<span></span> <span class="hidden md:inline">Speak</span>';
     });
-    showToast("🛑 Microphone stopped", "info");
+    showToast(" Microphone stopped", "info");
     return;
   }
 
@@ -771,9 +771,9 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-[#1e293b]", "text-slate-300", "bg-white", "text-purple-700", "dark:bg-[#142442]", "text-purple-300");
       btn.classList.add("bg-rose-600", "animate-pulse", "text-white");
-      btn.innerHTML = '<span>🔴</span> <span class="font-bold">Listening...</span>';
+      btn.innerHTML = '<span></span> <span class="font-bold">Listening...</span>';
     });
-    showToast("🎙️ Listening... Speak in Telugu, Hindi or English!", "info");
+    showToast(" Listening... Speak in Telugu, Hindi or English!", "info");
   };
 
   oneOffRecognition.onresult = (event) => {
@@ -791,7 +791,7 @@ export function toggleMicrophoneSTT() {
       });
       // Show interim transcript in the UI so user sees what was heard
       micBtns.forEach((btn) => {
-        btn.innerHTML = `<span>🔴</span> <span class="font-bold text-[9px] max-w-[120px] truncate">${transcript.slice(0, 40)}...</span>`;
+        btn.innerHTML = `<span></span> <span class="font-bold text-[9px] max-w-[120px] truncate">${transcript.slice(0, 40)}...</span>`;
       });
     }
   };
@@ -801,12 +801,12 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
+      btn.innerHTML = '<span></span> <span class="hidden md:inline">Speak</span>';
     });
 
-    // 🔑 AUTO-TRIGGER: If we captured any speech, immediately send to AI
+    //  AUTO-TRIGGER: If we captured any speech, immediately send to AI
     if (capturedTranscript && capturedTranscript.trim().length > 1) {
-      showToast(`🎙️ Heard: "${capturedTranscript.slice(0, 50)}" — Processing AI response...`, "info");
+      showToast(` Heard: "${capturedTranscript.slice(0, 50)}" — Processing AI response...`, "info");
       setTimeout(() => {
         if (typeof window.triggerVoiceTurnAction === "function") {
           window.triggerVoiceTurnAction();
@@ -822,12 +822,12 @@ export function toggleMicrophoneSTT() {
     micBtns.forEach((btn) => {
       btn.classList.remove("bg-rose-600", "animate-pulse", "text-white");
       btn.classList.add("bg-[#1e293b]", "text-slate-300");
-      btn.innerHTML = '<span>🎙️</span> <span class="hidden md:inline">Speak</span>';
+      btn.innerHTML = '<span></span> <span class="hidden md:inline">Speak</span>';
     });
     if (e.error === "not-allowed") {
-      showToast("❌ Microphone access denied. Please allow mic access in browser settings.", "error");
+      showToast("✕ Microphone access denied. Please allow mic access in browser settings.", "error");
     } else if (e.error === "no-speech") {
-      showToast("⚠️ No speech detected. Try speaking louder or closer to the mic.", "info");
+      showToast(" No speech detected. Try speaking louder or closer to the mic.", "info");
     }
   };
 
@@ -835,7 +835,7 @@ export function toggleMicrophoneSTT() {
     oneOffRecognition.start();
   } catch (e) {
     console.warn("Could not start recognition:", e);
-    showToast("❌ Could not access microphone. Please check permissions.", "error");
+    showToast("✕ Could not access microphone. Please check permissions.", "error");
   }
 }
 

@@ -41,7 +41,7 @@ export async function safeApiCall(url, method = "GET", body = null, headers = {}
       }
       if (res.status === 429) {
         const errJson = await res.json();
-        showToast(`⚠️ Rate limit exceeded: ${errJson.error?.message || "Please wait"}`, "error");
+        showToast(` Rate limit exceeded: ${errJson.error?.message || "Please wait"}`, "error");
         throw new Error(errJson.error?.message || "Too many requests");
       }
     } catch (e) {

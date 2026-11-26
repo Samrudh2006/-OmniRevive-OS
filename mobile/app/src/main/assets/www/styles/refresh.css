@@ -1,0 +1,95 @@
+/* Design refresh: solid brand fills, flat surfaces, borders instead of glows. */
+:root { --brand: #2bb5e6; --ink: #070e1c; --line: #1f2c40; }
+
+/* Buttons: solid brand fill, no gradient, no glow */
+.rzp-btn-primary, button.rzp-btn-primary {
+  background: var(--brand) !important; background-image: none !important;
+  color: var(--ink) !important; border: 1px solid #0ea5e9 !important;
+  box-shadow: none !important; font-weight: 600 !important;
+}
+.rzp-btn-primary:hover { background: #7dd3fc !important; transform: none !important; box-shadow: none !important; }
+.rzp-btn-primary * { color: inherit !important; }
+
+/* Flat surfaces: no frosted glass, no coloured or stock shadows */
+*, *::before, *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+header, .sticky-header { -webkit-backdrop-filter: blur(8px) !important; backdrop-filter: blur(8px) !important; }
+[class*="shadow-"], .shadow, .rzp-card, .rzp-card:hover, [class*="drop-shadow"] { box-shadow: none !important; filter: none !important; }
+html.dark [class*="shadow-"] { box-shadow: none !important; }
+
+/* No filled purple/indigo controls, no gradient buttons or section washes */
+button[class*="bg-gradient"], a[class*="bg-gradient"],
+button[class*="bg-purple"], button[class*="bg-violet"], button[class*="bg-indigo"] {
+  background-image: none !important; background-color: var(--brand) !important; color: var(--ink) !important;
+}
+section[class*="bg-gradient"], div[class*="bg-gradient-to"][class*="from-"]:not(.hero-art) { background-image: none !important; }
+
+/* Icons: plain, no tinted tiles */
+.w-10.h-10.rounded-2xl, .w-11.h-11.rounded-xl, .w-12.h-12.rounded-xl, .w-9.h-9.rounded-lg {
+  background: transparent !important; background-image: none !important; border-color: transparent !important;
+}
+
+/* One neutral tag style */
+.tag-neutral { padding: 2px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 11px; font-weight: 500; color: #b3c4d4; background: transparent; font-family: inherit; }
+
+/* Labels use the text face; the coding face is for code and data only */
+.font-mono:not(pre):not(code):not(td):not(th):not(kbd):not(pre *):not(code *):not(table *),
+.mono:not(pre):not(code):not(td):not(th):not(pre *):not(code *):not(table *) {
+  font-family: "Hanken Grotesk", system-ui, sans-serif !important; letter-spacing: 0 !important;
+}
+body, button, input, select, textarea { font-family: "Hanken Grotesk", system-ui, sans-serif; }
+pre, code, kbd, samp, table .mono, td.font-mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+/* Buttons made from former anchors keep link look */
+button.footer-nav-link { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
+
+/* Quiet labels: no wide-tracked capitals */
+.uppercase, [class*="uppercase"] { text-transform: none !important; }
+[class*="tracking-wide"], [class*="tracking-widest"], [class*="tracking-wider"] { letter-spacing: 0 !important; }
+/* Small tinted icon tiles become plain icons */
+.w-6.h-6.rounded-md, .w-6.h-6.rounded-lg, .w-8.h-8.rounded-xl, .w-8.h-8.rounded-lg, .w-9.h-9.rounded-xl, .w-10.h-10.rounded-xl {
+  background: transparent !important; background-image: none !important; border-color: transparent !important;
+}
+
+/* theme toggle icon: sun shows in dark (switch to light), moon shows in light */
+button[onclick="toggleThemeMode()"]{color:#0f172a}
+html.dark button[onclick="toggleThemeMode()"]{color:#e2e8f0}
+.theme-ico,#theme-icon{display:inline-flex;align-items:center;justify-content:center;line-height:0}
+.theme-ico svg,#theme-icon svg{display:block;width:18px;height:18px}
+html.light .ico-sun{display:none!important}
+html.dark .ico-moon{display:none!important}
+
+/* house accent, replaces the stock sky-400 shade */
+:root{--accent:#2bb5e6}
+.text-sky-400,.dark\:text-sky-400:is(.dark *),.group:hover .group-hover\:text-sky-400,.dark\:group-hover\:text-sky-400:is(.dark .group:hover *){color:#2bb5e6}
+.bg-sky-400,.dark\:bg-sky-400:is(.dark *){background-color:#2bb5e6}
+.border-sky-400,.dark\:border-sky-400:is(.dark *){border-color:#2bb5e6}
+
+/* one scroll container: the page (html). body must not be a second scroller, it breaks touch scrolling */
+html{overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:auto}
+body{overflow-x:clip!important;overflow-y:visible!important;overscroll-behavior:auto!important;height:auto}
+
+/* Contrast fixes (Lighthouse color-contrast), scoped to the flagged elements */
+html:not(.dark) body strong.text-\[\#0c6cf2\] { color: #0a58c9 !important; }
+#landing-sb-error { color: #b91c1c !important; }
+html:not(.dark) body .text-slate-400 { color: #55657a !important; }
+html:not(.dark) body .text-slate-500.dark\:text-slate-400 { color: #55657a !important; }
+html:not(.dark) body .text-xs.font-bold.text-sky-500.uppercase { color: #0369a1 !important; }
+html:not(.dark) body .text-\[10px\].text-emerald-500\/70 { color: #047857 !important; }
+html:not(.dark) body .text-\[10px\].text-sky-500\/70 { color: #0369a1 !important; }
+html:not(.dark) body [class*="bg-[#030712]"] .text-slate-300,
+html:not(.dark) body [class*="bg-[#030712]"] .text-slate-400,
+html:not(.dark) body [class*="bg-[#030712]"] .text-slate-500,
+html:not(.dark) body #landing-sandbox-terminal .text-slate-400,
+html:not(.dark) body #landing-sandbox-terminal .text-slate-500 { color: #a9b8c9 !important; }
+html:not(.dark) body #landing-sandbox-terminal .text-sky-400 { color: #5cc8f0 !important; }
+html:not(.dark) body footer a.hover\:text-sky-400 { color: #0a58c9 !important; }
+html:not(.dark) body .text-slate-500.dark\:text-slate-400 { color: #55657a !important; }
+.dark .text-slate-500.dark\:text-slate-400 { color: #55657a; }
+html:not(.dark) body .dark\:text-slate-400.text-slate-500 { color: #55657a !important; }
+html.light #landing-gateway-container .text-slate-500.dark\:text-slate-400,
+html:not(.dark) #landing-gateway-container .text-slate-500.dark\:text-slate-400 { color: #55657a !important; }
+html.light #landing-gateway-container [class*="bg-[#030712]"] .text-slate-300,
+html.light #landing-gateway-container [class*="bg-[#030712]"] .text-slate-400,
+html.light #landing-gateway-container [class*="bg-[#030712]"] .text-slate-500,
+html.light #landing-gateway-container #landing-sandbox-terminal .text-slate-400,
+html.light #landing-gateway-container #landing-sandbox-terminal .text-slate-500 { color: #a9b8c9 !important; }

@@ -24,10 +24,10 @@ class WasmAudioCodecDecoder {
       this.wasmInstance = instance;
       this.memory = instance.exports.memory;
       this.isInitialized = true;
-      console.info('⚡ [WASM SIMD Codec] Successfully initialized hardware-accelerated audio decoder.');
+      console.info(' [WASM SIMD Codec] Successfully initialized hardware-accelerated audio decoder.');
       return true;
     } catch (err) {
-      console.warn('⚠️ [WASM SIMD Codec] WASM instantiation fallback to WebAudio API:', err);
+      console.warn(' [WASM SIMD Codec] WASM instantiation fallback to WebAudio API:', err);
       this.isInitialized = true;
       return false;
     }

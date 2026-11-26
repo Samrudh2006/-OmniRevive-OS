@@ -9,3 +9,6 @@
 /faq                       /pages/faq.html                       200
 /documentation             /pages/documentation.html             200
 /about                     /pages/about.html                     200
+/privacy                   /pages/privacy.html                   200
+/terms                     /pages/terms.html                     200
+/docs                      /pages/documentation.html             301

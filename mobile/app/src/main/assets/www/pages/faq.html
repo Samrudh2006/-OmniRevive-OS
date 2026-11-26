@@ -33,7 +33,7 @@
         "name": "How does OmniRevive-OS recover failed payments?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "OmniRevive-OS operates a dual-speed architecture: a Fast-Loop (<50ms) that uses Qdrant vector memory and SciPy Weibull survival models to reroute or retry transient checkout failures, and a Deep-Loop that deploys trilingual voice AI agents in Telugu, Hindi, and English to resolve disputed B2B invoices."
+          "text": "OmniRevive-OS operates a dual-speed architecture: a Fast-Loop that uses Qdrant vector memory and SciPy Weibull survival models to reroute or retry transient checkout failures, and a Deep-Loop that deploys trilingual voice AI agents in Telugu, Hindi, and English to resolve disputed B2B invoices."
         }
       },
       {
@@ -41,7 +41,7 @@
         "name": "How does OmniRevive-OS prevent duplicate charging or double debits?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis alongside HMAC signature validation and SHA-256 idempotency tokens. This guarantees that parallel webhook events can never trigger duplicate recovery attempts."
+          "text": "OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis alongside HMAC signature validation and SHA-256 idempotency tokens. This is designed to stop parallel webhook events from triggering duplicate recovery attempts."
         }
       },
       {
@@ -154,12 +154,12 @@
 
     <div class="faq-item">
       <div class="faq-q">How does OmniRevive-OS recover failed payments?</div>
-      <div class="faq-a">OmniRevive-OS operates a dual-speed architecture: a Fast-Loop (<50ms) that uses Qdrant vector memory and SciPy Weibull survival models to reroute or retry transient checkout failures, and a Deep-Loop that deploys trilingual voice AI agents in Telugu, Hindi, and English to resolve disputed B2B invoices.</div>
+      <div class="faq-a">OmniRevive-OS operates a dual-speed architecture: a Fast-Loop that uses Qdrant vector memory and SciPy Weibull survival models to reroute or retry transient checkout failures, and a Deep-Loop that deploys trilingual voice AI agents in Telugu, Hindi, and English to resolve disputed B2B invoices.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">How does OmniRevive-OS prevent duplicate charging or double debits?</div>
-      <div class="faq-a">OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis alongside HMAC signature validation and SHA-256 idempotency tokens. This guarantees that parallel webhook events can never trigger duplicate recovery attempts.</div>
+      <div class="faq-a">OmniRevive-OS implements an atomic Compare-And-Swap (CAS) distributed mutex in Redis alongside HMAC signature validation and SHA-256 idempotency tokens. This is designed to stop parallel webhook events from triggering duplicate recovery attempts.</div>
     </div>
 
     <div class="faq-item">
