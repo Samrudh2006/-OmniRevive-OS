@@ -81,7 +81,7 @@ def trigger_manual_cycle():
 
 @router.post("/send_daily_report")
 def send_daily_report(
-    email: str = Query(..., description="Target email address to receive the daily project digest report")
+    email: str = Query(..., max_length=254, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$", description="Target email address to receive the daily project digest report")
 ):
     """Generates and dispatches a rich executive daily report containing project issues, system health, and agent swarm metrics."""
     result = send_daily_email_report(recipient_email=email)
@@ -100,7 +100,7 @@ def enterprise_board_meeting():
 
 @router.post("/c-suite/debate")
 def trigger_c_suite_debate(
-    amount_inr: float = Query(default=15000.0, description="Dispute or failed transaction amount in INR"),
+    amount_inr: float = Query(default=15000.0, gt=0, le=1e9, description="Dispute or failed transaction amount in INR"),
     bank_issuer: str = Query(default="HDFC", description="Bank issuer"),
     preferred_language: str = Query(default="te-IN", description="Customer language (te-IN, hi-IN, en-IN)"),
     attempt_number: int = Query(default=2, description="Attempt count")
@@ -125,9 +125,9 @@ def trigger_c_suite_debate(
 @router.post("/swarm/stress-test")
 @router.post("/api/v1/agency/swarm/stress-test")
 def trigger_swarm_stress_test(
-    total_transactions: int = Query(default=10000, description="Number of concurrent transactions to simulate"),
+    total_transactions: int = Query(default=10000, ge=1, le=100000, description="Number of concurrent transactions to simulate"),
     target_bank_rail: str = Query(default="hdfc_switch", description="Target bank rail for catastrophic black-swan outage"),
-    outage_severity: float = Query(default=0.95, description="Outage severity (0.0 to 1.0)")
+    outage_severity: float = Query(default=0.95, ge=0.0, le=1.0, description="Outage severity (0.0 to 1.0)")
 ):
     """
     Executes a high-throughput 10,000-TPS Multi-Agent Swarm stress run with acute black-swan failure.

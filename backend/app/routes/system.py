@@ -197,10 +197,10 @@ async def get_active_alerts(request: Request):
 @router.get("/api/v1/roi/calculator", tags=["System & Telemetry"], summary="ROI Calculator Alias")
 async def calculate_merchant_roi(
     request: Request,
-    monthly_gmv: float = 10000000.0,
-    failure_rate_pct: float = 12.5,
-    avg_ticket_size: float = 2500.0,
-    margin_bps: int = 200
+    monthly_gmv: float = Query(10000000.0, ge=0, le=1e13),
+    failure_rate_pct: float = Query(12.5, ge=0, le=100),
+    avg_ticket_size: float = Query(2500.0, gt=0, le=1e8),
+    margin_bps: int = Query(200, ge=0, le=10000)
 ):
     """
     Computes business impact and net recovered revenue for Razorpay merchants
