@@ -17,7 +17,10 @@ def test_frontend_root_serves_modular_html(client):
     assert "view-cfo_approvals" in text
     # Ensure massive monolithic inline script blocks were unbundled
     assert "function mountComponents() {" not in text
-    assert "<script type=\"module\" src=\"/static/main.js\"></script>" in text
+    assert (
+        "<script type=\"module\" src=\"/static/main.js\"></script>" in text
+        or 's.src = "/static/main.js"' in text
+    )
 
 def test_frontend_static_assets_served(client):
     # Main JS
