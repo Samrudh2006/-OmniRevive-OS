@@ -99,15 +99,19 @@ class _RecoveryOfflineScreenState extends State<RecoveryOfflineScreen> {
                           ),
                         ],
                       ),
-                      Switch(
-                        value: _isOnline,
-                        activeColor: Colors.greenAccent,
-                        onChanged: (val) {
-                          setState(() {
-                            _isOnline = val;
-                            _service.setNetworkStatus(val);
-                          });
-                        },
+                      Semantics(
+                        label: 'Network online mode',
+                        toggled: _isOnline,
+                        child: Switch(
+                          value: _isOnline,
+                          activeColor: Colors.greenAccent,
+                          onChanged: (val) {
+                            setState(() {
+                              _isOnline = val;
+                              _service.setNetworkStatus(val);
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -118,6 +122,7 @@ class _RecoveryOfflineScreenState extends State<RecoveryOfflineScreen> {
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF0C6CF2),
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
                         onPressed: () async {

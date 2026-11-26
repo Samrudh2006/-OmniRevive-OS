@@ -109,12 +109,19 @@ class _RailsScreenState extends State<RailsScreen> {
               final rail = _rails[index];
               final isSelected = _selectedRail == rail['id'];
 
-              return GestureDetector(
-                onTap: () {
-                  setState(() => _selectedRail = rail['id']);
-                  _simulateRecovery(rail['id']);
-                },
-                child: Container(
+              return Semantics(
+                button: true,
+                selected: isSelected,
+                label: '${rail['name']}, ${rail['tag']}',
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      setState(() => _selectedRail = rail['id']);
+                      _simulateRecovery(rail['id']);
+                    },
+                    child: Container(
                   margin: const EdgeInsets.only(bottom: 12),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -187,6 +194,8 @@ class _RailsScreenState extends State<RailsScreen> {
                         ),
                       ),
                     ],
+                  ),
+                ),
                   ),
                 ),
               );

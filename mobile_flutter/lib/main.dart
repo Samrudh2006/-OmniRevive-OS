@@ -149,9 +149,13 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.cyan.withOpacity(0.4)),
               ),
-              child: const Text(
+              child: Text(
                 'v1.1',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.cyan),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.cyan : const Color(0xFF0E7490),
+                ),
               ),
             ),
           ],
@@ -164,6 +168,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
           ),
           IconButton(
             icon: const Icon(Icons.notifications_none, size: 20),
+            tooltip: 'Notifications',
             onPressed: () {},
           ),
         ],
@@ -183,7 +188,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
           onTap: (index) => setState(() => _currentIndex = index),
           type: BottomNavigationBarType.fixed,
           backgroundColor: isDark ? const Color(0xFF040918) : Colors.white,
-          selectedItemColor: const Color(0xFF0C6CF2),
+          selectedItemColor: isDark ? const Color(0xFF60A5FA) : const Color(0xFF0C55EA),
           unselectedItemColor: isDark ? Colors.grey : const Color(0xFF64748B),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
           unselectedLabelStyle: const TextStyle(fontSize: 10),

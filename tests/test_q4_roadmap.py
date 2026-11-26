@@ -88,3 +88,53 @@ def time_future() -> float:
     import time
 
     return time.monotonic() + 120.0
+
+
+def test_q4_fastapi_routes():
+    from fastapi.testclient import TestClient
+    from backend.app.main import app
+
+    client = TestClient(app)
+
+    wa_res = client.post(
+        "/api/v1/b2b/whatsapp-flow",
+        json={
+            "recipient_phone": "+919876543210",
+            "invoice_id": "inv_route_01",
+            "amount_inr": 10000.0,
+            "proposed_discount_pct": 15.0,
+        },
+    )
+    assert wa_res.status_code == 200
+    assert wa_res.json()["data"]["payable_amount_inr"] == 9500.0
+
+    sign_res = client.post(
+        "/api/v1/cfo/sign-approval",
+        json={
+            "approval_id": "cfo_route_01",
+            "entity_id": "inv_route_01",
+            "amount_inr": 125000.0,
+            "decision": "APPROVED",
+            "approver_id": "cfo@omnirevive.io",
+        },
+    )
+    assert sign_res.status_code == 200
+    signed = sign_res.json()["data"]
+
+    ver_res = client.post(
+        "/api/v1/cfo/verify-signature",
+        json={**signed, "trusted_public_key_b64": signed["public_key_b64"]},
+    )
+    assert ver_res.status_code == 200
+    assert ver_res.json()["data"]["valid"] is True
+
+    lock1 = client.post(
+        "/api/v1/cfo/quorum-lock",
+        json={"resource_key": "route_lock_01", "owner_id": "w1", "ttl_seconds": 60.0},
+    )
+    lock2 = client.post(
+        "/api/v1/cfo/quorum-lock",
+        json={"resource_key": "route_lock_01", "owner_id": "w2", "ttl_seconds": 60.0},
+    )
+    assert lock1.json()["data"]["acquired"] is True
+    assert lock2.json()["data"]["acquired"] is False

@@ -848,7 +848,7 @@ html.light .text-sky-400,
 html.light .text-sky-500,
 html.light .text-cyan-300,
 html.light .text-cyan-400 {
-  color: #0284c7 !important;
+  color: #0369a1 !important;
   font-weight: 700 !important;
 }
 html.light .text-emerald-300,
@@ -2841,13 +2841,13 @@ html.light [class*="text-slate-600"] {
 html.light [class*="text-sky-400"],
 html.light [class*="text-blue-400"],
 html.light [class*="text-cyan-400"] {
-  color: #0c6cf2 !important;
+  color: #0369a1 !important;
   font-weight: 600 !important;
 }
 
 html.light [class*="text-emerald-400"],
 html.light [class*="text-green-400"] {
-  color: #057a55 !important;
+  color: #047857 !important;
   font-weight: 600 !important;
 }
 

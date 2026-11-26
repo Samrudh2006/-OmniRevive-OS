@@ -402,3 +402,40 @@ async def voxcpm_update_epistemic_state(req: EpistemicUpdateRequest, request: Re
     }
 
 
+class WhatsAppFlowRequest(BaseModel):
+    recipient_phone: str = Field(..., min_length=5, max_length=32)
+    invoice_id: str = Field(..., min_length=1, max_length=64)
+    amount_inr: float = Field(..., gt=0)
+    proposed_discount_pct: float = Field(default=0.0, ge=0.0, le=50.0)
+
+
+@router.post("/api/v1/b2b/whatsapp-flow", tags=["Deep-Loop B2B Voice & PTP"], summary="Generate WhatsApp Flow 2.0 UPI Recovery Payload")
+async def generate_whatsapp_flow_payload(req: WhatsAppFlowRequest, request: Request):
+    """Builds a WhatsApp Flow 2.0 interactive UPI payment payload with Cedar discount clamping."""
+    from backend.app.services.whatsapp_flow_service import build_whatsapp_flow_upi_payload
+
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    try:
+        payload = build_whatsapp_flow_upi_payload(
+            recipient_phone=req.recipient_phone,
+            invoice_id=req.invoice_id,
+            amount_inr=req.amount_inr,
+            proposed_discount_pct=req.proposed_discount_pct,
+        )
+        return {
+            "success": True,
+            "data": {
+                "invoice_id": payload.invoice_id,
+                "original_amount_inr": payload.original_amount_inr,
+                "discount_applied_inr": payload.discount_applied_inr,
+                "payable_amount_inr": payload.payable_amount_inr,
+                "upi_intent_uri": payload.upi_intent_uri,
+                "flow_message": payload.flow_message,
+            },
+            "trace_id": trace_id,
+            "timestamp": time.time(),
+        }
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
+
+

@@ -154,14 +154,15 @@ class _VoiceScreenState extends State<VoiceScreen> {
                     Row(
                       children: [
                         CircleAvatar(
-                          radius: 20,
+                          radius: 24,
                           backgroundColor: const Color(0xFF7C3AED).withOpacity(0.15),
                           child: IconButton(
                             icon: Icon(
                               _isPlaying ? Icons.pause : Icons.play_arrow,
-                              color: const Color(0xFF7C3AED),
-                              size: 20,
+                              color: isDark ? const Color(0xFFA78BFA) : const Color(0xFF6D28D9),
+                              size: 22,
                             ),
+                            tooltip: _isPlaying ? 'Pause synthetic voice' : 'Play synthetic voice',
                             onPressed: _togglePlay,
                           ),
                         ),
