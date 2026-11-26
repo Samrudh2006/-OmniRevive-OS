@@ -121,40 +121,89 @@ class DistributedIdempotencyStore:
 
         self._init_db()
 
+    _TABLE_DDL = """
+        CREATE TABLE IF NOT EXISTS {name} (
+            idempotency_key TEXT NOT NULL,
+            merchant_api_key_id TEXT NOT NULL DEFAULT 'default_merchant',
+            payload_hash TEXT NOT NULL,
+            created_at REAL NOT NULL,
+            status TEXT NOT NULL,
+            result_payload TEXT,
+            completed_at REAL,
+            PRIMARY KEY (merchant_api_key_id, idempotency_key)
+        )
+    """
+
+    @staticmethod
+    def _is_legacy_schema(conn) -> bool:
+        """Legacy shape: idempotency_key alone was the PRIMARY KEY (one global namespace across merchants)."""
+        info = conn.execute("PRAGMA table_info(idempotency_keys)").fetchall()
+        pk = {c[1]: c[5] for c in info}
+        return bool(info) and pk.get("idempotency_key") == 1 and pk.get("merchant_api_key_id", 0) == 0
+
     def _init_db(self):
         conn = get_db_connection(self.db_path)
+        exists = conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='idempotency_keys'").fetchone()
+        if not exists:
+            with conn:
+                conn.execute(self._TABLE_DDL.format(name="idempotency_keys"))
+        else:
+            # Backward-compatible column adds for very old databases
+            columns = [c[1] for c in conn.execute("PRAGMA table_info(idempotency_keys)").fetchall()]
+            with conn:
+                if "merchant_api_key_id" not in columns:
+                    conn.execute("ALTER TABLE idempotency_keys ADD COLUMN merchant_api_key_id TEXT DEFAULT 'default_merchant'")
+                if "result_payload" not in columns:
+                    conn.execute("ALTER TABLE idempotency_keys ADD COLUMN result_payload TEXT")
+                if "completed_at" not in columns:
+                    conn.execute("ALTER TABLE idempotency_keys ADD COLUMN completed_at REAL")
+            if self._is_legacy_schema(conn):
+                self._migrate_to_per_merchant(conn)
         with conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS idempotency_keys (
-                    idempotency_key TEXT PRIMARY KEY,
-                    merchant_api_key_id TEXT DEFAULT 'default_merchant',
-                    payload_hash TEXT NOT NULL,
-                    created_at REAL NOT NULL,
-                    status TEXT NOT NULL,
-                    result_payload TEXT,
-                    completed_at REAL
-                )
-            """)
             conn.execute("CREATE INDEX IF NOT EXISTS idx_idem_time ON idempotency_keys (created_at)")
-            # Backward-compatible schema migration
-            cursor = conn.cursor()
-            cursor.execute("PRAGMA table_info(idempotency_keys);")
-            columns = [c[1] for c in cursor.fetchall()]
-            if "merchant_api_key_id" not in columns:
-                conn.execute("ALTER TABLE idempotency_keys ADD COLUMN merchant_api_key_id TEXT DEFAULT 'default_merchant';")
-            if "result_payload" not in columns:
-                conn.execute("ALTER TABLE idempotency_keys ADD COLUMN result_payload TEXT;")
-            if "completed_at" not in columns:
-                conn.execute("ALTER TABLE idempotency_keys ADD COLUMN completed_at REAL;")
-            conn.execute("CREATE INDEX IF NOT EXISTS idx_idem_merch ON idempotency_keys (merchant_api_key_id, idempotency_key)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_idem_key ON idempotency_keys (idempotency_key)")
+
+    def _migrate_to_per_merchant(self, conn) -> None:
+        """One-shot, transactional table rebuild: PRIMARY KEY becomes (merchant_api_key_id, idempotency_key).
+        All existing rows are preserved (NULL merchant -> 'default_merchant'). Safe if two workers race: the
+        second one re-checks the shape after taking the write lock and does nothing."""
+        conn.execute("BEGIN IMMEDIATE")
+        try:
+            if not self._is_legacy_schema(conn):
+                conn.execute("COMMIT")
+                return
+            conn.execute("DROP TABLE IF EXISTS idempotency_keys_v2")
+            conn.execute(self._TABLE_DDL.format(name="idempotency_keys_v2"))
+            conn.execute(
+                "INSERT INTO idempotency_keys_v2 (idempotency_key, merchant_api_key_id, payload_hash, created_at, status, result_payload, completed_at) "
+                "SELECT idempotency_key, COALESCE(merchant_api_key_id, 'default_merchant'), payload_hash, created_at, status, result_payload, completed_at FROM idempotency_keys"
+            )
+            old = conn.execute("SELECT count(*) FROM idempotency_keys").fetchone()[0]
+            new = conn.execute("SELECT count(*) FROM idempotency_keys_v2").fetchone()[0]
+            if old != new:
+                raise RuntimeError(f"idempotency migration row mismatch {old}!={new}")
+            conn.execute("DROP TABLE idempotency_keys")
+            conn.execute("ALTER TABLE idempotency_keys_v2 RENAME TO idempotency_keys")
+            conn.execute("COMMIT")
+            logger.info(f"[SECURITY] Migrated idempotency_keys to per-merchant primary key ({new} rows preserved).")
+        except Exception:
+            conn.execute("ROLLBACK")
+            raise
+
+    def _resolve_merchant(self, conn, key: str, merchant_id: Optional[str]) -> str:
+        """Explicit merchant wins. Without one, use the only merchant that owns this key, else the default tenant."""
+        if merchant_id is not None:
+            return merchant_id
+        rows = conn.execute("SELECT merchant_api_key_id FROM idempotency_keys WHERE idempotency_key = ?", (key,)).fetchall()
+        return rows[0][0] if len(rows) == 1 else "default_merchant"
 
     def acquire_lock(self, key: str, payload_hash: str = "", ttl_seconds: int = 86400, merchant_id: str = "default_merchant") -> bool:
         """
-        Atomic CAS lock acquisition with durable completion awareness and multi-tenant isolation.
-        - If key does not exist: Inserts status='ACQUIRED' and returns True.
-        - If key exists and status='COMPLETED': Returns False (already durably executed; duplicate prevented).
-        - If key exists and status='ACQUIRED' but lease expired (> ttl_seconds): Renews lease and returns True.
-        - If key exists and status='ACQUIRED' with active lease: Returns False (concurrent collision dropped).
+        Atomic CAS lock acquisition, scoped per (merchant_id, key): two merchants may reuse the same key independently.
+        - Key absent for this merchant: inserts status='ACQUIRED' and returns True.
+        - COMPLETED: returns False (already durably executed).
+        - ACQUIRED/RENEWED but lease expired (> ttl_seconds): atomically renews and returns True (one winner).
+        - ACQUIRED with active lease: returns False.
         """
         conn = get_db_connection(self.db_path)
         now = time.time()
@@ -166,37 +215,33 @@ class DistributedIdempotencyStore:
                 )
             return True
         except sqlite3.IntegrityError:
-            # Atomic reclaim: only one caller can win an expired, non-completed lease.
             with conn:
                 cur = conn.execute(
                     "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED' "
-                    "WHERE idempotency_key = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
-                    (now, payload_hash, key, now, ttl_seconds)
+                    "WHERE idempotency_key = ? AND merchant_api_key_id = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
+                    (now, payload_hash, key, merchant_id, now, ttl_seconds)
                 )
                 return cur.rowcount == 1
 
-    def mark_completed(self, key: str, result_payload: Optional[dict] = None) -> bool:
-        """
-        Marks an execution as durably completed.
-        Prevents any subsequent execution even after lease expiration.
-        """
+    def mark_completed(self, key: str, result_payload: Optional[dict] = None, merchant_id: Optional[str] = None) -> bool:
+        """Marks an execution as durably completed for this merchant's key."""
         conn = get_db_connection(self.db_path)
         now = time.time()
         result_json = json.dumps(result_payload) if result_payload else None
+        mid = self._resolve_merchant(conn, key, merchant_id)
         with conn:
             conn.execute(
-                "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? WHERE idempotency_key = ?",
-                (result_json, now, key)
+                "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? WHERE idempotency_key = ? AND merchant_api_key_id = ?",
+                (result_json, now, key, mid)
             )
         return True
 
-    def get_execution_record(self, key: str) -> Optional[dict]:
-        """
-        Retrieves the durable execution record for an idempotency key.
-        """
+    def get_execution_record(self, key: str, merchant_id: Optional[str] = None) -> Optional[dict]:
+        """Retrieves the durable execution record for this merchant's key."""
         conn = get_db_connection(self.db_path)
+        mid = self._resolve_merchant(conn, key, merchant_id)
         cursor = conn.cursor()
-        cursor.execute("SELECT idempotency_key, payload_hash, created_at, status, result_payload, completed_at, merchant_api_key_id FROM idempotency_keys WHERE idempotency_key = ?", (key,))
+        cursor.execute("SELECT idempotency_key, payload_hash, created_at, status, result_payload, completed_at, merchant_api_key_id FROM idempotency_keys WHERE idempotency_key = ? AND merchant_api_key_id = ?", (key, mid))
         row = cursor.fetchone()
         if not row:
             return None
@@ -207,7 +252,7 @@ class DistributedIdempotencyStore:
             "status": row[3],
             "result_payload": json.loads(row[4]) if row[4] else None,
             "completed_at": row[5],
-            "merchant_api_key_id": row[6] if len(row) > 6 else "default_merchant"
+            "merchant_api_key_id": row[6]
         }
 
     def purge_completed(self, older_than_seconds: float = 90 * 86400) -> int:
@@ -225,11 +270,11 @@ class DistributedIdempotencyStore:
             )
         return cur.rowcount
 
-    def is_execution_completed(self, key: str) -> bool:
+    def is_execution_completed(self, key: str, merchant_id: Optional[str] = None) -> bool:
         """
-        Checks if the action for this idempotency key was already completed.
+        Checks if the action for this merchant's idempotency key was already completed.
         """
-        rec = self.get_execution_record(key)
+        rec = self.get_execution_record(key, merchant_id)
         return rec is not None and rec.get("status") == "COMPLETED"
 
 idempotency_store = DistributedIdempotencyStore()

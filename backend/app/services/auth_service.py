@@ -37,7 +37,8 @@ class AuthenticationService:
     def verify_request_auth(
         cls,
         request: Request,
-        required_role: Optional[str] = None
+        required_role: Optional[str] = None,
+        allow_demo: bool = True
     ) -> Tuple[bool, str, str]:
         """
         Validates whether the request is authorized using cryptographic constant-time equality.
@@ -62,7 +63,7 @@ class AuthenticationService:
             )
 
         # Safe Demo Mode fallback when no token is provided
-        if settings.SAFE_DEMO_MODE:
+        if settings.SAFE_DEMO_MODE and allow_demo:
             logger.info("[AUTH_SERVICE] Request permitted under SAFE_DEMO_MODE.")
             return True, "Role::Demo_Operator", "DEMO_MODE"
 

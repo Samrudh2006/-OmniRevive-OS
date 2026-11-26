@@ -3,7 +3,8 @@ FastAPI Routes for OmniRevive-OS Continuous Specialized Agency Swarm
 Powered by msitarzewski/agency-agents
 """
 
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Request
+from backend.app.services.auth_service import AuthenticationService as auth_service
 from typing import Dict, Any, Optional
 from backend.app.agency_swarm import (
     get_agency_swarm_status,
@@ -81,9 +82,11 @@ def trigger_manual_cycle():
 
 @router.post("/send_daily_report")
 def send_daily_report(
+    request: Request,
     email: str = Query(..., max_length=254, pattern=r"^[^@\s]+@[^@\s]+\.[^@\s]+$", description="Target email address to receive the daily project digest report")
 ):
     """Generates and dispatches a rich executive daily report containing project issues, system health, and agent swarm metrics."""
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin", allow_demo=False)
     result = send_daily_email_report(recipient_email=email)
     return result
 
