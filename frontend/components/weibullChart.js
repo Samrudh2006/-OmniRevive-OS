@@ -64,6 +64,7 @@ export function renderWeibullCanvasChart() {
   if (yieldEl) yieldEl.textContent = `${Math.min(94.5, 75 + k * 6.5).toFixed(1)}%`;
 
   // Canvas Rendering
+  if (canvas.closest(".hidden")) return; // hidden tab: skip drawing (avoids forced layout at load)
   const ctx = canvas.getContext("2d");
   const w = canvas.parentElement.clientWidth || 400;
   const h = canvas.parentElement.clientHeight || 200;

@@ -4,7 +4,7 @@
  * card networks, NPCI UPI Hub, and dynamic transaction packet flow.
  */
 
-export function initFintech3DTopology() {
+function initTopologyNow() {
   const canvas = document.getElementById("fintech-topology-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
@@ -48,14 +48,11 @@ export function initFintech3DTopology() {
   let angleX = 0;
 
   function render() {
-    if (!canvas || !canvas.parentElement || canvas.parentElement.offsetParent === null) {
-      requestAnimationFrame(render);
-      return;
-    }
+    if (!canvasVisible) { rafId = 0; return; }
 
     syncSize();
     if (canvas.width === 0 || canvas.height === 0) {
-      requestAnimationFrame(render);
+      rafId = requestAnimationFrame(render);
       return;
     }
 
@@ -166,7 +163,25 @@ export function initFintech3DTopology() {
       ctx.fillText(p.name, p.sx + p.size + 4, p.sy + 3);
     });
 
-    requestAnimationFrame(render);
+    rafId = requestAnimationFrame(render);
   }
-  render();
+  let canvasVisible = false, rafId = 0;
+if ("IntersectionObserver" in window) {
+  new IntersectionObserver((es) => {
+    canvasVisible = es[es.length - 1].isIntersecting;
+    if (canvasVisible && !rafId) rafId = requestAnimationFrame(render);
+  }).observe(canvas);
+} else { canvasVisible = true; rafId = requestAnimationFrame(render); }
 }
+
+function initFintech3DTopology() {
+  const c = document.getElementById("fintech-topology-canvas");
+  if (!c) return;
+  if (!("IntersectionObserver" in window)) { initTopologyNow(); return; }
+  const io = new IntersectionObserver((es) => {
+    if (es.some((e) => e.isIntersecting)) { io.disconnect(); initTopologyNow(); }
+  });
+  io.observe(c);
+}
+
+export { initFintech3DTopology };
