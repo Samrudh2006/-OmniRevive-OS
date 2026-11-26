@@ -933,7 +933,7 @@
           <span id="hero-typewriter-text">Recover the Lost 0.1% GMV Across India's Payment Rails</span><span class="typewriter-cursor"></span>
         </h1>
         <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 max-w-md mx-auto font-normal leading-relaxed text-center">
-          Autonomous, deterministic, and policy-governed. Transforming 18 payment failure topologies across <strong class="font-bold text-[#0c2340] dark:text-white">Juspay, PhonePe, CRED, Cashfree,</strong> and <strong class="font-bold text-[#0c2340] dark:text-white">Razorpay</strong> into recovered revenue in <strong class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">&lt;18.4ms</strong> using Weibull temporal hazard models and AWS Cedar zero-trust policies.
+          Autonomous, deterministic, and policy-governed. Transforming five classes of payment failure across <strong class="font-bold text-[#0c2340] dark:text-white">Juspay, PhonePe, CRED, Cashfree,</strong> and <strong class="font-bold text-[#0c2340] dark:text-white">Razorpay</strong> into recovered revenue in <strong class="text-emerald-600 dark:text-emerald-400 font-bold font-mono">&lt;18.4ms</strong> using Weibull temporal hazard models and AWS Cedar zero-trust policies.
         </p>
       </div>
 
@@ -1099,7 +1099,7 @@
                   <path d="M5 7 C2 11.5 2 20.5 5 25 M31 7 C34 11.5 34 20.5 31 25" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" class="dark:stroke-sky-200"/>
                 </svg>
               </div>
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-mono shadow-sm">18 Banks</span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-mono shadow-sm">7 Banks</span>
             </div>
             <div>
               <div class="text-base font-bold text-[#0c2340] dark:text-white group-hover:text-[#0c6cf2] dark:group-hover:text-sky-400 transition-colors">NPCI Switch Radar</div>
@@ -1600,7 +1600,7 @@ forbid (
               <span id="landing-sb-payid" class="font-mono text-slate-300">pay_HDFC_9A12BC34</span>
             </div>
             <div class="flex items-center justify-between">
-              <span class="text-slate-400">AI Confidence</span>
+              <span class="text-slate-400">Sample confidence</span>
               <span id="landing-sb-conf" class="font-bold text-emerald-400">95.4%</span>
             </div>
           </div>
@@ -1797,7 +1797,7 @@ forbid (
                 <span>NPCI Switch</span>
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
               </div>
-              <div class="text-[10px] text-emerald-400 font-mono font-bold">18 Banks Radar</div>
+              <div class="text-[10px] text-emerald-400 font-mono font-bold">7 Banks Radar</div>
             </div>
           </div>
 
@@ -2305,7 +2305,7 @@ forbid (
 
           <!-- Micro-Telemetry Tags -->
           <div class="flex flex-wrap gap-1.5 pt-1 text-[9.5px] font-mono">
-            <button onclick="openFeatureDetailModal('npci_switch');" class="px-2 py-0.5 rounded bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-bold transition cursor-pointer" title="Inspect 18/18 Multi-Rail Switches Radar">18/18 SWITCHES</button>
+            <button onclick="openFeatureDetailModal('npci_switch');" class="px-2 py-0.5 rounded bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 font-bold transition cursor-pointer" title="Inspect NPCI switch radar">7 SWITCHES</button>
             <button onclick="openFeatureDetailModal('audit_ledger');" class="px-2 py-0.5 rounded bg-sky-50 hover:bg-sky-100 dark:bg-sky-500/10 dark:hover:bg-sky-500/20 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-500/30 font-bold transition cursor-pointer" title="Inspect SHA-256 Merkle Ledger">SHA-256</button>
           </div>
 
@@ -5762,7 +5762,7 @@ forbid (
         description: "Live synthetic health probes and webhook telemetry monitoring 18 major Indian bank switches (HDFC, ICICI, SBI, Axis, Kotak) to prevent failed transaction routing during switch degradation.",
         handledCodes: ["NPCI_U16", "NPCI_U69", "UPI_LIMIT_EXCEEDED", "REMITTER_DOWN"],
         codeSnippet: "// NPCI Switch Health Resolver\nconst switchHealth = await npciRadar.evaluateSwitchCluster({\n  banks: ['HDFC', 'ICICI', 'SBI'],\n  degradationThreshold: 0.12,\n  routeFallback: 'DYNAMIC_UPI_LINK'\n});",
-        metrics: "18 Bank Endpoints · 99.99% Uptime",
+        metrics: "7 Bank Switches · Simulated Rails",
         workspaceTab: "npci_switch"
       },
       cedar_policy: {
