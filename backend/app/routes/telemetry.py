@@ -11,7 +11,7 @@ from backend.app.services.telemetry_service import log_system_event
 router = APIRouter()
 
 class UpdateSwitchTelemetryRequest(BaseModel):
-    bank_code: str
+    bank_code: str = Field(..., max_length=32)
     state: str = Field(default="DEGRADED", description="HEALTHY | DEGRADED | OUTAGE")
     success_rate_pct: float = Field(default=68.5, ge=0.0, le=100.0)
     latency_ms: float = Field(default=850.0, ge=0.0)

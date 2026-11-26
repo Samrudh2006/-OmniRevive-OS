@@ -4,7 +4,7 @@ import uuid
 import hashlib
 import logging
 from typing import Optional, Any, Dict
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi import APIRouter, Request, HTTPException, status, Response
 
 logger = logging.getLogger("OmniRevive.B2B.VoiceRoute")
@@ -80,9 +80,9 @@ from backend.app.services.telemetry_service import log_system_event
 router = APIRouter()
 
 class InvoiceMutationRequest(BaseModel):
-    field: str
+    field: str = Field(..., max_length=64)
     new_value: Any
-    reason: Optional[str] = "Manual dashboard instruction"
+    reason: Optional[str] = Field(default="Manual dashboard instruction", max_length=500)
 
 @router.post("/api/v1/b2b/voice/turn", tags=["Deep-Loop B2B Voice & PTP"], summary="Process Autonomous B2B Voice Turn")
 async def handle_b2b_voice_turn(req: VoiceDialogueTurnRequest, request: Request):
@@ -343,12 +343,12 @@ async def synthesize_neural_voice(
 from backend.app.b2b.voxcpm_streaming_engine import voxcpm_engine, EpistemicStateTracker
 
 class VoxCPMStreamRequest(BaseModel):
-    text_prompt: str
-    lang_code: Optional[str] = "te-IN"
-    epistemic_mode: Optional[str] = "AUTO"
+    text_prompt: str = Field(..., max_length=2000)
+    lang_code: Optional[str] = Field(default="te-IN", max_length=16)
+    epistemic_mode: Optional[str] = Field(default="AUTO", max_length=32)
 
 class EpistemicUpdateRequest(BaseModel):
-    user_utterance: str
+    user_utterance: str = Field(..., max_length=2000)
     acoustic_pause_ms: Optional[float] = 0.0
 
 @router.post("/api/v1/b2b/voice/voxcpm-stream", tags=["VoxCPM Spoken Epistemics"], summary="Stream 24kHz VoxCPM Audio Chunks")

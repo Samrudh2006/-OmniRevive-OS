@@ -18,15 +18,15 @@ class PrecedentSearchRequest(BaseModel):
     tenant_id: Optional[str] = None
 
 class PrecedentFeedbackRequest(BaseModel):
-    case_id: str
-    error_code: str
-    bank: str
-    rail: str
-    amount: float
-    strategy_applied: str
+    case_id: str = Field(..., max_length=128)
+    error_code: str = Field(..., max_length=256)
+    bank: str = Field(..., max_length=64)
+    rail: str = Field(..., max_length=32)
+    amount: float = Field(..., ge=0, le=1e9)
+    strategy_applied: str = Field(..., max_length=256)
     recovered: bool
-    recovery_latency_sec: int = 300
-    tenant_id: str = "default"
+    recovery_latency_sec: int = Field(default=300, ge=0, le=31536000)
+    tenant_id: str = Field(default="default", max_length=128)
 
 @router.get("/telemetry")
 @router.get("/stats")
