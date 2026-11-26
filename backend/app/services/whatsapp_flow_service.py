@@ -6,6 +6,7 @@ NPCI UPI 2.0 deep-links and AWS Cedar discount clamping.
 
 from __future__ import annotations
 
+import math
 import urllib.parse
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
@@ -26,6 +27,8 @@ class WhatsAppFlowPayload:
 
 def clamp_cedar_discount(amount_inr: float, proposed_discount_pct: float) -> float:
     """Enforce AWS Cedar discount guardrail: min(10%, INR 500), non-negative."""
+    if not (math.isfinite(amount_inr) and math.isfinite(proposed_discount_pct)):
+        raise ValueError("amount_inr and proposed_discount_pct must be finite")
     if amount_inr <= 0 or proposed_discount_pct <= 0:
         return 0.0
     pct_capped = min(proposed_discount_pct, 10.0)
@@ -44,13 +47,13 @@ def build_whatsapp_flow_upi_payload(
     flow_token: Optional[str] = None,
 ) -> WhatsAppFlowPayload:
     """Build a WhatsApp Flow 2.0 in-chat UPI payment payload with Cedar bounds."""
-    if amount_inr <= 0:
-        raise ValueError("amount_inr must be positive")
+    if not math.isfinite(amount_inr) or amount_inr <= 0:
+        raise ValueError("amount_inr must be a finite positive number")
     if not recipient_phone or not invoice_id:
         raise ValueError("recipient_phone and invoice_id are required")
 
     discount = clamp_cedar_discount(amount_inr, proposed_discount_pct)
-    payable = round(max(1.0, amount_inr - discount), 2)
+    payable = round(max(0.01, amount_inr - discount), 2)
     token = flow_token or f"wa_flow_{invoice_id}"
 
     upi_params = urllib.parse.urlencode(

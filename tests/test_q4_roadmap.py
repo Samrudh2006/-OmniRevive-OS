@@ -40,6 +40,8 @@ def test_cfo_ed25519_sign_and_tamper_detection():
         signed_at=1795674000.0,
     )
     assert CFOEd25519Signer.verify_approval(env) is True
+    assert CFOEd25519Signer.verify_approval(env, trusted_public_key_b64=signer.public_key_b64) is True
+    assert CFOEd25519Signer.verify_approval(env, trusted_public_key_b64="untrusted_key") is False
 
     tampered = SignedCFOApproval(
         approval_id=env.approval_id,
@@ -75,6 +77,11 @@ def test_multiregion_cas_lock_storm_and_expiry():
     )
     assert acquired_after_ttl is True
     assert token2 == 2
+    assert coord.release_quorum_lock("pay_storm_001", "worker_recovery", fencing_token=999) is False
+    assert coord.release_quorum_lock("pay_storm_001", "worker_recovery", fencing_token=token2) is True
+
+    with pytest.raises(ValueError):
+        coord.acquire_quorum_lock("pay_bad_ttl", "worker_0", ttl_seconds=0)
 
 
 def time_future() -> float:

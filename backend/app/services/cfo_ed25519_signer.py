@@ -7,7 +7,9 @@ quarantine approvals and non-repudiation audit trails.
 from __future__ import annotations
 
 import base64
+import hmac
 import json
+import math
 import time
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
@@ -65,6 +67,8 @@ class CFOEd25519Signer:
         approver_id: str,
         signed_at: float,
     ) -> bytes:
+        if not (math.isfinite(amount_inr) and math.isfinite(signed_at)):
+            raise ValueError("amount_inr and signed_at must be finite numbers")
         body: Dict[str, Any] = {
             "approval_id": approval_id,
             "entity_id": entity_id,
@@ -73,7 +77,9 @@ class CFOEd25519Signer:
             "approver_id": approver_id,
             "signed_at": round(float(signed_at), 3),
         }
-        return json.dumps(body, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return json.dumps(
+            body, sort_keys=True, separators=(",", ":"), allow_nan=False
+        ).encode("utf-8")
 
     def sign_approval(
         self,
@@ -103,9 +109,17 @@ class CFOEd25519Signer:
         )
 
     @classmethod
-    def verify_approval(cls, envelope: SignedCFOApproval) -> bool:
-        """Verify Ed25519 signature against the embedded raw public key."""
+    def verify_approval(
+        cls,
+        envelope: SignedCFOApproval,
+        trusted_public_key_b64: Optional[str] = None,
+    ) -> bool:
+        """Verify Ed25519 signature, optionally pinning against a trusted CFO public key."""
         try:
+            if trusted_public_key_b64 is not None and not hmac.compare_digest(
+                envelope.public_key_b64, trusted_public_key_b64
+            ):
+                return False
             pub = Ed25519PublicKey.from_public_bytes(
                 base64.b64decode(envelope.public_key_b64)
             )

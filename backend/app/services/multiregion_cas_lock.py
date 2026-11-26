@@ -45,6 +45,8 @@ class MultiRegionCASCoordinator:
         """
         ts = now if now is not None else time.monotonic()
         ttl = ttl_seconds if ttl_seconds is not None else self.default_ttl_seconds
+        if ttl <= 0:
+            raise ValueError("ttl_seconds must be positive")
 
         with self._lock:
             for region in self.REGIONS:
@@ -63,13 +65,20 @@ class MultiRegionCASCoordinator:
                 self._stores[region][resource_key] = record
             return True, token
 
-    def release_quorum_lock(self, resource_key: str, owner_id: str) -> bool:
-        """Compare-And-Swap release: only the current lock owner may release."""
+    def release_quorum_lock(
+        self,
+        resource_key: str,
+        owner_id: str,
+        fencing_token: Optional[int] = None,
+    ) -> bool:
+        """Compare-And-Swap release: only the current lock owner (and optional token) may release."""
         with self._lock:
             released = False
             for region in self.REGIONS:
                 existing = self._stores[region].get(resource_key)
                 if existing is not None and existing.owner_id == owner_id:
+                    if fencing_token is not None and existing.fencing_token != fencing_token:
+                        continue
                     del self._stores[region][resource_key]
                     released = True
             return released

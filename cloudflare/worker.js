@@ -44,10 +44,16 @@ export default {
       }
     }
 
-    // 18. Turnstile CAPTCHA Validation for Critical CFO Actions
+    // 18. Turnstile CAPTCHA Validation for Critical CFO Actions (Fail-Closed when configured)
     if (request.method === "POST" && url.pathname.startsWith("/api/v1/cfo/approve")) {
-      const turnstileToken = request.headers.get("CF-Turnstile-Token");
-      if (turnstileToken && env.TURNSTILE_SECRET_KEY) {
+      if (env.TURNSTILE_SECRET_KEY) {
+        const turnstileToken = request.headers.get("CF-Turnstile-Token");
+        if (!turnstileToken) {
+          return new Response(JSON.stringify({
+            success: false,
+            error: { code: "CAPTCHA_MISSING", message: "Missing CF-Turnstile-Token header." }
+          }), { status: 403, headers: { "Content-Type": "application/json" } });
+        }
         const formData = new FormData();
         formData.append("secret", env.TURNSTILE_SECRET_KEY);
         formData.append("response", turnstileToken);
