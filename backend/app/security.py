@@ -200,11 +200,24 @@ class DistributedIdempotencyStore:
     def acquire_lock(self, key: str, payload_hash: str = "", ttl_seconds: int = 86400, merchant_id: str = "default_merchant") -> bool:
         """
         Atomic CAS lock acquisition, scoped per (merchant_id, key): two merchants may reuse the same key independently.
+        - Redis atomic SET NX EX executes first if Redis is available.
+        - SQLite WAL executes second for durable crash-recovery.
         - Key absent for this merchant: inserts status='ACQUIRED' and returns True.
         - COMPLETED: returns False (already durably executed).
         - ACQUIRED/RENEWED but lease expired (> ttl_seconds): atomically renews and returns True (one winner).
         - ACQUIRED with active lease: returns False.
         """
+        if self.redis_client:
+            try:
+                redis_key = f"idempotency:{merchant_id}:{key}"
+                redis_acquired = self.redis_client.set(redis_key, "ACQUIRED", nx=True, ex=ttl_seconds)
+                if not redis_acquired:
+                    val = self.redis_client.get(redis_key)
+                    if val in ["ACQUIRED", "COMPLETED", "RENEWED"]:
+                        return False
+            except Exception as e:
+                logger.warning(f"[SECURITY] Redis acquire_lock error ({e}). Falling back to SQLite WAL.")
+
         conn = get_db_connection(self.db_path)
         now = time.time()
         try:
@@ -229,6 +242,12 @@ class DistributedIdempotencyStore:
         now = time.time()
         result_json = json.dumps(result_payload) if result_payload else None
         mid = self._resolve_merchant(conn, key, merchant_id)
+        if self.redis_client:
+            try:
+                redis_key = f"idempotency:{mid}:{key}"
+                self.redis_client.set(redis_key, "COMPLETED", ex=86400 * 7)
+            except Exception as e:
+                logger.warning(f"[SECURITY] Redis mark_completed error ({e}).")
         with conn:
             conn.execute(
                 "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? WHERE idempotency_key = ? AND merchant_api_key_id = ?",

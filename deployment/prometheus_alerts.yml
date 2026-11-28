@@ -1,0 +1,56 @@
+# OmniRevive-OS :: Production Prometheus Alerting Rules
+# File: deployment/prometheus_alerts.yml
+# Specification: Prometheus v2.45+ / Alertmanager
+
+groups:
+  - name: omnirevive_sla_and_recovery_alerts
+    rules:
+      - alert: HighFailedRecoveryRate
+        expr: sum(rate(recovery_requests_total{status="BLOCKED"}[5m])) / sum(rate(recovery_requests_total[5m])) > 0.35
+        for: 3m
+        labels:
+          severity: critical
+          tier: revenue-recovery
+        annotations:
+          summary: "Unusually high payment recovery failure rate (>35%)"
+          description: "Over 35% of incoming failed payment recovery workflows are being blocked by policy or gateway timeouts."
+
+      - alert: NPCISwitchCircuitBreakerTripped
+        expr: npci_bank_switch_circuit_breaker_open == 1
+        for: 30s
+        labels:
+          severity: warning
+          tier: banking-rails
+        annotations:
+          summary: "NPCI core banking switch circuit breaker tripped: {{ $labels.bank_code }}"
+          description: "Circuit breaker for {{ $labels.bank_code }} tripped due to 504 Gateway Timeout spike >15%. Traffic rebalanced to secondary rails."
+
+      - alert: DuplicateDebitCollisionSpike
+        expr: rate(idempotency_lock_collisions_total[1m]) > 10
+        for: 1m
+        labels:
+          severity: warning
+          tier: security-mutex
+        annotations:
+          summary: "High volume of concurrent webhook duplicate-debit attempts detected"
+          description: "More than 10 concurrent requests attempted to mutate the same idempotency key in 1 minute. Atomic CAS successfully dropped collisions."
+
+      - alert: CedarAuthorizationDenialSpike
+        expr: rate(cedar_evaluations_total{decision="DENY"}[5m]) > 5
+        for: 2m
+        labels:
+          severity: high
+          tier: zero-trust-security
+        annotations:
+          summary: "AWS Cedar policy denials exceeding baseline"
+          description: "Unauthorized actions or anomalous high-value transactions (>INR 5,00,000) attempted in the recovery execution path."
+
+      - alert: DiagnosticEngineLatencySpike
+        expr: histogram_quantile(0.99, sum(rate(diagnostic_latency_seconds_bucket[5m])) by (le)) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          tier: latency-sla
+        annotations:
+          summary: "P99 Diagnostic Engine latency exceeds 500ms"
+          description: "AI Diagnostic Engine P99 latency has risen to {{ $value }}s, impacting sub-second recovery decisioning."

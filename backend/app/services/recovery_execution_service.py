@@ -9,6 +9,7 @@ from backend.app.policy_engine import policy_engine
 from backend.app.gateways import default_gateway
 from backend.app.audit_store import audit_store
 from backend.app.services.cfo_service import cfo_service
+from aws.cedar.cedar_engine import get_cedar_engine
 from backend.app.services.telemetry_service import (
     log_system_event,
     DIAGNOSTIC_LATENCY_HISTOGRAM,
@@ -125,6 +126,32 @@ async def execute_recovery_pipeline(
     })
 
     log_system_event("INFO", "PolicyEngine", f"Policy verdict for {payment_id}: {policy_verdict.verdict}", trace_id=trace_id)
+
+    # Step 6b: AWS Cedar Formal Zero-Trust Policy Enforcement (Verified in execution path)
+    cedar_engine = get_cedar_engine()
+    cedar_action = "Action::ExecuteMandateRecovery" if diagnosis.recommended_strategy == "DELAYED_RETRY" else "Action::DispatchRecoveryLink"
+    cedar_eval = cedar_engine.evaluate(
+        principal='Agent::"FastLoopRecoveryEngine"',
+        action=cedar_action,
+        resource=f'RecoveryWorkflow::"{payment_id}"',
+        context={
+            "amount_inr": amount,
+            "cedar_kill_switch": False,
+            "error_code": error_code
+        }
+    )
+    decision_trace_steps.append({
+        "timestamp": now_ist_str,
+        "step": "Cedar Authorization",
+        "title": "AWS Cedar Zero-Trust Check",
+        "details": f"{cedar_eval.decision} • Policy: {cedar_eval.policy_id}",
+        "status": "COMPLETED" if cedar_eval.is_authorized else "BLOCKED",
+        "badge": f"Cedar: {cedar_eval.decision}"
+    })
+    log_system_event("INFO", "CedarEngine", f"Cedar evaluation for {payment_id}: {cedar_eval.decision}", trace_id=trace_id)
+
+    if not cedar_eval.is_authorized and policy_verdict.verdict == "ALLOWED":
+        policy_verdict.verdict = "DENIED_BY_CEDAR"
 
     # Step 7: Gateway Execution Layer
     gateway_result = {}

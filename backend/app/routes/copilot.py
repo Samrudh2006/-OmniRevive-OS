@@ -156,7 +156,7 @@ async def copilot_chat_endpoint(req: CopilotChatRequest, request: Request):
             "When a customer card fails due to soft declines or insufficient funds:\n"
             "1. OmniRevive halts aggressive card charges to eliminate bank decline fees.\n"
             "2. It instantly dispatches a verified WhatsApp message containing a pre-filled UPI Intent link (`upi://pay?...`) and a dense scannable QR code.\n"
-            "3. The customer taps once to open Google Pay/PhonePe/Paytm and completes payment in under 3 seconds with a **78.39% live cohort recovery yield**."
+            "3. The customer taps once to open Google Pay/PhonePe/Paytm and completes payment in under 3 seconds with a **77.0% transaction recovery rate (42.24% net GMV yield)**."
         )
     elif any(k in q for k in ["voice", "gst", "gstin", "b2b", "call", "hinglish", "speech", "invoice", "ptp"]):
         answer = (

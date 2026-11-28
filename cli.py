@@ -78,6 +78,65 @@ def cmd_benchmark(args):
     results = run_held_out_benchmark(verbose=True)
     return 0
 
+def cmd_concurrency_benchmark(args):
+    """Executes a true parallel multithreaded concurrency benchmark with 50 simultaneous workers."""
+    print_header("50-Worker Parallel Concurrency & Redis/SQLite CAS Mutex Benchmark")
+    import concurrent.futures
+    import random
+    
+    workers = args.workers
+    iterations = args.iterations
+    print(f"• Concurrency Level:  {workers} simultaneous OS threads")
+    print(f"• Test Iterations:    {iterations} independent payment keys")
+    print(f"• Storage Backing:    Redis CAS (if reachable) + SQLite WAL Idempotency Store")
+    print("-" * 80)
+    
+    total_acquired = 0
+    total_rejected = 0
+    start_time = time.perf_counter()
+    
+    for round_num in range(1, iterations + 1):
+        key = f"concurrency_bench_{int(time.time() * 1000)}_{round_num}"
+        round_acquired = 0
+        round_rejected = 0
+        
+        def worker_task(worker_id):
+            time.sleep(random.uniform(0.0001, 0.002))
+            return idempotency_store.acquire_lock(
+                key=key,
+                payload_hash=f"hash_worker_{worker_id}",
+                merchant_id="merchant_concurrency_bench"
+            )
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
+            futures = [executor.submit(worker_task, i) for i in range(workers)]
+            for f in concurrent.futures.as_completed(futures):
+                if f.result():
+                    round_acquired += 1
+                else:
+                    round_rejected += 1
+        
+        total_acquired += round_acquired
+        total_rejected += round_rejected
+        
+        if round_acquired != 1:
+            print(f"[FAIL] Round {round_num}: Double-debit hazard! Acquired={round_acquired}, Rejected={round_rejected}")
+            return 1
+
+    total_time = time.perf_counter() - start_time
+    total_ops = workers * iterations
+    ops_per_sec = total_ops / total_time
+    
+    print(f"• Total Webhook Invocations: {total_ops}")
+    print(f"• Total Single Winners:      {total_acquired} (Exactly 1 per key)")
+    print(f"• Total Collisions Rejected: {total_rejected} (409 Conflict equivalent)")
+    print(f"• Double-Debit Violations:   0")
+    print(f"• Total Benchmark Duration:  {total_time:.3f}s")
+    print(f"• Effective Throughput:      {ops_per_sec:,.1f} operations/sec")
+    print("-" * 80)
+    print("[PASS] 100% Strict Idempotency & Zero Double-Debit Guarantees Verified!\n")
+    return 0
+
 def cmd_simulate_attack(args):
     """Simulates adversarial red-team exploits to verify zero-trust containment."""
     print_header(f"Adversarial Attack Simulation: {args.attack.upper()}")
@@ -435,6 +494,12 @@ Examples:
     # benchmark
     sub_bench = subparsers.add_parser("benchmark", help="Execute the 100-case recovery benchmark")
     sub_bench.set_defaults(func=cmd_benchmark)
+
+    # concurrency-benchmark
+    sub_conc = subparsers.add_parser("concurrency-benchmark", help="Execute 50-worker parallel concurrency and CAS mutex benchmark")
+    sub_conc.add_argument("--workers", type=int, default=50, help="Number of concurrent worker threads (default: 50)")
+    sub_conc.add_argument("--iterations", type=int, default=5, help="Number of test iterations (default: 5)")
+    sub_conc.set_defaults(func=cmd_concurrency_benchmark)
     
     # replay
     sub_replay = subparsers.add_parser("replay", help="Replay a single benchmark case step-by-step")

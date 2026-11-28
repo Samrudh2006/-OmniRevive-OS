@@ -864,6 +864,12 @@
   <div id="landing-gateway-container"
     class="min-h-screen bg-[#070e1c] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white transition-all duration-300">
 
+    <!-- Transparent Safe Demo / Simulation Disclaimer Banner -->
+    <div class="bg-amber-500/10 border-b border-amber-500/20 text-amber-900 dark:text-amber-200 px-4 py-2 text-center text-[11px] sm:text-xs font-medium">
+      <span class="font-bold">⚠️ Architectural Prototype (SAFE_DEMO_MODE):</span>
+      Financial metrics (77.0% transaction recovery, 42.24% net GMV yield), gateway adapters, and NPCI switches are evaluated on a held-out 100-case simulated cohort (<a href="/benchmarks" class="underline font-bold hover:text-amber-500">methodology &amp; test report</a>). Live gateway execution requires configured merchant API keys.
+    </div>
+
     <!-- ULTRA-SPACIOUS HIGH-PRECISION LANDING NAVBAR -->
     <nav
       class="h-20 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/85 dark:bg-[#070e1c]/85 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center sticky top-0 z-40 transition-colors shadow-xs">
@@ -1030,15 +1036,15 @@
         <!-- 4 Live Metric Pods (Glassmorphic Cards Matching Reference Images) -->
         <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4 pt-10 text-left">
 
-          <!-- Card 1: Recovery Rate -->
+          <!-- Card 1: Recovery Benchmark (Simulated 100-Case Cohort) -->
           <div
             class="p-5 sm:p-6 rounded-3xl bg-white/85 dark:bg-[#050c1b]/85 backdrop-blur-lg border border-white/80 dark:border-sky-500/20 shadow-xl dark:shadow-2xl tilt-card space-y-1 transition hover:scale-[1.02]">
             <div
               class="flex items-center gap-2 text-xs font-bold text-sky-700 dark:text-sky-400 uppercase tracking-wider">
-              <span>DEMO RECOVERY RATE</span>
+              <span>SIMULATED BENCHMARK</span>
             </div>
-            <div class="text-3xl sm:text-4xl font-black text-emerald-500 dark:text-emerald-400 pt-1">78.39%</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Simulated sample data</div>
+            <div class="text-3xl sm:text-4xl font-black text-emerald-500 dark:text-emerald-400 pt-1">77.0% <span class="text-base sm:text-lg font-bold text-slate-500 dark:text-slate-400">/ 42.2% GMV</span></div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">77/100 txs resolved (₹4.15L / ₹9.83L GMV) · Held-out cohort</div>
           </div>
 
           <!-- Card 3: Regulatory Guard -->
@@ -1059,8 +1065,8 @@
               class="flex items-center gap-2 text-xs font-bold text-sky-700 dark:text-sky-400 uppercase tracking-wider">
               <span>VERIFIED INVARIANTS</span>
             </div>
-            <div class="text-3xl sm:text-4xl font-black text-sky-500 dark:text-sky-400 pt-1">600+ Tests</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">600+ tests collected, all passing</div>
+            <div class="text-3xl sm:text-4xl font-black text-sky-500 dark:text-sky-400 pt-1">635 Tests</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">635 tests collected, 100% passing</div>
           </div>
 
         </div>
@@ -2965,9 +2971,9 @@ forbid (
                 </div>
                 <div
                   class="text-2xl sm:text-[26px] font-extrabold text-white mt-2 mono metric-value-glow tracking-tight"
-                  id="kpi-net-recovery">78.39%</div>
+                  id="kpi-net-recovery">77.0%</div>
                 <div class="flex items-center gap-1.5 mt-1">
-                  <span class="text-[10px] text-emerald-400 font-semibold mono">Live Simulation</span>
+                  <span class="text-[10px] text-emerald-400 font-semibold mono">Simulated 100-Case (42.24% Net GMV)</span>
                 </div>
               </div>
 
@@ -7235,8 +7241,8 @@ forbid (
         </div>
         <div class="flex items-center gap-2">
           <span class="text-slate-400">Verified Impact:</span>
-          <strong id="modal-node-metrics" class="text-emerald-400 font-bold">78.39% Recovery Rate · ₹4.25L
-            Recovered</strong>
+          <strong id="modal-node-metrics" class="text-emerald-400 font-bold">77.0% Tx Recovery (42.24% Net GMV) · ₹4.15L
+            Recovered (Simulated)</strong>
         </div>
       </div>
 

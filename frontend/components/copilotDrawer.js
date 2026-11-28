@@ -361,12 +361,13 @@ export function triggerCopilotSuggestion(actionKey) {
       queryTitle = " Benchmark: Net Recovery Yield Analysis";
       answerHtml = `
         <div class="space-y-1.5">
-          <div class="text-cyan-600 dark:text-cyan-400 font-bold">Cohort Recovery Rate Empirical Analysis</div>
-          <div>• <strong>OmniRevive-OS Yield</strong>: <span class="text-emerald-600 dark:text-emerald-400 font-extrabold text-sm">78.39%</span></div>
-          <div>• <strong>Industry Static Retry Baseline</strong>: <span class="copilot-subtitle-text font-semibold">42.24%</span></div>
-          <div>• <strong>Net Recovery Lift</strong>: <span class="text-cyan-700 dark:text-cyan-300 font-bold">+36.15% Absolute Gain</span></div>
+          <div class="text-cyan-600 dark:text-cyan-400 font-bold">100-Case Held-Out Benchmark Analysis (Simulated)</div>
+          <div>• <strong>Transaction Count Recovery</strong>: <span class="text-emerald-600 dark:text-emerald-400 font-extrabold text-sm">77.0%</span> <span class="text-xs text-slate-400">(77 / 100 cases)</span></div>
+          <div>• <strong>Net GMV Recovery Yield</strong>: <span class="text-cyan-700 dark:text-cyan-300 font-bold">42.24%</span> <span class="text-xs text-slate-400">(₹4.15L / ₹9.83L at-risk)</span></div>
+          <div>• <strong>Static Retry Baseline (GMV)</strong>: <span class="copilot-subtitle-text font-semibold">35.00%</span></div>
+          <div>• <strong>Net Recovery Lift</strong>: <span class="text-emerald-600 dark:text-emerald-400 font-bold">+20.69% Relative GMV Gain</span></div>
           <div class="pt-1 text-[11px] copilot-msg-subtext leading-relaxed">
-            <strong>Key Insight</strong>: Instant retries fail at 82% during switch outages. Shifting to Weibull hazard density peak (+45m) avoids queue lock contention and allows bank CBS buffers to drain.
+            <strong>Key Insight</strong>: Instant retries fail during bank switch outages. Shifting to the Weibull hazard density peak (+45m) avoids queue lock contention and allows bank CBS buffers to drain. High-value suspicious velocity cases (10% of cohort) are safely escalated rather than blindly debited, explaining the 42.24% GMV yield vs 77.0% transaction count recovery.
           </div>
         </div>
       `;
@@ -383,7 +384,7 @@ export function triggerCopilotSuggestion(actionKey) {
           </div>
           <div>• <strong>Shape Parameter (k = 2.14)</strong>: Models wear-in / switch recovery acceleration after bank queue drain.</div>
           <div>• <strong>Scale Parameter (λ = 45m)</strong>: Empirical half-life peak of Indian banking CBS gateway timeouts.</div>
-          <div>• <strong>Impact</strong>: Boosts cohort yield from 42.24% to 78.39% without rate-limit triggers.</div>
+          <div>• <strong>Impact</strong>: Lifts recovery yield to 77.0% transaction recovery (42.24% net GMV) without rate-limit triggers.</div>
         </div>
       `;
       break;
@@ -639,7 +640,7 @@ function getLocalCopilotFallback(queryText) {
            "OmniRevive-OS uses a **SciPy-fitted Weibull Hazard Survival Model**:\n" +
            "1. Calculates recovery half-life dynamics from live NPCI switch signals.\n" +
            "2. Shifts the retry window to the mathematical peak at **+45 minutes**.\n" +
-           "3. Boosts cohort recovery yield from 42.24% baseline to **78.39%**.";
+           "3. Lifts recovery yield to 77.0% transaction count recovery (42.24% net GMV yield) in held-out benchmark.";
   } else if (text.includes("whatsapp") || text.includes("qr") || text.includes("upi") || text.includes("soft") || text.includes("balance")) {
     return " **1-Click WhatsApp Recovery & Dynamic Dense UPI QR**:\n\n" +
            "For consumer soft declines (e.g., card insufficient balance):\n" +

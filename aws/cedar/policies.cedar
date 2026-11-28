@@ -43,3 +43,15 @@ forbid (
     action in [Action::"DeleteAuditRecord", Action::"TruncateAuditLog"],
     resource is AuditLog
 );
+
+// POLICY 5: Fast-Loop Recovery Engine Mandate & Payment Link Execution Policy
+// Ensures only authorized agents (FastLoopRecoveryEngine, SRE_Admin) can execute mandate recoveries
+permit (
+    principal in [Agent::"FastLoopRecoveryEngine", Role::"SRE_Admin"],
+    action in [Action::"ExecuteMandateRecovery", Action::"DispatchRecoveryLink"],
+    resource is RecoveryWorkflow
+)
+when {
+    context.amount_inr <= 500000 &&
+    context.cedar_kill_switch == false
+};

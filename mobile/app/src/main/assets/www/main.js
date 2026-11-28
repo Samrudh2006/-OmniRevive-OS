@@ -1328,9 +1328,9 @@ export function countUpValue(elementId, start, end, duration = 1200, prefix = ""
 }
 
 export function animateAllKpis() {
-  countUpValue("kpi-net-recovery", 0, 78.39, 1300, "", "%", 2);
-  countUpValue("kpi-recovered-gmv", 0, 425600, 1500, "₹", "", 0);
-  countUpValue("kpi-at-risk-gmv", 0, 542850, 1500, "₹", "", 0);
+  countUpValue("kpi-net-recovery", 0, 77.0, 1300, "", "%", 1);
+  countUpValue("kpi-recovered-gmv", 0, 415450, 1500, "₹", "", 0);
+  countUpValue("kpi-at-risk-gmv", 0, 983604, 1500, "₹", "", 0);
 }
 
 // =========================================================================

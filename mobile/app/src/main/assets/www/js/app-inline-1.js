@@ -128,7 +128,7 @@ const ARCHITECTURE_NODES = {
     description: "Continuous Poisson & Weibull temporal hazard probability modeling that identifies the exact inflection point when downstream bank switches recover. Completely replaces blind exponential backoff that causes switch choking and rate-limit drops.",
     handledCodes: ["GATEWAY_504", "NPCI_TIMEOUT_91", "HDFC_DOWN_500", "BANK_SWITCH_DEGRADE"],
     codeSnippet: "// Weibull Hazard Rate Function\nfunction calculateOptimalRetry(beta = 1.42, alpha = 45.0) {\n  const t_optimal = alpha * Math.pow((beta - 1) / beta, 1 / beta);\n  return { retryAt: 'T+' + Math.round(t_optimal) + 'm', confidence: '95.4%' };\n}",
-    metrics: "78.39% Recovery Rate · ₹4.25L Recovered",
+    metrics: "77.0% Tx Recovery (42.24% Net GMV) · ₹4.15L Recovered (Simulated)",
     workspaceTab: "analytics"
   },
   npci_switch: {
@@ -2896,7 +2896,7 @@ const TOUR_STEPS = [
     title: "1. Real-Time SRE Recovery Telemetry",
     badge: "Live Telemetry",
     badgeColor: "bg-emerald-950/80 text-emerald-400 border-emerald-500/40",
-    description: "Monitors <strong>Live Cohort Yield (78.39%)</strong> vs <strong>Held-Out 100-Case Benchmark (42.24%)</strong> with exactly <strong>0 double-debit collisions</strong>.",
+    description: "Monitors <strong>Simulated Benchmark Yield: 77.0% Transaction Count Recovery</strong> (77/100 events) and <strong>42.24% Net GMV Recovery</strong> (₹4.15L of ₹9.83L) with exactly <strong>0 double-debit collisions</strong>.",
     highlightPadding: 8
   },
   {
@@ -3159,9 +3159,9 @@ function countUpValue(elementId, start, end, duration = 1200, prefix = "", suffi
 }
 
 function animateAllKpis() {
-  countUpValue('kpi-net-recovery', 0, 78.39, 1300, '', '%', 2);
-  countUpValue('kpi-recovered-gmv', 0, 425600, 1500, '₹', '', 0);
-  countUpValue('kpi-at-risk-gmv', 0, 542850, 1500, '₹', '', 0);
+  countUpValue('kpi-net-recovery', 0, 77.0, 1300, '', '%', 1);
+  countUpValue('kpi-recovered-gmv', 0, 415450, 1500, '₹', '', 0);
+  countUpValue('kpi-at-risk-gmv', 0, 983604, 1500, '₹', '', 0);
 }
 
 // =========================================================================

@@ -23,7 +23,7 @@ function calculateOptimalRetry(beta = 1.42, alpha = 45.0) {
   const t_optimal = alpha * Math.pow((beta - 1) / beta, 1 / beta);
   return { retryAt: "T+" + Math.round(t_optimal) + "m", confidence: "95.4%" };
 }`,
-      metrics: "78.39% Recovery Rate · ₹4.25L Recovered",
+      metrics: "77.0% Tx Recovery (42.24% Net GMV) · ₹4.15L Recovered (Simulated)",
       workspaceTab: "analytics"
     },
     npci_switch: {

@@ -26,6 +26,10 @@ class CedarEvaluationResult:
     policy_sha256: str = ""
     timestamp_utc: str = ""
 
+    @property
+    def is_authorized(self) -> bool:
+        return self.decision == "ALLOW"
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "decision": self.decision,
@@ -36,7 +40,7 @@ class CedarEvaluationResult:
             "diagnostics": self.diagnostics,
             "policy_sha256": self.policy_sha256,
             "timestamp_utc": self.timestamp_utc,
-            "is_authorized": self.decision == "ALLOW"
+            "is_authorized": self.is_authorized
         }
 
 
@@ -191,6 +195,42 @@ class CedarPolicyEngine:
                 policy_sha256=self._policy_sha256,
                 timestamp_utc=now_str
             )
+
+        # Rule 5: Fast-Loop Mandate Recovery & Link Execution Policy (Verified in live transaction path)
+        if action in ["Action::ExecuteMandateRecovery", "ExecuteMandateRecovery", "Action::DispatchRecoveryLink", "DispatchRecoveryLink"]:
+            is_auth_agent = any(p in principal for p in ["FastLoopRecoveryEngine", "SRE_Admin", "RecoveryWorker"])
+            amount = float(ctx.get("amount_inr", 0.0))
+            kill_switch = bool(ctx.get("cedar_kill_switch", False))
+
+            if is_auth_agent and amount <= 500000 and not kill_switch:
+                return CedarEvaluationResult(
+                    decision="ALLOW",
+                    policy_id="policy_fastloop_recovery_permit",
+                    principal=principal,
+                    action=action,
+                    resource=resource,
+                    diagnostics={"reason": "ALLOW: FastLoopRecoveryEngine authorized to execute recovery within risk bounds."},
+                    policy_sha256=self._policy_sha256,
+                    timestamp_utc=now_str
+                )
+            else:
+                diag = []
+                if not is_auth_agent:
+                    diag.append("Principal lacks Agent::FastLoopRecoveryEngine or Role::SRE_Admin")
+                if amount > 500000:
+                    diag.append(f"Amount INR {amount:,.2f} exceeds standard execution ceiling (INR 5,00,000)")
+                if kill_switch:
+                    diag.append("Emergency Cedar kill-switch is active")
+                return CedarEvaluationResult(
+                    decision="DENY",
+                    policy_id="policy_fastloop_recovery_permit",
+                    principal=principal,
+                    action=action,
+                    resource=resource,
+                    diagnostics={"reason": f"DENY: {', '.join(diag)}"},
+                    policy_sha256=self._policy_sha256,
+                    timestamp_utc=now_str
+                )
 
         # Executive CFO Approval Gating Rule
         if action in ["Action::ApproveCFOEscalation", "ApproveCFOEscalation", "Action::RejectCFOEscalation", "RejectCFOEscalation"]:

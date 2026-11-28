@@ -14,7 +14,7 @@
 - [AI Revenue Recovery](https://omnirevive-os.antideploy.com/ai-revenue-recovery): Technical breakdown of the 6-stage autonomous payment recovery pipeline.
 - [B2B Dispute Resolution](https://omnirevive-os.antideploy.com/b2b-dispute-resolution): Deterministic Finite State Machine (FSM) voice agent for invoice reconciliation.
 - [Idempotency Protection](https://omnirevive-os.antideploy.com/idempotency-protection): Atomic CAS mutexes, HMAC signatures, and duplicate-charge protection.
-- [Empirical Benchmarks](https://omnirevive-os.antideploy.com/benchmarks): Held-out 100-case test suite metrics (78.39% recovery rate, +36.15% uplift).
+- [Empirical Benchmarks](https://omnirevive-os.antideploy.com/benchmarks): Held-out 100-case test suite metrics (77.0% transaction recovery rate, 42.24% net GMV yield).
 - [Audit Ledger & Security](https://omnirevive-os.antideploy.com/audit-ledger): Cryptographic Merkle tree verification and SRE audit trail.
 - [FAQ](https://omnirevive-os.antideploy.com/faq): Frequently asked technical and architectural questions.
 - [API Reference](https://omnirevive-os.antideploy.com/docs): OpenAPI and Swagger specification for developers.

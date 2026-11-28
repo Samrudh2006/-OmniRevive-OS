@@ -80,7 +80,7 @@ class OverviewScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Recovered across 1,842 failure events (78.39% Success Rate)',
+                  'Simulated 100-Case Benchmark: 77.0% Tx Count (42.24% Net GMV)',
                   style: TextStyle(
                     fontSize: 12,
                     color: isDark ? Colors.grey[400] : const Color(0xFF475569),
@@ -132,7 +132,7 @@ class OverviewScreen extends StatelessWidget {
               ),
               _buildMetricCard(
                 title: 'MERKLE CHAIN',
-                value: '475+ Tests',
+                value: '635 Tests',
                 subtitle: 'SHA-256 Verified',
                 icon: Icons.verified_user,
                 accentColor: const Color(0xFFD97706),

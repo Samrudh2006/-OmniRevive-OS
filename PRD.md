@@ -88,7 +88,7 @@ Help Indian and global enterprises **recover 75%+ of dropped revenue autonomousl
 
 | Key Metric | Target Goal | Verified Benchmark Result |
 | :--- | :--- | :--- |
-| **Gross Recovery Rate** | `≥ 75.0%` | **78.39% (77/100 Transactions Recovered)** |
+| **Gross Recovery Rate** | `≥ 75.0%` | **77.0% (77/100 Transactions Recovered, 42.24% Net GMV Yield)** |
 | **Recovered Revenue GMV** | `≥ 40.0%` | **42.24% (₹4,15,450.31 Recovered)** |
 | **Double-Debit Violations** | `Strictly 0` | **0 (100.0% Idempotency Verified)** |
 | **TRAI Quiet-Hour Violations** | `Strictly 0` | **0 (100.0% Compliance)** |
