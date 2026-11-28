@@ -9,6 +9,7 @@ const approveEscalation = approveCFOItem;
 const rejectEscalation = rejectCFOItem;
 import { formatINR } from "../utils/formatters.js";
 import { showToast } from "../utils/toast.js";
+import { escapeHtml } from "../utils/escapeHtml.js";
 
 export async function refreshCfoQueueUI() {
   const container = document.getElementById("cfo-queue-tbody");
@@ -44,34 +45,42 @@ export async function refreshCfoQueueUI() {
       return;
     }
 
-    container.innerHTML = queue.map((item) => `
+    container.innerHTML = queue.map((item) => {
+      const recId = item.approval_id || item.escalation_id || "cfo_unknown";
+      const targetEntity = item.entity_id || item.invoice_id || "—";
+      const safeId = escapeHtml(recId);
+      const safeEntity = escapeHtml(targetEntity);
+      const safeReason = escapeHtml(item.reason || "High-value escalation");
+      const riskLevel = item.risk_level || (item.amount >= 100000 ? "CRITICAL" : "HIGH");
+      return `
       <tr class="border-b border-slate-800/60 hover:bg-slate-800/30 transition text-xs font-mono">
-        <td class="py-3 px-3 text-sky-400 font-semibold">${item.escalation_id}</td>
-        <td class="py-3 px-3 text-slate-300">${item.invoice_id}</td>
+        <td class="py-3 px-3 text-sky-400 font-semibold">${safeId}</td>
+        <td class="py-3 px-3 text-slate-300">${safeEntity}</td>
         <td class="py-3 px-3 text-amber-300 font-semibold">${formatINR(item.amount)}</td>
         <td class="py-3 px-3 text-rose-400">-${formatINR(item.margin_loss || 0)}</td>
-        <td class="py-3 px-3 text-slate-300 max-w-[200px] truncate" title="${item.reason}">${item.reason}</td>
+        <td class="py-3 px-3 text-slate-300 max-w-[200px] truncate" title="${safeReason}">${safeReason}</td>
         <td class="py-3 px-3">
           <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
-            item.risk_level === 'CRITICAL' 
+            riskLevel === 'CRITICAL' 
               ? 'bg-rose-950 text-rose-300 border border-rose-600/60' 
               : 'bg-amber-950 text-amber-300 border border-amber-600/60'
           }">
-            ${item.risk_level || 'HIGH'}
+            ${escapeHtml(riskLevel)}
           </span>
         </td>
         <td class="py-3 px-3 flex items-center gap-2">
-          <button onclick="handleCfoApprove('${item.escalation_id}')" 
+          <button onclick="handleCfoApprove('${safeId}')" 
                   class="px-2.5 py-1 rounded bg-emerald-700 hover:bg-emerald-600 text-white text-[11px] font-sans font-semibold transition flex items-center gap-1 shadow-sm">
             <span>✓</span> Approve
           </button>
-          <button onclick="handleCfoReject('${item.escalation_id}')" 
+          <button onclick="handleCfoReject('${safeId}')" 
                   class="px-2.5 py-1 rounded bg-rose-900/80 hover:bg-rose-800 text-rose-200 text-[11px] font-sans font-semibold transition flex items-center gap-1 border border-rose-700/60">
             <span>✕</span> Reject
           </button>
         </td>
       </tr>
-    `).join("");
+    `;
+    }).join("");
   } catch (err) {
     console.error("Failed to render CFO queue", err);
     if (container) {

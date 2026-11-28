@@ -37,9 +37,10 @@ export async function openAwsCedarModal() {
   // Fetch live Bedrock status
   try {
     const resp = await safeApiCall("/aws/bedrock/status");
-    if (resp && resp.data) {
+    const bd = resp?.data || resp;
+    if (bd && bd.foundation_model) {
       const mEl = document.getElementById("aws-modal-model");
-      if (mEl) mEl.innerText = resp.data.foundation_model.split("-").slice(0, 3).join(" ") || "Claude 3.5 Sonnet";
+      if (mEl) mEl.innerText = bd.foundation_model.split("-").slice(0, 3).join(" ") || "Claude 3.5 Sonnet";
     }
   } catch (e) {
     console.warn("Bedrock status fetch failed", e);
@@ -48,11 +49,12 @@ export async function openAwsCedarModal() {
   // Fetch live Cedar policies
   try {
     const resp = await safeApiCall("/aws/cedar/policies");
-    if (resp && resp.data) {
+    const pol = resp?.data || resp;
+    if (pol && pol.policy_sha256) {
       const hEl = document.getElementById("aws-modal-hash");
-      if (hEl) hEl.innerText = `SHA: ${resp.data.policy_sha256.substring(0, 16)}...`;
+      if (hEl) hEl.innerText = `SHA: ${pol.policy_sha256.substring(0, 16)}...`;
       const pEl = document.getElementById("aws-modal-policy-text");
-      if (pEl && resp.data.raw_policies) pEl.innerText = resp.data.raw_policies;
+      if (pEl && pol.raw_policies) pEl.innerText = pol.raw_policies;
     }
   } catch (e) {
     console.warn("Cedar policies fetch failed", e);
@@ -130,8 +132,8 @@ export async function runCedarTestEvaluation() {
       context: { mfa_verified: mfa, system_risk_score: 35, proposed_gstin: "29AABCU9603R1Z2", invoice_amount: 125000, regulatory_compliance: "GST_RULE_46" }
     });
 
-    if (resp && resp.data) {
-      const d = resp.data;
+    const d = resp?.data || resp;
+    if (d && d.decision) {
       if (badge) {
         if (d.decision === "ALLOW") {
           badge.innerText = "ALLOW";

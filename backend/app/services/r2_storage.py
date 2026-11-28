@@ -37,16 +37,19 @@ class CloudflareR2StorageService:
         timestamp = int(time.time())
         backup_key = f"backups/sqlite_{timestamp}_{os.path.basename(target_path)}"
         
-        logger.info(f"[R2_BACKUP] Uploading DB snapshot ({file_size} bytes) to {self.bucket_name}/{backup_key}")
+        logger.info(f"[R2_BACKUP] Simulated local snapshot manifest ({file_size} bytes) for {self.bucket_name}/{backup_key} (SAFE_DEMO_MODE)")
         
         return {
             "success": True,
+            "mode": "SIMULATED_LOCAL_MANIFEST",
+            "is_live_cloud_upload": False,
             "bucket": self.bucket_name,
             "key": backup_key,
             "bytes_uploaded": file_size,
             "public_url": self.get_public_url(backup_key),
             "timestamp": timestamp,
-            "provider": "Cloudflare R2 (Zero Egress)"
+            "provider": "Cloudflare R2 (Zero Egress)",
+            "disclaimer": "Simulated local SQLite manifest in SAFE_DEMO_MODE; live S3 R2 upload not connected."
         }
 
 r2_storage = CloudflareR2StorageService()

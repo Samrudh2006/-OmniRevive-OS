@@ -14,8 +14,10 @@ from backend.app.services.telemetry_service import (
     log_system_event,
     DIAGNOSTIC_LATENCY_HISTOGRAM,
     RECOVERY_REQUESTS_TOTAL,
-    RECOVERED_GMV_INR
+    RECOVERED_GMV_INR,
+    IDEMPOTENCY_COLLISIONS_TOTAL,
 )
+from backend.app.security import idempotency_store
 
 def mask_pii_string(val: str) -> str:
     if not val or len(val) < 6:
@@ -63,15 +65,35 @@ async def execute_recovery_pipeline(
         "badge": "Valid signature"
     })
 
-    # Step 3: Atomic Idempotency Lock
+    meta = metadata or {}
+    merchant_id = str(meta.get("merchant_id") or "merchant_123")
+    bank_issuer = str(meta.get("issuing_bank") or meta.get("bank") or "HDFC")
+    channel = str(meta.get("channel") or "WHATSAPP")
+
+    # Step 3: Atomic Idempotency Lock (real IdempotencyStore CAS check when key provided, or trace-unique demo key)
+    idem_key = meta.get("idempotency_key") or f"exec:{payment_id}:{trace_id}"
+    payload_hash = f"exec_{payment_id}_{amount}_{attempt_count}"
+    acquired = idempotency_store.acquire_lock(key=idem_key, payload_hash=payload_hash, merchant_id=merchant_id)
     decision_trace_steps.append({
         "timestamp": now_ist_str,
         "step": "Idempotency Lock",
-        "title": "Idempotency Lock Acquired",
-        "details": f"Lock key: merchant_123:{payment_id}",
-        "status": "COMPLETED",
-        "badge": "LOCKED"
+        "title": "Idempotency Lock Acquired" if acquired else "Duplicate Recovery Blocked",
+        "details": f"Lock key: {merchant_id}:{idem_key}",
+        "status": "COMPLETED" if acquired else "BLOCKED",
+        "badge": "LOCKED" if acquired else "409 DUPLICATE"
     })
+    if not acquired:
+        IDEMPOTENCY_COLLISIONS_TOTAL.inc()
+        return {
+            "trace_id": trace_id,
+            "payment_id": payment_id,
+            "merchant_id": merchant_id,
+            "amount": amount,
+            "status": "DUPLICATE_BLOCKED",
+            "policy_result": "SUPPRESSED",
+            "action_taken": "IGNORED_DUPLICATE",
+            "decision_trace": decision_trace_steps,
+        }
 
     # Step 4: Structured AI Diagnosis (Tier 2)
     diagnosis: DiagnosisProposal = diagnostic_engine.diagnose(
@@ -79,7 +101,7 @@ async def execute_recovery_pipeline(
         amount=amount,
         error_code=error_code,
         error_description=error_description,
-        metadata=metadata
+        metadata=meta
     )
     conf_pct = int(diagnosis.confidence * 100)
     decision_trace_steps.append({
@@ -97,10 +119,12 @@ async def execute_recovery_pipeline(
     hazard_rec = recovery_optimizer.select_optimal_retry_window(
         failure_class=diagnosis.failure_class,
         attempt_number=attempt_count,
-        bank_issuer="HDFC"
+        bank_issuer=bank_issuer
     )
-    delay_m = hazard_rec.recommended_retry_delay_minutes or 45
-    strategy_label = "Poisson-Window Mandate Retry" if diagnosis.recommended_strategy == "DELAYED_RETRY" else "Dynamic 1-Click UPI Link"
+    delay_m = (hazard_rec.recommended_retry_delay_minutes if hazard_rec.recommended_retry_delay_minutes is not None else 45) if diagnosis.recommended_strategy == "DELAYED_RETRY" else 0
+    strategy_label = "Poisson-Window Mandate Retry" if diagnosis.recommended_strategy == "DELAYED_RETRY" else (
+        "Executive / Risk Escalation" if diagnosis.recommended_strategy in ("ESCALATE_HUMAN", "SUPPRESS") else "Dynamic 1-Click UPI Link"
+    )
     decision_trace_steps.append({
         "timestamp": now_ist_str,
         "step": "Recovery Strategy Selected",
@@ -114,7 +138,8 @@ async def execute_recovery_pipeline(
     policy_verdict: PolicyVerdict = policy_engine.evaluate(
         diagnosis=diagnosis,
         attempt_count=attempt_count,
-        proposed_discount_pct=5.0
+        proposed_discount_pct=5.0,
+        channel=channel,
     )
     decision_trace_steps.append({
         "timestamp": now_ist_str,
@@ -131,12 +156,15 @@ async def execute_recovery_pipeline(
     cedar_engine = get_cedar_engine()
     cedar_action = "Action::ExecuteMandateRecovery" if diagnosis.recommended_strategy == "DELAYED_RETRY" else "Action::DispatchRecoveryLink"
     cedar_eval = cedar_engine.evaluate(
-        principal='Agent::"FastLoopRecoveryEngine"',
+        principal=str(meta.get("principal") or 'Agent::"FastLoopRecoveryEngine"'),
         action=cedar_action,
         resource=f'RecoveryWorkflow::"{payment_id}"',
         context={
             "amount_inr": amount,
-            "cedar_kill_switch": False,
+            "cedar_kill_switch": bool(meta.get("cedar_kill_switch", False)),
+            "quiet_hours_blocked": policy_verdict.verdict == "DEFERRED_QUIET_HOURS",
+            "merchant_id": merchant_id,
+            "resource_tenant_id": str(meta.get("resource_tenant_id") or merchant_id),
             "error_code": error_code
         }
     )
@@ -209,27 +237,44 @@ async def execute_recovery_pipeline(
         action_taken = "SUPPRESS_ACTION"
         gateway_result = {"reason": "Suppressed due to policy violation or retry limit."}
 
+    action_detail = (
+        f"Next retry at {retry_time_ist} IST (in {delay_m}m)" if action_taken == "SCHEDULE_MANDATE_RETRY"
+        else ("Immediate dispatch (+0m)" if action_taken == "CREATE_1CLICK_PAYMENT_LINK"
+              else f"Action: {action_taken}")
+    )
     decision_trace_steps.append({
         "timestamp": now_ist_str,
         "step": "Action Scheduled",
-        "title": "Action Scheduled",
-        "details": f"Next retry at {retry_time_ist} IST (in {delay_m}m)",
-        "status": "COMPLETED",
-        "badge": f"Retry in {delay_m}m"
+        "title": "Action Scheduled" if policy_verdict.verdict == "ALLOWED" else "Action Gated / Routed",
+        "details": action_detail,
+        "status": "COMPLETED" if policy_verdict.verdict == "ALLOWED" else "BLOCKED",
+        "badge": f"Retry in {delay_m}m" if delay_m > 0 and action_taken == "SCHEDULE_MANDATE_RETRY" else action_taken
     })
 
     # Step 8: Cryptographic Hash Chaining Audit Ledger
     audit_commit = audit_store.record_event(
         trace_id=trace_id,
-        merchant_id="merchant_123",
+        merchant_id=merchant_id,
         payment_id=payment_id,
         event_type="payment.failed",
         failure_class=diagnosis.failure_class,
-        decision=diagnosis.model_dump(),
+        decision={**diagnosis.model_dump(), "cedar_decision": cedar_eval.decision, "cedar_policy_id": cedar_eval.policy_id},
         policy_verdict=policy_verdict.verdict,
         action_taken=action_taken,
         gateway_result=gateway_result
     )
+
+    idempotency_store.mark_completed(
+        key=idem_key,
+        result_payload={"action_taken": action_taken, "audit_event_id": audit_commit["event_id"]},
+        merchant_id=merchant_id,
+    )
+    if meta.get("webhook_idempotency_key"):
+        idempotency_store.mark_completed(
+            key=str(meta["webhook_idempotency_key"]),
+            result_payload={"action_taken": action_taken, "audit_event_id": audit_commit["event_id"]},
+            merchant_id=merchant_id,
+        )
 
     log_system_event("INFO", "AuditLedger", f"Committed Event {audit_commit['event_id']} (Hash: {audit_commit['current_hash'][:10]}...)", trace_id=trace_id)
 
@@ -239,23 +284,25 @@ async def execute_recovery_pipeline(
     # Prometheus Metric Increments
     DIAGNOSTIC_LATENCY_HISTOGRAM.observe(total_duration)
     RECOVERY_REQUESTS_TOTAL.labels(status=policy_verdict.verdict, failure_class=diagnosis.failure_class).inc()
-    if action_taken in ["SCHEDULE_MANDATE_RETRY", "DISPATCH_DYNAMIC_UPI_LINK"]:
+    if action_taken in ["SCHEDULE_MANDATE_RETRY", "DISPATCH_DYNAMIC_UPI_LINK", "CREATE_1CLICK_PAYMENT_LINK"]:
         RECOVERED_GMV_INR.inc(amount)
 
     return {
         "trace_id": trace_id,
         "payment_id": payment_id,
+        "merchant_id": merchant_id,
         "amount": amount,
         "failure_class": diagnosis.failure_class,
         "strategy": "POISSON_RETRY" if diagnosis.recommended_strategy == "DELAYED_RETRY" else diagnosis.recommended_strategy,
         "recommended_action_label": strategy_label,
-        "recommended_retry_at": f"{retry_time_ist} (in {delay_m}m)",
+        "recommended_retry_at": f"{retry_time_ist} (in {delay_m}m)" if action_taken == "SCHEDULE_MANDATE_RETRY" else ("Immediate (+0m)" if action_taken == "CREATE_1CLICK_PAYMENT_LINK" else action_taken),
         "success_probability": f"{hazard_rec.success_probability * 100:.1f}%",
         "max_attempts": f"{attempt_count} / 3",
         "confidence": diagnosis.confidence,
         "policy_result": policy_verdict.verdict,
-        "reason": "Within retry limit, not quiet hours, success probability high",
-        "model_version": "diagnostic-v2.1.3",
+        "cedar_evaluation": cedar_eval.to_dict(),
+        "reason": "; ".join(policy_verdict.violated_rules) if policy_verdict.violated_rules else "Within retry limit, not quiet hours, Cedar permit verified",
+        "model_version": diagnosis.model_version,
         "policy_version": "policy-v1.4.2",
         "action_taken": action_taken,
         "gateway_result": gateway_result,

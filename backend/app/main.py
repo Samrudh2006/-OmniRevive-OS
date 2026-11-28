@@ -3,6 +3,7 @@ import uuid
 import time
 import logging
 import re
+from contextlib import asynccontextmanager
 from typing import Dict, Any, Optional, List
 
 from fastapi import FastAPI, HTTPException, Request, status, Response
@@ -100,8 +101,44 @@ TAGS_METADATA = [
     }
 ]
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup config validation, managed background daemons, and graceful resource shutdown."""
+    readiness_issues = settings.validate_production_readiness()
+    for issue in readiness_issues:
+        logger.warning(f"[STARTUP_CONFIG_CHECK] {issue}")
+
+    if not os.environ.get("PYTEST_CURRENT_TEST") and os.environ.get("OMNIREVIVE_DISABLE_DAEMONS", "0") != "1":
+        try:
+            from backend.app.agency_swarm import start_continuous_agency_swarm
+            from backend.app.services.email_report_service import start_daily_10am_scheduler
+            start_continuous_agency_swarm()
+            start_daily_10am_scheduler()
+        except Exception as exc:
+            logger.warning(f"[LIFESPAN] Daemon startup skipped: {exc}")
+
+    yield
+
+    try:
+        from backend.app.agency_swarm import stop_continuous_agency_swarm
+        from backend.app.services.email_report_service import stop_daily_10am_scheduler
+        from backend.app.security import close_all_db_connections, idempotency_store
+        stop_continuous_agency_swarm()
+        stop_daily_10am_scheduler()
+        if getattr(idempotency_store, "redis_client", None):
+            try:
+                idempotency_store.redis_client.close()
+            except Exception:
+                pass
+        closed = close_all_db_connections()
+        logger.info(f"[LIFESPAN] Graceful shutdown complete (closed {closed} SQLite connections).")
+    except Exception as exc:
+        logger.warning(f"[LIFESPAN] Shutdown cleanup warning: {exc}")
+
+
 app = FastAPI(
     title="OmniRevive-OS API",
+    lifespan=lifespan,
     description="""
 # 🚀 OmniRevive-OS Universal Control Plane API
 
@@ -115,7 +152,7 @@ Universal Autonomous AI Revenue Recovery Control Plane with Zero-Trust Guardrail
 * **Semantic Memory:** On-device Qdrant vector memory collection for failure precedents.
 * **Audit Ledger:** SHA-256 sequential hash chaining ensuring 100% cryptographic continuity.
     """,
-    version="1.2.0",
+    version=settings.APP_VERSION,
     openapi_tags=TAGS_METADATA,
     contact={
         "name": "OmniRevive Core Engineering Team",
@@ -258,7 +295,7 @@ if os.path.exists(frontend_dir):
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
 if os.path.exists(docs_dir):
-    app.mount("/docs", StaticFiles(directory=docs_dir), name="docs")
+    app.mount("/docs-assets", StaticFiles(directory=docs_dir), name="docs_assets")
 
 @app.get("/copilot_avatar.jpg")
 async def serve_copilot_avatar():
@@ -319,9 +356,7 @@ SEO_PAGE_ROUTES = {
     "/documentation": "documentation.html",
     "/about": "about.html",
     "/privacy": "privacy.html",
-    "/terms": "terms.html",
-    "/auth": "auth.html",
-    "/pages/auth.html": "auth.html"
+    "/terms": "terms.html"
 }
 
 def _serve_seo_page(filename: str):
@@ -377,11 +412,6 @@ async def serve_privacy():
 @app.get("/terms", response_class=HTMLResponse)
 async def serve_terms():
     return _serve_seo_page("terms.html")
-
-@app.get("/auth", response_class=HTMLResponse)
-@app.get("/pages/auth.html", response_class=HTMLResponse)
-async def serve_auth():
-    return _serve_seo_page("auth.html")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard():

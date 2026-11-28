@@ -22,8 +22,9 @@ async def verify_audit_chain(request: Request):
 @router.get("/api/v1/audit/events", tags=["Cryptographic Audit Ledger"], summary="Fetch Sequenced Audit Blocks")
 async def get_audit_ledger(request: Request, limit: int = Query(50, ge=1, le=500), merchant_id: Optional[str] = None):
     auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
+    scoped_merchant = auth_service.resolve_authorized_tenant(request, requested_merchant_id=merchant_id)
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}") if request else f"tr_{uuid.uuid4().hex[:12]}"
-    events = audit_store.get_events(limit=limit, merchant_id=merchant_id)
+    events = audit_store.get_events(limit=limit, merchant_id=scoped_merchant)
     return {
         "success": True,
         "data": {

@@ -86,6 +86,7 @@ class InvoiceMutationRequest(BaseModel):
 
 @router.post("/api/v1/b2b/voice/turn", tags=["Deep-Loop B2B Voice & PTP"], summary="Process Autonomous B2B Voice Turn")
 async def handle_b2b_voice_turn(req: VoiceDialogueTurnRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     response = b2b_voice_engine.process_customer_turn(req)
     now_ist_str = time.strftime("%I:%M:%S %p", time.gmtime(time.time() + 5.5 * 3600))
@@ -233,17 +234,12 @@ class VoiceSynthesisPayload(BaseModel):
     text: str
     voice: Optional[str] = "en-IN-NeerjaExpressiveNeural"
 
-@router.api_route("/api/v1/b2b/voice/synthesize", methods=["GET", "POST"], tags=["Deep-Loop B2B Voice & PTP"], summary="Synthesize Human Neural Voice Audio")
-async def synthesize_neural_voice(
+async def _synthesize_neural_voice_impl(
     request: Request,
     text: Optional[str] = None,
     voice: Optional[str] = "en-IN-NeerjaExpressiveNeural"
 ):
-    """
-    Synthesizes ultra-realistic human speech audio via Microsoft Azure Neural Engine
-    with automatic mapping to next-gen Voice AI open-weight models (Indic-Parler, Kokoro, Whisper, OmniVoice).
-    Returns 24kHz studio-quality MP3 audio with memory caching for sub-50ms repeat latency.
-    """
+    """Shared implementation for GET and POST neural speech synthesis."""
     input_text = text
     target_voice = voice or "en-IN-NeerjaExpressiveNeural"
     
@@ -337,6 +333,24 @@ async def synthesize_neural_voice(
     )
 
 
+@router.get("/api/v1/b2b/voice/synthesize", tags=["Deep-Loop B2B Voice & PTP"], summary="Synthesize Human Neural Voice Audio (GET)", operation_id="synthesize_neural_voice_get")
+async def synthesize_neural_voice_get(
+    request: Request,
+    text: Optional[str] = None,
+    voice: Optional[str] = "en-IN-NeerjaExpressiveNeural"
+):
+    return await _synthesize_neural_voice_impl(request=request, text=text, voice=voice)
+
+
+@router.post("/api/v1/b2b/voice/synthesize", tags=["Deep-Loop B2B Voice & PTP"], summary="Synthesize Human Neural Voice Audio (POST)", operation_id="synthesize_neural_voice_post")
+async def synthesize_neural_voice_post(
+    request: Request,
+    text: Optional[str] = None,
+    voice: Optional[str] = "en-IN-NeerjaExpressiveNeural"
+):
+    return await _synthesize_neural_voice_impl(request=request, text=text, voice=voice)
+
+
 # ---------------------------------------------------------------------------
 # VoxCPM Real-Time Spoken Epistemics & Full-Duplex Streaming Endpoints
 # ---------------------------------------------------------------------------
@@ -412,6 +426,7 @@ class WhatsAppFlowRequest(BaseModel):
 @router.post("/api/v1/b2b/whatsapp-flow", tags=["Deep-Loop B2B Voice & PTP"], summary="Generate WhatsApp Flow 2.0 UPI Recovery Payload")
 async def generate_whatsapp_flow_payload(req: WhatsAppFlowRequest, request: Request):
     """Builds a WhatsApp Flow 2.0 interactive UPI payment payload with Cedar discount clamping."""
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     from backend.app.services.whatsapp_flow_service import build_whatsapp_flow_upi_payload
 
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")

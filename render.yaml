@@ -1,3 +1,7 @@
+# OmniRevive-OS Single-Node Control Plane Render Blueprint
+# Note: Deploys a single web instance using SQLite WAL (MUTEX_BACKEND=sqlite_wal).
+# Multi-node horizontal scaling requires provisioning an external managed Redis (REDIS_URL)
+# and PostgreSQL store; SAFE_DEMO_MODE remains enabled by default for sandbox safety.
 services:
   - type: web
     name: razorrevive-os
@@ -6,12 +10,14 @@ services:
     startCommand: "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.9
+        value: 3.12.8
       - key: ENVIRONMENT
         value: production
+      - key: SAFE_DEMO_MODE
+        value: "true"
       - key: LOG_LEVEL
         value: INFO
       - key: MUTEX_BACKEND
         value: sqlite_wal
-    healthCheckPath: /health
+    healthCheckPath: /health/ready
     autoDeploy: true

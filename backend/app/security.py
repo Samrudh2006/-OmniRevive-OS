@@ -5,6 +5,7 @@ import json
 import sqlite3
 import re
 import os
+import uuid
 import threading
 import logging
 from typing import Optional, Dict, Any
@@ -18,18 +19,61 @@ from backend.app.config import settings
 
 logger = logging.getLogger("OmniRevive.Security")
 
-# Thread-local storage for SQLite connections in WAL mode
+# Thread-local storage & tracked registry for SQLite connections in WAL mode
 _local = threading.local()
+_conn_registry_lock = threading.Lock()
+_conn_registry: Dict[tuple, sqlite3.Connection] = {}
+
+
+def _prune_dead_thread_connections() -> None:
+    """Closes cached connections belonging to threads that have already exited."""
+    active_tids = {t.ident for t in threading.enumerate()}
+    with _conn_registry_lock:
+        dead_keys = [k for k in _conn_registry if k[0] not in active_tids]
+        for k in dead_keys:
+            conn = _conn_registry.pop(k, None)
+            if conn is not None:
+                try:
+                    conn.close()
+                except Exception:
+                    pass
+
 
 def get_db_connection(db_path: str) -> sqlite3.Connection:
-    if not hasattr(_local, f"conn_{db_path}"):
+    _prune_dead_thread_connections()
+    attr_name = f"conn_{db_path}"
+    conn = getattr(_local, attr_name, None)
+    if conn is None:
         conn = sqlite3.connect(db_path, check_same_thread=False, timeout=10.0)
         conn.execute("PRAGMA journal_mode = WAL;")
         conn.execute("PRAGMA synchronous = NORMAL;")
         conn.execute("PRAGMA busy_timeout = 10000;")  # wait for a competing writer instead of failing with "database is locked"
         conn.execute("PRAGMA foreign_keys = ON;")
-        setattr(_local, f"conn_{db_path}", conn)
-    return getattr(_local, f"conn_{db_path}")
+        setattr(_local, attr_name, conn)
+        with _conn_registry_lock:
+            _conn_registry[(threading.get_ident(), db_path)] = conn
+    return conn
+
+
+def close_all_db_connections() -> int:
+    """Gracefully closes all tracked SQLite connections on application shutdown or test teardown."""
+    closed = 0
+    with _conn_registry_lock:
+        items = list(_conn_registry.items())
+        _conn_registry.clear()
+    for (_, db_path), conn in items:
+        try:
+            conn.close()
+            closed += 1
+        except Exception:
+            pass
+        attr_name = f"conn_{db_path}"
+        if hasattr(_local, attr_name):
+            try:
+                delattr(_local, attr_name)
+            except Exception:
+                pass
+    return closed
 
 def mask_pii_string(value: Optional[str]) -> str:
     """
@@ -62,39 +106,56 @@ def verify_razorpay_signature(
     signature: Optional[str],
     secret: Optional[str] = None,
     timestamp: Optional[int] = None,
-    max_drift_seconds: int = 300
+    max_drift_seconds: int = 300,
+    previous_secret: Optional[str] = None,
+    require_timestamp: bool = False,
 ) -> bool:
     """
     Timing-Attack Resistant HMAC SHA-256 Webhook Signature Verification.
-    Uses cryptography constant_time.bytes_eq and replay timestamp drift protection.
+    Supports active + previous secret rotation ring, strict replay timestamp validation,
+    and constant-time comparison.
     """
     if not signature:
         logger.warning("[SECURITY] Missing X-Razorpay-Signature header.")
         return False
 
-    # Replay attack protection (within 300s window if timestamp provided)
-    if timestamp:
+    if require_timestamp and timestamp is None:
+        logger.warning("[SECURITY] Missing required X-Razorpay-Event-Time header.")
+        return False
+
+    # Replay attack protection (explicit None check so timestamp=0 cannot bypass drift validation)
+    if timestamp is not None:
         current_time = int(time.time())
         if abs(current_time - timestamp) > max_drift_seconds:
             logger.warning(f"[SECURITY] Webhook timestamp drifted by {abs(current_time - timestamp)}s > {max_drift_seconds}s. Rejecting replay.")
             return False
 
-    webhook_secret = secret or settings.RAZORPAY_WEBHOOK_SECRET
-    if not webhook_secret:
+    candidate_secrets = []
+    primary = secret if secret is not None else settings.RAZORPAY_WEBHOOK_SECRET
+    if primary:
+        candidate_secrets.append(primary)
+    prev = previous_secret if previous_secret is not None else settings.RAZORPAY_WEBHOOK_SECRET_PREVIOUS
+    if prev:
+        candidate_secrets.append(prev)
+
+    if not candidate_secrets:
         logger.error("[SECURITY] RAZORPAY_WEBHOOK_SECRET is not configured.")
         return False
 
-    expected_signature = hmac.new(
-        key=webhook_secret.encode("utf-8"),
-        msg=raw_payload,
-        digestmod=hashlib.sha256
-    ).hexdigest()
+    sig_bytes = signature.encode("utf-8")
+    matched = False
+    for sec in candidate_secrets:
+        expected_signature = hmac.new(
+            key=sec.encode("utf-8"),
+            msg=raw_payload,
+            digestmod=hashlib.sha256,
+        ).hexdigest()
+        if constant_time.bytes_eq(expected_signature.encode("utf-8"), sig_bytes):
+            matched = True
 
-    # Hardware-accelerated constant_time.bytes_eq prevents side-channel timing analysis attacks
-    is_valid = constant_time.bytes_eq(expected_signature.encode("utf-8"), signature.encode("utf-8"))
-    if not is_valid:
+    if not matched:
         logger.warning("[SECURITY] Cryptographic signature mismatch.")
-    return is_valid
+    return matched
 
 class DistributedIdempotencyStore:
     """
@@ -104,11 +165,18 @@ class DistributedIdempotencyStore:
     Features multi-tenant isolation with merchant_api_key_id.
     """
 
+    _REDIS_CAS_RELEASE_LUA = (
+        "local v = redis.call('get', KEYS[1]) "
+        "if v == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end"
+    )
+
     def __init__(self, db_path: Optional[str] = None, redis_url: Optional[str] = None):
         self.db_path = db_path or settings.DATABASE_PATH
         self.redis_client = None
-        
-        target_redis = redis_url or os.getenv("REDIS_URL")
+        self._owners_lock = threading.Lock()
+        self._active_owners: Dict[tuple, str] = {}
+
+        target_redis = redis_url or os.getenv("REDIS_URL") or settings.REDIS_URL
         if target_redis and redis:
             try:
                 # Fast 0.15s socket timeout prevents startup/turn latency spikes on unreachable Redis
@@ -128,6 +196,7 @@ class DistributedIdempotencyStore:
             payload_hash TEXT NOT NULL,
             created_at REAL NOT NULL,
             status TEXT NOT NULL,
+            owner_token TEXT,
             result_payload TEXT,
             completed_at REAL,
             PRIMARY KEY (merchant_api_key_id, idempotency_key)
@@ -153,6 +222,8 @@ class DistributedIdempotencyStore:
             with conn:
                 if "merchant_api_key_id" not in columns:
                     conn.execute("ALTER TABLE idempotency_keys ADD COLUMN merchant_api_key_id TEXT DEFAULT 'default_merchant'")
+                if "owner_token" not in columns:
+                    conn.execute("ALTER TABLE idempotency_keys ADD COLUMN owner_token TEXT")
                 if "result_payload" not in columns:
                     conn.execute("ALTER TABLE idempotency_keys ADD COLUMN result_payload TEXT")
                 if "completed_at" not in columns:
@@ -197,24 +268,25 @@ class DistributedIdempotencyStore:
         rows = conn.execute("SELECT merchant_api_key_id FROM idempotency_keys WHERE idempotency_key = ?", (key,)).fetchall()
         return rows[0][0] if len(rows) == 1 else "default_merchant"
 
-    def acquire_lock(self, key: str, payload_hash: str = "", ttl_seconds: int = 86400, merchant_id: str = "default_merchant") -> bool:
+    def acquire_lock_with_token(
+        self,
+        key: str,
+        payload_hash: str = "",
+        ttl_seconds: int = 86400,
+        merchant_id: str = "default_merchant",
+    ) -> tuple[bool, Optional[str]]:
         """
-        Atomic CAS lock acquisition, scoped per (merchant_id, key): two merchants may reuse the same key independently.
-        - Redis atomic SET NX EX executes first if Redis is available.
-        - SQLite WAL executes second for durable crash-recovery.
-        - Key absent for this merchant: inserts status='ACQUIRED' and returns True.
-        - COMPLETED: returns False (already durably executed).
-        - ACQUIRED/RENEWED but lease expired (> ttl_seconds): atomically renews and returns True (one winner).
-        - ACQUIRED with active lease: returns False.
+        Atomic CAS lock acquisition returning `(acquired, owner_token)` scoped per (merchant_id, key).
+        Provides lock ownership fencing via unique `owner_token` across both Redis (`SET NX EX`) and SQLite WAL.
         """
+        owner_token = f"own_{uuid.uuid4().hex[:16]}"
+        redis_key = f"idempotency:{merchant_id}:{key}"
+        redis_val = f"ACQUIRED:{owner_token}"
         if self.redis_client:
             try:
-                redis_key = f"idempotency:{merchant_id}:{key}"
-                redis_acquired = self.redis_client.set(redis_key, "ACQUIRED", nx=True, ex=ttl_seconds)
+                redis_acquired = self.redis_client.set(redis_key, redis_val, nx=True, ex=ttl_seconds)
                 if not redis_acquired:
-                    val = self.redis_client.get(redis_key)
-                    if val in ["ACQUIRED", "COMPLETED", "RENEWED"]:
-                        return False
+                    return False, None
             except Exception as e:
                 logger.warning(f"[SECURITY] Redis acquire_lock error ({e}). Falling back to SQLite WAL.")
 
@@ -223,36 +295,110 @@ class DistributedIdempotencyStore:
         try:
             with conn:
                 conn.execute(
-                    "INSERT INTO idempotency_keys (idempotency_key, merchant_api_key_id, payload_hash, created_at, status) VALUES (?, ?, ?, ?, ?)",
-                    (key, merchant_id, payload_hash, now, "ACQUIRED")
+                    "INSERT INTO idempotency_keys (idempotency_key, merchant_api_key_id, payload_hash, created_at, status, owner_token) VALUES (?, ?, ?, ?, ?, ?)",
+                    (key, merchant_id, payload_hash, now, "ACQUIRED", owner_token)
                 )
-            return True
+            with self._owners_lock:
+                self._active_owners[(merchant_id, key)] = owner_token
+            return True, owner_token
         except sqlite3.IntegrityError:
             with conn:
                 cur = conn.execute(
-                    "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED' "
+                    "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED', owner_token = ? "
                     "WHERE idempotency_key = ? AND merchant_api_key_id = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
-                    (now, payload_hash, key, merchant_id, now, ttl_seconds)
+                    (now, payload_hash, owner_token, key, merchant_id, now, ttl_seconds)
                 )
-                return cur.rowcount == 1
+                if cur.rowcount == 1:
+                    with self._owners_lock:
+                        self._active_owners[(merchant_id, key)] = owner_token
+                    return True, owner_token
+                # Release Redis key if we acquired it transiently before SQLite conflict
+                if self.redis_client:
+                    try:
+                        self.redis_client.eval(self._REDIS_CAS_RELEASE_LUA, 1, redis_key, redis_val)
+                    except Exception:
+                        pass
+                return False, None
 
-    def mark_completed(self, key: str, result_payload: Optional[dict] = None, merchant_id: Optional[str] = None) -> bool:
-        """Marks an execution as durably completed for this merchant's key."""
+    def acquire_lock(self, key: str, payload_hash: str = "", ttl_seconds: int = 86400, merchant_id: str = "default_merchant") -> bool:
+        """Atomic CAS lock acquisition, scoped per (merchant_id, key)."""
+        acquired, _ = self.acquire_lock_with_token(
+            key=key,
+            payload_hash=payload_hash,
+            ttl_seconds=ttl_seconds,
+            merchant_id=merchant_id,
+        )
+        return acquired
+
+    def release_lock(self, key: str, merchant_id: Optional[str] = None, owner_token: Optional[str] = None) -> bool:
+        """Owner-verified Compare-And-Swap lock release (Lua atomic check-and-del in Redis + SQLite cleanup)."""
+        conn = get_db_connection(self.db_path)
+        mid = self._resolve_merchant(conn, key, merchant_id)
+        if owner_token is None:
+            with self._owners_lock:
+                owner_token = self._active_owners.get((mid, key))
+        if not owner_token:
+            return False
+
+        redis_released = True
+        if self.redis_client:
+            try:
+                redis_key = f"idempotency:{mid}:{key}"
+                res = self.redis_client.eval(self._REDIS_CAS_RELEASE_LUA, 1, redis_key, f"ACQUIRED:{owner_token}")
+                redis_released = bool(res)
+            except Exception as e:
+                logger.warning(f"[SECURITY] Redis release_lock error ({e}).")
+                redis_released = False
+
+        with conn:
+            cur = conn.execute(
+                "DELETE FROM idempotency_keys WHERE idempotency_key = ? AND merchant_api_key_id = ? AND owner_token = ? AND status != 'COMPLETED'",
+                (key, mid, owner_token),
+            )
+        if cur.rowcount == 1:
+            with self._owners_lock:
+                self._active_owners.pop((mid, key), None)
+            return True and redis_released
+        return False
+
+    def mark_completed(
+        self,
+        key: str,
+        result_payload: Optional[dict] = None,
+        merchant_id: Optional[str] = None,
+        owner_token: Optional[str] = None,
+    ) -> bool:
+        """Marks an execution as durably completed for this merchant's key (verifying ownership if token provided)."""
         conn = get_db_connection(self.db_path)
         now = time.time()
         result_json = json.dumps(result_payload) if result_payload else None
         mid = self._resolve_merchant(conn, key, merchant_id)
+
+        if owner_token is not None:
+            with conn:
+                cur = conn.execute(
+                    "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? "
+                    "WHERE idempotency_key = ? AND merchant_api_key_id = ? AND owner_token = ?",
+                    (result_json, now, key, mid, owner_token),
+                )
+            if cur.rowcount == 0:
+                return False
+        else:
+            with conn:
+                conn.execute(
+                    "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? "
+                    "WHERE idempotency_key = ? AND merchant_api_key_id = ?",
+                    (result_json, now, key, mid),
+                )
+
         if self.redis_client:
             try:
                 redis_key = f"idempotency:{mid}:{key}"
                 self.redis_client.set(redis_key, "COMPLETED", ex=86400 * 7)
             except Exception as e:
                 logger.warning(f"[SECURITY] Redis mark_completed error ({e}).")
-        with conn:
-            conn.execute(
-                "UPDATE idempotency_keys SET status = 'COMPLETED', result_payload = ?, completed_at = ? WHERE idempotency_key = ? AND merchant_api_key_id = ?",
-                (result_json, now, key, mid)
-            )
+        with self._owners_lock:
+            self._active_owners.pop((mid, key), None)
         return True
 
     def get_execution_record(self, key: str, merchant_id: Optional[str] = None) -> Optional[dict]:

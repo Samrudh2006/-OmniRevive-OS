@@ -48,14 +48,33 @@ class AuthenticationService:
         provided_token = cls.extract_token_or_key(request)
         configured_sre_key = settings.API_AUTH_KEY
         configured_cfo_key = settings.CFO_AUTH_KEY
+        tenant_keys = getattr(settings, "MERCHANT_TENANT_KEYS", {}) or {}
 
         # Valid credentials provided with constant-time comparison (no wildcard startswith)
         if provided_token:
-            if hmac.compare_digest(provided_token.encode("utf-8"), configured_cfo_key.encode("utf-8")):
+            token_bytes = provided_token.encode("utf-8")
+            if hmac.compare_digest(token_bytes, configured_cfo_key.encode("utf-8")):
                 return True, "Role::CFO", "PRODUCTION"
-            if hmac.compare_digest(provided_token.encode("utf-8"), configured_sre_key.encode("utf-8")):
+            if hmac.compare_digest(token_bytes, configured_sre_key.encode("utf-8")):
+                if required_role == "Role::CFO":
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="CFO executive role required for this operation."
+                    )
                 role = "Role::Finance_Officer" if required_role == "Role::Finance_Officer" else "Role::SRE_Admin"
                 return True, role, "PRODUCTION"
+
+            # Check tenant-scoped merchant keys in constant time
+            for k, tenant_id in tenant_keys.items():
+                if hmac.compare_digest(token_bytes, k.encode("utf-8")):
+                    if required_role in ("Role::CFO", "Role::SRE_Admin"):
+                        raise HTTPException(
+                            status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f"Tenant key does not hold required {required_role} privilege."
+                        )
+                    request.state.authorized_merchant_id = tenant_id
+                    return True, f"Tenant::{tenant_id}", "PRODUCTION"
+
             # Invalid credentials explicitly provided -> reject with 403 Forbidden even in demo mode
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -72,5 +91,22 @@ class AuthenticationService:
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required. Provide valid X-API-Key or Authorization Bearer header."
         )
+
+    @classmethod
+    def resolve_authorized_tenant(
+        cls,
+        request: Request,
+        requested_merchant_id: Optional[str] = None,
+    ) -> Optional[str]:
+        """Enforces tenant boundary isolation for tenant-scoped tokens."""
+        bound_tenant = getattr(request.state, "authorized_merchant_id", None)
+        if bound_tenant:
+            if requested_merchant_id and requested_merchant_id != bound_tenant:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail=f"Cross-tenant access denied: caller is scoped to '{bound_tenant}'."
+                )
+            return bound_tenant
+        return requested_merchant_id
 
 auth_service = AuthenticationService()

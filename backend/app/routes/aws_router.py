@@ -17,13 +17,14 @@ async def get_cedar_policies():
     """Returns active AWS Cedar formal zero-trust authorization policies."""
     from aws.cedar.cedar_engine import get_cedar_engine
     engine = get_cedar_engine()
+    rule_count = engine.raw_policies.count("permit (") + engine.raw_policies.count("forbid (")
     return {
         "success": True,
         "data": {
             "specification": "AWS Cedar v3.0",
             "policy_sha256": engine.policy_hash,
             "raw_policies": engine.raw_policies,
-            "rule_count": 4,
+            "rule_count": rule_count,
             "enforcement_mode": "STRICT_ZERO_TRUST"
         },
         "timestamp": time.time()

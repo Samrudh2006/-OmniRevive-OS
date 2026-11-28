@@ -1040,6 +1040,9 @@ async function processBatchJsonItems(items) {
 }
 
 function renderBatchResults(data) {
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+  const payload = data?.data || data || {};
+  const items = Array.isArray(payload.items) ? payload.items : [];
   const totalEl = document.getElementById("bulk-kpi-total");
   const atRiskEl = document.getElementById("bulk-kpi-at-risk");
   const recEl = document.getElementById("bulk-kpi-recovered");
@@ -1048,27 +1051,27 @@ function renderBatchResults(data) {
   const latEl = document.getElementById("bulk-kpi-latency");
   const countEl = document.getElementById("bulk-table-count");
 
-  if (totalEl) totalEl.innerText = data.total_ingested || data.items?.length || 10;
-  if (atRiskEl) atRiskEl.innerText = `₹${(data.total_at_risk_gmv || 0).toLocaleString('en-IN')}`;
-  if (recEl) recEl.innerText = `₹${(data.expected_recovery_gmv || 0).toLocaleString('en-IN')}`;
-  if (delEl) delEl.innerText = data.delayed_retries_scheduled || 0;
-  if (linksEl) linksEl.innerText = data.direct_recovery_links_dispatched || 0;
-  if (latEl) latEl.innerText = `${(data.processing_time_ms || 2.4).toFixed(1)}ms`;
-  if (countEl) countEl.innerText = `Showing ${data.items?.length || 0} diagnosed transactions`;
+  if (totalEl) totalEl.innerText = payload.total_processed ?? payload.total_ingested ?? items.length;
+  if (atRiskEl) atRiskEl.innerText = `₹${(payload.total_batch_gmv_inr ?? payload.total_at_risk_gmv ?? 0).toLocaleString('en-IN')}`;
+  if (recEl) recEl.innerText = `₹${(payload.projected_recovery_gmv_inr ?? payload.expected_recovery_gmv ?? 0).toLocaleString('en-IN')}`;
+  if (delEl) delEl.innerText = payload.delayed_retries_scheduled ?? 0;
+  if (linksEl) linksEl.innerText = payload.direct_recovery_links_dispatched ?? 0;
+  if (latEl) latEl.innerText = `${(payload.processing_time_ms || 0).toFixed(1)}ms`;
+  if (countEl) countEl.innerText = `Showing ${items.length} diagnosed transactions`;
 
   const tbody = document.getElementById("bulk-table-body");
-  if (tbody && data.items) {
-    tbody.innerHTML = data.items.map(item => `
+  if (tbody && items.length) {
+    tbody.innerHTML = items.map(item => `
           <tr class="hover:bg-[#081224] transition-colors">
-            <td class="p-2.5 text-white font-medium">${item.payment_id}</td>
-            <td class="p-2.5 text-emerald-400 font-bold">₹${item.amount.toLocaleString('en-IN')}</td>
-            <td class="p-2.5 text-slate-300">${item.bank || 'HDFC'}</td>
-            <td class="p-2.5 text-sky-400">${item.failure_class}</td>
-            <td class="p-2.5 text-slate-200">${item.strategy}</td>
-            <td class="p-2.5 text-slate-300">${item.action}</td>
-            <td class="p-2.5 text-purple-300">${item.scheduled_retry_at || 'Immediate (+0m)'}</td>
-            <td class="p-2.5 text-slate-300">${item.confidence.toFixed(2)}</td>
-            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${item.policy_result}</span></td>
+            <td class="p-2.5 text-white font-medium">${esc(item.payment_id)}</td>
+            <td class="p-2.5 text-emerald-400 font-bold">₹${Number(item.amount || 0).toLocaleString('en-IN')}</td>
+            <td class="p-2.5 text-slate-300">${esc(item.bank_code || item.bank || 'HDFC')}</td>
+            <td class="p-2.5 text-sky-400">${esc(item.failure_class)}</td>
+            <td class="p-2.5 text-slate-200">${esc(item.strategy)}</td>
+            <td class="p-2.5 text-slate-300">${esc(item.action_status || item.action)}</td>
+            <td class="p-2.5 text-purple-300">${esc(item.scheduled_retry_at || (item.retry_delay_minutes != null ? `+${item.retry_delay_minutes}m` : 'Immediate (+0m)'))}</td>
+            <td class="p-2.5 text-slate-300">${Number(item.confidence || 0).toFixed(2)}</td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${esc(item.policy_verdict || item.policy_result)}</span></td>
           </tr>
         `).join("");
   }

@@ -47,6 +47,7 @@ class ServerReachMatrix {
       return;
     }
 
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
     const { nodes, load_balancer, active_region, global_p99_latency_ms } = this.data;
     const dist = load_balancer.active_distribution || { HDFC: 40, ICICI: 35, Axis: 20, SBI: 5 };
 
@@ -63,11 +64,11 @@ class ServerReachMatrix {
               <div class="flex items-center gap-2">
                 <h3 class="text-sm font-extrabold text-white tracking-tight">Global Load Balancer &amp; Server Reachability Matrix</h3>
                 <span class="px-2 py-0.5 rounded text-[9.5px] font-black bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 mono">
-                  ALL 7 NODES ONLINE
+                  SIMULATED 7-NODE TELEMETRY
                 </span>
               </div>
               <div class="text-[11px] text-slate-400">
-                Primary Core: <span class="text-cyan-300 font-semibold">${active_region}</span> • Global p99 Ping: <span class="text-emerald-300 font-mono font-bold">${global_p99_latency_ms}ms</span>
+                Primary Core: <span class="text-cyan-300 font-semibold">${esc(active_region)}</span> • Global p99 Ping: <span class="text-emerald-300 font-mono font-bold">${esc(global_p99_latency_ms)}ms</span>
               </div>
             </div>
           </div>
@@ -145,22 +146,22 @@ class ServerReachMatrix {
               <div class="p-3 bg-[#030610] rounded-xl border border-slate-800/80 hover:border-cyan-500/40 transition-all duration-200 flex flex-col justify-between space-y-2 group">
                 <div>
                   <div class="flex items-start justify-between gap-1.5">
-                    <span class="text-xs font-bold text-white tracking-tight leading-tight">${node.name}</span>
+                    <span class="text-xs font-bold text-white tracking-tight leading-tight">${esc(node.name)}</span>
                     <span class="px-1.5 py-0.5 rounded text-[8.5px] font-mono uppercase font-bold border ${statusColor}">
-                      ${node.status}
+                      ${esc(node.status)}
                     </span>
                   </div>
-                  <div class="text-[10px] text-slate-400 mt-0.5">${node.role}</div>
+                  <div class="text-[10px] text-slate-400 mt-0.5">${esc(node.role)}</div>
                 </div>
 
                 <div class="flex items-center justify-between pt-1 border-t border-slate-800/60 text-xs font-mono">
                   <div class="flex items-center gap-1.5">
                     <span class="w-1.5 h-1.5 rounded-full ${dotColor}"></span>
                     <span class="text-slate-400 text-[10px]">Ping:</span>
-                    <span class="font-bold text-cyan-300 text-[11px]">${node.latency_ms}ms</span>
+                    <span class="font-bold text-cyan-300 text-[11px]">${esc(node.latency_ms)}ms</span>
                   </div>
                   <div class="text-[10px] text-slate-400">
-                    SLA: <span class="text-slate-200 font-semibold">${node.sla_uptime}</span>
+                    SLA: <span class="text-slate-200 font-semibold">${esc(node.sla_uptime)}</span>
                   </div>
                 </div>
               </div>

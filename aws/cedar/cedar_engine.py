@@ -85,10 +85,47 @@ class CedarPolicyEngine:
     ) -> CedarEvaluationResult:
         """
         Evaluates authorization using Cedar Zero-Trust rule semantics.
-        Default is DENY unless explicitly permitted by an applicable policy.
+        Fails closed (DENY) on missing permits, tenant mismatch, quiet hours, or evaluation errors.
         """
-        ctx = context or {}
         now_str = datetime.now(timezone.utc).isoformat()
+        try:
+            return self._evaluate_inner(principal=principal, action=action, resource=resource, context=context, now_str=now_str)
+        except Exception as exc:
+            return CedarEvaluationResult(
+                decision="DENY",
+                policy_id="fail_closed_evaluation_error",
+                principal=str(principal),
+                action=str(action),
+                resource=str(resource),
+                diagnostics={"reason": f"DENY (Fail-Closed): Evaluation exception ({type(exc).__name__})."},
+                policy_sha256=self._policy_sha256,
+                timestamp_utc=now_str
+            )
+
+    def _evaluate_inner(
+        self,
+        principal: str,
+        action: str,
+        resource: str,
+        context: Optional[Dict[str, Any]],
+        now_str: str
+    ) -> CedarEvaluationResult:
+        ctx = context or {}
+
+        # Global Tenant Isolation Guard: deny cross-tenant operations explicitly
+        caller_tenant = ctx.get("merchant_id")
+        resource_tenant = ctx.get("resource_tenant_id")
+        if caller_tenant and resource_tenant and caller_tenant != resource_tenant:
+            return CedarEvaluationResult(
+                decision="DENY",
+                policy_id="policy_tenant_isolation_forbid",
+                principal=principal,
+                action=action,
+                resource=resource,
+                diagnostics={"reason": f"DENY: Cross-tenant access forbidden ({caller_tenant} != {resource_tenant})."},
+                policy_sha256=self._policy_sha256,
+                timestamp_utc=now_str
+            )
 
         # Rule 4: Universal Forbid on Audit Record Deletion
         if action in ["Action::DeleteAuditRecord", "DeleteAuditRecord", "Action::TruncateAuditLog", "TruncateAuditLog"]:
@@ -183,15 +220,27 @@ class CedarPolicyEngine:
                     timestamp_utc=now_str
                 )
 
-        # Rule 3: Voice Dialogue Turn & Email Dispatch
+        # Rule 3: Voice Dialogue Turn & Email Dispatch (requires BedrockVoiceAgent, SRE_Admin, or Finance_Officer)
         if action in ["Action::ExecuteVoiceDialogueTurn", "ExecuteVoiceDialogueTurn", "Action::DispatchTaxInvoiceEmail", "DispatchTaxInvoiceEmail"]:
+            is_auth = any(p in principal for p in ["BedrockVoiceAgent", "SRE_Admin", "Finance_Officer"])
+            if is_auth:
+                return CedarEvaluationResult(
+                    decision="ALLOW",
+                    policy_id="policy_voice_turn_dispatch_permit",
+                    principal=principal,
+                    action=action,
+                    resource=resource,
+                    diagnostics={"reason": "ALLOW: Standard autonomous recovery action permitted for BedrockVoiceAgent."},
+                    policy_sha256=self._policy_sha256,
+                    timestamp_utc=now_str
+                )
             return CedarEvaluationResult(
-                decision="ALLOW",
+                decision="DENY",
                 policy_id="policy_voice_turn_dispatch_permit",
                 principal=principal,
                 action=action,
                 resource=resource,
-                diagnostics={"reason": "ALLOW: Standard autonomous recovery action permitted for BedrockVoiceAgent."},
+                diagnostics={"reason": "DENY: Principal lacks BedrockVoiceAgent, SRE_Admin, or Finance_Officer authorization."},
                 policy_sha256=self._policy_sha256,
                 timestamp_utc=now_str
             )
@@ -201,8 +250,9 @@ class CedarPolicyEngine:
             is_auth_agent = any(p in principal for p in ["FastLoopRecoveryEngine", "SRE_Admin", "RecoveryWorker"])
             amount = float(ctx.get("amount_inr", 0.0))
             kill_switch = bool(ctx.get("cedar_kill_switch", False))
+            quiet_hours_blocked = bool(ctx.get("quiet_hours_blocked", False))
 
-            if is_auth_agent and amount <= 500000 and not kill_switch:
+            if is_auth_agent and amount <= 500000 and not kill_switch and not (quiet_hours_blocked and "DispatchRecoveryLink" in action):
                 return CedarEvaluationResult(
                     decision="ALLOW",
                     policy_id="policy_fastloop_recovery_permit",
@@ -221,6 +271,8 @@ class CedarPolicyEngine:
                     diag.append(f"Amount INR {amount:,.2f} exceeds standard execution ceiling (INR 5,00,000)")
                 if kill_switch:
                     diag.append("Emergency Cedar kill-switch is active")
+                if quiet_hours_blocked and "DispatchRecoveryLink" in action:
+                    diag.append("TRAI Quiet Hours forbid outbound link dispatch (21:00-09:00 IST)")
                 return CedarEvaluationResult(
                     decision="DENY",
                     policy_id="policy_fastloop_recovery_permit",

@@ -784,29 +784,29 @@ pytest tests/ -v --tb=short
   swagger_docs: {
     category: "DEVELOPER · OPENAPI",
     title: "Swagger UI & OpenAPI Interactive Spec",
-    badge: "48 Live Endpoints · Try It Now",
+    badge: "OpenAPI 3.1.0 Spec · v1.2.0",
     icon: "📖",
     metrics: [
-      { label: "API Version", value: "v1.1.0", sub: "Semantic Versioning" },
-      { label: "Live Endpoints", value: "48 APIs", sub: "REST + WebSocket + SSE" },
-      { label: "Auth Methods", value: "2 Schemes", sub: "HMAC SHA-256 + JWT Bearer" },
+      { label: "API Version", value: "v1.2.0", sub: "Semantic Versioning" },
+      { label: "OpenAPI Paths", value: "149", sub: "REST + WebSocket + SSE" },
+      { label: "Auth Methods", value: "2 Schemes", sub: "HMAC SHA-256 + Bearer Keys" },
       { label: "Response Types", value: "JSON + SSE", sub: "Real-Time Streaming" }
     ],
-    overview: "The OmniRevive-OS Swagger UI provides a fully interactive API sandbox. Developers can authenticate with Bearer JWT or HMAC API keys, trigger live payment recoveries, stream real-time failure telemetry, verify Merkle audit chains, and inspect zero-trust Cedar policy evaluations — all directly from the browser without any additional tooling.",
-    mathFormula: "Endpoints = 48,   Schemas = Pydantic v2 Strict,   Version = 3.1.0",
+    overview: "The OmniRevive-OS Swagger UI provides a fully interactive API sandbox. Developers can authenticate with Bearer API/tenant keys or HMAC webhook signatures, trigger simulated payment recoveries, stream telemetry, verify Merkle audit chains, and inspect zero-trust Cedar policy evaluations — all directly from the browser.",
+    mathFormula: "Paths = 149,   Schemas = Pydantic v2 Strict,   OpenAPI = 3.1.0",
     architecture: [
       "GET  /docs — Swagger UI interactive browser sandbox",
       "GET  /redoc — ReDoc documentation with full schema explorer",
       "GET  /openapi.json — Raw OpenAPI 3.1.0 specification download",
-      "POST /api/v1/recovery/fast-loop — B2C Weibull retry trigger",
-      "GET  /api/v1/stream/live — SSE real-time failure event stream",
-      "POST /api/v1/audit/verify — Cryptographic Merkle chain verification"
+      "POST /api/v1/simulate/failure — B2C Weibull retry & guardrail pipeline",
+      "GET  /api/v1/telemetry/live-stream — SSE real-time failure telemetry stream",
+      "GET  /api/v1/audit/verify — Cryptographic Merkle chain verification"
     ],
-    codeSnippet: `# Try it live at: https://omnirevive-os.antideploy.com/docs
+    codeSnippet: `# Try it live at: https://razorrevive-os.onrender.com/docs
 # Or via curl:
-curl -X GET "https://omnirevive-os.antideploy.com/api/v1/health" \\
+curl -X GET "https://razorrevive-os.onrender.com/api/v1/health" \\
   -H "accept: application/json"
-# Response: {"status":"healthy","version":"1.1.0","tests_passing":"600+"}`,
+# Response: {"status":"healthy","version":"1.2.0"}`,
     tabId: "docs"
   },
 
@@ -1051,7 +1051,7 @@ export function openFeatureDetailModal(featureKey) {
       <!-- Action Footer -->
       <div class="modal-footer-region pt-4 flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div class="modal-status-label text-[11px] font-mono">
-          Status: <span class="text-emerald-600 dark:text-emerald-400 font-bold">● Active in Production</span>
+          Mode: <span class="text-emerald-600 dark:text-emerald-400 font-bold">● Active in SAFE_DEMO_MODE (Simulated Controls)</span>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="closeFeatureDetailModal(); launchControlPlane('${data.tabId}');" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 transition flex items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-500/50">

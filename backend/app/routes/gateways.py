@@ -56,11 +56,12 @@ def select_active_rail(req: SelectRailRequest, request: Request):
     }
 
 @router.post("/simulate")
-def simulate_multi_rail_recovery(req: SimulateRecoveryRequest):
+def simulate_multi_rail_recovery(req: SimulateRecoveryRequest, request: Request):
     """
     Executes a high-fidelity simulation of an autonomous recovery through any specific
     fintech rail (Juspay HyperSDK, PhonePe Switch, CRED Pay, Cashfree, Neobanks, etc.).
     """
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     pid = req.payment_id or f"pay_sim_{uuid.uuid4().hex[:8]}"
     start_time = time.perf_counter()
 
@@ -375,11 +376,12 @@ def get_live_fx_rates():
 
 
 @router.post("/self-healing/remediate", summary="Trigger Autonomous Self-Healing Code Patch Synthesizer")
-def trigger_self_healing_repair(req: SelfHealingRemediateRequest):
+def trigger_self_healing_repair(req: SelfHealingRemediateRequest, request: Request):
     """
     Autonomous SRE agent detects gateway contract drift, synthesizes dynamic hot-patch adapter,
     verifies in sandbox, and applies zero-downtime runtime patch.
     """
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin")
     from autonomous_ai_company_os.self_healing import self_healing_synthesizer
     anomaly = self_healing_synthesizer.detect_schema_drift(
         gateway_name=req.gateway_name,

@@ -391,5 +391,12 @@ def start_daily_10am_scheduler():
         t = threading.Thread(target=_daily_10am_schedule_loop, daemon=True)
         t.start()
 
-# Auto-start scheduler thread on import
-start_daily_10am_scheduler()
+
+def stop_daily_10am_scheduler():
+    """Signals the daily email scheduler thread to stop gracefully."""
+    _scheduler_state["is_active"] = False
+
+
+# Avoid spawning unmanaged daemon threads during pytest/CLI imports; FastAPI lifespan manages runtime daemons.
+if not os.environ.get("PYTEST_CURRENT_TEST") and os.environ.get("OMNIREVIVE_DISABLE_DAEMONS", "0") != "1":
+    start_daily_10am_scheduler()

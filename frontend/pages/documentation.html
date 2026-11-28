@@ -77,7 +77,7 @@
 </head>
 <body>
   <header>
-    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.1.0</span></a>
+    <a href="/" class="brand">OmniRevive-OS <span class="brand-badge">v1.2.0</span></a>
     <nav>
       <a href="/architecture">Architecture</a>
       <a href="/benchmarks">Benchmarks</a>
@@ -93,9 +93,9 @@
 
     <h1>Developer Documentation & Quickstart</h1>
     <div class="meta-bar">
-      <span>Version: 1.1.0</span>
+      <span>Version: 1.2.0</span>
       <span>Framework: FastAPI + Vanilla SRE Frontend</span>
-      <span>Author: Samrudh Dwivedula</span>
+      <span>Mode: SAFE_DEMO_MODE Default</span>
     </div>
 
     <h2>1. Quickstart Installation</h2>
@@ -111,29 +111,33 @@ pip install -r requirements.txt
 python -m uvicorn backend.app.main:app --port 8000 --reload
     </pre>
 
-    <h2>2. Key REST API Endpoints</h2>
+    <h2>2. Verified REST API Endpoints</h2>
     <ul>
-      <li><code>POST /api/v1/recovery/simulate-failure</code>: Ingest a simulated payment drop and trigger the autonomous Fast-Loop recovery pipeline.</li>
-      <li><code>POST /api/v1/recovery/dynamic-upi-qr</code>: Generate an instant dynamic UPI intent link and payment QR for soft decline recovery.</li>
-      <li><code>POST /api/v1/recovery/batch</code>: Bulk recovery orchestrator for processing CSV and JSON failure batches with thread concurrency.</li>
-      <li><code>GET /api/v1/audit/verify</code>: Verify the integrity of the sequential SHA-256 Merkle audit chain from genesis to leaf.</li>
-      <li><code>POST /api/v1/b2b/dispute</code>: Ingest a B2B invoice dispute and initiate trilingual voice negotiation FSM.</li>
-      <li><code>GET /api/v1/system/health</code>: Prometheus SRE metrics, live rail status, and health telemetry.</li>
+      <li><code>POST /api/v1/webhooks/razorpay</code>: HMAC-SHA256 verified, replay-protected payment webhook ingestion.</li>
+      <li><code>POST /api/v1/simulate/failure</code>: Simulate a failed payment drop through Fast-Loop Diagnosis, Weibull Windowing, Policy Gatekeeper, and Cedar Zero-Trust.</li>
+      <li><code>POST /api/v1/recovery/upi-qr</code>: Generate a dynamic UPI intent deep link and SVG QR for soft-decline recovery.</li>
+      <li><code>POST /api/v1/recovery/batch-json</code> &amp; <code>/batch-upload</code>: Bulk recovery orchestrator for CSV and JSON batches.</li>
+      <li><code>GET /api/v1/audit/verify</code> &amp; <code>GET /api/v1/audit/events</code>: Verify sequential SHA-256 Merkle audit integrity and tenant-scoped blocks.</li>
+      <li><code>POST /api/v1/b2b/voice/turn</code>: B2B trilingual voice dispute resolution FSM (with Cedar approval gating).</li>
+      <li><code>GET /health</code>, <code>/health/live</code>, <code>/health/ready</code>, <code>/metrics</code>: Liveness, dependency readiness probes, and Prometheus metrics.</li>
     </ul>
 
     <h2>3. Interactive CLI Commands</h2>
     <pre>
-# Check health and rail telemetry
+# Check health, audit integrity, and configuration bounds
 python cli.py health
 
 # Run the 100-case held-out benchmark
 python cli.py benchmark
 
-# Verify cryptographic audit ledger
-python cli.py verify-audit
+# Run 4-strategy ablation comparison (Fixed, Exponential, Jitter, Weibull)
+python cli.py strategy-benchmark
 
-# Launch conversational recovery copilot
-python cli.py chat
+# Run 50-worker parallel concurrency CAS mutex benchmark
+python cli.py concurrency-benchmark
+
+# Verify cryptographic SHA-256 audit ledger
+python cli.py verify-audit
     </pre>
 
     <h2>4. Enterprise Cloud Deployment</h2>

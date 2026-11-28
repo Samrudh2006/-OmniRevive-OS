@@ -639,9 +639,10 @@
       // Fetch live Bedrock status
       try {
         const resp = await safeApiCall("/aws/bedrock/status");
-        if (resp && resp.data) {
+        const d = resp?.data || resp;
+        if (d && d.foundation_model) {
           const mEl = document.getElementById("aws-modal-model");
-          if (mEl) mEl.innerText = resp.data.foundation_model.split("-").slice(0, 3).join(" ") || "Claude 3.5 Sonnet";
+          if (mEl) mEl.innerText = d.foundation_model.split("-").slice(0, 3).join(" ") || "Claude 3.5 Sonnet";
         }
       } catch (e) {
         console.warn("Bedrock status fetch failed", e);
@@ -650,11 +651,12 @@
       // Fetch live Cedar policies
       try {
         const resp = await safeApiCall("/aws/cedar/policies");
-        if (resp && resp.data) {
+        const d = resp?.data || resp;
+        if (d && d.policy_sha256) {
           const hEl = document.getElementById("aws-modal-hash");
-          if (hEl) hEl.innerText = `SHA: ${resp.data.policy_sha256.substring(0, 16)}...`;
+          if (hEl) hEl.innerText = `SHA: ${d.policy_sha256.substring(0, 16)}...`;
           const pEl = document.getElementById("aws-modal-policy-text");
-          if (pEl && resp.data.raw_policies) pEl.innerText = resp.data.raw_policies;
+          if (pEl && d.raw_policies) pEl.innerText = d.raw_policies;
         }
       } catch (e) {
         console.warn("Cedar policies fetch failed", e);
@@ -721,8 +723,8 @@
           context: { mfa_verified: mfa, system_risk_score: 35, proposed_gstin: "29AABCU9603R1Z2", invoice_amount: 125000, regulatory_compliance: "GST_RULE_46" }
         });
 
-        if (resp && resp.data) {
-          const d = resp.data;
+        const d = resp?.data || resp;
+        if (d && d.decision) {
           if (badge) {
             if (d.decision === "ALLOW") {
               badge.innerText = "ALLOW";
@@ -797,8 +799,8 @@
           context: { mfa_verified: mfa, system_risk_score: 35, proposed_gstin: "36AABCU9603R1Z2", invoice_amount: 85000, regulatory_compliance: "GST_RULE_46" }
         });
 
-        if (resp && resp.data) {
-          const d = resp.data;
+        const d = resp?.data || resp;
+        if (d && d.decision) {
           if (badge) {
             if (d.decision === "ALLOW") {
               badge.innerText = "ALLOW";
@@ -815,11 +817,11 @@
         }
       } catch (err) {
         if (badge) {
-          badge.innerText = "ALLOW";
-          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
+          badge.innerText = "DENY (FAIL-CLOSED)";
+          badge.className = "px-2.5 py-0.5 rounded text-[11px] font-extrabold bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30";
         }
         if (details) {
-          details.innerText = "Verified local Cedar Zero-Trust rule permit statement.";
+          details.innerText = `Cedar evaluator unreachable (${err.message}). Failed closed per Zero-Trust security policy.`;
         }
       }
     }
@@ -891,8 +893,8 @@
       if (statusEl) statusEl.innerText = "Refreshing 7-D vectors from telemetry service...";
       try {
         const resp = await safeApiCall("/api/v1/telemetry/context7?bank_code=SBI", "GET");
-        if (resp && resp.data) {
-          const d = resp.data;
+        const d = resp?.data || resp;
+        if (d && d.dimensions) {
           const dims = d.dimensions;
           if (document.getElementById("c7-d1-score")) document.getElementById("c7-d1-score").innerText = `${dims.D1_switch_telemetry.score} / 100`;
           if (document.getElementById("c7-d1-sub")) document.getElementById("c7-d1-sub").innerText = `${dims.D1_switch_telemetry.state} (${dims.D1_switch_telemetry.latency_ms}ms)`;

@@ -9,6 +9,7 @@ from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from backend.app.config import settings
 from backend.app.audit_store import audit_store
 from backend.app.security import get_db_connection
+from backend.app.services.auth_service import AuthenticationService as auth_service
 from backend.app.services.telemetry_service import (
     LIVE_LOGS_BUFFER,
     LATEST_BENCHMARK_CACHE,
@@ -26,12 +27,25 @@ async def healthcheck(request: Request):
         "data": {
             "status": "healthy",
             "service": "OmniRevive-OS",
-            "version": "1.2.0",
+            "version": settings.APP_VERSION,
             "architecture": "Universal Multi-Rail Deterministic Control Plane",
-            "environment": settings.ENVIRONMENT
+            "environment": settings.ENVIRONMENT,
+            "safe_demo_mode": settings.SAFE_DEMO_MODE
         },
         "trace_id": trace_id,
         "timestamp": time.time()
+    }
+
+
+@router.get("/health/live", tags=["System & Telemetry"], summary="Kubernetes/Render Liveness Probe")
+@router.get("/api/v1/health/live", tags=["System & Telemetry"], summary="Liveness Probe API Alias")
+async def liveness(request: Request):
+    trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    return {
+        "success": True,
+        "data": {"status": "alive", "service": "OmniRevive-OS", "version": settings.APP_VERSION},
+        "trace_id": trace_id,
+        "timestamp": time.time(),
     }
 
 def _check_database() -> Dict[str, Any]:
@@ -129,8 +143,8 @@ async def get_dashboard_summary(request: Request):
                 "tampering_detected": audit_health.get("tampering_detected", False)
             },
             "system_status": "All Systems Operational",
-            "version": "v1.0.0",
-            "mode": "SIMULATION_MODE"
+            "version": settings.APP_VERSION,
+            "mode": "SIMULATION_MODE" if settings.SAFE_DEMO_MODE else "PRODUCTION_MODE"
         },
         "trace_id": trace_id,
         "timestamp": time.time()
@@ -497,6 +511,7 @@ async def rebalance_traffic(request: Request):
     Dynamically shifts traffic weights across bank switches to eliminate degradation.
     """
     global _LOAD_BALANCER_WEIGHTS
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     body = {}
     try:

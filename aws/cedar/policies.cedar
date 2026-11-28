@@ -45,7 +45,7 @@ forbid (
 );
 
 // POLICY 5: Fast-Loop Recovery Engine Mandate & Payment Link Execution Policy
-// Ensures only authorized agents (FastLoopRecoveryEngine, SRE_Admin) can execute mandate recoveries
+// Ensures only authorized agents can execute mandate recoveries within INR ceiling, quiet hours, and tenant isolation
 permit (
     principal in [Agent::"FastLoopRecoveryEngine", Role::"SRE_Admin"],
     action in [Action::"ExecuteMandateRecovery", Action::"DispatchRecoveryLink"],
@@ -53,5 +53,6 @@ permit (
 )
 when {
     context.amount_inr <= 500000 &&
-    context.cedar_kill_switch == false
+    context.cedar_kill_switch == false &&
+    context.quiet_hours_blocked == false
 };

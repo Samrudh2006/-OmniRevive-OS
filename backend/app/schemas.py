@@ -50,7 +50,10 @@ class DiagnosisProposal(BaseModel):
 class RetryWindowRecommendation(BaseModel):
     recommended_retry_delay_minutes: int = Field(ge=0, le=1440)
     success_probability: float = Field(ge=0.0, le=1.0)
-    hazard_rate: float
+    hazard_rate: float = Field(ge=0.0)
+    retry_eligible: bool = True
+    circuit_breaker_open: bool = False
+    recommended_fallback_rail: Optional[str] = None
     reason: str
     model_version: str = "recovery-hazard-v1"
 
@@ -87,7 +90,7 @@ class PromiseToPayRecord(BaseModel):
 
 class PolicyVerdict(BaseModel):
     passed_all_gates: bool
-    verdict: Literal["ALLOWED", "DEFERRED_QUIET_HOURS", "ESCALATED_HUMAN", "SUPPRESSED"]
+    verdict: Literal["ALLOWED", "DEFERRED_QUIET_HOURS", "ESCALATED_HUMAN", "SUPPRESSED", "DENIED_BY_CEDAR"]
     violated_rules: List[str] = Field(default_factory=list)
     applied_modifications: List[str] = Field(default_factory=list)
     effective_discount: float = 0.0

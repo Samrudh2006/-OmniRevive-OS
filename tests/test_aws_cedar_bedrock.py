@@ -90,7 +90,7 @@ def test_api_aws_cedar_policies_endpoint():
     data = response.json()
     assert data["success"] is True
     assert "policy_sha256" in data["data"]
-    assert data["data"]["rule_count"] == 4
+    assert data["data"]["rule_count"] == 5
 
 
 def test_api_aws_cedar_evaluate_endpoint():

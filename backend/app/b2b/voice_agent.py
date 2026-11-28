@@ -1266,9 +1266,26 @@ class B2BVoiceDialogueEngine:
                 dispute_category="TAX_LINE_CORRECTION",
                 reason=f"Customer provided valid GSTIN during voice call. Cedar policy: {cedar_res.policy_id}",
                 confidence=0.96,
-                requires_approval=False,
-                approved_by_policy=cedar_res.decision == "ALLOW"
+                requires_approval=(cedar_res.decision != "ALLOW"),
+                approved_by_policy=(cedar_res.decision == "ALLOW")
             )
+
+            # Fail-closed Cedar Zero-Trust enforcement: do not mutate ledger or dispatch if Cedar denies
+            if cedar_res.decision != "ALLOW":
+                b2b_fsm.transition(inv_id, "ESCALATED", "CEDAR_POLICY_DENIED_GST_MUTATION")
+                return VoiceDialogueResponse(
+                    call_session_id=req.call_session_id,
+                    agent_speech_response="For invoices above ₹5,00,000, this GSTIN update has been escalated to our CFO Executive Queue for mandatory review.",
+                    intent_detected="GST_DISPUTE_RESOLUTION",
+                    action_taken="ESCALATE_HUMAN",
+                    should_escalate_to_human=True,
+                    recommended_voice=target_voice,
+                    mutation_proposal=proposal,
+                    invoice_mutated=False,
+                    cedar_evaluation=cedar_res.to_dict(),
+                    bedrock_inference=bedrock_res.to_dict(),
+                    fsm_current_state=b2b_fsm.get_state(inv_id)
+                )
 
             inv = invoice_store.mutate_invoice_field(
                 invoice_id=inv_id,
@@ -1328,9 +1345,6 @@ class B2BVoiceDialogueEngine:
         if (has_ptp_intent or has_day_commitment) and is_not_general_question:
             day_label, target_ptp_epoch = extract_ptp_date_and_epoch(speech)
             
-            if b2b_fsm.get_state(inv_id) != "PTP_REGISTERED":
-                b2b_fsm.transition(inv_id, "PTP_REGISTERED", f"CUSTOMER_COMMITTED_{day_label.replace(' ', '_')}")
-
             cedar_res = get_cedar_engine().evaluate(
                 principal="Agent::BedrockVoiceAgent",
                 action="Action::ApprovePTP",
@@ -1338,6 +1352,24 @@ class B2BVoiceDialogueEngine:
                 context={"proposed_gstin": "29AABCU9603R1Z2", "invoice_amount": int(amt), "regulatory_compliance": "GST_RULE_46"}
             )
             bedrock_res = get_bedrock_agent().synthesize_turn(speech, {"invoice_id": inv_id, "amount": amt})
+
+            if cedar_res.decision != "ALLOW":
+                b2b_fsm.transition(inv_id, "ESCALATED", "CEDAR_POLICY_DENIED_PTP")
+                return VoiceDialogueResponse(
+                    call_session_id=req.call_session_id,
+                    agent_speech_response="High-value commitments above ₹5,00,000 require CFO sign-off. I have escalated your commitment for executive approval.",
+                    intent_detected="PROMISE_TO_PAY_COMMITMENT",
+                    action_taken="ESCALATE_HUMAN",
+                    should_escalate_to_human=True,
+                    recommended_voice=target_voice,
+                    ptp_created=False,
+                    cedar_evaluation=cedar_res.to_dict(),
+                    bedrock_inference=bedrock_res.to_dict(),
+                    fsm_current_state=b2b_fsm.get_state(inv_id)
+                )
+
+            if b2b_fsm.get_state(inv_id) != "PTP_REGISTERED":
+                b2b_fsm.transition(inv_id, "PTP_REGISTERED", f"CUSTOMER_COMMITTED_{day_label.replace(' ', '_')}")
 
             ptp_record = ptp_store.register_promise(
                 invoice_id=inv_id,

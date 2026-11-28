@@ -3,6 +3,7 @@
  */
 
 import { safeApiCall, showToast } from "./apiClient.js?v=2.1.0";
+import { escapeHtml } from "../utils/escapeHtml.js?v=2.1.0";
 import { formatINR, formatDateIST } from "../utils/formatters.js?v=2.1.0";
 import { speakText, stopSpeaking } from "../utils/audioPlayer.js?v=2.1.0";
 import { refreshAuditLedger } from "./auditService.js?v=2.1.0";
@@ -193,12 +194,12 @@ export async function loadPTPRecords() {
 
     container.innerHTML = records.map(r => `
       <tr class="border-b border-slate-200 dark:border-[#1e293b] hover:bg-slate-50 dark:hover:bg-[#0c182c]/40 transition text-xs">
-        <td class="p-3 font-mono text-sky-400 font-semibold">${r.invoice_id}</td>
-        <td class="p-3 text-slate-300">${r.customer_contact}</td>
+        <td class="p-3 font-mono text-sky-400 font-semibold">${escapeHtml(r.invoice_id)}</td>
+        <td class="p-3 text-slate-300">${escapeHtml(r.customer_contact)}</td>
         <td class="p-3 font-mono font-bold text-white">${formatINR(r.amount)}</td>
-        <td class="p-3 text-emerald-400 font-medium">${r.promised_window_label}</td>
+        <td class="p-3 text-emerald-400 font-medium">${escapeHtml(r.promised_window_label)}</td>
         <td class="p-3">
-          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/60 text-emerald-300 border border-emerald-800 mono">${r.status}</span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/60 text-emerald-300 border border-emerald-800 mono">${escapeHtml(r.status)}</span>
         </td>
       </tr>
     `).join("");

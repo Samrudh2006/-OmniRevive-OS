@@ -38,7 +38,7 @@ def cmd_health(args):
     audit_health = audit_store.verify_chain_integrity()
     
     print(f"• Service Name:       OmniRevive-OS")
-    print(f"• Version:            1.0.0")
+    print(f"• Version:            {settings.APP_VERSION}")
     print(f"• Environment:        {settings.ENVIRONMENT}")
     print(f"• Database (SQLite):  {settings.DATABASE_PATH}")
     print(f"• Audit Chain Valid:  {'[PASS] VALID' if audit_health['valid'] else '[FAIL] TAMPERED'}")
@@ -76,6 +76,14 @@ def cmd_benchmark(args):
     """Executes the 100-case held-out statistical recovery benchmark."""
     print_header("100 Held-Out Case Production Benchmark")
     results = run_held_out_benchmark(verbose=True)
+    return 0
+
+
+def cmd_strategy_benchmark(args):
+    """Compares Fixed Interval, Exponential Backoff, Jitter, and Weibull optimization strategies."""
+    from benchmarks.strategy_comparison import run_four_strategy_comparison
+    print_header("4-Strategy Recovery Benchmark Comparison")
+    run_four_strategy_comparison(verbose=True)
     return 0
 
 def cmd_concurrency_benchmark(args):
@@ -494,6 +502,10 @@ Examples:
     # benchmark
     sub_bench = subparsers.add_parser("benchmark", help="Execute the 100-case recovery benchmark")
     sub_bench.set_defaults(func=cmd_benchmark)
+
+    # strategy-benchmark
+    sub_strat = subparsers.add_parser("strategy-benchmark", help="Compare Fixed, Exponential, Jitter, and Weibull recovery strategies")
+    sub_strat.set_defaults(func=cmd_strategy_benchmark)
 
     # concurrency-benchmark
     sub_conc = subparsers.add_parser("concurrency-benchmark", help="Execute 50-worker parallel concurrency and CAS mutex benchmark")

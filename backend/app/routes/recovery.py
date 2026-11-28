@@ -6,14 +6,15 @@ import time
 import urllib.parse
 from typing import Dict, Any, Optional, List
 from fastapi import Query, APIRouter, HTTPException, Header, Request, BackgroundTasks, status, UploadFile, File
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict, ValidationError
 
+from backend.app.config import settings
 from backend.app.schemas import BulkRecoveryItem
 from backend.app.security import verify_razorpay_signature, idempotency_store
 from backend.app.token_lifecycle import card_token_manager
 from backend.app.bulk_processor import bulk_processor
 from backend.app.services.recovery_execution_service import execute_recovery_pipeline
-from backend.app.services.telemetry_service import log_system_event
+from backend.app.services.telemetry_service import log_system_event, IDEMPOTENCY_COLLISIONS_TOTAL
 from backend.app.services.auth_service import AuthenticationService as auth_service
 
 router = APIRouter(tags=["Fast-Loop Recovery Engine"])
@@ -47,47 +48,76 @@ class BulkJsonRequest(BaseModel):
     items: List[BulkRecoveryItem]
 
 
+class RazorpayWebhookPayload(BaseModel):
+    model_config = ConfigDict(extra="allow")
+    event: str = Field(default="payment.failed", min_length=1, max_length=128)
+    id: Optional[str] = None
+    payload: Dict[str, Any] = Field(default_factory=dict)
+
+
 @router.post("/api/v1/webhooks/razorpay", status_code=status.HTTP_202_ACCEPTED, summary="Razorpay Webhook Ingestion & Recovery Dispatch")
 async def razorpay_webhook_receiver(
     request: Request,
     background_tasks: BackgroundTasks,
     x_razorpay_signature: Optional[str] = Header(None),
-    x_razorpay_event_time: Optional[int] = Header(None)
+    x_razorpay_event_time: Optional[int] = Header(None),
+    x_merchant_id: Optional[str] = Header(None),
 ):
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    content_length = request.headers.get("Content-Length")
+    if content_length and content_length.isdigit() and int(content_length) > settings.MAX_WEBHOOK_BYTES:
+        raise HTTPException(status_code=413, detail="Webhook payload exceeds maximum allowed size.")
+
     raw_body = await request.body()
-    
-    # 1. Cryptographic HMAC Verification
-    if not x_razorpay_signature or not verify_razorpay_signature(raw_body, x_razorpay_signature, timestamp=x_razorpay_event_time):
+    if len(raw_body) > settings.MAX_WEBHOOK_BYTES:
+        raise HTTPException(status_code=413, detail="Webhook payload exceeds maximum allowed size.")
+
+    # 1. Cryptographic HMAC Verification + Replay Window + Secret Rotation Ring
+    require_ts = (not settings.SAFE_DEMO_MODE) or settings.WEBHOOK_REQUIRE_TIMESTAMP
+    if not x_razorpay_signature or not verify_razorpay_signature(
+        raw_body,
+        x_razorpay_signature,
+        timestamp=x_razorpay_event_time,
+        require_timestamp=require_ts,
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Missing or invalid cryptographic HMAC signature, or expired replay window."
         )
 
     try:
-        event_payload = json.loads(raw_body.decode("utf-8"))
+        validated_hook = RazorpayWebhookPayload.model_validate_json(raw_body.decode("utf-8"))
+    except ValidationError as ve:
+        raise HTTPException(status_code=422, detail=f"Webhook payload schema invalid: {ve.errors()}")
     except Exception:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Malformed JSON webhook payload."
         )
 
-    event_type = event_payload.get("event", "payment.failed")
-    payment_entity = event_payload.get("payload", {}).get("payment", {}).get("entity", {})
-    payment_id = payment_entity.get("id") or event_payload.get("id") or f"pay_{uuid.uuid4().hex[:8]}"
+    event_type = validated_hook.event
+    payment_entity = validated_hook.payload.get("payment", {}).get("entity", {})
+    if not isinstance(payment_entity, dict):
+        raise HTTPException(status_code=422, detail="payload.payment.entity must be a JSON object.")
+    payment_id = payment_entity.get("id") or validated_hook.id or f"pay_{uuid.uuid4().hex[:8]}"
+
+    notes = payment_entity.get("notes") if isinstance(payment_entity.get("notes"), dict) else {}
+    merchant_id = str(x_merchant_id or notes.get("merchant_id") or "default_merchant")
 
     payload_hash = hashlib.sha256(raw_body).hexdigest()
     idempotency_key = f"wh_{payment_id}"
 
-    # 2. Atomic Idempotency Claim
-    acquired = idempotency_store.acquire_lock(key=idempotency_key, payload_hash=payload_hash)
+    # 2. Tenant-Scoped Atomic Idempotency Claim
+    acquired = idempotency_store.acquire_lock(key=idempotency_key, payload_hash=payload_hash, merchant_id=merchant_id)
     if not acquired:
+        IDEMPOTENCY_COLLISIONS_TOTAL.inc()
         return {
             "success": True,
             "data": {
                 "status": "ignored_duplicate",
                 "message": "Duplicate event delivery safely ignored by atomic distributed mutex.",
-                "payment_id": payment_id
+                "payment_id": payment_id,
+                "merchant_id": merchant_id,
             },
             "trace_id": trace_id,
             "timestamp": time.time()
@@ -99,13 +129,14 @@ async def razorpay_webhook_receiver(
     error_desc = payment_entity.get("error_description", "Bank gateway failure")
     customer_phone = payment_entity.get("contact", "+919876543210")
     customer_email = payment_entity.get("email", "customer@example.com")
-    attempt_count = payment_entity.get("notes", {}).get("attempt_count", 1)
+    attempt_count = notes.get("attempt_count", 1)
+    exec_meta = {**notes, "merchant_id": merchant_id, "webhook_idempotency_key": idempotency_key}
 
     # Execute recovery asynchronously
     background_tasks.add_task(
         execute_recovery_pipeline,
         trace_id, payment_id, amount, error_code, error_desc,
-        customer_phone, customer_email, attempt_count, payment_entity.get("notes", {})
+        customer_phone, customer_email, attempt_count, exec_meta
     )
 
     return {
@@ -113,6 +144,7 @@ async def razorpay_webhook_receiver(
         "data": {
             "status": "accepted_for_recovery",
             "payment_id": payment_id,
+            "merchant_id": merchant_id,
             "event": event_type
         },
         "trace_id": trace_id,
@@ -122,7 +154,10 @@ async def razorpay_webhook_receiver(
 
 @router.post("/api/v1/simulate/failure", summary="Simulate Failed Transaction Recovery")
 async def simulate_failure_endpoint(req: SimulatedFailureRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
+    bound_tenant = auth_service.resolve_authorized_tenant(request)
+    meta = {"merchant_id": bound_tenant} if bound_tenant else None
     result = await execute_recovery_pipeline(
         trace_id=trace_id,
         payment_id=req.payment_id,
@@ -131,7 +166,8 @@ async def simulate_failure_endpoint(req: SimulatedFailureRequest, request: Reque
         error_description=req.error_description,
         customer_phone=req.customer_phone,
         customer_email=req.customer_email,
-        attempt_count=req.attempt_count
+        attempt_count=req.attempt_count,
+        metadata=meta,
     )
     return {
         "success": True,
@@ -256,7 +292,7 @@ async def upload_bulk_recovery_csv(
     content_bytes = await file.read(MAX_CSV_BYTES + 1)
     if len(content_bytes) > MAX_CSV_BYTES:
         raise HTTPException(
-            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            status_code=413,
             detail="Uploaded CSV file exceeds 10MB limit."
         )
     csv_str = content_bytes.decode("utf-8", errors="replace")

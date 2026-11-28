@@ -8,6 +8,7 @@ from fastapi.responses import HTMLResponse
 from backend.app.b2b.invoice_store import invoice_store
 from backend.app.communication.dispatch_engine import dispatch_engine
 from backend.app.audit_store import audit_store
+from backend.app.services.auth_service import AuthenticationService as auth_service
 
 router = APIRouter()
 
@@ -19,6 +20,7 @@ class EmailDispatchRequest(BaseModel):
 
 @router.post("/api/v1/communication/email/send", tags=["Communication Dispatch"], summary="Dispatch Authentic Corporate Tax Invoice Email")
 async def send_invoice_email_endpoint(req: EmailDispatchRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::Finance_Officer")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     inv = invoice_store.get_invoice(req.invoice_id)
     if not inv:

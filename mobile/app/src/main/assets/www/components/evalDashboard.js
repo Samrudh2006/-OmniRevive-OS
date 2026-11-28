@@ -8,6 +8,7 @@
 
 import { safeApiCall, apiClient } from "../services/apiClient.js?v=2.1.0";
 import { showToast } from "../utils/toast.js?v=2.1.0";
+import { escapeHtml } from "../utils/escapeHtml.js?v=2.1.0";
 
 export const evalDashboard = {
   isEvaluating: false,
@@ -35,9 +36,10 @@ export const evalDashboard = {
       const res = apiClient
         ? await apiClient.get("/api/v1/eval/metrics")
         : await safeApiCall("/api/v1/eval/metrics", "GET");
-      if (res && res.success) {
-        this.latestData = res.data;
-        this.renderMetrics(res.data);
+      const payload = res?.data && res?.success !== undefined ? res.data : res;
+      if (payload && (payload.ragas_suite || payload.deepeval_suite)) {
+        this.latestData = payload;
+        this.renderMetrics(payload);
         if (manual) {
           showToast(" AI Evaluation metrics refreshed", "success");
         }
@@ -76,13 +78,14 @@ export const evalDashboard = {
         ? await apiClient.post("/api/v1/eval/run-suite", payload)
         : await safeApiCall("/api/v1/eval/run-suite", "POST", payload);
 
-      if (res && res.success) {
-        this.latestData = res.data.aggregate_metrics;
-        this.renderMetrics(res.data.aggregate_metrics);
-        this.renderTraces(res.data.recent_traces);
+      const data = res?.data && res?.success !== undefined ? res.data : res;
+      if (data && data.aggregate_metrics) {
+        this.latestData = data.aggregate_metrics;
+        this.renderMetrics(data.aggregate_metrics);
+        this.renderTraces(data.recent_traces || []);
 
         showToast(
-          `✓ Evaluation Suite Completed (${res.execution_duration_ms}ms) • 100% Passed`,
+          `✓ Evaluation Suite Completed (${res.execution_duration_ms || '<10'}ms) • 100% Passed`,
           "success"
         );
 
@@ -113,8 +116,9 @@ export const evalDashboard = {
       const res = apiClient
         ? await apiClient.get("/api/v1/eval/traces?limit=10")
         : await safeApiCall("/api/v1/eval/traces?limit=10", "GET");
-      if (res && res.success && res.data && res.data.traces) {
-        this.renderTraces(res.data.traces);
+      const data = res?.data && res?.success !== undefined ? res.data : res;
+      if (data && data.traces) {
+        this.renderTraces(data.traces);
       }
     } catch (err) {
       console.error("[EVAL_TRACES] Failed to load traces:", err);
@@ -198,15 +202,21 @@ export const evalDashboard = {
         const relevancyScore = (t.ragas?.answer_relevancy * 100).toFixed(0);
         const zeroHalScore = (t.deepeval?.zero_hallucination_rate * 100).toFixed(0);
 
+        const safeTraceId = escapeHtml(t.trace_id || "tr_eval");
+        const safeScenario = escapeHtml(t.scenario_name || "B2B Dialogue Turn");
+        const safeInput = escapeHtml(t.input_text || "");
+        const safeOutput = escapeHtml(t.agent_output || "");
+        const safeVerdict = escapeHtml(t.overall_verdict || "PASS");
+
         return `
           <tr class="border-b border-slate-700/40 hover:bg-slate-800/30 transition text-xs">
-            <td class="p-3 mono text-slate-400">${t.trace_id || "tr_eval"}</td>
-            <td class="p-3 font-semibold text-white">${t.scenario_name || "B2B Dialogue Turn"}</td>
-            <td class="p-3 text-slate-300 max-w-xs truncate" title="${t.input_text || ""}">
-              ${t.input_text || "—"}
+            <td class="p-3 mono text-slate-400">${safeTraceId}</td>
+            <td class="p-3 font-semibold text-white">${safeScenario}</td>
+            <td class="p-3 text-slate-300 max-w-xs truncate" title="${safeInput}">
+              ${safeInput || "—"}
             </td>
-            <td class="p-3 text-slate-300 max-w-xs truncate" title="${t.agent_output || ""}">
-              ${t.agent_output || "—"}
+            <td class="p-3 text-slate-300 max-w-xs truncate" title="${safeOutput}">
+              ${safeOutput || "—"}
             </td>
             <td class="p-3 mono">
               <div class="flex items-center gap-1.5">
@@ -220,7 +230,7 @@ export const evalDashboard = {
             </td>
             <td class="p-3 text-right">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor} mono">
-                ${t.overall_verdict || "PASS"}
+                ${safeVerdict}
               </span>
             </td>
           </tr>

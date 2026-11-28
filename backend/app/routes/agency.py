@@ -72,8 +72,9 @@ from backend.app.services.autonomous_bug_repair import get_welcome_back_briefing
 from backend.app.services.ai_enterprise_suite import generate_ai_executive_board_meeting
 
 @router.post("/run_cycle")
-def trigger_manual_cycle():
+def trigger_manual_cycle(request: Request):
     """Manually trigger an immediate execution pass across all specialized agents."""
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin")
     result = execute_agency_cycle()
     return {
         "message": "Continuous specialized agent swarm cycle executed successfully.",
@@ -126,7 +127,6 @@ def trigger_c_suite_debate(
     }
 
 @router.post("/swarm/stress-test")
-@router.post("/api/v1/agency/swarm/stress-test")
 def trigger_swarm_stress_test(
     total_transactions: int = Query(default=10000, ge=1, le=100000, description="Number of concurrent transactions to simulate"),
     target_bank_rail: str = Query(default="hdfc_switch", description="Target bank rail for catastrophic black-swan outage"),

@@ -40,14 +40,18 @@ export async function triggerFastLoopPipeline() {
     document.querySelectorAll("#trace-id-display").forEach(el => el.innerText = `(Trace ID: ${data.trace_id})`);
 
     if (data.decision_trace && data.decision_trace.length > 0) {
-      const timelineHtml = data.decision_trace.map(t => `
+      const timelineHtml = data.decision_trace.map(t => {
+        const isBlocked = t.status === "BLOCKED";
+        const dotCls = isBlocked ? "bg-rose-500" : "bg-[#10b981]";
+        return `
         <div class="relative">
-          <span class="absolute -left-[21px] top-0.5 w-3 h-3 rounded-full bg-[#10b981] flex items-center justify-center text-[8px] text-white">✓</span>
-          <div class="text-slate-400 mono text-[10px]">${t.timestamp || '10:15:24'}</div>
-          <div class="text-white font-semibold text-xs">${t.title || t.step}</div>
-          <div class="text-[11px] text-slate-400">${t.details || ''}</div>
+          <span class="absolute -left-[21px] top-0.5 w-3 h-3 rounded-full ${dotCls} flex items-center justify-center text-[8px] text-white">${isBlocked ? '✕' : '✓'}</span>
+          <div class="text-slate-400 mono text-[10px]">${escapeHtml(t.timestamp || '10:15:24')} <span class="text-amber-400/90">[Simulated]</span></div>
+          <div class="text-white font-semibold text-xs">${escapeHtml(t.title || t.step)}</div>
+          <div class="text-[11px] text-slate-400">${escapeHtml(t.details || '')}</div>
         </div>
-      `).join('');
+      `;
+      }).join('');
       document.querySelectorAll("#trace-timeline-list").forEach(el => el.innerHTML = timelineHtml);
     }
 
@@ -179,29 +183,40 @@ export function renderBatchResults(data) {
   const latEl = document.getElementById("bulk-kpi-latency");
   const countEl = document.getElementById("bulk-table-count");
 
-  if (totalEl) totalEl.innerText = data.total_ingested || data.items?.length || 10;
-  if (atRiskEl) atRiskEl.innerText = `₹${(data.total_at_risk_gmv || 0).toLocaleString('en-IN')}`;
-  if (recEl) recEl.innerText = `₹${(data.expected_recovery_gmv || 0).toLocaleString('en-IN')}`;
-  if (delEl) delEl.innerText = data.delayed_retries_scheduled || 0;
-  if (linksEl) linksEl.innerText = data.direct_recovery_links_dispatched || 0;
+  const items = data.items || [];
+  const totalProcessed = data.total_processed ?? data.total_ingested ?? items.length;
+  const totalAtRiskGmv = data.total_batch_gmv_inr ?? data.total_at_risk_gmv ?? 0;
+  const expectedRecoveryGmv = data.projected_recovery_gmv_inr ?? data.expected_recovery_gmv ?? 0;
+  const delayedCount = data.delayed_retries_scheduled ?? items.filter(i => i.strategy === "DELAYED_RETRY").length;
+  const linksCount = data.direct_recovery_links_dispatched ?? items.filter(i => i.strategy === "DISPATCH_PAYMENT_LINK").length;
+
+  if (totalEl) totalEl.innerText = totalProcessed;
+  if (atRiskEl) atRiskEl.innerText = `₹${Number(totalAtRiskGmv).toLocaleString('en-IN')}`;
+  if (recEl) recEl.innerText = `₹${Number(expectedRecoveryGmv).toLocaleString('en-IN')}`;
+  if (delEl) delEl.innerText = delayedCount;
+  if (linksEl) linksEl.innerText = linksCount;
   if (latEl) latEl.innerText = `${(data.processing_time_ms || 2.4).toFixed(1)}ms`;
-  if (countEl) countEl.innerText = `Showing ${data.items?.length || 0} diagnosed transactions`;
+  if (countEl) countEl.innerText = `Showing ${items.length} diagnosed transactions (SAFE_DEMO_MODE simulation)`;
 
   const tbody = document.getElementById("bulk-table-body");
-  if (tbody && data.items) {
-    tbody.innerHTML = data.items.map(item => `
+  if (tbody && items.length > 0) {
+    tbody.innerHTML = items.map(item => {
+      const retryMins = item.retry_delay_minutes;
+      const retryLabel = item.scheduled_retry_at || (retryMins > 0 ? `+${retryMins}m (Weibull)` : 'Immediate (+0m)');
+      return `
       <tr class="hover:bg-[#081224] transition-colors">
         <td class="p-2.5 text-white font-medium">${escapeHtml(item.payment_id)}</td>
         <td class="p-2.5 text-emerald-400 font-bold">₹${Number(item.amount || 0).toLocaleString('en-IN')}</td>
-        <td class="p-2.5 text-slate-300">${escapeHtml(item.bank || 'HDFC')}</td>
+        <td class="p-2.5 text-slate-300">${escapeHtml(item.bank_code || item.bank || 'HDFC')}</td>
         <td class="p-2.5 text-sky-400">${escapeHtml(item.failure_class)}</td>
         <td class="p-2.5 text-slate-200">${escapeHtml(item.strategy)}</td>
-        <td class="p-2.5 text-slate-300">${escapeHtml(item.action)}</td>
-        <td class="p-2.5 text-purple-300">${escapeHtml(item.scheduled_retry_at || 'Immediate (+0m)')}</td>
+        <td class="p-2.5 text-slate-300">${escapeHtml(item.action_status || item.action || 'SCHEDULED')}</td>
+        <td class="p-2.5 text-purple-300">${escapeHtml(retryLabel)}</td>
         <td class="p-2.5 text-slate-300">${Number(item.confidence || 0).toFixed(2)}</td>
-        <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${escapeHtml(item.policy_result)}</span></td>
+        <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#063b22] text-[#10b981]">${escapeHtml(item.policy_verdict || item.policy_result || 'ALLOWED')}</span></td>
       </tr>
-    `).join("");
+    `;
+    }).join("");
   }
 }
 

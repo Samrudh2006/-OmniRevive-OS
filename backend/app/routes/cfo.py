@@ -144,6 +144,7 @@ class MultiRegionLockRequest(BaseModel):
 
 @router.post("/sign-approval", summary="Sign CFO Approval with Ed25519")
 async def sign_cfo_approval(payload: CFOSignRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::CFO")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     env = _cfo_ephemeral_signer.sign_approval(
         approval_id=payload.approval_id,
@@ -195,6 +196,7 @@ async def verify_cfo_signature(payload: CFOVerifyRequest, request: Request):
 
 @router.post("/quorum-lock", summary="Acquire Multi-Region Active-Active CAS Lock (ap-south-1 & ap-south-2)")
 async def acquire_multiregion_quorum_lock(payload: MultiRegionLockRequest, request: Request):
+    auth_service.verify_request_auth(request, required_role="Role::SRE_Admin")
     trace_id = getattr(request.state, "trace_id", f"tr_{uuid.uuid4().hex[:12]}")
     acquired, fencing_token = _multiregion_cas.acquire_quorum_lock(
         resource_key=payload.resource_key,

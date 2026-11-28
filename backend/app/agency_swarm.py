@@ -187,8 +187,15 @@ def start_continuous_agency_swarm():
         t.start()
         logger.info("Continuous Agency Swarm background daemon active.")
 
-# Auto-start on import
-start_continuous_agency_swarm()
+
+def stop_continuous_agency_swarm():
+    """Signals the background agency swarm loop to stop gracefully."""
+    agency_state["is_running"] = False
+
+
+# Avoid spawning unmanaged daemon threads during pytest/CLI imports; FastAPI lifespan manages runtime daemons.
+if not os.environ.get("PYTEST_CURRENT_TEST") and os.environ.get("OMNIREVIVE_DISABLE_DAEMONS", "0") != "1":
+    start_continuous_agency_swarm()
 
 def get_agency_swarm_status() -> Dict[str, Any]:
     """Returns real-time operational status of all registered specialized agents."""

@@ -15,30 +15,43 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install uv Package Manager
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
       - name: Install Dependencies
         run: |
+          mkdir -p reports
           ~/.local/bin/uv venv
           ~/.local/bin/uv pip install -r requirements.txt
 
-      - name: Run Test Suite (47/47 Tests & Adversarial Verification)
+      - name: Run Full Test Suite, JUnit XML & Coverage
         run: |
-          ~/.local/bin/uv run pytest -v --cov=backend --cov-report=term-missing
+          ~/.local/bin/uv run pytest -v --junitxml=reports/junit.xml --cov=backend --cov=aws --cov-report=xml:reports/coverage.xml --cov-report=term-missing
 
-      - name: Run 100-Batch Production Benchmark
+      - name: Upload Test & Coverage Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-and-coverage-reports
+          path: |
+            reports/junit.xml
+            reports/coverage.xml
+
+      - name: Run 100-Case Benchmarks & Strategy Comparison
         run: |
-          ~/.local/bin/uv run python benchmarks/benchmark_runner.py
+          ~/.local/bin/uv run python cli.py benchmark
+          ~/.local/bin/uv run python cli.py strategy-benchmark
+          ~/.local/bin/uv run python cli.py concurrency-benchmark
 
-      - name: Verify Cryptographic Audit Chain CLI
+      - name: Verify Cryptographic Audit Chain & Deployment Smoke Checks
         run: |
           ~/.local/bin/uv run python cli.py verify-audit
+          ~/.local/bin/uv run python deployment/verify_deployment.py
 
   docker-build:
     name: Docker Container Build Check
