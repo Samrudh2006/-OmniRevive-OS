@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 /// Represents a queued offline payment/mandate recovery attempt
