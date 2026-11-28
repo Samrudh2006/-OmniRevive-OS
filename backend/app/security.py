@@ -1,5 +1,7 @@
+import atexit
 import hmac
 import hashlib
+import random
 import time
 import json
 import sqlite3
@@ -8,7 +10,7 @@ import os
 import uuid
 import threading
 import logging
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Tuple
 from cryptography.hazmat.primitives import constant_time
 try:
     import redis
@@ -22,17 +24,21 @@ logger = logging.getLogger("OmniRevive.Security")
 # Thread-local storage & tracked registry for SQLite connections in WAL mode
 _local = threading.local()
 _conn_registry_lock = threading.Lock()
-_conn_registry: Dict[tuple, sqlite3.Connection] = {}
+_conn_registry: Dict[tuple, Tuple[sqlite3.Connection, threading.Thread]] = {}
 
 
 def _prune_dead_thread_connections() -> None:
-    """Closes cached connections belonging to threads that have already exited."""
-    active_tids = {t.ident for t in threading.enumerate()}
+    """Closes cached connections belonging to threads that have finished running.
+    Restricted to the main thread so worker pools never race cross-thread sqlite3.close().
+    """
+    if threading.current_thread() is not threading.main_thread():
+        return
     with _conn_registry_lock:
-        dead_keys = [k for k in _conn_registry if k[0] not in active_tids]
+        dead_keys = [k for k, (_, th) in _conn_registry.items() if not th.is_alive()]
         for k in dead_keys:
-            conn = _conn_registry.pop(k, None)
-            if conn is not None:
+            entry = _conn_registry.pop(k, None)
+            if entry is not None:
+                conn = entry[0]
                 try:
                     conn.close()
                 except Exception:
@@ -45,13 +51,15 @@ def get_db_connection(db_path: str) -> sqlite3.Connection:
     conn = getattr(_local, attr_name, None)
     if conn is None:
         conn = sqlite3.connect(db_path, check_same_thread=False, timeout=10.0)
-        conn.execute("PRAGMA journal_mode = WAL;")
+        conn.execute("PRAGMA busy_timeout = 10000;")  # wait for competing writers instead of failing with "database is locked"
+        mode_row = conn.execute("PRAGMA journal_mode;").fetchone()
+        if not mode_row or str(mode_row[0]).lower() != "wal":
+            conn.execute("PRAGMA journal_mode = WAL;")
         conn.execute("PRAGMA synchronous = NORMAL;")
-        conn.execute("PRAGMA busy_timeout = 10000;")  # wait for a competing writer instead of failing with "database is locked"
         conn.execute("PRAGMA foreign_keys = ON;")
         setattr(_local, attr_name, conn)
         with _conn_registry_lock:
-            _conn_registry[(threading.get_ident(), db_path)] = conn
+            _conn_registry[(threading.get_ident(), db_path)] = (conn, threading.current_thread())
     return conn
 
 
@@ -61,7 +69,7 @@ def close_all_db_connections() -> int:
     with _conn_registry_lock:
         items = list(_conn_registry.items())
         _conn_registry.clear()
-    for (_, db_path), conn in items:
+    for (_, db_path), (conn, _) in items:
         try:
             conn.close()
             closed += 1
@@ -74,6 +82,9 @@ def close_all_db_connections() -> int:
             except Exception:
                 pass
     return closed
+
+
+atexit.register(close_all_db_connections)
 
 def mask_pii_string(value: Optional[str]) -> str:
     """
@@ -292,26 +303,33 @@ class DistributedIdempotencyStore:
 
         conn = get_db_connection(self.db_path)
         now = time.time()
-        try:
-            with conn:
-                conn.execute(
-                    "INSERT INTO idempotency_keys (idempotency_key, merchant_api_key_id, payload_hash, created_at, status, owner_token) VALUES (?, ?, ?, ?, ?, ?)",
-                    (key, merchant_id, payload_hash, now, "ACQUIRED", owner_token)
-                )
-            with self._owners_lock:
-                self._active_owners[(merchant_id, key)] = owner_token
-            return True, owner_token
-        except sqlite3.IntegrityError:
-            with conn:
-                cur = conn.execute(
-                    "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED', owner_token = ? "
-                    "WHERE idempotency_key = ? AND merchant_api_key_id = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
-                    (now, payload_hash, owner_token, key, merchant_id, now, ttl_seconds)
-                )
-                if cur.rowcount == 1:
-                    with self._owners_lock:
-                        self._active_owners[(merchant_id, key)] = owner_token
-                    return True, owner_token
+        for attempt in range(5):
+            try:
+                with conn:
+                    conn.execute(
+                        "INSERT INTO idempotency_keys (idempotency_key, merchant_api_key_id, payload_hash, created_at, status, owner_token) VALUES (?, ?, ?, ?, ?, ?)",
+                        (key, merchant_id, payload_hash, now, "ACQUIRED", owner_token)
+                    )
+                with self._owners_lock:
+                    self._active_owners[(merchant_id, key)] = owner_token
+                return True, owner_token
+            except sqlite3.IntegrityError:
+                try:
+                    with conn:
+                        cur = conn.execute(
+                            "UPDATE idempotency_keys SET created_at = ?, payload_hash = ?, status = 'RENEWED', owner_token = ? "
+                            "WHERE idempotency_key = ? AND merchant_api_key_id = ? AND status != 'COMPLETED' AND (? - created_at) > ?",
+                            (now, payload_hash, owner_token, key, merchant_id, now, ttl_seconds)
+                        )
+                        if cur.rowcount == 1:
+                            with self._owners_lock:
+                                self._active_owners[(merchant_id, key)] = owner_token
+                            return True, owner_token
+                except sqlite3.OperationalError as op_err:
+                    if ("locked" in str(op_err).lower() or "busy" in str(op_err).lower()) and attempt < 4:
+                        time.sleep(0.01 * (attempt + 1) + random.uniform(0.001, 0.008))
+                        continue
+                    raise
                 # Release Redis key if we acquired it transiently before SQLite conflict
                 if self.redis_client:
                     try:
@@ -319,6 +337,12 @@ class DistributedIdempotencyStore:
                     except Exception:
                         pass
                 return False, None
+            except sqlite3.OperationalError as op_err:
+                if ("locked" in str(op_err).lower() or "busy" in str(op_err).lower()) and attempt < 4:
+                    time.sleep(0.01 * (attempt + 1) + random.uniform(0.001, 0.008))
+                    continue
+                raise
+        return False, None
 
     def acquire_lock(self, key: str, payload_hash: str = "", ttl_seconds: int = 86400, merchant_id: str = "default_merchant") -> bool:
         """Atomic CAS lock acquisition, scoped per (merchant_id, key)."""

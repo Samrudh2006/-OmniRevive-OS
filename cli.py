@@ -24,7 +24,7 @@ from backend.app.audit_store import audit_store
 from backend.app.diagnostic_engine import diagnostic_engine
 from backend.app.recovery_optimizer import recovery_optimizer
 from backend.app.policy_engine import policy_engine
-from backend.app.security import idempotency_store, verify_razorpay_signature
+from backend.app.security import close_all_db_connections, idempotency_store, verify_razorpay_signature
 from benchmarks.benchmark_runner import run_held_out_benchmark
 
 def print_header(title: str):
@@ -143,6 +143,7 @@ def cmd_concurrency_benchmark(args):
     print(f"• Effective Throughput:      {ops_per_sec:,.1f} operations/sec")
     print("-" * 80)
     print("[PASS] 100% Strict Idempotency & Zero Double-Debit Guarantees Verified!\n")
+    close_all_db_connections()
     return 0
 
 def cmd_simulate_attack(args):
@@ -565,7 +566,10 @@ Examples:
         parser.print_help()
         sys.exit(1)
         
-    code = args.func(args)
+    try:
+        code = args.func(args)
+    finally:
+        close_all_db_connections()
     sys.exit(code or 0)
 
 if __name__ == "__main__":

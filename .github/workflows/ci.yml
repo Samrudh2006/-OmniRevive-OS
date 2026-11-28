@@ -43,15 +43,19 @@ jobs:
             reports/coverage.xml
 
       - name: Run 100-Case Benchmarks & Strategy Comparison
+        env:
+          PYTHONFAULTHANDLER: "1"
         run: |
-          ~/.local/bin/uv run python cli.py benchmark
-          ~/.local/bin/uv run python cli.py strategy-benchmark
-          ~/.local/bin/uv run python cli.py concurrency-benchmark
+          ~/.local/bin/uv run python -X faulthandler cli.py benchmark
+          ~/.local/bin/uv run python -X faulthandler cli.py strategy-benchmark
+          ~/.local/bin/uv run python -X faulthandler cli.py concurrency-benchmark
 
       - name: Verify Cryptographic Audit Chain & Deployment Smoke Checks
+        env:
+          PYTHONFAULTHANDLER: "1"
         run: |
-          ~/.local/bin/uv run python cli.py verify-audit
-          ~/.local/bin/uv run python deployment/verify_deployment.py
+          ~/.local/bin/uv run python -X faulthandler cli.py verify-audit
+          ~/.local/bin/uv run python -X faulthandler deployment/verify_deployment.py
 
   docker-build:
     name: Docker Container Build Check
